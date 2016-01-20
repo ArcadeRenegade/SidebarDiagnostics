@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
 
-namespace SidebarDiagnostics
+namespace SidebarDiagnostics.AB
 {
     public enum ABEdge : int
     {

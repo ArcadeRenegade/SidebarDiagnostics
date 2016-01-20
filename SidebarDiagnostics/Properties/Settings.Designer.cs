@@ -26,9 +26,9 @@ namespace SidebarDiagnostics.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Right")]
-        public global::SidebarDiagnostics.ABEdge DockEdge {
+        public global::SidebarDiagnostics.AB.ABEdge DockEdge {
             get {
-                return ((global::SidebarDiagnostics.ABEdge)(this["DockEdge"]));
+                return ((global::SidebarDiagnostics.AB.ABEdge)(this["DockEdge"]));
             }
             set {
                 this["DockEdge"] = value;

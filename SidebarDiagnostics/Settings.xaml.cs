@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Input;
+using SidebarDiagnostics.AB;
+using SidebarDiagnostics.Helpers;
 
 namespace SidebarDiagnostics
 {
@@ -16,14 +19,24 @@ namespace SidebarDiagnostics
             DockEdgeComboBox.Items.Add(ABEdge.Right);
             DockEdgeComboBox.SelectedValue = Properties.Settings.Default.DockEdge;
 
-            for (int i = 0; i < Utilities.GetNoScreens(); i++)
+            Monitor[] _monitors = Monitor.AllMonitors.ToArray();
+
+            for (int i = 0; i < _monitors.Length; i++)
             {
                 ScreenComboBox.Items.Add(new { Text = string.Format("#{0}", i + 1), Value = i });
             }
 
             ScreenComboBox.DisplayMemberPath = "Text";
             ScreenComboBox.SelectedValuePath = "Value";
-            ScreenComboBox.SelectedValue = Properties.Settings.Default.ScreenIndex;
+
+            if (Properties.Settings.Default.ScreenIndex < _monitors.Length)
+            {
+                ScreenComboBox.SelectedValue = Properties.Settings.Default.ScreenIndex;
+            }
+            else
+            {
+                ScreenComboBox.SelectedValue = 0;
+            }
 
             BGColorTextBox.Text = Properties.Settings.Default.BGColor;
 

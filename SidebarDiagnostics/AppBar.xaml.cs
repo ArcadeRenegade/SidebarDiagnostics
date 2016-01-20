@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using OpenHardwareMonitor.Hardware;
+using SidebarDiagnostics.AB;
+using SidebarDiagnostics.Helpers;
 
 namespace SidebarDiagnostics
 {
@@ -21,11 +23,19 @@ namespace SidebarDiagnostics
         public void InitAppBar()
         {
             AppBarFunctions.SetAppBar(this, ABEdge.None, Properties.Settings.Default.AlwaysTop);
-            
-            System.Windows.Forms.Screen _screen = Utilities.GetScreenFromIndex(Properties.Settings.Default.ScreenIndex);
 
-            this.Top = _screen.WorkingArea.Top;
-            this.Left = _screen.WorkingArea.Left + (Properties.Settings.Default.DockEdge == ABEdge.Right ? _screen.WorkingArea.Width - this.Width : 0);
+            Monitor _monitor = Utilities.GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
+
+            Top = _monitor.WorkingArea.Top;
+
+            double _left = _monitor.WorkingArea.Left;
+
+            if (Properties.Settings.Default.DockEdge == ABEdge.Right)
+            {
+                _left += _monitor.WorkingArea.Width - Width;
+            }
+
+            Left = _left;
 
             AppBarFunctions.SetAppBar(this, Properties.Settings.Default.DockEdge, Properties.Settings.Default.AlwaysTop);
         }

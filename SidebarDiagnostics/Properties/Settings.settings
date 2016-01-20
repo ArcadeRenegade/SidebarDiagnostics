@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SidebarDiagnostics.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="DockEdge" Type="SidebarDiagnostics.ABEdge" Scope="User">
+    <Setting Name="DockEdge" Type="SidebarDiagnostics.AB.ABEdge" Scope="User">
       <Value Profile="(Default)">Right</Value>
     </Setting>
     <Setting Name="ScreenIndex" Type="System.Int32" Scope="User">
