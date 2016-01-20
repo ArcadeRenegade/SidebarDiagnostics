@@ -16,6 +16,8 @@ namespace SidebarDiagnostics
         public AppBar()
         {
             InitializeComponent();
+
+            this.ShowInTaskbar = false;
         }
 
         public void InitAppBar()
