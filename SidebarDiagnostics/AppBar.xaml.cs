@@ -163,7 +163,9 @@ namespace SidebarDiagnostics
                     ISensor _coreLoad = _loadSensors.Where(s => s.Index == i).FirstOrDefault();
 
                     if (_coreLoad != null)
+                    {
                         _hwPanel.UpdateLabel(_coreLoad.Identifier, string.Format("Core #{0}: {1:0.##}%", i, _coreLoad.Value));
+                    }
                 }
             }
         }
