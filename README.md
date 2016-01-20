@@ -14,4 +14,4 @@ Just extract to somewhere and run SidebarDiagnostics.exe.
 
 You will likely need to run it as administrator.
 
-<img src="http://i.imgur.com/YFocN32.png" />
+<img src="http://i.imgur.com/VD7OiLR.png" />
