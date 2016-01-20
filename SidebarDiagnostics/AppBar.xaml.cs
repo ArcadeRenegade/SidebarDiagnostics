@@ -16,8 +16,6 @@ namespace SidebarDiagnostics
         public AppBar()
         {
             InitializeComponent();
-
-            this.ShowInTaskbar = false;
         }
 
         public void InitAppBar()
@@ -33,7 +31,7 @@ namespace SidebarDiagnostics
             this.Top = _screen.WorkingArea.Top;
             this.Left = _screen.WorkingArea.Left + (_dockEdge == ABEdge.Right ? _screen.WorkingArea.Width - this.Width : 0);
 
-            AppBarFunctions.SetAppBar(this, _dockEdge, false);
+            AppBarFunctions.SetAppBar(this, _dockEdge, Properties.Settings.Default.AlwaysTop);
         }
 
         public void InitContent()

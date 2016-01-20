@@ -94,5 +94,17 @@ namespace SidebarDiagnostics.Properties {
                 this["PollingInterval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AlwaysTop {
+            get {
+                return ((bool)(this["AlwaysTop"]));
+            }
+            set {
+                this["AlwaysTop"] = value;
+            }
+        }
     }
 }

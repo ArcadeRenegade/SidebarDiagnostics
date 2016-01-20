@@ -33,6 +33,8 @@ namespace SidebarDiagnostics
 
             PollingIntervalTextBox.Text = Properties.Settings.Default.PollingInterval.ToString();
 
+            AlwaysTopCheckBox.IsChecked = Properties.Settings.Default.AlwaysTop;
+
             StartupCheckBox.IsChecked = Utilities.IsStartupEnabled();
         }
 
@@ -52,6 +54,7 @@ namespace SidebarDiagnostics
             Properties.Settings.Default.BGOpacity = BGOpacitySlider.Value;
             Properties.Settings.Default.TextColor = TextColorTextBox.Text;
             Properties.Settings.Default.PollingInterval = int.Parse(PollingIntervalTextBox.Text);
+            Properties.Settings.Default.AlwaysTop = AlwaysTopCheckBox.IsChecked.HasValue && AlwaysTopCheckBox.IsChecked.Value;
             Properties.Settings.Default.Save();
 
             Utilities.SetStartupEnabled(StartupCheckBox.IsChecked.HasValue && StartupCheckBox.IsChecked.Value);

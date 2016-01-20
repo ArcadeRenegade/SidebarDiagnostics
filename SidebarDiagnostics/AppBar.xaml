@@ -9,8 +9,9 @@
         Loaded="Window_Loaded"
         Closing="Window_Closing"
         Title="MainWindow"
-        Height="600" Width="180"
+        Height="680" Width="180"
         AllowsTransparency="True"
+        ShowInTaskbar="False"
         WindowStyle="None">
     <Window.Background>
         <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor}" />
