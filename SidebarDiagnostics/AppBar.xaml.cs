@@ -20,18 +20,14 @@ namespace SidebarDiagnostics
 
         public void InitAppBar()
         {
-            if (_screenIndex == Properties.Settings.Default.ScreenIndex && _dockEdge == Properties.Settings.Default.DockEdge)
-                return;
-
-            _screenIndex = Properties.Settings.Default.ScreenIndex;
-            _dockEdge = Properties.Settings.Default.DockEdge;
-
-            System.Windows.Forms.Screen _screen = Utilities.GetScreenFromIndex(_screenIndex);
+            AppBarFunctions.SetAppBar(this, ABEdge.None, Properties.Settings.Default.AlwaysTop);
+            
+            System.Windows.Forms.Screen _screen = Utilities.GetScreenFromIndex(Properties.Settings.Default.ScreenIndex);
 
             this.Top = _screen.WorkingArea.Top;
-            this.Left = _screen.WorkingArea.Left + (_dockEdge == ABEdge.Right ? _screen.WorkingArea.Width - this.Width : 0);
+            this.Left = _screen.WorkingArea.Left + (Properties.Settings.Default.DockEdge == ABEdge.Right ? _screen.WorkingArea.Width - this.Width : 0);
 
-            AppBarFunctions.SetAppBar(this, _dockEdge, Properties.Settings.Default.AlwaysTop);
+            AppBarFunctions.SetAppBar(this, Properties.Settings.Default.DockEdge, Properties.Settings.Default.AlwaysTop);
         }
 
         public void InitContent()
@@ -268,11 +264,7 @@ namespace SidebarDiagnostics
 
             AppBarFunctions.SetAppBar(this, ABEdge.None, false);
         }
-
-        private int _screenIndex { get; set; }
-
-        private ABEdge _dockEdge { get; set; }
-        
+                
         private DispatcherTimer _clockTimer { get; set; }
 
         private DispatcherTimer _hardwareTimer { get; set; }
