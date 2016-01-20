@@ -8,6 +8,10 @@ Currently compiled in <a href="https://www.microsoft.com/en-us/download/details.
 
 Data provided by <a href="http://openhardwaremonitor.org/">Open Hardware Monitor</a>.
 
-<a href="https://drive.google.com/file/d/0B2nGKa6VrrDON3h1UTUtODQzZW8/view?usp=sharing">Download Link</a>
+Just extract to somewhere and run SidebarDiagnostics.exe.
+
+<a href="https://drive.google.com/file/d/0B2nGKa6VrrDON3h1UTUtODQzZW8/view?usp=sharing">Download Link</a>.
+
+You will likely need to run it as administrator.
 
 <img src="http://i.imgur.com/UjYhiAF.png" />
