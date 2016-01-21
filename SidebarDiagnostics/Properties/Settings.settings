@@ -18,7 +18,7 @@
       <Value Profile="(Default)">#FFFFFF</Value>
     </Setting>
     <Setting Name="PollingInterval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="AlwaysTop" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

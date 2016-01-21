@@ -41,7 +41,7 @@
         <ComboBox x:Name="ScreenComboBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" />
 
         <Label Grid.Column="0" Grid.Row="2" Content="Background Color" VerticalAlignment="Center" />
-        <TextBox x:Name="BGColorTextBox" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" />
+        <TextBox x:Name="BGColorTextBox" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" />
 
         <Label Grid.Column="0" Grid.Row="3" Content="Background Opacity" VerticalAlignment="Center" />
         <DockPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
@@ -50,10 +50,13 @@
         </DockPanel>
 
         <Label Grid.Column="0" Grid.Row="4" Content="Text Color" VerticalAlignment="Center" />
-        <TextBox x:Name="TextColorTextBox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" />
+        <TextBox x:Name="TextColorTextBox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" />
 
-        <Label Grid.Column="0" Grid.Row="5" Content="Polling Interval" VerticalAlignment="Center" />
-        <TextBox x:Name="PollingIntervalTextBox" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" PreviewTextInput="PollingIntervalTextBox_PreviewTextInput" />
+        <Label Grid.Column="0" Grid.Row="5" Content="Polling Interval (MS)" VerticalAlignment="Center" />
+        <DockPanel Grid.Column="1" Grid.Row="5" VerticalAlignment="Center">
+            <TextBox Text="{Binding ElementName=PollingIntervalSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
+            <Slider x:Name="PollingIntervalSlider" Minimum="100" Maximum="5000" TickFrequency="100" TickPlacement="BottomRight" LargeChange="1000" IsSnapToTickEnabled="True" VerticalAlignment="Center" />
+        </DockPanel>
 
         <Label Grid.Column="0" Grid.Row="6" Content="Always On Top" VerticalAlignment="Center" />
         <CheckBox x:Name="AlwaysTopCheckBox" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" />

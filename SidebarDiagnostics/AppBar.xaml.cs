@@ -52,8 +52,13 @@ namespace SidebarDiagnostics
             GetHardware();
             UpdateHardware();
 
+            if (Properties.Settings.Default.PollingInterval < 100)
+            {
+                Properties.Settings.Default.PollingInterval = 1000;
+            }
+
             _hardwareTimer = new DispatcherTimer();
-            _hardwareTimer.Interval = TimeSpan.FromSeconds(Properties.Settings.Default.PollingInterval);
+            _hardwareTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
             _hardwareTimer.Tick += new EventHandler(HardwareTimer_Tick);
             _hardwareTimer.Start();
         }
@@ -63,7 +68,7 @@ namespace SidebarDiagnostics
             InitAppBar();
             UpdateLayout();
 
-            _hardwareTimer.Interval = TimeSpan.FromSeconds(Properties.Settings.Default.PollingInterval);
+            _hardwareTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -89,27 +94,21 @@ namespace SidebarDiagnostics
 
         private void GetHardware()
         {
-            _boardHW = App._computer.Hardware.Where(h => h.HardwareType == HardwareType.Mainboard).FirstOrDefault();
+            _hwManager = new HWManager(App._computer, CPUStackPanel, RAMStackPanel, GPUStackPanel);
 
-            _cpuHW = App._computer.Hardware.Where(h => h.HardwareType == HardwareType.CPU).Select(hw => new HWPanel(hw, CPUStackPanel)).ToArray();
-
-            if (_cpuHW.Length > 0)
+            if (_hwManager.HasCPU)
             {
                 CPUTitle.Visibility = Visibility.Visible;
                 CPUStackPanel.Visibility = Visibility.Visible;
             }
 
-            _ramHW = App._computer.Hardware.Where(h => h.HardwareType == HardwareType.RAM).Select(hw => new HWPanel(hw, RAMStackPanel)).ToArray();
-
-            if (_ramHW.Length > 0)
+            if (_hwManager.HasRam)
             {
                 RAMTitle.Visibility = Visibility.Visible;
                 RAMStackPanel.Visibility = Visibility.Visible;
             }
-
-            _gpuHW = App._computer.Hardware.Where(h => new HardwareType[2] { HardwareType.GpuNvidia, HardwareType.GpuAti }.Contains(h.HardwareType)).Select(hw => new HWPanel(hw, GPUStackPanel)).ToArray();
-
-            if (_gpuHW.Length > 0)
+            
+            if (_hwManager.HasGPU)
             {
                 GPUTitle.Visibility = Visibility.Visible;
                 GPUStackPanel.Visibility = Visibility.Visible;
@@ -118,195 +117,9 @@ namespace SidebarDiagnostics
 
         private void UpdateHardware()
         {
-            UpdateBoard();
-            UpdateCPU();
-            UpdateRAM();
-            UpdateGPU();
+            _hwManager.Update();
         }
-
-        private void UpdateBoard()
-        {
-            if (_boardHW != null)
-            {
-                _boardHW.Update();
-            }
-        }
-
-        private void UpdateCPU()
-        {
-            foreach (HWPanel _hwPanel in _cpuHW)
-            {
-                _hwPanel.Hardware.Update();
                 
-                ISensor _coreClock = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("CPU")).FirstOrDefault();
-
-                if (_coreClock != null)
-                {
-                    _hwPanel.UpdateLabel(_coreClock.Identifier, string.Format("Clock: {0:0.##} MHz", _coreClock.Value));
-                }
-
-                ISensor _voltage = null;
-                ISensor _tempSensor = null;
-
-                if (_boardHW != null)
-                {
-                    _voltage = _boardHW.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Name.Contains("CPU")).FirstOrDefault();
-                    _tempSensor = _boardHW.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Contains("CPU")).FirstOrDefault();
-                }
-
-                if (_voltage == null)
-                {
-                    _voltage = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage).FirstOrDefault();
-                }
-
-                if (_tempSensor == null)
-                {
-                    _tempSensor =
-                        _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name == "CPU Package").FirstOrDefault() ??
-                        _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature).FirstOrDefault();
-                }
-
-                if (_voltage != null)
-                {
-                    _hwPanel.UpdateLabel(_voltage.Identifier, string.Format("Volt: {0:0.##} V", _voltage.Value));
-                }
-
-                if (_tempSensor != null)
-                {
-                    _hwPanel.UpdateLabel(_tempSensor.Identifier, string.Format("Temp: {0:0.##} C", _tempSensor.Value));
-                }
-
-                ISensor _fanSensor = _hwPanel.Hardware.Sensors.Where(s => new SensorType[2] { SensorType.Fan, SensorType.Control }.Contains(s.SensorType)).FirstOrDefault();
-
-                if (_fanSensor != null)
-                {
-                    _hwPanel.UpdateLabel(_fanSensor.Identifier, string.Format("Fan: {0:0.##} RPM", _fanSensor.Value));
-                }
-
-                List<ISensor> _loadSensors = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Load).ToList();
-
-                ISensor _totalCPU = _loadSensors.Where(s => s.Index == 0).FirstOrDefault();
-
-                if (_totalCPU != null)
-                {
-                    _hwPanel.UpdateLabel(_totalCPU.Identifier, string.Format("Load: {0:0.##}%", _totalCPU.Value));
-                }
-
-                for (int i = 1; i <= _loadSensors.Max(s => s.Index); i++)
-                {
-                    ISensor _coreLoad = _loadSensors.Where(s => s.Index == i).FirstOrDefault();
-
-                    if (_coreLoad != null)
-                    {
-                        _hwPanel.UpdateLabel(_coreLoad.Identifier, string.Format("Core #{0}: {1:0.##}%", i, _coreLoad.Value));
-                    }
-                }
-            }
-        }
-
-        private void UpdateRAM()
-        {
-            foreach (HWPanel _hwPanel in _ramHW)
-            {
-                _hwPanel.Hardware.Update();
-
-                ISensor _ramClock = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock).FirstOrDefault();
-
-                if (_ramClock != null)
-                {
-                    _hwPanel.UpdateLabel(_ramClock.Identifier, string.Format("Clock: {0:0.##} MHz", _ramClock.Value));
-                }
-
-                ISensor _voltage = null;
-
-                if (_boardHW != null)
-                {
-                    _voltage = _boardHW.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Name.Contains("RAM")).FirstOrDefault();
-                }
-
-                if (_voltage == null)
-                {
-                    _voltage = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage).FirstOrDefault();
-                }
-
-                if (_voltage != null)
-                {
-                    _hwPanel.UpdateLabel(_voltage.Identifier, string.Format("Volt: {0:0.##} V", _voltage.Value));
-                }
-
-                ISensor _loadSensor = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
-
-                if (_loadSensor != null)
-                {
-                    _hwPanel.UpdateLabel(_loadSensor.Identifier, string.Format("Load: {0:0.##}%", _loadSensor.Value));
-                }
-
-                ISensor _usedSensor = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 0).FirstOrDefault();
-
-                if (_usedSensor != null)
-                {
-                    _hwPanel.UpdateLabel(_usedSensor.Identifier, string.Format("Used: {0:0.##} GB", _usedSensor.Value));
-                }
-
-                ISensor _availSensor = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 1).FirstOrDefault();
-
-                if (_availSensor != null)
-                {
-                    _hwPanel.UpdateLabel(_availSensor.Identifier, string.Format("Free: {0:0.##} GB", _availSensor.Value));
-                }
-            }
-        }
-
-        private void UpdateGPU()
-        {
-            foreach (HWPanel _hwPanel in _gpuHW)
-            {
-                _hwPanel.Hardware.Update();
-
-                ISensor _coreClock = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 0).FirstOrDefault();
-
-                if (_coreClock != null)
-                {
-                    _hwPanel.UpdateLabel(_coreClock.Identifier, string.Format("Core: {0:0.##} MHz", _coreClock.Value));
-                }
-
-                ISensor _memoryClock = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 1).FirstOrDefault();
-
-                if (_memoryClock != null)
-                {
-                    _hwPanel.UpdateLabel(_memoryClock.Identifier, string.Format("RAM: {0:0.##} MHz", _memoryClock.Value));
-                }
-
-                ISensor _coreLoad = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
-
-                if (_coreLoad != null)
-                {
-                    _hwPanel.UpdateLabel(_coreLoad.Identifier, string.Format("Core: {0:0.##}%", _coreLoad.Value));
-                }
-
-                ISensor _memoryLoad = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 3).FirstOrDefault();
-
-                if (_memoryLoad != null)
-                {
-                    _hwPanel.UpdateLabel(_memoryLoad.Identifier, string.Format("RAM: {0:0.##}%", _memoryLoad.Value));
-                }
-
-                ISensor _tempSensor = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
-
-                if (_tempSensor != null)
-                {
-                    _hwPanel.UpdateLabel(_tempSensor.Identifier, string.Format("Temp: {0:0.##} C", _tempSensor.Value));
-                }
-
-                ISensor _fanSensor = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
-
-                if (_fanSensor != null)
-                {
-                    _hwPanel.UpdateLabel(_fanSensor.Identifier, string.Format("Fan: {0:0.##} RPM", _fanSensor.Value));
-                }
-            }
-        }
-        
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             Settings _settings = new Settings();
@@ -331,56 +144,309 @@ namespace SidebarDiagnostics
 
         private DispatcherTimer _hardwareTimer { get; set; }
 
-        private IHardware _boardHW { get; set; }
-
-        private HWPanel[] _cpuHW { get; set; }
-
-        private HWPanel[] _ramHW { get; set; }
-
-        private HWPanel[] _gpuHW { get; set; }
+        private HWManager _hwManager { get; set; }
         
-        private class HWPanel
+        private class HWManager
         {
-            public HWPanel(IHardware hardware, StackPanel parent)
+            public HWManager(IComputer computer, StackPanel cpuStackPanel, StackPanel ramStackPanel, StackPanel gpuStackPanel)
             {
-                Hardware = hardware;
+                BoardHW = App._computer.Hardware.Where(h => h.HardwareType == HardwareType.Mainboard).FirstOrDefault();
+                HasBoard = BoardHW != null;
 
-                StackPanel = new StackPanel();
-                StackPanel.Style = (Style)Application.Current.FindResource("HardwarePanel");
-                parent.Children.Add(StackPanel);
+                CPU = App._computer.Hardware.Where(h => h.HardwareType == HardwareType.CPU).Select(hw => new HWPanel(BoardHW, HWType.CPU, hw, cpuStackPanel)).ToArray();
+                HasCPU = CPU.Length > 0;
 
-                TextBlock _subtitle = new TextBlock();
-                _subtitle.Style = (Style)Application.Current.FindResource("AppSubtitle");
-                _subtitle.Text = hardware.Name;
-                StackPanel.Children.Add(_subtitle);
+                RAM = App._computer.Hardware.Where(h => h.HardwareType == HardwareType.RAM).Select(hw => new HWPanel(BoardHW, HWType.RAM, hw, ramStackPanel)).ToArray();
+                HasRam = RAM.Length > 0;
 
-                Controls = new Dictionary<Identifier, FrameworkElement>();
+                GPU = App._computer.Hardware.Where(h => new HardwareType[2] { HardwareType.GpuNvidia, HardwareType.GpuAti }.Contains(h.HardwareType)).Select(hw => new HWPanel(BoardHW, HWType.GPU, hw, gpuStackPanel)).ToArray();
+                HasGPU = GPU.Length > 0;
             }
 
-            public void UpdateLabel(Identifier id, string text)
+            public void Update()
             {
-                Label _label;
-
-                if (Controls.ContainsKey(id))
+                if (BoardHW != null)
                 {
-                    _label = (Label)Controls[id];
-                }
-                else
-                {
-                    _label = new Label();
-                    _label.Style = (Style)Application.Current.FindResource("AppLabel");
-
-                    StackPanel.Children.Add(_label);
-
-                    Controls.Add(id, _label);
+                    BoardHW.Update();
                 }
 
-                _label.Content = text;
+                foreach (HWPanel _cpuPanel in CPU)
+                {
+                    _cpuPanel.Update(true);
+                }
+
+                foreach (HWPanel _ramPanel in RAM)
+                {
+                    _ramPanel.Update(true);
+                }
+
+                foreach (HWPanel _gpuPanel in GPU)
+                {
+                    _gpuPanel.Update(true);
+                }
             }
 
-            public IHardware Hardware { get; set; }
-            public StackPanel StackPanel { get; set; }
-            public Dictionary<Identifier, FrameworkElement> Controls { get; set; }
+            public IHardware BoardHW { get; private set; }
+            public HWPanel[] CPU { get; private set; }
+            public HWPanel[] RAM { get; private set; }
+            public HWPanel[] GPU { get; private set; }
+
+            public bool HasBoard { get; private set; }
+            public bool HasCPU { get; private set; }
+            public bool HasRam { get; private set; }
+            public bool HasGPU { get; private set; }
+            
+            public class HWPanel
+            {
+                public HWPanel(IHardware board, HWType type, IHardware hardware, StackPanel parent)
+                {
+                    Type = type;
+
+                    Hardware = hardware;
+
+                    StackPanel = new StackPanel();
+                    StackPanel.Style = (Style)Application.Current.FindResource("HardwarePanel");
+                    parent.Children.Add(StackPanel);
+
+                    TextBlock _subtitle = new TextBlock();
+                    _subtitle.Style = (Style)Application.Current.FindResource("AppSubtitle");
+                    _subtitle.Text = hardware.Name;
+                    StackPanel.Children.Add(_subtitle);
+
+                    Sensors = new List<HWSensor>();
+
+                    hardware.Update();
+
+                    switch (type)
+                    {
+                        case HWType.CPU:
+                            InitCPU(board);
+                            break;
+
+                        case HWType.RAM:
+                            InitRAM(board);
+                            break;
+
+                        case HWType.GPU:
+                            InitGPU();
+                            break;
+                    }
+
+                    Update(false);
+                }
+
+                public void Update(bool updateHW)
+                {
+                    if (updateHW)
+                    {
+                        Hardware.Update();
+                    }
+
+                    foreach (HWSensor _hwSensor in Sensors)
+                    {
+                        _hwSensor.UpdateLabel();
+                    }
+                }
+                
+                private void InitCPU(IHardware board)
+                {
+                    ISensor _coreClock = Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("CPU")).FirstOrDefault();
+
+                    if (_coreClock != null)
+                    {
+                        Sensors.Add(new HWSensor(_coreClock, "Clock", " MHz", StackPanel));
+                    }
+
+                    ISensor _voltage = null;
+                    ISensor _tempSensor = null;
+
+                    if (board != null)
+                    {
+                        _voltage = board.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Name.Contains("CPU")).FirstOrDefault();
+                        _tempSensor = board.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Contains("CPU")).FirstOrDefault();
+                    }
+
+                    if (_voltage == null)
+                    {
+                        _voltage = Hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage).FirstOrDefault();
+                    }
+
+                    if (_tempSensor == null)
+                    {
+                        _tempSensor =
+                            Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name == "CPU Package").FirstOrDefault() ??
+                            Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature).FirstOrDefault();
+                    }
+
+                    if (_voltage != null)
+                    {
+                        Sensors.Add(new HWSensor(_voltage, "Volt", " V", StackPanel));
+                    }
+
+                    if (_tempSensor != null)
+                    {
+                        Sensors.Add(new HWSensor(_tempSensor, "Temp", " C", StackPanel));
+                    }
+
+                    ISensor _fanSensor = Hardware.Sensors.Where(s => new SensorType[2] { SensorType.Fan, SensorType.Control }.Contains(s.SensorType)).FirstOrDefault();
+
+                    if (_fanSensor != null)
+                    {
+                        Sensors.Add(new HWSensor(_fanSensor, "Fan", " RPM", StackPanel));
+                    }
+
+                    List<ISensor> _loadSensors = Hardware.Sensors.Where(s => s.SensorType == SensorType.Load).ToList();
+
+                    ISensor _totalCPU = _loadSensors.Where(s => s.Index == 0).FirstOrDefault();
+
+                    if (_totalCPU != null)
+                    {
+                        Sensors.Add(new HWSensor(_totalCPU, "Load", "%", StackPanel));
+                    }
+
+                    for (int i = 1; i <= _loadSensors.Max(s => s.Index); i++)
+                    {
+                        ISensor _coreLoad = _loadSensors.Where(s => s.Index == i).FirstOrDefault();
+
+                        if (_coreLoad != null)
+                        {
+                            Sensors.Add(new HWSensor(_coreLoad, string.Format("Core #{0}", i), "%", StackPanel));
+                        }
+                    }
+                }
+
+                public void InitRAM(IHardware board)
+                {
+                    ISensor _ramClock = Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock).FirstOrDefault();
+
+                    if (_ramClock != null)
+                    {
+                        Sensors.Add(new HWSensor(_ramClock, "Clock", " MHz", StackPanel));
+                    }
+
+                    ISensor _voltage = null;
+
+                    if (board != null)
+                    {
+                        _voltage = board.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Name.Contains("RAM")).FirstOrDefault();
+                    }
+
+                    if (_voltage == null)
+                    {
+                        _voltage = Hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage).FirstOrDefault();
+                    }
+
+                    if (_voltage != null)
+                    {
+                        Sensors.Add(new HWSensor(_voltage, "Volt", " V", StackPanel));
+                    }
+
+                    ISensor _loadSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
+
+                    if (_loadSensor != null)
+                    {
+                        Sensors.Add(new HWSensor(_loadSensor, "Load", "%", StackPanel));
+                    }
+
+                    ISensor _usedSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 0).FirstOrDefault();
+
+                    if (_usedSensor != null)
+                    {
+                        Sensors.Add(new HWSensor(_usedSensor, "Used", " GB", StackPanel));
+                    }
+
+                    ISensor _availSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 1).FirstOrDefault();
+
+                    if (_availSensor != null)
+                    {
+                        Sensors.Add(new HWSensor(_availSensor, "Free", " GB", StackPanel));
+                    }
+                }
+
+                public void InitGPU()
+                {
+                    ISensor _coreClock = Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 0).FirstOrDefault();
+
+                    if (_coreClock != null)
+                    {
+                        Sensors.Add(new HWSensor(_coreClock, "Core", " MHz", StackPanel));
+                    }
+
+                    ISensor _memoryClock = Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 1).FirstOrDefault();
+
+                    if (_memoryClock != null)
+                    {
+                        Sensors.Add(new HWSensor(_memoryClock, "RAM", " MHz", StackPanel));
+                    }
+
+                    ISensor _coreLoad = Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
+
+                    if (_coreLoad != null)
+                    {
+                        Sensors.Add(new HWSensor(_coreLoad, "Core", "%", StackPanel));
+                    }
+
+                    ISensor _memoryLoad = Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 3).FirstOrDefault();
+
+                    if (_memoryLoad != null)
+                    {
+                        Sensors.Add(new HWSensor(_memoryLoad, "RAM", "%", StackPanel));
+                    }
+
+                    ISensor _tempSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
+
+                    if (_tempSensor != null)
+                    {
+                        Sensors.Add(new HWSensor(_tempSensor, "Temp", " C", StackPanel));
+                    }
+
+                    ISensor _fanSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
+
+                    if (_fanSensor != null)
+                    {
+                        Sensors.Add(new HWSensor(_fanSensor, "Fan", " RPM", StackPanel));
+                    }
+                }
+                
+                public HWType Type { get; private set; }
+                public IHardware Hardware { get; private set; }
+                public List<HWSensor> Sensors { get; private set; }
+                private StackPanel StackPanel { get; set; }
+
+                public class HWSensor
+                {
+                    public HWSensor(ISensor sensor, string text, string append, StackPanel stackPanel)
+                    {
+                        Sensor = sensor;
+
+                        Text = text;
+
+                        Append = append;
+
+                        Control = new Label();
+                        Control.Style = (Style)Application.Current.FindResource("AppLabel");
+
+                        stackPanel.Children.Add(Control);
+                    }
+
+                    public void UpdateLabel()
+                    {
+                        Control.Content = string.Format("{0}: {1:0.##}{2}", Text, Sensor.Value, Append);
+                    }
+
+                    public ISensor Sensor { get; private set; }
+                    public string Text { get; set; }
+                    public string Append { get; set; }
+                    public Label Control { get; private set; }
+                }
+            }
+
+            public enum HWType : byte
+            {
+                CPU,
+                RAM,
+                GPU
+            }
         }
     }
 }

@@ -85,7 +85,7 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
         public int PollingInterval {
             get {
                 return ((int)(this["PollingInterval"]));

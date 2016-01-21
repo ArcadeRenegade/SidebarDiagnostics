@@ -1,6 +1,7 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 using SidebarDiagnostics.AB;
 using SidebarDiagnostics.Helpers;
 
@@ -44,18 +45,20 @@ namespace SidebarDiagnostics
             
             TextColorTextBox.Text = Properties.Settings.Default.TextColor;
 
-            PollingIntervalTextBox.Text = Properties.Settings.Default.PollingInterval.ToString();
+            PollingIntervalSlider.Value = Properties.Settings.Default.PollingInterval;
 
             AlwaysTopCheckBox.IsChecked = Properties.Settings.Default.AlwaysTop;
 
             StartupCheckBox.IsChecked = Utilities.IsStartupEnabled();
         }
 
-        private void PollingIntervalTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void ColorTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!char.IsDigit(e.Text, e.Text.Length - 1))
+            TextBox _textbox = (TextBox)sender;
+
+            if (!new Regex("^#[a-fA-F0-9]{6}$").IsMatch(_textbox.Text))
             {
-                e.Handled = true;
+                _textbox.Text = "#000000";
             }
         }
 
@@ -66,7 +69,7 @@ namespace SidebarDiagnostics
             Properties.Settings.Default.BGColor = BGColorTextBox.Text;
             Properties.Settings.Default.BGOpacity = BGOpacitySlider.Value;
             Properties.Settings.Default.TextColor = TextColorTextBox.Text;
-            Properties.Settings.Default.PollingInterval = int.Parse(PollingIntervalTextBox.Text);
+            Properties.Settings.Default.PollingInterval = (int)PollingIntervalSlider.Value;
             Properties.Settings.Default.AlwaysTop = AlwaysTopCheckBox.IsChecked.HasValue && AlwaysTopCheckBox.IsChecked.Value;
             Properties.Settings.Default.Save();
 
