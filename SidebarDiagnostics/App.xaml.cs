@@ -47,7 +47,7 @@ namespace SidebarDiagnostics
                 FanControllerEnabled = true,
                 GPUEnabled = true,
                 HDDEnabled = false,
-                MainboardEnabled = false,
+                MainboardEnabled = true,
                 RAMEnabled = true
             };
 

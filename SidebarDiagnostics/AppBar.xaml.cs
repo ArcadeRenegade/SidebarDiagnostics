@@ -89,6 +89,8 @@ namespace SidebarDiagnostics
 
         private void GetHardware()
         {
+            _boardHW = App._computer.Hardware.Where(h => h.HardwareType == HardwareType.Mainboard).FirstOrDefault();
+
             _cpuHW = App._computer.Hardware.Where(h => h.HardwareType == HardwareType.CPU).Select(hw => new HWPanel(hw, CPUStackPanel)).ToArray();
 
             if (_cpuHW.Length > 0)
@@ -116,9 +118,18 @@ namespace SidebarDiagnostics
 
         private void UpdateHardware()
         {
+            UpdateBoard();
             UpdateCPU();
             UpdateRAM();
             UpdateGPU();
+        }
+
+        private void UpdateBoard()
+        {
+            if (_boardHW != null)
+            {
+                _boardHW.Update();
+            }
         }
 
         private void UpdateCPU()
@@ -127,28 +138,45 @@ namespace SidebarDiagnostics
             {
                 _hwPanel.Hardware.Update();
                 
-                ISensor _coreClock = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 1).FirstOrDefault();
+                ISensor _coreClock = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("CPU")).FirstOrDefault();
 
                 if (_coreClock != null)
                 {
                     _hwPanel.UpdateLabel(_coreClock.Identifier, string.Format("Clock: {0:0.##} MHz", _coreClock.Value));
                 }
 
-                ISensor _voltage = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Index == 0).FirstOrDefault();
+                ISensor _voltage = null;
+                ISensor _tempSensor = null;
+
+                if (_boardHW != null)
+                {
+                    _voltage = _boardHW.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Name.Contains("CPU")).FirstOrDefault();
+                    _tempSensor = _boardHW.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Contains("CPU")).FirstOrDefault();
+                }
+
+                if (_voltage == null)
+                {
+                    _voltage = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage).FirstOrDefault();
+                }
+
+                if (_tempSensor == null)
+                {
+                    _tempSensor =
+                        _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name == "CPU Package").FirstOrDefault() ??
+                        _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature).FirstOrDefault();
+                }
 
                 if (_voltage != null)
                 {
                     _hwPanel.UpdateLabel(_voltage.Identifier, string.Format("Volt: {0:0.##} V", _voltage.Value));
                 }
 
-                ISensor _tempSensor = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
-
                 if (_tempSensor != null)
                 {
                     _hwPanel.UpdateLabel(_tempSensor.Identifier, string.Format("Temp: {0:0.##} C", _tempSensor.Value));
                 }
 
-                ISensor _fanSensor = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
+                ISensor _fanSensor = _hwPanel.Hardware.Sensors.Where(s => new SensorType[2] { SensorType.Fan, SensorType.Control }.Contains(s.SensorType)).FirstOrDefault();
 
                 if (_fanSensor != null)
                 {
@@ -181,6 +209,23 @@ namespace SidebarDiagnostics
             foreach (HWPanel _hwPanel in _ramHW)
             {
                 _hwPanel.Hardware.Update();
+
+                ISensor _ramClock = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock).FirstOrDefault();
+
+                if (_ramClock != null)
+                {
+                    _hwPanel.UpdateLabel(_ramClock.Identifier, string.Format("Clock: {0:0.##} MHz", _ramClock.Value));
+                }
+
+                if (_boardHW != null)
+                {
+                    ISensor _voltage = _boardHW.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Name.Contains("RAM")).FirstOrDefault();
+
+                    if (_voltage != null)
+                    {
+                        _hwPanel.UpdateLabel(_voltage.Identifier, string.Format("Volt: {0:0.##} V", _voltage.Value));
+                    }
+                }
 
                 ISensor _loadSensor = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
@@ -278,6 +323,8 @@ namespace SidebarDiagnostics
         private DispatcherTimer _clockTimer { get; set; }
 
         private DispatcherTimer _hardwareTimer { get; set; }
+
+        private IHardware _boardHW { get; set; }
 
         private HWPanel[] _cpuHW { get; set; }
 
