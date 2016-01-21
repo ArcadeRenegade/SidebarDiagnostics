@@ -175,6 +175,11 @@ namespace SidebarDiagnostics
                 if (BoardHW != null)
                 {
                     BoardHW.Update();
+
+                    foreach (IHardware _subHardware in BoardHW.SubHardware)
+                    {
+                        _subHardware.Update();
+                    }
                 }
 
                 foreach (HWPanel _cpuPanel in CPU)
@@ -222,7 +227,7 @@ namespace SidebarDiagnostics
 
                     Sensors = new List<HWSensor>();
 
-                    hardware.Update();
+                    UpdateHardware();
 
                     switch (type)
                     {
@@ -246,12 +251,22 @@ namespace SidebarDiagnostics
                 {
                     if (updateHW)
                     {
-                        Hardware.Update();
+                        UpdateHardware();
                     }
 
                     foreach (HWSensor _hwSensor in Sensors)
                     {
                         _hwSensor.UpdateLabel();
+                    }
+                }
+
+                private void UpdateHardware()
+                {
+                    Hardware.Update();
+
+                    foreach (IHardware _subHardware in Hardware.SubHardware)
+                    {
+                        _subHardware.Update();
                     }
                 }
                 
@@ -266,11 +281,13 @@ namespace SidebarDiagnostics
 
                     ISensor _voltage = null;
                     ISensor _tempSensor = null;
+                    ISensor _fanSensor = null;
 
                     if (board != null)
                     {
                         _voltage = board.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Name.Contains("CPU")).FirstOrDefault();
                         _tempSensor = board.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Contains("CPU")).FirstOrDefault();
+                        _fanSensor = board.Sensors.Where(s => new SensorType[2] { SensorType.Fan, SensorType.Control }.Contains(s.SensorType) && s.Name.Contains("CPU")).FirstOrDefault();
                     }
 
                     if (_voltage == null)
@@ -285,6 +302,11 @@ namespace SidebarDiagnostics
                             Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature).FirstOrDefault();
                     }
 
+                    if (_fanSensor == null)
+                    {
+                        _fanSensor = Hardware.Sensors.Where(s => new SensorType[2] { SensorType.Fan, SensorType.Control }.Contains(s.SensorType)).FirstOrDefault();
+                    }
+
                     if (_voltage != null)
                     {
                         Sensors.Add(new HWSensor(_voltage, "Volt", " V", StackPanel));
@@ -294,8 +316,6 @@ namespace SidebarDiagnostics
                     {
                         Sensors.Add(new HWSensor(_tempSensor, "Temp", " C", StackPanel));
                     }
-
-                    ISensor _fanSensor = Hardware.Sensors.Where(s => new SensorType[2] { SensorType.Fan, SensorType.Control }.Contains(s.SensorType)).FirstOrDefault();
 
                     if (_fanSensor != null)
                     {
