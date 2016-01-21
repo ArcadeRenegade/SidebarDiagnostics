@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
 using OpenHardwareMonitor.Hardware;
 
@@ -23,6 +25,12 @@ namespace SidebarDiagnostics
             };
             _settingsMenuItem.Click += SettingsMenuItem_Click;
 
+            MenuItem _showMenuItem = new MenuItem()
+            {
+                Header = "Show"
+            };
+            _showMenuItem.Click += ShowMenuItem_Click;
+
             MenuItem _closeMenuItem = new MenuItem()
             {
                 Header = "Close"
@@ -31,13 +39,15 @@ namespace SidebarDiagnostics
 
             ContextMenu _contextMenu = new ContextMenu();
             _contextMenu.Items.Add(_settingsMenuItem);
+            _contextMenu.Items.Add(_showMenuItem);
             _contextMenu.Items.Add(_closeMenuItem);
 
             _taskbarIcon = new TaskbarIcon()
             {
                 Icon = SidebarDiagnostics.Properties.Resources.TrayIcon,
                 ToolTipText = Assembly.GetExecutingAssembly().GetName().Name,
-                ContextMenu = _contextMenu
+                ContextMenu = _contextMenu,
+                LeftClickCommand = new ShowAppBarCommand()
             };
 
             // OHM COMPUTER
@@ -69,6 +79,11 @@ namespace SidebarDiagnostics
             _settings.ShowDialog();
         }
 
+        private void ShowMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Windows.OfType<AppBar>().First().Activate();
+        }
+
         private void CloseMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -77,5 +92,20 @@ namespace SidebarDiagnostics
         private static TaskbarIcon _taskbarIcon { get; set; }
 
         internal static Computer _computer { get; set; }
+
+        public class ShowAppBarCommand: ICommand
+        {
+            public void Execute(object parameter)
+            {
+                Application.Current.Windows.OfType<AppBar>().First().Activate();
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public event EventHandler CanExecuteChanged;
+        }
     }
 }

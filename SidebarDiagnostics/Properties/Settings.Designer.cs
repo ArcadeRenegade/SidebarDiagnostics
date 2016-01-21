@@ -106,5 +106,29 @@ namespace SidebarDiagnostics.Properties {
                 this["AlwaysTop"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Clock24HR {
+            get {
+                return ((bool)(this["Clock24HR"]));
+            }
+            set {
+                this["Clock24HR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseAppBar {
+            get {
+                return ((bool)(this["UseAppBar"]));
+            }
+            set {
+                this["UseAppBar"] = value;
+            }
+        }
     }
 }

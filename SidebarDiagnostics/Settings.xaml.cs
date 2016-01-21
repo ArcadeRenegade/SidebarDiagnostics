@@ -47,6 +47,10 @@ namespace SidebarDiagnostics
 
             PollingIntervalSlider.Value = Properties.Settings.Default.PollingInterval;
 
+            Clock24HRCheckBox.IsChecked = Properties.Settings.Default.Clock24HR;
+
+            UseAppBarCheckBox.IsChecked = Properties.Settings.Default.UseAppBar;
+
             AlwaysTopCheckBox.IsChecked = Properties.Settings.Default.AlwaysTop;
 
             StartupCheckBox.IsChecked = Utilities.IsStartupEnabled();
@@ -70,6 +74,8 @@ namespace SidebarDiagnostics
             Properties.Settings.Default.BGOpacity = BGOpacitySlider.Value;
             Properties.Settings.Default.TextColor = TextColorTextBox.Text;
             Properties.Settings.Default.PollingInterval = (int)PollingIntervalSlider.Value;
+            Properties.Settings.Default.Clock24HR = Clock24HRCheckBox.IsChecked.HasValue && Clock24HRCheckBox.IsChecked.Value;
+            Properties.Settings.Default.UseAppBar = UseAppBarCheckBox.IsChecked.HasValue && UseAppBarCheckBox.IsChecked.Value;
             Properties.Settings.Default.AlwaysTop = AlwaysTopCheckBox.IsChecked.HasValue && AlwaysTopCheckBox.IsChecked.Value;
             Properties.Settings.Default.Save();
 

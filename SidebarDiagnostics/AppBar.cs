@@ -156,7 +156,7 @@ namespace SidebarDiagnostics.AB
 
         }
 
-        public static void SetAppBar(Window appbarWindow, ABEdge edge, bool topMost)
+        public static void SetAppBar(Window appbarWindow, ABEdge edge)
         {
             RegisterInfo info = GetRegisterInfo(appbarWindow);
 
@@ -173,7 +173,7 @@ namespace SidebarDiagnostics.AB
                     SHAppBarMessage((int)ABMsg.ABM_REMOVE, ref abd);
                     info.IsRegistered = false;
                 }
-                RestoreWindow(appbarWindow);
+                //RestoreWindow(appbarWindow);
                 return;
             }
 
@@ -191,7 +191,6 @@ namespace SidebarDiagnostics.AB
 
             appbarWindow.WindowStyle = WindowStyle.None;
             appbarWindow.ResizeMode = ResizeMode.NoResize;
-            appbarWindow.Topmost = topMost;
 
             ABSetPos(info.Edge, appbarWindow);
         }

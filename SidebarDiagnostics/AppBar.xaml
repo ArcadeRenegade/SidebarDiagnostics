@@ -8,10 +8,11 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Closing="Window_Closing"
-        Title="MainWindow"
+        Title="Sidebar"
         Height="680" Width="180"
         AllowsTransparency="True"
         ShowInTaskbar="False"
+        ResizeMode="NoResize"
         WindowStyle="None">
     <Window.Background>
         <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor}" />

@@ -22,7 +22,7 @@ namespace SidebarDiagnostics
 
         public void InitAppBar()
         {
-            AppBarFunctions.SetAppBar(this, ABEdge.None, Properties.Settings.Default.AlwaysTop);
+            AppBarFunctions.SetAppBar(this, ABEdge.None);
 
             Monitor _monitor = Utilities.GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
 
@@ -37,7 +37,14 @@ namespace SidebarDiagnostics
 
             Left = _left;
 
-            AppBarFunctions.SetAppBar(this, Properties.Settings.Default.DockEdge, Properties.Settings.Default.AlwaysTop);
+            Height = _monitor.WorkingArea.Height;
+
+            Topmost = Properties.Settings.Default.AlwaysTop;
+
+            if (Properties.Settings.Default.UseAppBar)
+            {
+                AppBarFunctions.SetAppBar(this, Properties.Settings.Default.DockEdge);
+            }
         }
 
         public void InitContent()
@@ -84,7 +91,7 @@ namespace SidebarDiagnostics
 
         private void GetClock()
         {
-            ClockLabel.Content = DateTime.Now.ToString("h:mm:ss tt");
+            ClockLabel.Content = DateTime.Now.ToString(Properties.Settings.Default.Clock24HR ? "H:mm:ss" : "h:mm:ss tt");
         }
 
         private void HardwareTimer_Tick(object sender, EventArgs e)
@@ -137,7 +144,7 @@ namespace SidebarDiagnostics
             _hardwareTimer.Stop();
             _clockTimer.Stop();
 
-            AppBarFunctions.SetAppBar(this, ABEdge.None, false);
+            AppBarFunctions.SetAppBar(this, ABEdge.None);
         }
                 
         private DispatcherTimer _clockTimer { get; set; }
