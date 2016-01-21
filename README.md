@@ -10,7 +10,7 @@ Currently compiled in <a href="https://www.microsoft.com/en-us/download/details.
 
 Data provided by <a href="http://openhardwaremonitor.org/">Open Hardware Monitor</a>.
 
-Go to the releases tab to download the software.
+Go to the <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases">releases tab</a> to download the latest version of the software.
 
 You will need to run it as administrator.
 
