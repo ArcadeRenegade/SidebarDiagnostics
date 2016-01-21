@@ -27,6 +27,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.Resources>
@@ -66,13 +67,16 @@
         <Label Grid.Column="0" Grid.Row="7" Content="Use App Bar" VerticalAlignment="Center" />
         <CheckBox x:Name="UseAppBarCheckBox" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" />
 
-        <Label Grid.Column="0" Grid.Row="8" Content="Always On Top" VerticalAlignment="Center" />
-        <CheckBox x:Name="AlwaysTopCheckBox" Grid.Column="1" Grid.Row="8" Margin="0,6,0,0" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="8" Content="Allow Click Through" VerticalAlignment="Center" />
+        <CheckBox x:Name="ClickThroughCheckBox" Grid.Column="1" Grid.Row="8" Margin="0,6,0,0" VerticalAlignment="Center" />
 
-        <Label Grid.Column="0" Grid.Row="9" Content="Run at startup" VerticalAlignment="Center" />
-        <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Grid.Row="9" Margin="0,6,0,0" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="9" Content="Always On Top" VerticalAlignment="Center" />
+        <CheckBox x:Name="AlwaysTopCheckBox" Grid.Column="1" Grid.Row="9" Margin="0,6,0,0" VerticalAlignment="Center" />
 
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="10" Margin="0,20,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+        <Label Grid.Column="0" Grid.Row="10" Content="Run at startup" VerticalAlignment="Center" />
+        <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Grid.Row="10" Margin="0,6,0,0" VerticalAlignment="Center" />
+
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="11" Margin="0,20,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
             <Button x:Name="SaveBtn" Content="Save" Margin="0,0,10,0" Padding="16,8" Click="SaveBtn_Click"></Button>
             <Button x:Name="CancelBtn" Content="Cancel" Padding="16,8" Click="CancelBtn_Click"></Button>
         </StackPanel>

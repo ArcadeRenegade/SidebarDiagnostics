@@ -51,6 +51,8 @@ namespace SidebarDiagnostics
 
             UseAppBarCheckBox.IsChecked = Properties.Settings.Default.UseAppBar;
 
+            ClickThroughCheckBox.IsChecked = Properties.Settings.Default.ClickThrough;
+
             AlwaysTopCheckBox.IsChecked = Properties.Settings.Default.AlwaysTop;
 
             StartupCheckBox.IsChecked = Utilities.IsStartupEnabled();
@@ -76,19 +78,29 @@ namespace SidebarDiagnostics
             Properties.Settings.Default.PollingInterval = (int)PollingIntervalSlider.Value;
             Properties.Settings.Default.Clock24HR = Clock24HRCheckBox.IsChecked.HasValue && Clock24HRCheckBox.IsChecked.Value;
             Properties.Settings.Default.UseAppBar = UseAppBarCheckBox.IsChecked.HasValue && UseAppBarCheckBox.IsChecked.Value;
+            Properties.Settings.Default.ClickThrough = ClickThroughCheckBox.IsChecked.HasValue && ClickThroughCheckBox.IsChecked.Value;
             Properties.Settings.Default.AlwaysTop = AlwaysTopCheckBox.IsChecked.HasValue && AlwaysTopCheckBox.IsChecked.Value;
             Properties.Settings.Default.Save();
 
             Utilities.SetStartupEnabled(StartupCheckBox.IsChecked.HasValue && StartupCheckBox.IsChecked.Value);
 
-            (Owner as AppBar).SettingsUpdate();
-            
-            Close();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Owner.Closed += AppBar_Closed;
+                Owner.Close();
+                Close();
+            });
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void AppBar_Closed(object sender, System.EventArgs e)
+        {
+            AppBar _newAppBar = new AppBar();
+            _newAppBar.Show();
         }
     }
 }

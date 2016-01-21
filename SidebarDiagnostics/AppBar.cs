@@ -21,7 +21,7 @@ namespace SidebarDiagnostics.AB
         public static void SetClickThrough(Window window)
         {
             IntPtr hwnd = new WindowInteropHelper(window).Handle;
-            var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+            int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
         }
     }
@@ -35,7 +35,7 @@ namespace SidebarDiagnostics.AB
         None
     }
 
-    internal static class AppBarFunctions
+    public static class AppBarFunctions
     {
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT
@@ -99,8 +99,7 @@ namespace SidebarDiagnostics.AB
 
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO mi);
-
-
+        
         private const int MONITOR_DEFAULTTONEAREST = 0x2;
         private const int MONITORINFOF_PRIMARY = 0x1;
 
@@ -114,8 +113,7 @@ namespace SidebarDiagnostics.AB
             public Point OriginalPosition { get; set; }
             public Size OriginalSize { get; set; }
             public ResizeMode OriginalResizeMode { get; set; }
-
-
+            
             public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam,
                                     IntPtr lParam, ref bool handled)
             {
@@ -137,6 +135,7 @@ namespace SidebarDiagnostics.AB
         private static RegisterInfo GetRegisterInfo(Window appbarWindow)
         {
             RegisterInfo reg;
+
             if (s_RegisteredWindowInfo.ContainsKey(appbarWindow))
             {
                 reg = s_RegisteredWindowInfo[appbarWindow];
@@ -157,24 +156,10 @@ namespace SidebarDiagnostics.AB
                 };
                 s_RegisteredWindowInfo.Add(appbarWindow, reg);
             }
+
             return reg;
         }
-
-        private static void RestoreWindow(Window appbarWindow)
-        {
-            RegisterInfo info = GetRegisterInfo(appbarWindow);
-
-            appbarWindow.WindowStyle = info.OriginalStyle;
-            appbarWindow.ResizeMode = info.OriginalResizeMode;
-            appbarWindow.Topmost = false;
-
-            Rect rect = new Rect(info.OriginalPosition.X, info.OriginalPosition.Y,
-                info.OriginalSize.Width, info.OriginalSize.Height);
-            appbarWindow.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
-                    new ResizeDelegate(DoResize), appbarWindow, rect);
-
-        }
-
+        
         public static void SetAppBar(Window appbarWindow, ABEdge edge)
         {
             RegisterInfo info = GetRegisterInfo(appbarWindow);
@@ -192,7 +177,7 @@ namespace SidebarDiagnostics.AB
                     SHAppBarMessage((int)ABMsg.ABM_REMOVE, ref abd);
                     info.IsRegistered = false;
                 }
-                //RestoreWindow(appbarWindow);
+
                 return;
             }
 
@@ -203,9 +188,6 @@ namespace SidebarDiagnostics.AB
                 abd.uCallbackMessage = info.CallbackId;
 
                 uint ret = SHAppBarMessage((int)ABMsg.ABM_NEW, ref abd);
-
-                //HwndSource source = HwndSource.FromHwnd(abd.hWnd);
-                //source.AddHook(new HwndSourceHook(info.WndProc));
             }
 
             appbarWindow.WindowStyle = WindowStyle.None;
@@ -215,6 +197,7 @@ namespace SidebarDiagnostics.AB
         }
 
         private delegate void ResizeDelegate(Window appbarWindow, Rect rect);
+
         private static void DoResize(Window appbarWindow, Rect rect)
         {
             appbarWindow.Width = rect.Width;
@@ -237,6 +220,7 @@ namespace SidebarDiagnostics.AB
                 {
                     return;
                 }
+
                 leftOffset = mi.rcWork.left;
                 topOffset = mi.rcWork.top;
                 actualScreenWidth = mi.rcWork.right - leftOffset;
@@ -292,12 +276,11 @@ namespace SidebarDiagnostics.AB
             SHAppBarMessage((int)ABMsg.ABM_QUERYPOS, ref barData);
             SHAppBarMessage((int)ABMsg.ABM_SETPOS, ref barData);
 
-            Rect rect = new Rect((double)barData.rc.left, (double)barData.rc.top,
-                (double)(barData.rc.right - barData.rc.left), (double)(barData.rc.bottom - barData.rc.top));
+            Rect rect = new Rect((double)barData.rc.left, (double)barData.rc.top, (double)(barData.rc.right - barData.rc.left), (double)(barData.rc.bottom - barData.rc.top));
+
             //This is done async, because WPF will send a resize after a new appbar is added.  
             //if we size right away, WPFs resize comes last and overrides us.
-            appbarWindow.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
-                new ResizeDelegate(DoResize), appbarWindow, rect);
+            appbarWindow.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new ResizeDelegate(DoResize), appbarWindow, rect);
         }
     }
 }

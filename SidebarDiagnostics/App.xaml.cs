@@ -18,6 +18,9 @@ namespace SidebarDiagnostics
         {
             base.OnStartup(e);
 
+            // CONFIG
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
             // NOTIFY ICON
             MenuItem _settingsMenuItem = new MenuItem()
             {

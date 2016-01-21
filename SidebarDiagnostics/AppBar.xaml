@@ -8,6 +8,8 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Closing="Window_Closing"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave"
         Title="Sidebar"
         Height="680" Width="180"
         AllowsTransparency="True"
@@ -27,11 +29,13 @@
         </Grid.RowDefinitions>
 
         <StackPanel
+            x:Name="WindowControlsStackPanel"
             Grid.Row="0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
             Margin="10"
-            Orientation="Horizontal">
+            Orientation="Horizontal"
+            Visibility="Hidden">
             <Button x:Name="SettingsButton"
                     Click="SettingsButton_Click"
                     HorizontalAlignment="Right"
