@@ -475,5 +475,17 @@ namespace SidebarDiagnostics
                 GPU
             }
         }
+
+        private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            SettingsButton.Visibility = Visibility.Visible;
+            CloseButton.Visibility = Visibility.Visible;
+        }
+
+        private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            SettingsButton.Visibility = Visibility.Hidden;
+            CloseButton.Visibility = Visibility.Hidden;
+        }
     }
 }
