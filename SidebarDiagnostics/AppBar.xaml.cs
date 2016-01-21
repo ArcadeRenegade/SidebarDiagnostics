@@ -217,14 +217,21 @@ namespace SidebarDiagnostics
                     _hwPanel.UpdateLabel(_ramClock.Identifier, string.Format("Clock: {0:0.##} MHz", _ramClock.Value));
                 }
 
+                ISensor _voltage = null;
+
                 if (_boardHW != null)
                 {
-                    ISensor _voltage = _boardHW.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Name.Contains("RAM")).FirstOrDefault();
+                    _voltage = _boardHW.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Name.Contains("RAM")).FirstOrDefault();
+                }
 
-                    if (_voltage != null)
-                    {
-                        _hwPanel.UpdateLabel(_voltage.Identifier, string.Format("Volt: {0:0.##} V", _voltage.Value));
-                    }
+                if (_voltage == null)
+                {
+                    _voltage = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage).FirstOrDefault();
+                }
+
+                if (_voltage != null)
+                {
+                    _hwPanel.UpdateLabel(_voltage.Identifier, string.Format("Volt: {0:0.##} V", _voltage.Value));
                 }
 
                 ISensor _loadSensor = _hwPanel.Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
