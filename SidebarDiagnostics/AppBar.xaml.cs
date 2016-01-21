@@ -411,7 +411,7 @@ namespace SidebarDiagnostics
 
                     if (_fanSensor != null)
                     {
-                        Sensors.Add(new HWSensor(_fanSensor, "Fan", " RPM", StackPanel));
+                        Sensors.Add(new HWSensor(_fanSensor, "Fan", "%", StackPanel));
                     }
                 }
                 
