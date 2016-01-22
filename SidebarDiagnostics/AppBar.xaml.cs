@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Threading;
-using SidebarDiagnostics.AB;
+using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Helpers;
 using SidebarDiagnostics.Hardware;
 
@@ -19,21 +19,29 @@ namespace SidebarDiagnostics
 
         private void InitAppBar()
         {
-            Monitor _monitor = Utilities.GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
+            var _screen = Utilities.GetScreenFromIndex(Properties.Settings.Default.ScreenIndex);
 
-            Top = _monitor.WorkingArea.Top;
+            double _left;
 
-            double _left = _monitor.WorkingArea.Left;
-
-            if (Properties.Settings.Default.DockEdge == ABEdge.Right)
+            switch (Properties.Settings.Default.DockEdge)
             {
-                _left += _monitor.WorkingArea.Width - Width;
+                case DockEdge.Left:
+                    _left = _screen.WorkingArea.Left;
+                    break;
+
+                case DockEdge.Right:
+                    _left = _screen.WorkingArea.Right - ActualWidth;
+                    break;
+
+                default:
+                    _left = 0;
+                    break;
             }
 
             Left = _left;
-
-            Height = _monitor.WorkingArea.Height;
-
+            Top = _screen.WorkingArea.Top;
+            Height = _screen.WorkingArea.Height;
+            
             Topmost = Properties.Settings.Default.AlwaysTop;
 
             if (Properties.Settings.Default.ClickThrough)
@@ -43,7 +51,7 @@ namespace SidebarDiagnostics
 
             if (Properties.Settings.Default.UseAppBar)
             {
-                AppBarFunctions.SetAppBar(this, Properties.Settings.Default.DockEdge);
+                AppBarWindow.SetAppBar(this, _screen, Properties.Settings.Default.DockEdge);
             }
         }
 
@@ -151,7 +159,7 @@ namespace SidebarDiagnostics
                 _hardwareTimer.Stop();
                 _clockTimer.Stop();
 
-                AppBarFunctions.SetAppBar(this, ABEdge.None);
+                AppBarWindow.SetAppBar(this, null, DockEdge.None);
             }
         }
 

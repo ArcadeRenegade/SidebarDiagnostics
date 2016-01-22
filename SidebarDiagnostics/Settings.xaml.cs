@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using SidebarDiagnostics.AB;
+using System.Windows.Threading;
+using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Helpers;
 
 namespace SidebarDiagnostics
@@ -16,13 +18,13 @@ namespace SidebarDiagnostics
         {
             InitializeComponent();
 
-            DockEdgeComboBox.Items.Add(ABEdge.Left);
-            DockEdgeComboBox.Items.Add(ABEdge.Right);
+            DockEdgeComboBox.Items.Add(DockEdge.Left);
+            DockEdgeComboBox.Items.Add(DockEdge.Right);
             DockEdgeComboBox.SelectedValue = Properties.Settings.Default.DockEdge;
 
-            Monitor[] _monitors = Monitor.AllMonitors.ToArray();
+            int _screenCount = Utilities.GetScreenCount();
 
-            for (int i = 0; i < _monitors.Length; i++)
+            for (int i = 0; i < _screenCount; i++)
             {
                 ScreenComboBox.Items.Add(new { Text = string.Format("#{0}", i + 1), Value = i });
             }
@@ -30,7 +32,7 @@ namespace SidebarDiagnostics
             ScreenComboBox.DisplayMemberPath = "Text";
             ScreenComboBox.SelectedValuePath = "Value";
 
-            if (Properties.Settings.Default.ScreenIndex < _monitors.Length)
+            if (Properties.Settings.Default.ScreenIndex < _screenCount)
             {
                 ScreenComboBox.SelectedValue = Properties.Settings.Default.ScreenIndex;
             }
@@ -81,7 +83,7 @@ namespace SidebarDiagnostics
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.DockEdge = (ABEdge)DockEdgeComboBox.SelectedValue;
+            Properties.Settings.Default.DockEdge = (DockEdge)DockEdgeComboBox.SelectedValue;
             Properties.Settings.Default.ScreenIndex = (int)ScreenComboBox.SelectedValue;
             Properties.Settings.Default.SidebarWidth = (int)SidebarWidthSlider.Value;
             Properties.Settings.Default.BGColor = BGColorTextBox.Text;
@@ -102,12 +104,12 @@ namespace SidebarDiagnostics
 
             Utilities.SetStartupEnabled(StartupCheckBox.IsChecked.HasValue && StartupCheckBox.IsChecked.Value);
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Owner.Closed += AppBar_Closed;
-                Owner.Close();
-                Close();
-            });
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+           {
+               Owner.Closed += AppBar_Closed;
+               Owner.Close();
+               Close();
+           }));
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

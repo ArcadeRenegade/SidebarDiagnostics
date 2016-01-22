@@ -4,13 +4,14 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
+using System.Windows.Forms;
 
-namespace SidebarDiagnostics.AB
+namespace SidebarDiagnostics.Windows
 {
     public static class ClickThroughWindow
     {
-        const int WS_EX_TRANSPARENT = 0x00000020;
-        const int GWL_EXSTYLE = (-20);
+        private const int WS_EX_TRANSPARENT = 0x00000020;
+        private const int GWL_EXSTYLE = (-20);
 
         [DllImport("user32.dll")]
         static extern int GetWindowLong(IntPtr hwnd, int index);
@@ -20,22 +21,14 @@ namespace SidebarDiagnostics.AB
 
         public static void SetClickThrough(Window window)
         {
-            IntPtr hwnd = new WindowInteropHelper(window).Handle;
-            int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
+            IntPtr _hwnd = new WindowInteropHelper(window).Handle;
+            int _style = GetWindowLong(_hwnd, GWL_EXSTYLE);
+
+            SetWindowLong(_hwnd, GWL_EXSTYLE, _style | WS_EX_TRANSPARENT);
         }
     }
 
-    public enum ABEdge : int
-    {
-        Left = 0,
-        Top,
-        Right,
-        Bottom,
-        None
-    }
-
-    public static class AppBarFunctions
+    public static class AppBarWindow
     {
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT
@@ -57,15 +50,6 @@ namespace SidebarDiagnostics.AB
             public IntPtr lParam;
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct MONITORINFO
-        {
-            public int cbSize;
-            public RECT rcMonitor;
-            public RECT rcWork;
-            public int dwFlags;
-        }
-
         private enum ABMsg : int
         {
             ABM_NEW = 0,
@@ -80,6 +64,7 @@ namespace SidebarDiagnostics.AB
             ABM_WINDOWPOSCHANGED,
             ABM_SETSTATE
         }
+
         private enum ABNotify : int
         {
             ABN_STATECHANGE = 0,
@@ -94,193 +79,175 @@ namespace SidebarDiagnostics.AB
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         private static extern int RegisterWindowMessage(string msg);
 
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+        public static void SetAppBar(Window window, Screen screen, DockEdge edge)
+        {
+            RegisterInfo _regInfo = GetRegisterInfo(window, screen);
 
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO mi);
-        
-        private const int MONITOR_DEFAULTTONEAREST = 0x2;
-        private const int MONITORINFOF_PRIMARY = 0x1;
+            _regInfo.Edge = edge;
+
+            APPBARDATA _appBarData = new APPBARDATA();
+            _appBarData.cbSize = Marshal.SizeOf(_appBarData);
+            _appBarData.hWnd = new WindowInteropHelper(window).Handle;
+
+            if (edge == DockEdge.None)
+            {
+                if (_regInfo.IsRegistered)
+                {
+                    SHAppBarMessage((int)ABMsg.ABM_REMOVE, ref _appBarData);
+                    _regInfo.IsRegistered = false;
+                }
+
+                return;
+            }
+
+            if (!_regInfo.IsRegistered)
+            {
+                _regInfo.IsRegistered = true;
+                _regInfo.CallbackId = RegisterWindowMessage("AppBarMessage");
+                _appBarData.uCallbackMessage = _regInfo.CallbackId;
+
+                uint ret = SHAppBarMessage((int)ABMsg.ABM_NEW, ref _appBarData);
+            }
+
+            window.WindowStyle = WindowStyle.None;
+            window.ResizeMode = ResizeMode.NoResize;
+
+            ABSetPos(window, screen, edge);
+        }
+                
+        private static void ABSetPos(Window window, Screen screen, DockEdge edge)
+        {
+            APPBARDATA _appBarData = new APPBARDATA();
+            _appBarData.cbSize = Marshal.SizeOf(_appBarData);
+            _appBarData.hWnd = new WindowInteropHelper(window).Handle;
+            _appBarData.uEdge = (int)edge;
+
+            int _left = screen.WorkingArea.Left;
+            int _top = screen.WorkingArea.Top;
+            int _right = screen.WorkingArea.Right;
+            int _bottom = screen.WorkingArea.Bottom;
+
+            int _width = screen.WorkingArea.Width;
+            int _height = screen.WorkingArea.Width;
+
+            int _windowWidth = (int)Math.Round(window.ActualWidth);
+            int _windowHeight = (int)Math.Round(window.ActualHeight);
+
+            DockEdge _edge = (DockEdge)_appBarData.uEdge;
+            
+            switch (_edge)
+            {
+                case DockEdge.Left:
+                    _right = _left + _windowWidth;
+                    break;
+
+                case DockEdge.Right:
+                    _left = _right - _windowWidth;
+                    break;
+
+                case DockEdge.Top:
+                    _bottom = _top + _windowHeight;
+                    break;
+
+                case DockEdge.Bottom:
+                    _top = _bottom - _windowHeight;
+                    break;
+            }
+
+            _appBarData.rc = new RECT()
+            {
+                left = _left,
+                top = _top,
+                right = _right,
+                bottom = _bottom
+            };
+
+            SHAppBarMessage((int)ABMsg.ABM_QUERYPOS, ref _appBarData);
+
+            SHAppBarMessage((int)ABMsg.ABM_SETPOS, ref _appBarData);
+
+            Rect _rect = new Rect(
+                _appBarData.rc.left,
+                _appBarData.rc.top,
+                (_appBarData.rc.right - _appBarData.rc.left),
+                (_appBarData.rc.bottom - _appBarData.rc.top)
+                );
+
+            window.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+            {
+                window.Width = _rect.Width;
+                window.Height = _rect.Height;
+                window.Top = _rect.Top;
+                window.Left = _rect.Left;
+            }));
+        }
 
         private class RegisterInfo
         {
             public int CallbackId { get; set; }
             public bool IsRegistered { get; set; }
             public Window Window { get; set; }
-            public ABEdge Edge { get; set; }
+            public Screen Screen { get; set; }
+            public DockEdge Edge { get; set; }
             public WindowStyle OriginalStyle { get; set; }
             public Point OriginalPosition { get; set; }
             public Size OriginalSize { get; set; }
             public ResizeMode OriginalResizeMode { get; set; }
-            
-            public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam,
-                                    IntPtr lParam, ref bool handled)
+
+            public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
             {
                 if (msg == CallbackId)
                 {
                     if (wParam.ToInt32() == (int)ABNotify.ABN_POSCHANGED)
                     {
-                        ABSetPos(Edge, Window);
+                        ABSetPos(Window, Screen, Edge);
                         handled = true;
                     }
                 }
+
                 return IntPtr.Zero;
             }
 
         }
-        
-        private static Dictionary<Window, RegisterInfo> s_RegisteredWindowInfo = new Dictionary<Window, RegisterInfo>();
 
-        private static RegisterInfo GetRegisterInfo(Window appbarWindow)
+        private static RegisterInfo GetRegisterInfo(Window window, Screen screen)
         {
-            RegisterInfo reg;
+            RegisterInfo _regInfo;
 
-            if (s_RegisteredWindowInfo.ContainsKey(appbarWindow))
+            if (_windowDict.ContainsKey(window))
             {
-                reg = s_RegisteredWindowInfo[appbarWindow];
+                _regInfo = _windowDict[window];
             }
             else
             {
-                reg = new RegisterInfo()
+                _regInfo = new RegisterInfo()
                 {
                     CallbackId = 0,
-                    Window = appbarWindow,
                     IsRegistered = false,
-                    Edge = ABEdge.Top,
-                    OriginalStyle = appbarWindow.WindowStyle,
-                    OriginalPosition = new Point(appbarWindow.Left, appbarWindow.Top),
-                    OriginalSize =
-                        new Size(appbarWindow.ActualWidth, appbarWindow.ActualHeight),
-                    OriginalResizeMode = appbarWindow.ResizeMode,
+                    Window = window,
+                    Screen = screen,
+                    Edge = DockEdge.Top,
+                    OriginalStyle = window.WindowStyle,
+                    OriginalPosition = new Point(window.Left, window.Top),
+                    OriginalSize = new Size(window.ActualWidth, window.ActualHeight),
+                    OriginalResizeMode = window.ResizeMode,
                 };
-                s_RegisteredWindowInfo.Add(appbarWindow, reg);
+
+                _windowDict.Add(window, _regInfo);
             }
 
-            return reg;
-        }
-        
-        public static void SetAppBar(Window appbarWindow, ABEdge edge)
-        {
-            RegisterInfo info = GetRegisterInfo(appbarWindow);
-
-            info.Edge = edge;
-
-            APPBARDATA abd = new APPBARDATA();
-            abd.cbSize = Marshal.SizeOf(abd);
-            abd.hWnd = new WindowInteropHelper(appbarWindow).Handle;
-
-            if (edge == ABEdge.None)
-            {
-                if (info.IsRegistered)
-                {
-                    SHAppBarMessage((int)ABMsg.ABM_REMOVE, ref abd);
-                    info.IsRegistered = false;
-                }
-
-                return;
-            }
-
-            if (!info.IsRegistered)
-            {
-                info.IsRegistered = true;
-                info.CallbackId = RegisterWindowMessage("AppBarMessage");
-                abd.uCallbackMessage = info.CallbackId;
-
-                uint ret = SHAppBarMessage((int)ABMsg.ABM_NEW, ref abd);
-            }
-
-            appbarWindow.WindowStyle = WindowStyle.None;
-            appbarWindow.ResizeMode = ResizeMode.NoResize;
-
-            ABSetPos(info.Edge, appbarWindow);
+            return _regInfo;
         }
 
-        private delegate void ResizeDelegate(Window appbarWindow, Rect rect);
+        private static Dictionary<Window, RegisterInfo> _windowDict = new Dictionary<Window, RegisterInfo>();
+    }
 
-        private static void DoResize(Window appbarWindow, Rect rect)
-        {
-            appbarWindow.Width = rect.Width;
-            appbarWindow.Height = rect.Height;
-            appbarWindow.Top = rect.Top;
-            appbarWindow.Left = rect.Left;
-        }
-
-        private static void GetActualScreenData(ABEdge edge, Window appbarWindow, ref int leftOffset, ref int topOffset, ref int actualScreenWidth, ref int actualScreenHeight)
-        {
-            IntPtr handle = new WindowInteropHelper(appbarWindow).Handle;
-            IntPtr monitorHandle = MonitorFromWindow(handle, MONITOR_DEFAULTTONEAREST);
-
-            MONITORINFO mi = new MONITORINFO();
-            mi.cbSize = Marshal.SizeOf(mi);
-
-            if (GetMonitorInfo(monitorHandle, ref mi))
-            {
-                if (mi.dwFlags == MONITORINFOF_PRIMARY)
-                {
-                    return;
-                }
-
-                leftOffset = mi.rcWork.left;
-                topOffset = mi.rcWork.top;
-                actualScreenWidth = mi.rcWork.right - leftOffset;
-                actualScreenHeight = mi.rcWork.bottom - mi.rcWork.top;
-            }
-        }
-
-        private static void ABSetPos(ABEdge edge, Window appbarWindow)
-        {
-            APPBARDATA barData = new APPBARDATA();
-            barData.cbSize = Marshal.SizeOf(barData);
-            barData.hWnd = new WindowInteropHelper(appbarWindow).Handle;
-            barData.uEdge = (int)edge;
-
-            int leftOffset = 0;
-            int topOffset = 0;
-            int actualScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
-            int actualScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
-
-            GetActualScreenData(edge, appbarWindow, ref leftOffset, ref topOffset, ref actualScreenWidth, ref actualScreenHeight);
-
-            if (barData.uEdge == (int)ABEdge.Left || barData.uEdge == (int)ABEdge.Right)
-            {
-                barData.rc.top = topOffset;
-                barData.rc.bottom = actualScreenHeight;
-                if (barData.uEdge == (int)ABEdge.Left)
-                {
-                    barData.rc.left = leftOffset;
-                    barData.rc.right = (int)Math.Round(appbarWindow.ActualWidth) + leftOffset;
-                }
-                else
-                {
-                    barData.rc.right = actualScreenWidth + leftOffset;
-                    barData.rc.left = barData.rc.right - (int)Math.Round(appbarWindow.ActualWidth);
-                }
-            }
-            else
-            {
-                barData.rc.left = leftOffset;
-                barData.rc.right = actualScreenWidth + leftOffset;
-                if (barData.uEdge == (int)ABEdge.Top)
-                {
-                    barData.rc.top = topOffset;
-                    barData.rc.bottom = (int)Math.Round(appbarWindow.ActualHeight) + topOffset;
-                }
-                else
-                {
-                    barData.rc.bottom = actualScreenHeight + topOffset;
-                    barData.rc.top = barData.rc.bottom - (int)Math.Round(appbarWindow.ActualHeight);
-                }
-            }
-
-            SHAppBarMessage((int)ABMsg.ABM_QUERYPOS, ref barData);
-            SHAppBarMessage((int)ABMsg.ABM_SETPOS, ref barData);
-
-            Rect rect = new Rect((double)barData.rc.left, (double)barData.rc.top, (double)(barData.rc.right - barData.rc.left), (double)(barData.rc.bottom - barData.rc.top));
-
-            //This is done async, because WPF will send a resize after a new appbar is added.  
-            //if we size right away, WPFs resize comes last and overrides us.
-            appbarWindow.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new ResizeDelegate(DoResize), appbarWindow, rect);
-        }
+    public enum DockEdge : int
+    {
+        Left = 0,
+        Top,
+        Right,
+        Bottom,
+        None
     }
 }
