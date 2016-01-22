@@ -34,6 +34,12 @@ namespace SidebarDiagnostics
             };
             _showMenuItem.Click += ShowMenuItem_Click;
 
+            MenuItem _hideMenuItem = new MenuItem()
+            {
+                Header = "Hide"
+            };
+            _hideMenuItem.Click += HideMenuItem_Click;
+
             MenuItem _closeMenuItem = new MenuItem()
             {
                 Header = "Close"
@@ -43,6 +49,7 @@ namespace SidebarDiagnostics
             ContextMenu _contextMenu = new ContextMenu();
             _contextMenu.Items.Add(_settingsMenuItem);
             _contextMenu.Items.Add(_showMenuItem);
+            _contextMenu.Items.Add(_hideMenuItem);
             _contextMenu.Items.Add(_closeMenuItem);
 
             _taskbarIcon = new TaskbarIcon()
@@ -75,6 +82,13 @@ namespace SidebarDiagnostics
             base.OnExit(e);
         }
 
+        private static void ShowAppBar()
+        {
+            AppBar _appBar = Application.Current.Windows.OfType<AppBar>().First();
+            _appBar.Show();
+            _appBar.Activate();
+        }
+
         private void SettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Settings _settings = new Settings();
@@ -84,7 +98,12 @@ namespace SidebarDiagnostics
 
         private void ShowMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Windows.OfType<AppBar>().First().Activate();
+            ShowAppBar();
+        }
+
+        private void HideMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Windows.OfType<AppBar>().First().Hide();
         }
 
         private void CloseMenuItem_Click(object sender, RoutedEventArgs e)
@@ -100,7 +119,7 @@ namespace SidebarDiagnostics
         {
             public void Execute(object parameter)
             {
-                Application.Current.Windows.OfType<AppBar>().First().Activate();
+                ShowAppBar();
             }
 
             public bool CanExecute(object parameter)

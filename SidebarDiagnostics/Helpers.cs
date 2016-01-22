@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using Microsoft.Win32.TaskScheduler;
 
 namespace SidebarDiagnostics.Helpers
 {
@@ -21,43 +22,37 @@ namespace SidebarDiagnostics.Helpers
             else
                 return _screens.Where(s => s.Primary).Single();
         }
-
-        public static bool IsStartupEnabled()
+        
+        public static bool StartupTaskExists()
         {
-            using (RegistryKey _registryKey = GetRegistryKey(false))
+            using (TaskService _taskService = new TaskService())
             {
-                return IsStartupEnabled(_registryKey);
+                return _taskService.FindTask(_taskName) != null;
             }
         }
 
-        private static bool IsStartupEnabled(RegistryKey registryKey)
+        public static void EnableStartupTask()
         {
-            return registryKey.GetValue(_regKeyName) != null;
-        }
-
-        public static void SetStartupEnabled(bool enable)
-        {
-            using (RegistryKey _registryKey = GetRegistryKey(true))
+            using (TaskService _taskService = new TaskService())
             {
-                bool _isStartupEnabled = IsStartupEnabled(_registryKey);
+                TaskDefinition _def = _taskService.NewTask();
+                _def.Triggers.Add(new LogonTrigger() { Enabled = true });
+                _def.Actions.Add(new ExecAction(Assembly.GetEntryAssembly().Location));
+                _def.Principal.RunLevel = TaskRunLevel.Highest;
 
-                if (enable)
-                {
-                    _registryKey.SetValue(_regKeyName, string.Format("\"{0}\"", Assembly.GetEntryAssembly().Location));
-                }
-                else if (!enable && _isStartupEnabled)
-                {
-                    _registryKey.DeleteValue(_regKeyName);
-                }
+                _taskService.RootFolder.RegisterTaskDefinition(_taskName, _def);
             }
         }
 
-        private static RegistryKey GetRegistryKey(bool writable)
+        public static void DisableStartupTask()
         {
-            return Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", writable);
+            using (TaskService _taskService = new TaskService())
+            {
+                _taskService.RootFolder.DeleteTask(_taskName, false);
+            }
         }
 
-        private static readonly string _regKeyName = Assembly.GetExecutingAssembly().GetName().Name;
+        private const string _taskName = "SidebarStartup";
     }
      
     public class FontSetting

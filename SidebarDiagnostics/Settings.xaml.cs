@@ -68,7 +68,7 @@ namespace SidebarDiagnostics
 
             AlwaysTopCheckBox.IsChecked = Properties.Settings.Default.AlwaysTop;
 
-            StartupCheckBox.IsChecked = Utilities.IsStartupEnabled();
+            StartupCheckBox.IsChecked = Utilities.StartupTaskExists();
         }
 
         private void ColorTextBox_LostFocus(object sender, RoutedEventArgs e)
@@ -102,7 +102,14 @@ namespace SidebarDiagnostics
             Properties.Settings.Default.AlwaysTop = AlwaysTopCheckBox.IsChecked.HasValue && AlwaysTopCheckBox.IsChecked.Value;
             Properties.Settings.Default.Save();
 
-            Utilities.SetStartupEnabled(StartupCheckBox.IsChecked.HasValue && StartupCheckBox.IsChecked.Value);
+            if (StartupCheckBox.IsChecked.HasValue && StartupCheckBox.IsChecked.Value)
+            {
+                Utilities.EnableStartupTask();
+            }
+            else
+            {
+                Utilities.DisableStartupTask();
+            }
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
            {
