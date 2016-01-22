@@ -112,7 +112,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Windows.cs" />
-    <Compile Include="HWMonitor.cs" />
+    <Compile Include="Hardware.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
