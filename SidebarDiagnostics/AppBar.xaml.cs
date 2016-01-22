@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Helpers;
@@ -131,6 +132,16 @@ namespace SidebarDiagnostics
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ScrollViewer_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            (sender as ScrollViewer).VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+        }
+
+        private void ScrollViewer_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            (sender as ScrollViewer).VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
