@@ -8,39 +8,39 @@ using System.Windows.Forms;
 
 namespace SidebarDiagnostics.Windows
 {
+    internal static class NativeMethods
+    {
+        [DllImport("User32.dll")]
+        internal static extern int GetWindowLong(IntPtr hwnd, int index);
+
+        [DllImport("User32.dll")]
+        internal static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
+
+        [DllImport("User32.dll", CharSet = CharSet.Unicode)]
+        internal static extern int RegisterWindowMessage(string msg);
+
+        [DllImport("Shell32.dll", CallingConvention = CallingConvention.StdCall)]
+        internal static extern UIntPtr SHAppBarMessage(int dwMessage, ref AppBarWindow.APPBARDATA pData);
+    }
+
     public static class ClickThroughWindow
     {
         private const int WS_EX_TRANSPARENT = 0x00000020;
         private const int GWL_EXSTYLE = (-20);
 
-        [DllImport("user32.dll")]
-        static extern int GetWindowLong(IntPtr hwnd, int index);
-
-        [DllImport("user32.dll")]
-        static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
-
         public static void SetClickThrough(Window window)
         {
             IntPtr _hwnd = new WindowInteropHelper(window).Handle;
-            int _style = GetWindowLong(_hwnd, GWL_EXSTYLE);
+            int _style = NativeMethods.GetWindowLong(_hwnd, GWL_EXSTYLE);
 
-            SetWindowLong(_hwnd, GWL_EXSTYLE, _style | WS_EX_TRANSPARENT);
+            NativeMethods.SetWindowLong(_hwnd, GWL_EXSTYLE, _style | WS_EX_TRANSPARENT);
         }
     }
 
     public static class AppBarWindow
     {
         [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            public int left;
-            public int top;
-            public int right;
-            public int bottom;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct APPBARDATA
+        internal struct APPBARDATA
         {
             public int cbSize;
             public IntPtr hWnd;
@@ -50,9 +50,18 @@ namespace SidebarDiagnostics.Windows
             public IntPtr lParam;
         }
 
-        private enum ABMsg : int
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct RECT
         {
-            ABM_NEW = 0,
+            public int left;
+            public int top;
+            public int right;
+            public int bottom;
+        }
+
+        private enum AppBarMsg : int
+        {
+            ABM_NEW,
             ABM_REMOVE,
             ABM_QUERYPOS,
             ABM_SETPOS,
@@ -65,19 +74,13 @@ namespace SidebarDiagnostics.Windows
             ABM_SETSTATE
         }
 
-        private enum ABNotify : int
+        private enum AppBarNotify : int
         {
-            ABN_STATECHANGE = 0,
+            ABN_STATECHANGE,
             ABN_POSCHANGED,
             ABN_FULLSCREENAPP,
             ABN_WINDOWARRANGE
         }
-
-        [DllImport("SHELL32", CallingConvention = CallingConvention.StdCall)]
-        private static extern uint SHAppBarMessage(int dwMessage, ref APPBARDATA pData);
-
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        private static extern int RegisterWindowMessage(string msg);
 
         public static void SetAppBar(Window window, Screen screen, DockEdge edge)
         {
@@ -93,7 +96,7 @@ namespace SidebarDiagnostics.Windows
             {
                 if (_regInfo.IsRegistered)
                 {
-                    SHAppBarMessage((int)ABMsg.ABM_REMOVE, ref _appBarData);
+                    NativeMethods.SHAppBarMessage((int)AppBarMsg.ABM_REMOVE, ref _appBarData);
                     _regInfo.IsRegistered = false;
                 }
 
@@ -103,19 +106,19 @@ namespace SidebarDiagnostics.Windows
             if (!_regInfo.IsRegistered)
             {
                 _regInfo.IsRegistered = true;
-                _regInfo.CallbackId = RegisterWindowMessage("AppBarMessage");
-                _appBarData.uCallbackMessage = _regInfo.CallbackId;
+                _regInfo.CallbackID = NativeMethods.RegisterWindowMessage("AppBarMessage");
+                _appBarData.uCallbackMessage = _regInfo.CallbackID;
 
-                uint ret = SHAppBarMessage((int)ABMsg.ABM_NEW, ref _appBarData);
+                NativeMethods.SHAppBarMessage((int)AppBarMsg.ABM_NEW, ref _appBarData);
             }
 
             window.WindowStyle = WindowStyle.None;
             window.ResizeMode = ResizeMode.NoResize;
 
-            ABSetPos(window, screen, edge);
+            DockAppBar(window, screen, edge);
         }
                 
-        private static void ABSetPos(Window window, Screen screen, DockEdge edge)
+        private static void DockAppBar(Window window, Screen screen, DockEdge edge)
         {
             APPBARDATA _appBarData = new APPBARDATA();
             _appBarData.cbSize = Marshal.SizeOf(_appBarData);
@@ -162,9 +165,9 @@ namespace SidebarDiagnostics.Windows
                 bottom = _bottom
             };
 
-            SHAppBarMessage((int)ABMsg.ABM_QUERYPOS, ref _appBarData);
+            NativeMethods.SHAppBarMessage((int)AppBarMsg.ABM_QUERYPOS, ref _appBarData);
 
-            SHAppBarMessage((int)ABMsg.ABM_SETPOS, ref _appBarData);
+            NativeMethods.SHAppBarMessage((int)AppBarMsg.ABM_SETPOS, ref _appBarData);
 
             Rect _rect = new Rect(
                 _appBarData.rc.left,
@@ -184,7 +187,7 @@ namespace SidebarDiagnostics.Windows
 
         private class RegisterInfo
         {
-            public int CallbackId { get; set; }
+            public int CallbackID { get; set; }
             public bool IsRegistered { get; set; }
             public Window Window { get; set; }
             public Screen Screen { get; set; }
@@ -196,18 +199,17 @@ namespace SidebarDiagnostics.Windows
 
             public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
             {
-                if (msg == CallbackId)
+                if (msg == CallbackID)
                 {
-                    if (wParam.ToInt32() == (int)ABNotify.ABN_POSCHANGED)
+                    if (wParam.ToInt32() == (int)AppBarNotify.ABN_POSCHANGED)
                     {
-                        ABSetPos(Window, Screen, Edge);
+                        DockAppBar(Window, Screen, Edge);
                         handled = true;
                     }
                 }
 
                 return IntPtr.Zero;
             }
-
         }
 
         private static RegisterInfo GetRegisterInfo(Window window, Screen screen)
@@ -222,7 +224,7 @@ namespace SidebarDiagnostics.Windows
             {
                 _regInfo = new RegisterInfo()
                 {
-                    CallbackId = 0,
+                    CallbackID = 0,
                     IsRegistered = false,
                     Window = window,
                     Screen = screen,
