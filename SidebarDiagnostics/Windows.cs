@@ -242,9 +242,9 @@ namespace SidebarDiagnostics.Windows
         private static Dictionary<Window, RegisterInfo> _windowDict = new Dictionary<Window, RegisterInfo>();
     }
 
-    public enum DockEdge : int
+    public enum DockEdge : byte
     {
-        Left = 0,
+        Left,
         Top,
         Right,
         Bottom,
