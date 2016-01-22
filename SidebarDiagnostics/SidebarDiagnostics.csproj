@@ -111,7 +111,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AppBar.cs" />
+    <Compile Include="Windows.cs" />
     <Compile Include="HWMonitor.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.xaml.cs">
