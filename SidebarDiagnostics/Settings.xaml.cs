@@ -39,10 +39,21 @@ namespace SidebarDiagnostics
                 ScreenComboBox.SelectedValue = 0;
             }
 
+            SidebarWidthSlider.Value = Properties.Settings.Default.SidebarWidth;
+
             BGColorTextBox.Text = Properties.Settings.Default.BGColor;
 
             BGOpacitySlider.Value = Properties.Settings.Default.BGOpacity;
             
+            FontSizeComboBox.Items.Add(FontSetting.x10);
+            FontSizeComboBox.Items.Add(FontSetting.x12);
+            FontSizeComboBox.Items.Add(FontSetting.x14);
+            FontSizeComboBox.Items.Add(FontSetting.x16);
+            FontSizeComboBox.Items.Add(FontSetting.x18);
+
+            FontSizeComboBox.DisplayMemberPath = FontSizeComboBox.SelectedValuePath = "FontSize";
+            FontSizeComboBox.SelectedValue = Properties.Settings.Default.FontSize;
+
             TextColorTextBox.Text = Properties.Settings.Default.TextColor;
 
             PollingIntervalSlider.Value = Properties.Settings.Default.PollingInterval;
@@ -72,8 +83,15 @@ namespace SidebarDiagnostics
         {
             Properties.Settings.Default.DockEdge = (ABEdge)DockEdgeComboBox.SelectedValue;
             Properties.Settings.Default.ScreenIndex = (int)ScreenComboBox.SelectedValue;
+            Properties.Settings.Default.SidebarWidth = (int)SidebarWidthSlider.Value;
             Properties.Settings.Default.BGColor = BGColorTextBox.Text;
             Properties.Settings.Default.BGOpacity = BGOpacitySlider.Value;
+
+            FontSetting _fontSetting = (FontSetting)FontSizeComboBox.SelectedItem;
+            Properties.Settings.Default.FontSize = _fontSetting.FontSize;
+            Properties.Settings.Default.TitleFontSize = _fontSetting.TitleFontSize;
+            Properties.Settings.Default.IconSize = _fontSetting.IconSize;            
+            
             Properties.Settings.Default.TextColor = TextColorTextBox.Text;
             Properties.Settings.Default.PollingInterval = (int)PollingIntervalSlider.Value;
             Properties.Settings.Default.Clock24HR = Clock24HRCheckBox.IsChecked.HasValue && Clock24HRCheckBox.IsChecked.Value;

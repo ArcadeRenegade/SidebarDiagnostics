@@ -74,10 +74,10 @@ namespace SidebarDiagnostics.Hardware
             StackPanel.Style = (Style)Application.Current.FindResource("HardwarePanel");
             parent.Children.Add(StackPanel);
 
-            TextBlock _subtitle = new TextBlock();
-            _subtitle.Style = (Style)Application.Current.FindResource("AppSubtitle");
-            _subtitle.Text = hardware.Name;
-            StackPanel.Children.Add(_subtitle);
+            TextBlock _hardwareName = new TextBlock();
+            _hardwareName.Style = (Style)Application.Current.FindResource("HardwareText");
+            _hardwareName.Text = hardware.Name;
+            StackPanel.Children.Add(_hardwareName);
             
             UpdateHardware();
 
@@ -315,21 +315,21 @@ namespace SidebarDiagnostics.Hardware
 
             Append = append;
 
-            Control = new Label();
-            Control.Style = (Style)Application.Current.FindResource("AppLabel");
+            Control = new TextBlock();
+            Control.Style = (Style)Application.Current.FindResource("SensorText");
 
             stackPanel.Children.Add(Control);
         }
 
         public void UpdateLabel()
         {
-            Control.Content = string.Format("{0}: {1:0.##}{2}", Text, Sensor.Value, Append);
+            Control.Text = string.Format("{0}: {1:0.##}{2}", Text, Sensor.Value, Append);
         }
 
         public ISensor Sensor { get; private set; }
         public string Text { get; set; }
         public string Append { get; set; }
-        public Label Control { get; private set; }
+        public TextBlock Control { get; private set; }
     }
 
     public enum HWType : byte

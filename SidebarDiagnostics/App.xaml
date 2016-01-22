@@ -26,37 +26,34 @@
         </Style>
 
         <Style x:Key="AppIcon" TargetType="{x:Type Path}">
-            <Setter Property="Width" Value="24" />
-            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=IconSize}" />
+            <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=IconSize}" />
             <Setter Property="Margin" Value="0,0,10,0" />
             <Setter Property="Stretch" Value="Uniform" />
             <Setter Property="Fill" Value="{Binding Source={x:Static prop:Settings.Default}, Path=TextColor}" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
-
-        <Style x:Key="AppText" TargetType="{x:Type Label}">
+        
+        <Style x:Key="AppTitle" TargetType="{x:Type Label}">
             <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=TextColor}" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="0" />
-        </Style>
-
-        <Style x:Key="AppLabel" TargetType="{x:Type Label}" BasedOn="{StaticResource AppText}">
-            <Setter Property="FontSize" Value="14px" />
-        </Style>
-
-        <Style x:Key="AppTitle" TargetType="{x:Type Label}" BasedOn="{StaticResource AppText}">
-            <Setter Property="FontSize" Value="16px" />
+            <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=TitleFontSize}" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
-        <Style x:Key="AppSubtitle" TargetType="{x:Type TextBlock}">
+        <Style x:Key="HardwareText" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=TextColor}" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="0,0,0,6" />
-            <Setter Property="FontSize" Value="14px" />
+            <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSize}" />
             <Setter Property="TextWrapping" Value="WrapWithOverflow" />
         </Style>
 
+        <Style x:Key="SensorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HardwareText}">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        
         <Style x:Key="HardwarePanel" TargetType="{x:Type StackPanel}">
             <Setter Property="Margin" Value="0,0,0,10" />
         </Style>

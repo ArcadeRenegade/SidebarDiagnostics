@@ -142,5 +142,53 @@ namespace SidebarDiagnostics.Properties {
                 this["ClickThrough"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
+        public int SidebarWidth {
+            get {
+                return ((int)(this["SidebarWidth"]));
+            }
+            set {
+                this["SidebarWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("14")]
+        public int FontSize {
+            get {
+                return ((int)(this["FontSize"]));
+            }
+            set {
+                this["FontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
+        public int TitleFontSize {
+            get {
+                return ((int)(this["TitleFontSize"]));
+            }
+            set {
+                this["TitleFontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("24")]
+        public int IconSize {
+            get {
+                return ((int)(this["IconSize"]));
+            }
+            set {
+                this["IconSize"] = value;
+            }
+        }
     }
 }

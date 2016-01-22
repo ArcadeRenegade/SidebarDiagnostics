@@ -32,5 +32,17 @@
     <Setting Name="ClickThrough" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="SidebarWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">180</Value>
+    </Setting>
+    <Setting Name="FontSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
+    <Setting Name="TitleFontSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">16</Value>
+    </Setting>
+    <Setting Name="IconSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">24</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

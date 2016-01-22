@@ -19,8 +19,6 @@ namespace SidebarDiagnostics
 
         private void InitAppBar()
         {
-            AppBarFunctions.SetAppBar(this, ABEdge.None);
-
             Monitor _monitor = Utilities.GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
 
             Top = _monitor.WorkingArea.Top;
