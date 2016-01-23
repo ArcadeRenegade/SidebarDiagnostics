@@ -18,6 +18,23 @@ namespace SidebarDiagnostics
             InitializeComponent();
         }
 
+        public void ABShow()
+        {
+            Shown = true;
+
+            Show();
+            InitAppBar();
+            Activate();
+        }
+
+        public void ABHide()
+        {
+            Shown = false;
+            
+            ClearAppBar();
+            Hide();
+        }
+
         private void InitAppBar()
         {
             var _screen = Utilities.GetScreenFromIndex(Properties.Settings.Default.ScreenIndex);
@@ -56,6 +73,14 @@ namespace SidebarDiagnostics
             }
         }
 
+        private void ClearAppBar()
+        {
+            if (Properties.Settings.Default.UseAppBar)
+            {
+                AppBarWindow.SetAppBar(this, null, DockEdge.None);
+            }
+        }
+
         private void InitContent()
         {
             UpdateClock();
@@ -67,11 +92,6 @@ namespace SidebarDiagnostics
 
             GetHardware();
             UpdateHardware();
-
-            if (Properties.Settings.Default.PollingInterval < 100)
-            {
-                Properties.Settings.Default.PollingInterval = 1000;
-            }
 
             _hardwareTimer = new DispatcherTimer();
             _hardwareTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
@@ -173,6 +193,8 @@ namespace SidebarDiagnostics
                 AppBarWindow.SetAppBar(this, null, DockEdge.None);
             }
         }
+
+        public bool Shown { get; private set; } = true;
 
         private DispatcherTimer _clockTimer { get; set; }
 

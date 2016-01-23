@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
         mc:Ignorable="d"
-        Title="Settings"
+        Title="Sidebar Settings"
         Width="360"
         SizeToContent="Height"
         Icon="settings.ico"
@@ -25,6 +25,7 @@
             <RowDefinition Height="38px"></RowDefinition>
             <RowDefinition Height="38px"></RowDefinition>
             <RowDefinition Height="38px"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -83,10 +84,13 @@
         <Label Grid.Column="0" Grid.Row="11" Content="Always On Top" VerticalAlignment="Center" />
         <CheckBox x:Name="AlwaysTopCheckBox" Grid.Column="1" Grid.Row="11" Margin="0,6,0,0" VerticalAlignment="Center" />
 
-        <Label Grid.Column="0" Grid.Row="12" Content="Run at startup" VerticalAlignment="Center" />
-        <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Grid.Row="12" Margin="0,6,0,0" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="12" Content="Check For Updates" VerticalAlignment="Center" />
+        <CheckBox x:Name="UpdatesCheckBox" Grid.Column="1" Grid.Row="12" Margin="0,6,0,0" VerticalAlignment="Center" />
+        
+        <Label Grid.Column="0" Grid.Row="13" Content="Run at startup" VerticalAlignment="Center" />
+        <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Grid.Row="13" Margin="0,6,0,0" VerticalAlignment="Center" />
 
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="13" Margin="0,20,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="14" Margin="0,20,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
             <Button x:Name="SaveBtn" Content="Save" Margin="0,0,10,0" Padding="16,8" Click="SaveBtn_Click"></Button>
             <Button x:Name="CancelBtn" Content="Cancel" Padding="16,8" Click="CancelBtn_Click"></Button>
         </StackPanel>

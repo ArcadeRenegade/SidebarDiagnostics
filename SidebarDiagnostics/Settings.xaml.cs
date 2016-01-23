@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -68,6 +67,8 @@ namespace SidebarDiagnostics
 
             AlwaysTopCheckBox.IsChecked = Properties.Settings.Default.AlwaysTop;
 
+            UpdatesCheckBox.IsChecked = Properties.Settings.Default.CheckForUpdates;
+
             StartupCheckBox.IsChecked = Utilities.StartupTaskExists();
         }
 
@@ -96,13 +97,14 @@ namespace SidebarDiagnostics
             
             Properties.Settings.Default.TextColor = TextColorTextBox.Text;
             Properties.Settings.Default.PollingInterval = (int)PollingIntervalSlider.Value;
-            Properties.Settings.Default.Clock24HR = Clock24HRCheckBox.IsChecked.HasValue && Clock24HRCheckBox.IsChecked.Value;
-            Properties.Settings.Default.UseAppBar = UseAppBarCheckBox.IsChecked.HasValue && UseAppBarCheckBox.IsChecked.Value;
-            Properties.Settings.Default.ClickThrough = ClickThroughCheckBox.IsChecked.HasValue && ClickThroughCheckBox.IsChecked.Value;
-            Properties.Settings.Default.AlwaysTop = AlwaysTopCheckBox.IsChecked.HasValue && AlwaysTopCheckBox.IsChecked.Value;
+            Properties.Settings.Default.Clock24HR = Clock24HRCheckBox.IsChecked == true;
+            Properties.Settings.Default.UseAppBar = UseAppBarCheckBox.IsChecked == true;
+            Properties.Settings.Default.ClickThrough = ClickThroughCheckBox.IsChecked == true;
+            Properties.Settings.Default.AlwaysTop = AlwaysTopCheckBox.IsChecked == true;
+            Properties.Settings.Default.CheckForUpdates = UpdatesCheckBox.IsChecked == true;
             Properties.Settings.Default.Save();
 
-            if (StartupCheckBox.IsChecked.HasValue && StartupCheckBox.IsChecked.Value)
+            if (StartupCheckBox.IsChecked == true)
             {
                 Utilities.EnableStartupTask();
             }
@@ -112,11 +114,11 @@ namespace SidebarDiagnostics
             }
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-           {
-               Owner.Closed += AppBar_Closed;
-               Owner.Close();
-               Close();
-           }));
+            {
+                Owner.Closed += AppBar_Closed;
+                Owner.Close();
+                Close();
+            }));
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
