@@ -42,6 +42,16 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
+        <Style x:Key="MonitorTitle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Margin" Value="0,20,0,0" />
+        </Style>
+        
+        <Style x:Key="HardwarePanel" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="Margin" Value="0,10,0,0" />
+        </Style>
+        
         <Style x:Key="HardwareText" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=TextColor}" />
             <Setter Property="Padding" Value="0" />
@@ -52,10 +62,6 @@
 
         <Style x:Key="SensorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HardwareText}">
             <Setter Property="Margin" Value="0" />
-        </Style>
-        
-        <Style x:Key="HardwarePanel" TargetType="{x:Type StackPanel}">
-            <Setter Property="Margin" Value="0,0,0,10" />
         </Style>
 
         <Style x:Key="ScrollBarTrackThumb" TargetType="{x:Type Thumb}">

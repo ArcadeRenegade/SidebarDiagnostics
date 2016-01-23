@@ -117,7 +117,7 @@
     </ApplicationDefinition>
     <Compile Include="Updates.cs" />
     <Compile Include="Windows.cs" />
-    <Compile Include="Hardware.cs" />
+    <Compile Include="Monitor.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>

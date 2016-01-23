@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Helpers;
-using SidebarDiagnostics.Hardware;
+using SidebarDiagnostics.Monitor;
 
 namespace SidebarDiagnostics
 {
@@ -116,30 +116,16 @@ namespace SidebarDiagnostics
 
         private void GetHardware()
         {
-            _hwManager = new HWManager(App._computer, CPUStackPanel, RAMStackPanel, GPUStackPanel);
+            _monitorManager = new MonitorManager(App._computer, MainStackPanel);
 
-            if (_hwManager.HasCPU)
-            {
-                CPUTitle.Visibility = Visibility.Visible;
-                CPUStackPanel.Visibility = Visibility.Visible;
-            }
-
-            if (_hwManager.HasRam)
-            {
-                RAMTitle.Visibility = Visibility.Visible;
-                RAMStackPanel.Visibility = Visibility.Visible;
-            }
-            
-            if (_hwManager.HasGPU)
-            {
-                GPUTitle.Visibility = Visibility.Visible;
-                GPUStackPanel.Visibility = Visibility.Visible;
-            }
+            _monitorManager.AddPanel(MonitorType.CPU, true);
+            _monitorManager.AddPanel(MonitorType.RAM, true);
+            _monitorManager.AddPanel(MonitorType.GPU, true);
         }
 
         private void UpdateHardware()
         {
-            _hwManager.Update();
+            _monitorManager.Update();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
@@ -200,6 +186,6 @@ namespace SidebarDiagnostics
 
         private DispatcherTimer _hardwareTimer { get; set; }
 
-        private HWManager _hwManager { get; set; }
+        private MonitorManager _monitorManager { get; set; }
     }
 }
