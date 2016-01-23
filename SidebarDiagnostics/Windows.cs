@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -94,6 +95,36 @@ namespace SidebarDiagnostics.Windows
         {
             return GetMonitors().Length;
         }
+
+        public static WorkArea GetWorkArea(Window window)
+        {
+            MonitorInfo _screen = GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
+
+            PresentationSource _presentationSource = PresentationSource.FromVisual(window);
+            double _scaleX = 1 / _presentationSource.CompositionTarget.TransformToDevice.M11;
+            double _scaleY = 1 / _presentationSource.CompositionTarget.TransformToDevice.M22;
+
+            WorkArea _workArea = new WorkArea()
+            {
+                Left = _screen.WorkArea.Left * _scaleX,
+                Top = _screen.WorkArea.Top * _scaleY,
+                Right = _screen.WorkArea.Right * _scaleX,
+                Bottom = _screen.WorkArea.Bottom * _scaleY
+            };
+
+            switch (Properties.Settings.Default.DockEdge)
+            {
+                case DockEdge.Left:
+                    _workArea.Right = _workArea.Left + window.ActualWidth;
+                    break;
+
+                case DockEdge.Right:
+                    _workArea.Left = _workArea.Right - window.ActualWidth;
+                    break;
+            }
+
+            return _workArea;
+        }
     }
 
     public static class ClickThroughWindow
@@ -158,7 +189,6 @@ namespace SidebarDiagnostics.Windows
         public static void SetAppBar(Window window, WorkArea workArea, DockEdge edge)
         {
             RegisterInfo _regInfo = GetRegisterInfo(window, workArea);
-            _regInfo.Edge = edge;
 
             APPBARDATA _appBarData = new APPBARDATA();
             _appBarData.cbSize = Marshal.SizeOf(_appBarData);
@@ -168,7 +198,10 @@ namespace SidebarDiagnostics.Windows
             {
                 if (_regInfo.IsRegistered)
                 {
+                    _regInfo.Source.RemoveHook(_regInfo.Hook);
+
                     NativeMethods.SHAppBarMessage((int)AppBarMsg.ABM_REMOVE, ref _appBarData);
+
                     _regInfo.IsRegistered = false;
                 }
 
@@ -179,21 +212,20 @@ namespace SidebarDiagnostics.Windows
             {
                 _regInfo.IsRegistered = true;
                 _regInfo.CallbackID = NativeMethods.RegisterWindowMessage("AppBarMessage");
+                _regInfo.Edge = edge;
+
                 _appBarData.uCallbackMessage = _regInfo.CallbackID;
 
                 NativeMethods.SHAppBarMessage((int)AppBarMsg.ABM_NEW, ref _appBarData);
-
-                //HwndSource source = HwndSource.FromHwnd(_appBarData.hWnd);
-                //source.AddHook(new HwndSourceHook(_regInfo.WndProc));
             }
 
             window.WindowStyle = WindowStyle.None;
             window.ResizeMode = ResizeMode.NoResize;
 
-            DockAppBar(window, workArea, edge);
+            DockAppBar(window, workArea, edge, _regInfo);
         }
                 
-        private static void DockAppBar(Window window, WorkArea workArea, DockEdge edge)
+        private static void DockAppBar(Window window, WorkArea workArea, DockEdge edge, RegisterInfo regInfo)
         {
             APPBARDATA _appBarData = new APPBARDATA();
             _appBarData.cbSize = Marshal.SizeOf(_appBarData);
@@ -225,6 +257,13 @@ namespace SidebarDiagnostics.Windows
                 window.Height = _rect.Height;
                 window.Top = _rect.Top;
                 window.Left = _rect.Left;
+
+                Task.Delay(500).ContinueWith(_ =>
+                {
+                    regInfo.Hook = new HwndSourceHook(regInfo.WndProc);
+                    regInfo.Source = HwndSource.FromHwnd(_appBarData.hWnd);
+                    regInfo.Source.AddHook(regInfo.Hook);
+                });
             }));
         }
 
@@ -235,10 +274,8 @@ namespace SidebarDiagnostics.Windows
             public Window Window { get; set; }
             public WorkArea WorkArea { get; set; }
             public DockEdge Edge { get; set; }
-            public WindowStyle OriginalStyle { get; set; }
-            public Point OriginalPosition { get; set; }
-            public Size OriginalSize { get; set; }
-            public ResizeMode OriginalResizeMode { get; set; }
+            public HwndSource Source { get; set; }
+            public HwndSourceHook Hook { get; set; }
 
             public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
             {
@@ -246,9 +283,17 @@ namespace SidebarDiagnostics.Windows
                 {
                     if (wParam.ToInt32() == (int)AppBarNotify.ABN_POSCHANGED)
                     {
-                        DockAppBar(Window, WorkArea, Edge);
-                        handled = true;
+                        SetAppBar(Window, null, DockEdge.None);
+
+                        WorkArea _workArea = Monitors.GetWorkArea(Window);
+
+                        Window.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+                        {
+                            SetAppBar(Window, _workArea, Edge);
+                        }));
                     }
+
+                    handled = true;
                 }
 
                 return IntPtr.Zero;
@@ -262,6 +307,7 @@ namespace SidebarDiagnostics.Windows
             if (_windowDict.ContainsKey(window))
             {
                 _regInfo = _windowDict[window];
+                _regInfo.WorkArea = workArea ?? _regInfo.WorkArea;
             }
             else
             {
@@ -271,11 +317,7 @@ namespace SidebarDiagnostics.Windows
                     IsRegistered = false,
                     Window = window,
                     WorkArea = workArea,
-                    Edge = DockEdge.Top,
-                    OriginalStyle = window.WindowStyle,
-                    OriginalPosition = new Point(window.Left, window.Top),
-                    OriginalSize = new Size(window.ActualWidth, window.ActualHeight),
-                    OriginalResizeMode = window.ResizeMode,
+                    Edge = DockEdge.Top
                 };
 
                 _windowDict.Add(window, _regInfo);

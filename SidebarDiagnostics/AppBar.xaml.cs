@@ -36,30 +36,7 @@ namespace SidebarDiagnostics
 
         private void InitAppBar()
         {
-            Monitors.MonitorInfo _screen = Monitors.GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
-
-            PresentationSource _presentationSource = PresentationSource.FromVisual(this);
-            double _scaleX = 1 / _presentationSource.CompositionTarget.TransformToDevice.M11;
-            double _scaleY = 1 / _presentationSource.CompositionTarget.TransformToDevice.M22;
-
-            WorkArea _workArea = new WorkArea()
-            {
-                Left = _screen.WorkArea.Left * _scaleX,
-                Top = _screen.WorkArea.Top * _scaleY,
-                Right = _screen.WorkArea.Right * _scaleX,
-                Bottom = _screen.WorkArea.Bottom * _scaleY
-            };
-            
-            switch (Properties.Settings.Default.DockEdge)
-            {
-                case DockEdge.Left:
-                    _workArea.Right = _workArea.Left + ActualWidth;
-                    break;
-
-                case DockEdge.Right:
-                    _workArea.Left = _workArea.Right - ActualWidth;
-                    break;
-            }
+            WorkArea _workArea = Monitors.GetWorkArea(this);
 
             Left = _workArea.Left;
             Top = _workArea.Top;
