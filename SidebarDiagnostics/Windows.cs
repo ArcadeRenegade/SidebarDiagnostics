@@ -1,26 +1,99 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using System.Windows.Forms;
 
 namespace SidebarDiagnostics.Windows
 {
     internal static class NativeMethods
     {
-        [DllImport("User32.dll")]
+        [DllImport("user32.dll")]
         internal static extern int GetWindowLong(IntPtr hwnd, int index);
 
-        [DllImport("User32.dll")]
+        [DllImport("user32.dll")]
         internal static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
 
-        [DllImport("User32.dll", CharSet = CharSet.Unicode)]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         internal static extern int RegisterWindowMessage(string msg);
 
-        [DllImport("Shell32.dll", CallingConvention = CallingConvention.StdCall)]
+        [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
         internal static extern UIntPtr SHAppBarMessage(int dwMessage, ref AppBarWindow.APPBARDATA pData);
+        
+        [DllImport("user32.dll")]
+        internal static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lpRect, Monitors.MonitorEnumProc callback, int dwData);
+
+        [DllImport("user32.dll")]
+        internal static extern bool GetMonitorInfo(IntPtr hMonitor, ref Monitors.MonitorInfo lpmi);
+    }
+
+    public class WorkArea
+    {
+        public double Left { get; set; }
+        public double Top { get; set; }
+        public double Right { get; set; }
+        public double Bottom { get; set; }
+    }
+
+    public static class Monitors
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MonitorInfo
+        {
+            public int cbSize;
+            public RECT WorkAreaArea;
+            public RECT WorkArea;
+            public bool IsPrimary;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+
+        internal delegate bool MonitorEnumProc(IntPtr hDesktop, IntPtr hdc, ref RECT pRect, int dwData);
+
+        public static MonitorInfo[] GetMonitors()
+        {
+            List<MonitorInfo> _monitors = new List<MonitorInfo>();
+
+            MonitorEnumProc _callback = (IntPtr hDesktop, IntPtr hdc, ref RECT pRect, int dwData) =>
+            {
+                MonitorInfo _info = new MonitorInfo();
+                _info.cbSize = Marshal.SizeOf(_info);
+
+                NativeMethods.GetMonitorInfo(hDesktop, ref _info);
+
+                _monitors.Add(_info);
+
+                return true;
+            };
+
+            NativeMethods.EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, _callback, 0);
+
+            return _monitors.ToArray();
+        }
+
+        public static MonitorInfo GetMonitorFromIndex(int index)
+        {
+            MonitorInfo[] _monitors = GetMonitors();
+
+            if (index < _monitors.Length)
+                return _monitors[index];
+            else
+                return _monitors.Where(s => s.IsPrimary).Single();
+        }
+
+        public static int GetNoOfMonitors()
+        {
+            return GetMonitors().Length;
+        }
     }
 
     public static class ClickThroughWindow
@@ -53,10 +126,10 @@ namespace SidebarDiagnostics.Windows
         [StructLayout(LayoutKind.Sequential)]
         internal struct RECT
         {
-            public int left;
-            public int top;
-            public int right;
-            public int bottom;
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
         }
 
         private enum AppBarMsg : int
@@ -82,10 +155,9 @@ namespace SidebarDiagnostics.Windows
             ABN_WINDOWARRANGE
         }
 
-        public static void SetAppBar(Window window, Screen screen, DockEdge edge)
+        public static void SetAppBar(Window window, WorkArea workArea, DockEdge edge)
         {
-            RegisterInfo _regInfo = GetRegisterInfo(window, screen);
-
+            RegisterInfo _regInfo = GetRegisterInfo(window, workArea);
             _regInfo.Edge = edge;
 
             APPBARDATA _appBarData = new APPBARDATA();
@@ -110,59 +182,30 @@ namespace SidebarDiagnostics.Windows
                 _appBarData.uCallbackMessage = _regInfo.CallbackID;
 
                 NativeMethods.SHAppBarMessage((int)AppBarMsg.ABM_NEW, ref _appBarData);
+
+                //HwndSource source = HwndSource.FromHwnd(_appBarData.hWnd);
+                //source.AddHook(new HwndSourceHook(_regInfo.WndProc));
             }
 
             window.WindowStyle = WindowStyle.None;
             window.ResizeMode = ResizeMode.NoResize;
 
-            DockAppBar(window, screen, edge);
+            DockAppBar(window, workArea, edge);
         }
                 
-        private static void DockAppBar(Window window, Screen screen, DockEdge edge)
+        private static void DockAppBar(Window window, WorkArea workArea, DockEdge edge)
         {
             APPBARDATA _appBarData = new APPBARDATA();
             _appBarData.cbSize = Marshal.SizeOf(_appBarData);
             _appBarData.hWnd = new WindowInteropHelper(window).Handle;
             _appBarData.uEdge = (int)edge;
 
-            int _left = screen.WorkingArea.Left;
-            int _top = screen.WorkingArea.Top;
-            int _right = screen.WorkingArea.Right;
-            int _bottom = screen.WorkingArea.Bottom;
-
-            int _width = screen.WorkingArea.Width;
-            int _height = screen.WorkingArea.Width;
-
-            int _windowWidth = (int)Math.Round(window.ActualWidth);
-            int _windowHeight = (int)Math.Round(window.ActualHeight);
-
-            DockEdge _edge = (DockEdge)_appBarData.uEdge;
-            
-            switch (_edge)
-            {
-                case DockEdge.Left:
-                    _right = _left + _windowWidth;
-                    break;
-
-                case DockEdge.Right:
-                    _left = _right - _windowWidth;
-                    break;
-
-                case DockEdge.Top:
-                    _bottom = _top + _windowHeight;
-                    break;
-
-                case DockEdge.Bottom:
-                    _top = _bottom - _windowHeight;
-                    break;
-            }
-
             _appBarData.rc = new RECT()
             {
-                left = _left,
-                top = _top,
-                right = _right,
-                bottom = _bottom
+                Left = (int)Math.Round(workArea.Left),
+                Top = (int)Math.Round(workArea.Top),
+                Right = (int)Math.Round(workArea.Right),
+                Bottom = (int)Math.Round(workArea.Bottom)
             };
 
             NativeMethods.SHAppBarMessage((int)AppBarMsg.ABM_QUERYPOS, ref _appBarData);
@@ -170,10 +213,10 @@ namespace SidebarDiagnostics.Windows
             NativeMethods.SHAppBarMessage((int)AppBarMsg.ABM_SETPOS, ref _appBarData);
 
             Rect _rect = new Rect(
-                _appBarData.rc.left,
-                _appBarData.rc.top,
-                (_appBarData.rc.right - _appBarData.rc.left),
-                (_appBarData.rc.bottom - _appBarData.rc.top)
+                _appBarData.rc.Left,
+                _appBarData.rc.Top,
+                (_appBarData.rc.Right - _appBarData.rc.Left),
+                (_appBarData.rc.Bottom - _appBarData.rc.Top)
                 );
 
             window.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
@@ -190,7 +233,7 @@ namespace SidebarDiagnostics.Windows
             public int CallbackID { get; set; }
             public bool IsRegistered { get; set; }
             public Window Window { get; set; }
-            public Screen Screen { get; set; }
+            public WorkArea WorkArea { get; set; }
             public DockEdge Edge { get; set; }
             public WindowStyle OriginalStyle { get; set; }
             public Point OriginalPosition { get; set; }
@@ -203,7 +246,7 @@ namespace SidebarDiagnostics.Windows
                 {
                     if (wParam.ToInt32() == (int)AppBarNotify.ABN_POSCHANGED)
                     {
-                        DockAppBar(Window, Screen, Edge);
+                        DockAppBar(Window, WorkArea, Edge);
                         handled = true;
                     }
                 }
@@ -212,7 +255,7 @@ namespace SidebarDiagnostics.Windows
             }
         }
 
-        private static RegisterInfo GetRegisterInfo(Window window, Screen screen)
+        private static RegisterInfo GetRegisterInfo(Window window, WorkArea workArea)
         {
             RegisterInfo _regInfo;
 
@@ -227,7 +270,7 @@ namespace SidebarDiagnostics.Windows
                     CallbackID = 0,
                     IsRegistered = false,
                     Window = window,
-                    Screen = screen,
+                    WorkArea = workArea,
                     Edge = DockEdge.Top,
                     OriginalStyle = window.WindowStyle,
                     OriginalPosition = new Point(window.Left, window.Top),

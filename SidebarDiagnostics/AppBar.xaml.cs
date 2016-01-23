@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
-using SidebarDiagnostics.Helpers;
 using SidebarDiagnostics.Monitor;
 
 namespace SidebarDiagnostics
@@ -37,28 +36,34 @@ namespace SidebarDiagnostics
 
         private void InitAppBar()
         {
-            var _screen = Utilities.GetScreenFromIndex(Properties.Settings.Default.ScreenIndex);
+            Monitors.MonitorInfo _screen = Monitors.GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
 
-            double _left;
+            PresentationSource _presentationSource = PresentationSource.FromVisual(this);
+            double _scaleX = 1 / _presentationSource.CompositionTarget.TransformToDevice.M11;
+            double _scaleY = 1 / _presentationSource.CompositionTarget.TransformToDevice.M22;
 
+            WorkArea _workArea = new WorkArea()
+            {
+                Left = _screen.WorkArea.Left * _scaleX,
+                Top = _screen.WorkArea.Top * _scaleY,
+                Right = _screen.WorkArea.Right * _scaleX,
+                Bottom = _screen.WorkArea.Bottom * _scaleY
+            };
+            
             switch (Properties.Settings.Default.DockEdge)
             {
                 case DockEdge.Left:
-                    _left = _screen.WorkingArea.Left;
+                    _workArea.Right = _workArea.Left + ActualWidth;
                     break;
 
                 case DockEdge.Right:
-                    _left = _screen.WorkingArea.Right - ActualWidth;
-                    break;
-
-                default:
-                    _left = 0;
+                    _workArea.Left = _workArea.Right - ActualWidth;
                     break;
             }
 
-            Left = _left;
-            Top = _screen.WorkingArea.Top;
-            Height = _screen.WorkingArea.Height;
+            Left = _workArea.Left;
+            Top = _workArea.Top;
+            Height = _workArea.Bottom - _workArea.Top;
             
             Topmost = Properties.Settings.Default.AlwaysTop;
 
@@ -69,7 +74,7 @@ namespace SidebarDiagnostics
 
             if (Properties.Settings.Default.UseAppBar)
             {
-                AppBarWindow.SetAppBar(this, _screen, Properties.Settings.Default.DockEdge);
+                AppBarWindow.SetAppBar(this, _workArea, Properties.Settings.Default.DockEdge);
             }
         }
 

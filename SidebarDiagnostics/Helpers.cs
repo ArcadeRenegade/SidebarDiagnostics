@@ -1,27 +1,11 @@
 ﻿using System.Linq;
 using System.Reflection;
-using System.Windows.Forms;
 using Microsoft.Win32.TaskScheduler;
 
 namespace SidebarDiagnostics.Helpers
 {
     public static class Utilities
-    {
-        public static int GetScreenCount()
-        {
-            return Screen.AllScreens.Length;
-        }
-
-        public static Screen GetScreenFromIndex(int index)
-        {
-            Screen[] _screens = Screen.AllScreens.ToArray();
-
-            if (index < _screens.Length)
-                return _screens[index];
-            else
-                return _screens.Where(s => s.Primary).Single();
-        }
-        
+    {        
         public static bool StartupTaskExists()
         {
             using (TaskService _taskService = new TaskService())

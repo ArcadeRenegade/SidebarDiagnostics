@@ -21,7 +21,7 @@ namespace SidebarDiagnostics
             DockEdgeComboBox.Items.Add(DockEdge.Right);
             DockEdgeComboBox.SelectedValue = Properties.Settings.Default.DockEdge;
 
-            int _screenCount = Utilities.GetScreenCount();
+            int _screenCount = Monitors.GetNoOfMonitors();
 
             for (int i = 0; i < _screenCount; i++)
             {
