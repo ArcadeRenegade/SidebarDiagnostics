@@ -115,9 +115,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Monitor.cs" />
     <Compile Include="Updates.cs" />
     <Compile Include="Windows.cs" />
-    <Compile Include="Monitor.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
