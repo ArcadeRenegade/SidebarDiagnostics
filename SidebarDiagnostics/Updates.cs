@@ -2,8 +2,10 @@
 using System.Net;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.Threading.Tasks;
 using System.Windows;
-using Newtonsoft.Json.Linq;
 
 namespace SidebarDiagnostics.Updates
 {
@@ -12,9 +14,9 @@ namespace SidebarDiagnostics.Updates
         private const string GitHubAPI = "https://api.github.com/repos/ArcadeRenegade/SidebarDiagnostics/releases/latest";
         private const string UserAgent = "ArcadeRenegade-SidebarDiagnostics";
 
-        public static void Check(bool showInfoDialogs)
+        public async static Task Check(bool showInfoDialogs)
         {
-            VersionCheckResult _result = CheckNewVersion();
+            CheckResult _result = await CheckVersionAsync();
 
             if (_result.Success)
             {
@@ -33,55 +35,53 @@ namespace SidebarDiagnostics.Updates
             }
         }
 
-        private static VersionCheckResult CheckNewVersion()
+        private async static Task<CheckResult> CheckVersionAsync()
         {
             HttpWebRequest _request = (HttpWebRequest)WebRequest.Create(GitHubAPI);
+            _request.Method = WebRequestMethods.Http.Get;
             _request.UserAgent = UserAgent;
 
             try
             {
-                using (WebResponse _response = _request.GetResponse())
+                using (WebResponse _response = await _request.GetResponseAsync())
                 {
-                    using (Stream _stream = _response.GetResponseStream())
+                    using (Stream _responseStream = _response.GetResponseStream())
                     {
-                        using (StreamReader _reader = new StreamReader(_stream))
+                        DataContractJsonSerializer _json = new DataContractJsonSerializer(typeof(GitHubRelease));
+                        GitHubRelease _release = (GitHubRelease)_json.ReadObject(_responseStream);
+
+                        string _newVersion = _release.tag_name;
+                        string _thisVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+
+                        if (!_thisVersion.Equals(_newVersion, StringComparison.OrdinalIgnoreCase))
                         {
-                            JObject _json = JObject.Parse(_reader.ReadToEnd());
-
-                            string _newVersion = _json.Value<string>("tag_name");
-
-                            string _thisVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
-
-                            if (!_thisVersion.Equals(_newVersion, StringComparison.OrdinalIgnoreCase))
+                            return new CheckResult()
                             {
-                                return new VersionCheckResult()
-                                {
-                                    Success = true,
-                                    NewVersion = true,
-                                    VersionNo = _newVersion,
-                                    URL = _json.Value<string>("html_url")
-                                };
-                            }
+                                Success = true,
+                                NewVersion = true,
+                                VersionNo = _newVersion,
+                                URL = _release.html_url
+                            };
                         }
                     }
                 }
             }
             catch (WebException webEx)
             {
-                return VersionCheckResult.Failed;
+                return CheckResult.Failed;
             }
 
-            return VersionCheckResult.None;
+            return CheckResult.None;
         }
 
         private static void ShowNoUpdateDialog()
         {
-            MessageBox.Show("You have the latest version.", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+            MessageBox.Show("You have the latest version.", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
 
         private static void ShowUpdateDialog(string newVersionNo, string downloadURL)
         {
-            MessageBoxResult _result = MessageBox.Show(string.Format("A new version v{0} is available. Download it?", newVersionNo), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+            MessageBoxResult _result = MessageBox.Show(string.Format("A new version v{0} is available. Download it?", newVersionNo), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
 
             if (_result == MessageBoxResult.Yes)
             {
@@ -91,18 +91,30 @@ namespace SidebarDiagnostics.Updates
 
         private static void ShowErrorDialog()
         {
-            MessageBox.Show("A web exception was thrown while trying to check for updates. Check internet connection.", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            MessageBox.Show("Could not check for updates. Check your internet connection.", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+        }
+
+        private class CheckResult
+        {
+            public static CheckResult None = new CheckResult() { Success = true, NewVersion = false };
+            public static CheckResult Failed = new CheckResult() { Success = false };
+
+            public bool Success { get; set; }
+            public bool NewVersion { get; set; }
+            public string VersionNo { get; set; }
+            public string URL { get; set; }
+        }
+
+        [DataContract]
+        private class GitHubRelease
+        {
+            [DataMember]
+            public string tag_name { get; set; }
+
+            [DataMember]
+            public string html_url { get; set; }
         }
     }
 
-    public class VersionCheckResult
-    {
-        public static VersionCheckResult None = new VersionCheckResult() { Success = true, NewVersion = false };
-        public static VersionCheckResult Failed = new VersionCheckResult() { Success = false };
 
-        public bool Success { get; set; }
-        public bool NewVersion { get; set; }
-        public string VersionNo { get; set; }
-        public string URL { get; set; }
-    }
 }

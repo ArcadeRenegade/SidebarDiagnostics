@@ -34,6 +34,13 @@ namespace SidebarDiagnostics
             Hide();
         }
 
+        public void Reload()
+        {
+            _reloading = true;
+
+            Close();
+        }
+
         private void InitAppBar()
         {
             WorkArea _workArea = Monitors.GetWorkArea(this);
@@ -140,10 +147,7 @@ namespace SidebarDiagnostics
 
         private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            if (!Properties.Settings.Default.ClickThrough)
-            {
-                WindowControlsStackPanel.Visibility = Visibility.Visible;
-            }
+            WindowControlsStackPanel.Visibility = Visibility.Visible;
         }
 
         private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -153,12 +157,30 @@ namespace SidebarDiagnostics
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (IsLoaded)
+            if (_hardwareTimer != null)
             {
                 _hardwareTimer.Stop();
-                _clockTimer.Stop();
+            }
 
-                AppBarWindow.SetAppBar(this, null, DockEdge.None);
+            if (_clockTimer != null)
+            {
+                _clockTimer.Stop();
+            }
+
+            ClearAppBar();
+            AppBarWindow.DisposeWindow(this);
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (_reloading)
+            {
+                AppBar _newAppBar = new AppBar();
+                _newAppBar.Show();
+            }
+            else
+            {
+                Application.Current.Shutdown();
             }
         }
 
@@ -169,5 +191,7 @@ namespace SidebarDiagnostics
         private DispatcherTimer _hardwareTimer { get; set; }
 
         private MonitorManager _monitorManager { get; set; }
+
+        private bool _reloading { get; set; } = false;
     }
 }

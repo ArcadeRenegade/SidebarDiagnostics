@@ -258,14 +258,57 @@ namespace SidebarDiagnostics.Windows
                 window.Top = _rect.Top;
                 window.Left = _rect.Left;
 
-                Task.Delay(500).ContinueWith(_ =>
+                window.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
                 {
-                    regInfo.Hook = new HwndSourceHook(regInfo.WndProc);
-                    regInfo.Source = HwndSource.FromHwnd(_appBarData.hWnd);
-                    regInfo.Source.AddHook(regInfo.Hook);
-                });
+                    Task.Delay(100).ContinueWith(_ =>
+                    {
+                        regInfo.Hook = new HwndSourceHook(regInfo.WndProc);
+                        regInfo.Source = HwndSource.FromHwnd(_appBarData.hWnd);
+                        regInfo.Source.AddHook(regInfo.Hook);
+                    });
+                }));
             }));
         }
+
+        private static RegisterInfo GetRegisterInfo(Window window, WorkArea workArea)
+        {
+            RegisterInfo _regInfo;
+
+            if (_windowDict.ContainsKey(window))
+            {
+                _regInfo = _windowDict[window];
+
+                if (workArea != null)
+                {
+                    _regInfo.WorkArea = workArea;
+                }
+            }
+            else
+            {
+                _regInfo = new RegisterInfo()
+                {
+                    CallbackID = 0,
+                    IsRegistered = false,
+                    Window = window,
+                    WorkArea = workArea,
+                    Edge = DockEdge.Top
+                };
+
+                _windowDict.Add(window, _regInfo);
+            }
+
+            return _regInfo;
+        }
+
+        public static void DisposeWindow(Window window)
+        {
+            if (_windowDict.ContainsKey(window))
+            {
+                _windowDict.Remove(window);
+            }
+        }
+
+        private static Dictionary<Window, RegisterInfo> _windowDict = new Dictionary<Window, RegisterInfo>();
 
         private class RegisterInfo
         {
@@ -287,10 +330,7 @@ namespace SidebarDiagnostics.Windows
 
                         WorkArea _workArea = Monitors.GetWorkArea(Window);
 
-                        Window.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-                        {
-                            SetAppBar(Window, _workArea, Edge);
-                        }));
+                        SetAppBar(Window, _workArea, Edge);
                     }
 
                     handled = true;
@@ -299,34 +339,6 @@ namespace SidebarDiagnostics.Windows
                 return IntPtr.Zero;
             }
         }
-
-        private static RegisterInfo GetRegisterInfo(Window window, WorkArea workArea)
-        {
-            RegisterInfo _regInfo;
-
-            if (_windowDict.ContainsKey(window))
-            {
-                _regInfo = _windowDict[window];
-                _regInfo.WorkArea = workArea ?? _regInfo.WorkArea;
-            }
-            else
-            {
-                _regInfo = new RegisterInfo()
-                {
-                    CallbackID = 0,
-                    IsRegistered = false,
-                    Window = window,
-                    WorkArea = workArea,
-                    Edge = DockEdge.Top
-                };
-
-                _windowDict.Add(window, _regInfo);
-            }
-
-            return _regInfo;
-        }
-
-        private static Dictionary<Window, RegisterInfo> _windowDict = new Dictionary<Window, RegisterInfo>();
     }
 
     public enum DockEdge : byte

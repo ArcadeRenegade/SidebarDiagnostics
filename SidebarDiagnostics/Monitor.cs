@@ -156,8 +156,6 @@ namespace SidebarDiagnostics.Monitor
             Type = type;
             Hardware = hardware;
 
-            _sensors = new List<HWSensor>();
-
             UpdateHardware();
 
             switch (type)
@@ -198,11 +196,13 @@ namespace SidebarDiagnostics.Monitor
 
         private void InitCPU(IHardware board)
         {
+            List<HWSensor> _sensorList = new List<HWSensor>();
+
             ISensor _coreClock = Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("CPU")).FirstOrDefault();
 
             if (_coreClock != null)
             {
-                _sensors.Add(new HWSensor(_coreClock, "Clock", " MHz", InnerPanel));
+                _sensorList.Add(new HWSensor(_coreClock, "Clock", " MHz", InnerPanel));
             }
 
             ISensor _voltage = null;
@@ -235,17 +235,17 @@ namespace SidebarDiagnostics.Monitor
 
             if (_voltage != null)
             {
-                _sensors.Add(new HWSensor(_voltage, "Volt", " V", InnerPanel));
+                _sensorList.Add(new HWSensor(_voltage, "Volt", " V", InnerPanel));
             }
 
             if (_tempSensor != null)
             {
-                _sensors.Add(new HWSensor(_tempSensor, "Temp", " C", InnerPanel));
+                _sensorList.Add(new HWSensor(_tempSensor, "Temp", " C", InnerPanel));
             }
 
             if (_fanSensor != null)
             {
-                _sensors.Add(new HWSensor(_fanSensor, "Fan", " RPM", InnerPanel));
+                _sensorList.Add(new HWSensor(_fanSensor, "Fan", " RPM", InnerPanel));
             }
 
             List<ISensor> _loadSensors = Hardware.Sensors.Where(s => s.SensorType == SensorType.Load).ToList();
@@ -254,7 +254,7 @@ namespace SidebarDiagnostics.Monitor
 
             if (_totalCPU != null)
             {
-                _sensors.Add(new HWSensor(_totalCPU, "Load", "%", InnerPanel));
+                _sensorList.Add(new HWSensor(_totalCPU, "Load", "%", InnerPanel));
             }
 
             for (int i = 1; i <= _loadSensors.Max(s => s.Index); i++)
@@ -263,18 +263,22 @@ namespace SidebarDiagnostics.Monitor
 
                 if (_coreLoad != null)
                 {
-                    _sensors.Add(new HWSensor(_coreLoad, string.Format("Core #{0}", i), "%", InnerPanel));
+                    _sensorList.Add(new HWSensor(_coreLoad, string.Format("Core #{0}", i), "%", InnerPanel));
                 }
             }
+
+            _sensors = _sensorList.ToArray();
         }
 
         public void InitRAM(IHardware board)
         {
+            List<HWSensor> _sensorList = new List<HWSensor>();
+
             ISensor _ramClock = Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock).FirstOrDefault();
 
             if (_ramClock != null)
             {
-                _sensors.Add(new HWSensor(_ramClock, "Clock", " MHz", InnerPanel));
+                _sensorList.Add(new HWSensor(_ramClock, "Clock", " MHz", InnerPanel));
             }
 
             ISensor _voltage = null;
@@ -291,74 +295,80 @@ namespace SidebarDiagnostics.Monitor
 
             if (_voltage != null)
             {
-                _sensors.Add(new HWSensor(_voltage, "Volt", " V", InnerPanel));
+                _sensorList.Add(new HWSensor(_voltage, "Volt", " V", InnerPanel));
             }
 
             ISensor _loadSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_loadSensor != null)
             {
-                _sensors.Add(new HWSensor(_loadSensor, "Load", "%", InnerPanel));
+                _sensorList.Add(new HWSensor(_loadSensor, "Load", "%", InnerPanel));
             }
 
             ISensor _usedSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 0).FirstOrDefault();
 
             if (_usedSensor != null)
             {
-                _sensors.Add(new HWSensor(_usedSensor, "Used", " GB", InnerPanel));
+                _sensorList.Add(new HWSensor(_usedSensor, "Used", " GB", InnerPanel));
             }
 
             ISensor _availSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 1).FirstOrDefault();
 
             if (_availSensor != null)
             {
-                _sensors.Add(new HWSensor(_availSensor, "Free", " GB", InnerPanel));
+                _sensorList.Add(new HWSensor(_availSensor, "Free", " GB", InnerPanel));
             }
+
+            _sensors = _sensorList.ToArray();
         }
 
         public void InitGPU()
         {
+            List<HWSensor> _sensorList = new List<HWSensor>();
+
             ISensor _coreClock = Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 0).FirstOrDefault();
 
             if (_coreClock != null)
             {
-                _sensors.Add(new HWSensor(_coreClock, "Core", " MHz", InnerPanel));
+                _sensorList.Add(new HWSensor(_coreClock, "Core", " MHz", InnerPanel));
             }
 
             ISensor _memoryClock = Hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 1).FirstOrDefault();
 
             if (_memoryClock != null)
             {
-                _sensors.Add(new HWSensor(_memoryClock, "VRAM", " MHz", InnerPanel));
+                _sensorList.Add(new HWSensor(_memoryClock, "VRAM", " MHz", InnerPanel));
             }
 
             ISensor _coreLoad = Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_coreLoad != null)
             {
-                _sensors.Add(new HWSensor(_coreLoad, "Core", "%", InnerPanel));
+                _sensorList.Add(new HWSensor(_coreLoad, "Core", "%", InnerPanel));
             }
 
             ISensor _memoryLoad = Hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 3).FirstOrDefault();
 
             if (_memoryLoad != null)
             {
-                _sensors.Add(new HWSensor(_memoryLoad, "VRAM", "%", InnerPanel));
+                _sensorList.Add(new HWSensor(_memoryLoad, "VRAM", "%", InnerPanel));
             }
 
             ISensor _tempSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
 
             if (_tempSensor != null)
             {
-                _sensors.Add(new HWSensor(_tempSensor, "Temp", " C", InnerPanel));
+                _sensorList.Add(new HWSensor(_tempSensor, "Temp", " C", InnerPanel));
             }
 
             ISensor _fanSensor = Hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
 
             if (_fanSensor != null)
             {
-                _sensors.Add(new HWSensor(_fanSensor, "Fan", "%", InnerPanel));
+                _sensorList.Add(new HWSensor(_fanSensor, "Fan", "%", InnerPanel));
             }
+
+            _sensors = _sensorList.ToArray();
         }
 
         public MonitorType Type { get; private set; }
@@ -367,7 +377,7 @@ namespace SidebarDiagnostics.Monitor
            
         public StackPanel InnerPanel { get; private set; }
 
-        private List<HWSensor> _sensors { get; set; }
+        private HWSensor[] _sensors { get; set; }
 
         private class HWSensor
         {

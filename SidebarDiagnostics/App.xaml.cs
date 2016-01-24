@@ -3,9 +3,8 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
 using OpenHardwareMonitor.Hardware;
+using Hardcodet.Wpf.TaskbarNotification;
 using SidebarDiagnostics.Updates;
 
 namespace SidebarDiagnostics
@@ -15,49 +14,17 @@ namespace SidebarDiagnostics
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected async override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             // CONFIG
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-            // NOTIFY ICON
-            var _settings = new System.Windows.Forms.MenuItem() { Text = "Settings" };
-            _settings.Click += SettingsMenuItem_Click;
-
-            var _update = new System.Windows.Forms.MenuItem() { Text = "Update" };
-            _update.Click += UpdateMenuItem_Click;
-
-            var _close = new System.Windows.Forms.MenuItem() { Text = "Close" };
-            _close.Click += CloseMenuItem_Click;
-
-            ShowMenuItem = new System.Windows.Forms.MenuItem() { Text = "Show" };
-            ShowMenuItem.Click += ShowMenuItem_Click;
-            ShowMenuItem.Checked = true;
-
-            HideMenuItem = new System.Windows.Forms.MenuItem() { Text = "Hide" };
-            HideMenuItem.Click += HideMenuItem_Click;
-
-            var _visiblity = new System.Windows.Forms.MenuItem() { Text = "Visibility" };
-            _visiblity.MenuItems.Add(ShowMenuItem);
-            _visiblity.MenuItems.Add(HideMenuItem);
-            _visiblity.Popup += VisibilityMenuItem_Popup;
-
-            var _contextMenu = new System.Windows.Forms.ContextMenu();
-            _contextMenu.MenuItems.Add(_settings);
-            _contextMenu.MenuItems.Add(_visiblity);
-            _contextMenu.MenuItems.Add(_update);
-            _contextMenu.MenuItems.Add(_close);
-
-            TrayIcon = new System.Windows.Forms.NotifyIcon()
-            {
-                Icon = SidebarDiagnostics.Properties.Resources.TrayIcon,
-                Text = Assembly.GetExecutingAssembly().GetName().Name,
-                ContextMenu = _contextMenu
-            };
-            TrayIcon.Click += TrayIcon_Click;
-            TrayIcon.Visible = true;
+            
+            // TRAY ICON
+            TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            TrayIcon.ToolTipText = Assembly.GetExecutingAssembly().GetName().Name;
+            TrayIcon.Visibility = Visibility.Visible;
 
             // OHM COMPUTER
             _computer = new Computer()
@@ -75,7 +42,7 @@ namespace SidebarDiagnostics
             // CHECK FOR UPDATES
             if (SidebarDiagnostics.Properties.Settings.Default.CheckForUpdates)
             {
-                UpdateManager.Check(false);
+                await UpdateManager.Check(false);
             }
         }
 
@@ -87,7 +54,7 @@ namespace SidebarDiagnostics
             base.OnExit(e);
         }
 
-        private void SettingsMenuItem_Click(object sender, EventArgs e)
+        private void Settings_Click(object sender, EventArgs e)
         {
             AppBar _appBar = GetAppBar;
 
@@ -99,28 +66,30 @@ namespace SidebarDiagnostics
             _settings.ShowDialog();
         }
 
-        private void UpdateMenuItem_Click(object sender, EventArgs e)
-        {
-            UpdateManager.Check(true);
-        }
-
-        private void CloseMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        private void VisibilityMenuItem_Popup(object sender, EventArgs e)
+        private void Reload_Click(object sender, EventArgs e)
         {
             AppBar _appBar = GetAppBar;
 
             if (_appBar == null)
                 return;
 
-            ShowMenuItem.Checked = _appBar.Shown;
-            HideMenuItem.Checked = !_appBar.Shown;
+            _appBar.Reload();
         }
 
-        private void ShowMenuItem_Click(object sender, EventArgs e)
+        private void Visibility_SubmenuOpened(object sender, EventArgs e)
+        {
+            AppBar _appBar = GetAppBar;
+
+            if (_appBar == null)
+                return;
+
+            MenuItem _this = (MenuItem)sender;
+
+            (_this.Items.GetItemAt(0) as MenuItem).IsChecked = _appBar.Shown;
+            (_this.Items.GetItemAt(1) as MenuItem).IsChecked = !_appBar.Shown;
+        }
+        
+        private void Show_Click(object sender, EventArgs e)
         {
             AppBar _appBar = GetAppBar;
 
@@ -130,7 +99,7 @@ namespace SidebarDiagnostics
             _appBar.ABShow();
         }
 
-        private void HideMenuItem_Click(object sender, EventArgs e)
+        private void Hide_Click(object sender, EventArgs e)
         {
             AppBar _appBar = GetAppBar;
 
@@ -140,14 +109,14 @@ namespace SidebarDiagnostics
             _appBar.ABHide();
         }
 
-        private void TrayIcon_Click(object sender, EventArgs e)
+        private async void Update_Click(object sender, EventArgs e)
         {
-            AppBar _appBar = GetAppBar;
+            await UpdateManager.Check(true);
+        }
 
-            if (_appBar == null)
-                return;
-
-            _appBar.Activate();
+        private void Close_Click(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
         }
 
         private static AppBar GetAppBar
@@ -158,11 +127,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private static System.Windows.Forms.NotifyIcon TrayIcon { get; set; }
-
-        private static System.Windows.Forms.MenuItem ShowMenuItem { get; set; }
-
-        private static System.Windows.Forms.MenuItem HideMenuItem { get; set; }
+        private static TaskbarIcon TrayIcon { get; set; }
 
         internal static Computer _computer { get; set; }
     }

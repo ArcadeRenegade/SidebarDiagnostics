@@ -115,21 +115,13 @@ namespace SidebarDiagnostics
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
             {
-                Owner.Closed += AppBar_Closed;
-                Owner.Close();
-                Close();
+                (Owner as AppBar).Reload();
             }));
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void AppBar_Closed(object sender, System.EventArgs e)
-        {
-            AppBar _newAppBar = new AppBar();
-            _newAppBar.Show();
         }
     }
 }
