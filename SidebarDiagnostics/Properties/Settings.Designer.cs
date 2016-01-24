@@ -74,12 +74,12 @@ namespace SidebarDiagnostics.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#FFFFFF")]
-        public string TextColor {
+        public string FontColor {
             get {
-                return ((string)(this["TextColor"]));
+                return ((string)(this["FontColor"]));
             }
             set {
-                this["TextColor"] = value;
+                this["FontColor"] = value;
             }
         }
         

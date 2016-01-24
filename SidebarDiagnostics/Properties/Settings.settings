@@ -14,7 +14,7 @@
     <Setting Name="BGOpacity" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.85</Value>
     </Setting>
-    <Setting Name="TextColor" Type="System.String" Scope="User">
+    <Setting Name="FontColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#FFFFFF</Value>
     </Setting>
     <Setting Name="PollingInterval" Type="System.Int32" Scope="User">

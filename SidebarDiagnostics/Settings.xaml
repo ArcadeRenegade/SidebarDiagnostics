@@ -6,93 +6,104 @@
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
         mc:Ignorable="d"
         Title="Sidebar Settings"
-        Width="360"
+        Width="400"
         SizeToContent="Height"
         Icon="settings.ico"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
-    <Grid Margin="15">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="38px"></RowDefinition>
-            <RowDefinition Height="38px"></RowDefinition>
-            <RowDefinition Height="38px"></RowDefinition>
-            <RowDefinition Height="38px"></RowDefinition>
-            <RowDefinition Height="38px"></RowDefinition>
-            <RowDefinition Height="38px"></RowDefinition>
-            <RowDefinition Height="38px"></RowDefinition>
-            <RowDefinition Height="38px"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.Resources>
-            <Style TargetType="{x:Type Label}">
-                <Setter Property="Margin" Value="0,5,10,0"></Setter>
-            </Style>
-        </Grid.Resources>
-        
-        <Label Grid.Column="0" Grid.Row="0" Content="Dock" VerticalAlignment="Center" />
-        <ComboBox x:Name="DockEdgeComboBox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" />
+    <StackPanel Orientation="Vertical">
+        <TabControl Margin="10" Padding="15">
+            <TabItem Header="General">
+                <Grid Style="{StaticResource SettingGrid}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-        <Label Grid.Column="0" Grid.Row="1" Content="Screen" VerticalAlignment="Center" />
-        <ComboBox x:Name="ScreenComboBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" />
+                    <Label Grid.Column="0" Grid.Row="0" Content="Dock" VerticalAlignment="Center" />
+                    <ComboBox x:Name="DockEdgeComboBox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" ToolTip="Which edge the sidebar will dock to." />
 
-        <Label Grid.Column="0" Grid.Row="2" Content="Sidebar Width" VerticalAlignment="Center" />
-        <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
-            <TextBox Text="{Binding ElementName=SidebarWidthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-            <Slider x:Name="SidebarWidthSlider" Minimum="100" Maximum="300" TickFrequency="5" TickPlacement="None" LargeChange="100" IsSnapToTickEnabled="True" VerticalAlignment="Center" />
-        </DockPanel>
-        
-        <Label Grid.Column="0" Grid.Row="3" Content="Background Color" VerticalAlignment="Center" />
-        <TextBox x:Name="BGColorTextBox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" />
+                    <Label Grid.Column="0" Grid.Row="1" Content="Screen" VerticalAlignment="Center" />
+                    <ComboBox x:Name="ScreenComboBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" ToolTip="Which screen the sidebar will be on." />
 
-        <Label Grid.Column="0" Grid.Row="4" Content="Background Opacity" VerticalAlignment="Center" />
-        <DockPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
-            <TextBox Text="{Binding ElementName=BGOpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-            <Slider x:Name="BGOpacitySlider" Minimum="0" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.05" IsSnapToTickEnabled="True" VerticalAlignment="Center" />
-        </DockPanel>
+                    <Label Grid.Column="0" Grid.Row="2" Content="Polling Interval" VerticalAlignment="Center" />
+                    <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
+                        <TextBox Text="{Binding ElementName=PollingIntervalSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
+                        <Slider x:Name="PollingIntervalSlider" Minimum="100" Maximum="5000" TickFrequency="100" TickPlacement="None" LargeChange="1000" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Time between polling for data in milliseconds." />
+                    </DockPanel>
 
-        <Label Grid.Column="0" Grid.Row="5" Content="Text Size" VerticalAlignment="Center" />
-        <ComboBox x:Name="FontSizeComboBox" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" />
-        
-        <Label Grid.Column="0" Grid.Row="6" Content="Text Color" VerticalAlignment="Center" />
-        <TextBox x:Name="TextColorTextBox" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" />
+                    <Label Grid.Column="0" Grid.Row="3" Content="Use App Bar" VerticalAlignment="Center" />
+                    <CheckBox x:Name="UseAppBarCheckBox" Grid.Column="1" Grid.Row="3" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Reserves space in the work area for the sidebar." />
 
-        <Label Grid.Column="0" Grid.Row="7" Content="Polling Interval (MS)" VerticalAlignment="Center" />
-        <DockPanel Grid.Column="1" Grid.Row="7" VerticalAlignment="Center">
-            <TextBox Text="{Binding ElementName=PollingIntervalSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-            <Slider x:Name="PollingIntervalSlider" Minimum="100" Maximum="5000" TickFrequency="100" TickPlacement="None" LargeChange="1000" IsSnapToTickEnabled="True" VerticalAlignment="Center" />
-        </DockPanel>
+                    <Label Grid.Column="0" Grid.Row="4" Content="Allow Click Through" VerticalAlignment="Center" />
+                    <CheckBox x:Name="ClickThroughCheckBox" Grid.Column="1" Grid.Row="4" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes mouse events pass through the window." />
 
-        <Label Grid.Column="0" Grid.Row="8" Content="24 Hour Clock" VerticalAlignment="Center" />
-        <CheckBox x:Name="Clock24HRCheckBox" Grid.Column="1" Grid.Row="8" Margin="0,6,0,0" VerticalAlignment="Center" />
+                    <Label Grid.Column="0" Grid.Row="5" Content="Always On Top" VerticalAlignment="Center" />
+                    <CheckBox x:Name="AlwaysTopCheckBox" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes the sidebar always on top of other windows." />
 
-        <Label Grid.Column="0" Grid.Row="9" Content="Use App Bar" VerticalAlignment="Center" />
-        <CheckBox x:Name="UseAppBarCheckBox" Grid.Column="1" Grid.Row="9" Margin="0,6,0,0" VerticalAlignment="Center" />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Check For Updates" VerticalAlignment="Center" />
+                    <CheckBox x:Name="UpdatesCheckBox" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Check for updates on program start up." />
 
-        <Label Grid.Column="0" Grid.Row="10" Content="Allow Click Through" VerticalAlignment="Center" />
-        <CheckBox x:Name="ClickThroughCheckBox" Grid.Column="1" Grid.Row="10" Margin="0,6,0,0" VerticalAlignment="Center" />
+                    <Label Grid.Column="0" Grid.Row="7" Content="Run at startup" VerticalAlignment="Center" />
+                    <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Runs the program when you first log in." />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Customize">
+                <Grid Style="{StaticResource SettingGrid}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-        <Label Grid.Column="0" Grid.Row="11" Content="Always On Top" VerticalAlignment="Center" />
-        <CheckBox x:Name="AlwaysTopCheckBox" Grid.Column="1" Grid.Row="11" Margin="0,6,0,0" VerticalAlignment="Center" />
+                    <Label Grid.Column="0" Grid.Row="0" Content="Sidebar Width" VerticalAlignment="Center" />
+                    <DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center">
+                        <TextBox Text="{Binding ElementName=SidebarWidthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
+                        <Slider x:Name="SidebarWidthSlider" Minimum="100" Maximum="300" TickFrequency="5" TickPlacement="None" LargeChange="100" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Width of the sidebar in pixels." />
+                    </DockPanel>
 
-        <Label Grid.Column="0" Grid.Row="12" Content="Check For Updates" VerticalAlignment="Center" />
-        <CheckBox x:Name="UpdatesCheckBox" Grid.Column="1" Grid.Row="12" Margin="0,6,0,0" VerticalAlignment="Center" />
-        
-        <Label Grid.Column="0" Grid.Row="13" Content="Run at startup" VerticalAlignment="Center" />
-        <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Grid.Row="13" Margin="0,6,0,0" VerticalAlignment="Center" />
+                    <Label Grid.Column="0" Grid.Row="1" Content="Background Color" VerticalAlignment="Center" />
+                    <TextBox x:Name="BGColorTextBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the sidebar background." />
 
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="14" Margin="0,20,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
-            <Button x:Name="SaveBtn" Content="Save" Margin="0,0,10,0" Padding="16,8" Click="SaveBtn_Click"></Button>
-            <Button x:Name="CancelBtn" Content="Cancel" Padding="16,8" Click="CancelBtn_Click"></Button>
+                    <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" VerticalAlignment="Center" />
+                    <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
+                        <TextBox Text="{Binding ElementName=BGOpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
+                        <Slider x:Name="BGOpacitySlider" Minimum="0" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.05" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the sidebar background." />
+                    </DockPanel>
+
+                    <Label Grid.Column="0" Grid.Row="3" Content="Font Size" VerticalAlignment="Center" />
+                    <ComboBox x:Name="FontSizeComboBox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" ToolTip="Size of the text and icons in the sidebar." />
+
+                    <Label Grid.Column="0" Grid.Row="4" Content="Font Color" VerticalAlignment="Center" />
+                    <TextBox x:Name="FontColorTextBox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the text and icons in the sidebar." />
+
+                    <Label Grid.Column="0" Grid.Row="5" Content="24 Hour Clock" VerticalAlignment="Center" />
+                    <CheckBox x:Name="Clock24HRCheckBox" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the time format to 24 hours." />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Monitors">
+            </TabItem>
+        </TabControl>
+        <StackPanel Style="{StaticResource SettingButtons}">
+            <Button Content="Save" Click="SaveButton_Click"></Button>
+            <Button Content="Cancel" Click="CancelButton_Click"></Button>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Window>

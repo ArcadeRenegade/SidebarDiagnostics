@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -177,6 +178,11 @@ namespace SidebarDiagnostics
             {
                 AppBar _newAppBar = new AppBar();
                 _newAppBar.Show();
+
+                foreach (Settings _settings in Application.Current.Windows.OfType<Settings>())
+                {
+                    _settings.Owner = _newAppBar;
+                }
             }
             else
             {

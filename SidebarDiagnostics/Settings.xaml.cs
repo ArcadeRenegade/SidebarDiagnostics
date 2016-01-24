@@ -55,7 +55,7 @@ namespace SidebarDiagnostics
             FontSizeComboBox.DisplayMemberPath = FontSizeComboBox.SelectedValuePath = "FontSize";
             FontSizeComboBox.SelectedValue = Properties.Settings.Default.FontSize;
 
-            TextColorTextBox.Text = Properties.Settings.Default.TextColor;
+            FontColorTextBox.Text = Properties.Settings.Default.FontColor;
 
             PollingIntervalSlider.Value = Properties.Settings.Default.PollingInterval;
 
@@ -72,17 +72,7 @@ namespace SidebarDiagnostics
             StartupCheckBox.IsChecked = Utilities.StartupTaskExists();
         }
 
-        private void ColorTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox _textbox = (TextBox)sender;
-
-            if (!new Regex("^#[a-fA-F0-9]{6}$").IsMatch(_textbox.Text))
-            {
-                _textbox.Text = "#000000";
-            }
-        }
-
-        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        private void Save()
         {
             Properties.Settings.Default.DockEdge = (DockEdge)DockEdgeComboBox.SelectedValue;
             Properties.Settings.Default.ScreenIndex = (int)ScreenComboBox.SelectedValue;
@@ -93,9 +83,9 @@ namespace SidebarDiagnostics
             FontSetting _fontSetting = (FontSetting)FontSizeComboBox.SelectedItem;
             Properties.Settings.Default.FontSize = _fontSetting.FontSize;
             Properties.Settings.Default.TitleFontSize = _fontSetting.TitleFontSize;
-            Properties.Settings.Default.IconSize = _fontSetting.IconSize;            
-            
-            Properties.Settings.Default.TextColor = TextColorTextBox.Text;
+            Properties.Settings.Default.IconSize = _fontSetting.IconSize;
+
+            Properties.Settings.Default.FontColor = FontColorTextBox.Text;
             Properties.Settings.Default.PollingInterval = (int)PollingIntervalSlider.Value;
             Properties.Settings.Default.Clock24HR = Clock24HRCheckBox.IsChecked == true;
             Properties.Settings.Default.UseAppBar = UseAppBarCheckBox.IsChecked == true;
@@ -119,7 +109,23 @@ namespace SidebarDiagnostics
             }));
         }
 
-        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        private void ColorTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox _textbox = (TextBox)sender;
+
+            if (!new Regex("^#[a-fA-F0-9]{6}$").IsMatch(_textbox.Text))
+            {
+                _textbox.Text = "#000000";
+            }
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Save();
+            Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
