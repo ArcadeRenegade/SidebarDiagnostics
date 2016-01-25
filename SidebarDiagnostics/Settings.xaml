@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
+        xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitor"
         mc:Ignorable="d"
+        Closing="Window_Closing"
         Title="Sidebar Settings"
         Width="400"
         SizeToContent="Height"
@@ -39,20 +41,20 @@
                     <Label Grid.Column="0" Grid.Row="2" Content="Polling Interval" VerticalAlignment="Center" />
                     <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
                         <TextBox Text="{Binding ElementName=PollingIntervalSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-                        <Slider x:Name="PollingIntervalSlider" Minimum="100" Maximum="5000" TickFrequency="100" TickPlacement="None" LargeChange="1000" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Time between polling for data in milliseconds." />
+                        <Slider x:Name="PollingIntervalSlider" Value="{Binding Path=PollingInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="5000" TickFrequency="100" TickPlacement="None" LargeChange="1000" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Time between polling for data in milliseconds." />
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Use App Bar" VerticalAlignment="Center" />
-                    <CheckBox x:Name="UseAppBarCheckBox" Grid.Column="1" Grid.Row="3" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Reserves space in the work area for the sidebar." />
+                    <CheckBox x:Name="UseAppBarCheckBox" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Reserves space in the work area for the sidebar." />
 
                     <Label Grid.Column="0" Grid.Row="4" Content="Allow Click Through" VerticalAlignment="Center" />
-                    <CheckBox x:Name="ClickThroughCheckBox" Grid.Column="1" Grid.Row="4" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes mouse events pass through the window." />
+                    <CheckBox x:Name="ClickThroughCheckBox" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes mouse events pass through the window." />
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Always On Top" VerticalAlignment="Center" />
-                    <CheckBox x:Name="AlwaysTopCheckBox" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes the sidebar always on top of other windows." />
+                    <CheckBox x:Name="AlwaysTopCheckBox" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes the sidebar always on top of other windows." />
 
                     <Label Grid.Column="0" Grid.Row="6" Content="Check For Updates" VerticalAlignment="Center" />
-                    <CheckBox x:Name="UpdatesCheckBox" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Check for updates on program start up." />
+                    <CheckBox x:Name="UpdatesCheckBox" IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Check for updates on program start up." />
 
                     <Label Grid.Column="0" Grid.Row="7" Content="Run at startup" VerticalAlignment="Center" />
                     <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Runs the program when you first log in." />
@@ -76,29 +78,132 @@
                     <Label Grid.Column="0" Grid.Row="0" Content="Sidebar Width" VerticalAlignment="Center" />
                     <DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center">
                         <TextBox Text="{Binding ElementName=SidebarWidthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-                        <Slider x:Name="SidebarWidthSlider" Minimum="100" Maximum="300" TickFrequency="5" TickPlacement="None" LargeChange="100" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Width of the sidebar in pixels." />
+                        <Slider x:Name="SidebarWidthSlider" Value="{Binding Path=SidebarWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="300" TickFrequency="5" TickPlacement="None" LargeChange="100" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Width of the sidebar in pixels." />
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="1" Content="Background Color" VerticalAlignment="Center" />
-                    <TextBox x:Name="BGColorTextBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the sidebar background." />
+                    <TextBox x:Name="BGColorTextBox" Text="{Binding Path=BGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the sidebar background." />
 
                     <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" VerticalAlignment="Center" />
                     <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
                         <TextBox Text="{Binding ElementName=BGOpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-                        <Slider x:Name="BGOpacitySlider" Minimum="0" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.05" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the sidebar background." />
+                        <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.05" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the sidebar background." />
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Font Size" VerticalAlignment="Center" />
                     <ComboBox x:Name="FontSizeComboBox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" ToolTip="Size of the text and icons in the sidebar." />
-
+                    
                     <Label Grid.Column="0" Grid.Row="4" Content="Font Color" VerticalAlignment="Center" />
-                    <TextBox x:Name="FontColorTextBox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the text and icons in the sidebar." />
+                    <TextBox x:Name="FontColorTextBox" Text="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the text and icons in the sidebar." />
 
                     <Label Grid.Column="0" Grid.Row="5" Content="24 Hour Clock" VerticalAlignment="Center" />
-                    <CheckBox x:Name="Clock24HRCheckBox" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the time format to 24 hours." />
+                    <CheckBox x:Name="Clock24HRCheckBox" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the time format to 24 hours." />
                 </Grid>
             </TabItem>
             <TabItem Header="Monitors">
+                <StackPanel Orientation="Vertical">
+                    <Label Margin="0,0,0,15" Padding="0" Content="Click a row to edit its settings." />
+                    <DataGrid x:Name="MonitorsDataGrid" ItemsSource="{Binding Path=MonitorConfig}"  AutoGenerateColumns="False" HeadersVisibility="Column" SelectionUnit="FullRow" SelectionMode="Single" GridLinesVisibility="None">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#e1e7e9" />
+                        </DataGrid.Resources>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="BorderThickness" Value="0" />
+                            </Style>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Enabled">
+                                <DataGridTemplateColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="Padding" Value="12,4" />
+                                    </Style>
+                                </DataGridTemplateColumn.HeaderStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
+                                        <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enables this monitor." />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Monitor" Width="*">
+                                <DataGridTemplateColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="Padding" Value="12,4" />
+                                    </Style>
+                                </DataGridTemplateColumn.HeaderStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
+                                        <Label Content="{Binding Path=Name}" VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Order">
+                                <DataGridTemplateColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="Padding" Value="12,4" />
+                                    </Style>
+                                </DataGridTemplateColumn.HeaderStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                            <StackPanel.Resources>
+                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource AppButton}">
+                                                    <Setter Property="Width" Value="14" />
+                                                    <Setter Property="Height" Value="14" />
+                                                    <Setter Property="Margin" Value="4,0" />
+                                                </Style>
+                                                <Style TargetType="{x:Type Path}">
+                                                    <Setter Property="Width" Value="8" />
+                                                    <Setter Property="Height" Value="8" />
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                    <Setter Property="Fill" Value="#666666" />
+                                                    <Setter Property="Stretch" Value="Uniform" />
+                                                </Style>
+                                            </StackPanel.Resources>
+                                            <Button Click="MonitorUp_Click">
+                                                <Path Data="F1 M 37.8516,35.625L 34.6849,38.7917L 23.6016,50.2708L 23.6016,39.9792L 37.8516,24.9375L 52.1016,39.9792L 52.1016,50.2708L 41.0182,38.7917L 37.8516,35.625 Z" />
+                                            </Button>
+                                            <Button Click="MonitorDown_Click">
+                                                <Path Data="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z" />
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <Border Background="#ecf0f1" Padding="35,6">
+                                    <ItemsControl ItemsSource="{Binding Path=Params}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type monitor:MonitorConfigParam}">
+                                                <ContentControl Content="{Binding}">
+                                                    <ContentControl.Style>
+                                                        <Style TargetType="{x:Type ContentControl}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Type}" Value="System.Boolean">
+                                                                    <Setter Property="ContentTemplate" Value="{StaticResource MonitorConfigBool}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ContentControl.Style>
+                                                </ContentControl>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Vertical" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Border>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+                </StackPanel>
             </TabItem>
         </TabControl>
         <StackPanel Style="{StaticResource SettingButtons}">

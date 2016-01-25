@@ -78,7 +78,7 @@ namespace SidebarDiagnostics.Windows
 
             NativeMethods.EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, _callback, 0);
 
-            return _monitors.ToArray();
+            return _monitors.OrderByDescending(m => m.IsPrimary).ToArray();
         }
 
         public static MonitorInfo GetMonitorFromIndex(int index)
@@ -341,6 +341,7 @@ namespace SidebarDiagnostics.Windows
         }
     }
 
+    [Serializable]
     public enum DockEdge : byte
     {
         Left,

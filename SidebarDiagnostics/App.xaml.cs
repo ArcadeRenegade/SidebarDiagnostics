@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -6,6 +7,7 @@ using System.Windows.Controls;
 using OpenHardwareMonitor.Hardware;
 using Hardcodet.Wpf.TaskbarNotification;
 using SidebarDiagnostics.Updates;
+using SidebarDiagnostics.Monitor;
 
 namespace SidebarDiagnostics
 {
@@ -18,8 +20,8 @@ namespace SidebarDiagnostics
         {
             base.OnStartup(e);
 
-            // CONFIG
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            // SETTINGS
+            CheckSettings();
             
             // TRAY ICON
             TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
@@ -52,6 +54,50 @@ namespace SidebarDiagnostics
             TrayIcon.Dispose();
 
             base.OnExit(e);
+        }
+
+        private void CheckSettings()
+        {
+            if (SidebarDiagnostics.Properties.Settings.Default.MonitorConfig == null)
+            {
+                SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = new MonitorConfig[3]
+                {
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.CPU,
+                        Enabled = true,
+                        Order = 1,
+                        Params = new MonitorConfigParam[2]
+                        {
+                            MonitorConfigParam.Defaults.HardwareNames,
+                            MonitorConfigParam.Defaults.UseFahrenheit
+                        }
+                    },
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.RAM,
+                        Enabled = true,
+                        Order = 2,
+                        Params = new MonitorConfigParam[1]
+                        {
+                            MonitorConfigParam.Defaults.HardwareNames
+                        }
+                    },
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.GPU,
+                        Enabled = true,
+                        Order = 3,
+                        Params = new MonitorConfigParam[2]
+                        {
+                            MonitorConfigParam.Defaults.HardwareNames,
+                            MonitorConfigParam.Defaults.UseFahrenheit
+                        }
+                    }
+                };
+
+                SidebarDiagnostics.Properties.Settings.Default.Save();
+            }
         }
 
         private void Settings_Click(object sender, EventArgs e)
@@ -130,5 +176,7 @@ namespace SidebarDiagnostics
         private static TaskbarIcon TrayIcon { get; set; }
 
         internal static Computer _computer { get; set; }
+
+        internal static bool _reloading { get; set; } = false;
     }
 }

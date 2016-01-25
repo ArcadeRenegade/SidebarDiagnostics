@@ -49,42 +49,6 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#000000")]
-        public string BGColor {
-            get {
-                return ((string)(this["BGColor"]));
-            }
-            set {
-                this["BGColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
-        public double BGOpacity {
-            get {
-                return ((double)(this["BGOpacity"]));
-            }
-            set {
-                this["BGOpacity"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFFF")]
-        public string FontColor {
-            get {
-                return ((string)(this["FontColor"]));
-            }
-            set {
-                this["FontColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1000")]
         public int PollingInterval {
             get {
@@ -92,30 +56,6 @@ namespace SidebarDiagnostics.Properties {
             }
             set {
                 this["PollingInterval"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AlwaysTop {
-            get {
-                return ((bool)(this["AlwaysTop"]));
-            }
-            set {
-                this["AlwaysTop"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Clock24HR {
-            get {
-                return ((bool)(this["Clock24HR"]));
-            }
-            set {
-                this["Clock24HR"] = value;
             }
         }
         
@@ -145,6 +85,30 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AlwaysTop {
+            get {
+                return ((bool)(this["AlwaysTop"]));
+            }
+            set {
+                this["AlwaysTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CheckForUpdates {
+            get {
+                return ((bool)(this["CheckForUpdates"]));
+            }
+            set {
+                this["CheckForUpdates"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("180")]
         public int SidebarWidth {
             get {
@@ -152,6 +116,30 @@ namespace SidebarDiagnostics.Properties {
             }
             set {
                 this["SidebarWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#000000")]
+        public string BGColor {
+            get {
+                return ((string)(this["BGColor"]));
+            }
+            set {
+                this["BGColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public double BGOpacity {
+            get {
+                return ((double)(this["BGOpacity"]));
+            }
+            set {
+                this["BGOpacity"] = value;
             }
         }
         
@@ -193,13 +181,36 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CheckForUpdates {
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFFF")]
+        public string FontColor {
             get {
-                return ((bool)(this["CheckForUpdates"]));
+                return ((string)(this["FontColor"]));
             }
             set {
-                this["CheckForUpdates"] = value;
+                this["FontColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Clock24HR {
+            get {
+                return ((bool)(this["Clock24HR"]));
+            }
+            set {
+                this["Clock24HR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public SidebarDiagnostics.Monitor.MonitorConfig[] MonitorConfig {
+            get {
+                return ((SidebarDiagnostics.Monitor.MonitorConfig[])(this["MonitorConfig"]));
+            }
+            set {
+                this["MonitorConfig"] = value;
             }
         }
     }

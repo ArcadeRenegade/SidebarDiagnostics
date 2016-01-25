@@ -4,6 +4,7 @@
              xmlns:tb="http://www.hardcodet.net/taskbar"
              xmlns:local="clr-namespace:SidebarDiagnostics"
              xmlns:prop="clr-namespace:SidebarDiagnostics.Properties"
+             ShutdownMode="OnExplicitShutdown"
              StartupUri="AppBar.xaml">
     <Application.Resources>        
         <tb:TaskbarIcon x:Key="TrayIcon" IconSource="/Tray.ico">
@@ -60,9 +61,22 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
+        <Style x:Key="VerticalPanel" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Vertical" />
+        </Style>
+
+        <Style x:Key="GroupPanel" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="Margin" Value="0,20,0,0" />
+        </Style>
+
+        <Style x:Key="MonitorPanel" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="Margin" Value="0,10,0,0" />
+        </Style>
+
         <Style x:Key="MonitorTitle" TargetType="{x:Type StackPanel}">
             <Setter Property="Orientation" Value="Horizontal" />
-            <Setter Property="Margin" Value="0,20,0,0" />
         </Style>
 
         <Style x:Key="HardwarePanel" TargetType="{x:Type StackPanel}">
@@ -182,5 +196,9 @@
                 </Style>
             </Style.Resources>
         </Style>
+
+        <DataTemplate x:Key="MonitorConfigBool">
+            <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,5" />
+        </DataTemplate>
     </Application.Resources>
 </Application>

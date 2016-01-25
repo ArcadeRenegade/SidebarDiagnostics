@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:prop="clr-namespace:SidebarDiagnostics.Properties"
+        xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitor"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Closing="Window_Closing"
@@ -31,7 +32,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel
-            x:Name="WindowControlsStackPanel"
+            x:Name="WindowControls"
             Grid.Row="0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
@@ -60,13 +61,68 @@
         </StackPanel>
         
         <ScrollViewer Grid.Row="1" Margin="5,15" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" MouseEnter="ScrollViewer_MouseEnter" MouseLeave="ScrollViewer_MouseLeave">
-            <StackPanel x:Name="MainStackPanel" Margin="15,0" Orientation="Vertical" VerticalAlignment="Top">
+            <StackPanel Margin="15,0" Orientation="Vertical" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
                     <Path Style="{StaticResource AppIcon}" Data="M256,0C114.625,0,0,114.625,0,256s114.625,256,256,256s256-114.625,256-256S397.375,0,256,0z M272,479.188V448h-32v31.188  C129.281,471.313,40.688,382.719,32.813,272H64v-32H32.813C40.688,129.281,129.281,40.688,240,32.813V64h32V32.813  C382.719,40.688,471.313,129.281,479.188,240H448v32h31.188C471.313,382.719,382.719,471.313,272,479.188z M373.781,188  c2.188,3.813,0.875,8.719-2.938,10.938l-84.516,48.781c0.734,2.719,1.672,5.344,1.672,8.281c0,17.688-14.328,32-32,32  s-32-14.313-32-32l-86.844-50.125c-7.656-4.438-10.281-14.219-5.859-21.875c4.406-7.688,14.203-10.313,21.859-5.875l87.344,50.438  c4.656-2.625,9.75-4.563,15.5-4.563c8.938,0,16.984,3.688,22.797,9.625l84.047-48.563C366.594,182.844,371.5,184.156,373.781,188z"></Path>
                     <Label Content="Time" Style="{StaticResource AppTitle}" />
                 </StackPanel>
+
+                <Label Content="{Binding Path=Time}" Style="{StaticResource AppTitle}" />
                 
-                <Label x:Name="ClockLabel" Style="{StaticResource AppTitle}" />
+                <ItemsControl ItemsSource="{Binding Path=MonitorManager.MonitorPanels}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type monitor:MonitorPanel}">
+                            <StackPanel Style="{StaticResource GroupPanel}">
+                                <StackPanel Style="{StaticResource MonitorTitle}">
+                                    <Path Data="{Binding Path=IconPath}" Style="{StaticResource AppIcon}" />
+                                    <Label Content="{Binding Path=Title}" Style="{StaticResource AppTitle}" />
+                                </StackPanel>
+                                <ItemsControl ItemsSource="{Binding Path=Monitors}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type monitor:OHMMonitor}">
+                                            <StackPanel Style="{StaticResource MonitorPanel}">
+                                                <ContentControl>
+                                                    <TextBlock Text="{Binding Path=Name}" Style="{StaticResource HardwareText}" />
+                                                    <ContentControl.Style>
+                                                        <Style TargetType="{x:Type ContentControl}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ShowName}" Value="false">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ContentControl.Style>
+                                                </ContentControl>
+                                                <ItemsControl ItemsSource="{Binding Path=Sensors}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate DataType="{x:Type monitor:OHMSensor}">
+                                                            <TextBlock Text="{Binding Path=Text}" Style="{StaticResource SensorText}" />
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Style="{StaticResource VerticalPanel}" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Style="{StaticResource VerticalPanel}" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Style="{StaticResource VerticalPanel}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </StackPanel>
         </ScrollViewer>
     </Grid>

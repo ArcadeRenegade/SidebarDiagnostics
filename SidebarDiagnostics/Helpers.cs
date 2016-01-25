@@ -44,14 +44,14 @@ namespace SidebarDiagnostics.Helpers
 
         public override bool Equals(object obj)
         {
-            FontSetting _fontSetting = obj as FontSetting;
+            FontSetting _that = obj as FontSetting;
 
-            if (_fontSetting == null)
+            if (_that == null)
             {
                 return false;
             }
 
-            return this.FontSize == _fontSetting.FontSize;
+            return this.FontSize == _that.FontSize;
         }
 
         public override int GetHashCode()

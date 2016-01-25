@@ -37,7 +37,7 @@ namespace SidebarDiagnostics
 
         public void Reload()
         {
-            _reloading = true;
+            App._reloading = true;
 
             Close();
         }
@@ -73,16 +73,14 @@ namespace SidebarDiagnostics
 
         private void InitContent()
         {
-            UpdateClock();
-
+            Model = new AppBarModel();
+            DataContext = Model;
+            
             _clockTimer = new DispatcherTimer();
             _clockTimer.Interval = TimeSpan.FromSeconds(1);
             _clockTimer.Tick += new EventHandler(ClockTimer_Tick);
             _clockTimer.Start();
-
-            GetHardware();
-            UpdateHardware();
-
+            
             _hardwareTimer = new DispatcherTimer();
             _hardwareTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
             _hardwareTimer.Tick += new EventHandler(HardwareTimer_Tick);
@@ -91,31 +89,12 @@ namespace SidebarDiagnostics
         
         private void ClockTimer_Tick(object sender, EventArgs e)
         {
-            UpdateClock();
-        }
-
-        private void UpdateClock()
-        {
-            ClockLabel.Content = DateTime.Now.ToString(Properties.Settings.Default.Clock24HR ? "H:mm:ss" : "h:mm:ss tt");
+            Model.UpdateTime();
         }
 
         private void HardwareTimer_Tick(object sender, EventArgs e)
         {
-            UpdateHardware();
-        }
-
-        private void GetHardware()
-        {
-            _monitorManager = new MonitorManager(App._computer, MainStackPanel);
-
-            _monitorManager.AddPanel(MonitorType.CPU, true);
-            _monitorManager.AddPanel(MonitorType.RAM, true);
-            _monitorManager.AddPanel(MonitorType.GPU, true);
-        }
-
-        private void UpdateHardware()
-        {
-            _monitorManager.Update();
+            Model.UpdateMonitors();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
@@ -148,12 +127,12 @@ namespace SidebarDiagnostics
 
         private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            WindowControlsStackPanel.Visibility = Visibility.Visible;
+            WindowControls.Visibility = Visibility.Visible;
         }
 
         private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            WindowControlsStackPanel.Visibility = Visibility.Hidden;
+            WindowControls.Visibility = Visibility.Hidden;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -174,15 +153,11 @@ namespace SidebarDiagnostics
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            if (_reloading)
+            if (App._reloading)
             {
-                AppBar _newAppBar = new AppBar();
-                _newAppBar.Show();
+                App._reloading = false;
 
-                foreach (Settings _settings in Application.Current.Windows.OfType<Settings>())
-                {
-                    _settings.Owner = _newAppBar;
-                }
+                new AppBar().Show();
             }
             else
             {
@@ -190,14 +165,12 @@ namespace SidebarDiagnostics
             }
         }
 
+        public AppBarModel Model { get; set; }
+
         public bool Shown { get; private set; } = true;
 
         private DispatcherTimer _clockTimer { get; set; }
 
         private DispatcherTimer _hardwareTimer { get; set; }
-
-        private MonitorManager _monitorManager { get; set; }
-
-        private bool _reloading { get; set; } = false;
     }
 }
