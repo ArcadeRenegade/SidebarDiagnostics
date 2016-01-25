@@ -15,6 +15,7 @@
         Title="Sidebar"
         Width="{Binding Source={x:Static prop:Settings.Default}, Path=SidebarWidth}"
         Height="800"
+        Icon="/App.ico"
         AllowsTransparency="True"
         ShowInTaskbar="False"
         ResizeMode="NoResize"
