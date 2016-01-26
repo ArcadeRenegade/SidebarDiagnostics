@@ -207,7 +207,7 @@ namespace SidebarDiagnostics.Monitor
                 }
                 else
                 {
-                    ISensor _firstClock = _coreClocks.FirstOrDefault(c => c.Index == 0);
+                    ISensor _firstClock = _coreClocks.FirstOrDefault(c => c.Index == 1);
 
                     if (_firstClock != null)
                     {

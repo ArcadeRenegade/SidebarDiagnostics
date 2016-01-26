@@ -260,7 +260,7 @@ namespace SidebarDiagnostics.Windows
 
                 window.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
                 {
-                    Task.Delay(100).ContinueWith(_ =>
+                    Task.Delay(150).ContinueWith(_ =>
                     {
                         regInfo.Hook = new HwndSourceHook(regInfo.WndProc);
                         regInfo.Source = HwndSource.FromHwnd(_appBarData.hWnd);
@@ -333,9 +333,12 @@ namespace SidebarDiagnostics.Windows
                     {
                         SetAppBar(Window, null, DockEdge.None);
 
-                        WorkArea _workArea = Monitors.GetWorkArea(Window);
+                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+                        {
+                            WorkArea _workArea = Monitors.GetWorkArea(Window);
 
-                        SetAppBar(Window, _workArea, Edge);
+                            SetAppBar(Window, _workArea, Edge);
+                        }));
                     }
 
                     handled = true;
