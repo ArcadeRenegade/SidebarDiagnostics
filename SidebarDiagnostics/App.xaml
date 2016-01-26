@@ -84,18 +84,21 @@
             <Setter Property="Margin" Value="0,10,0,0" />
         </Style>
 
-        <Style x:Key="HardwareText" TargetType="{x:Type TextBlock}">
+        <Style x:Key="DataText" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor}" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Margin" Value="0,0,0,6" />
+            <Setter Property="Margin" Value="0" />
             <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize}" />
             <Setter Property="TextWrapping" Value="WrapWithOverflow" />
         </Style>
 
-        <Style x:Key="SensorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HardwareText}">
-            <Setter Property="Margin" Value="0" />
+        <Style x:Key="HardwareText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataText}">
+            <Setter Property="Margin" Value="0,0,0,6" />
+        </Style>
+        
+        <Style x:Key="SensorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataText}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=IsAlert}" Value="True">
+                <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
                     <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor}" />
                 </DataTrigger>
             </Style.Triggers>

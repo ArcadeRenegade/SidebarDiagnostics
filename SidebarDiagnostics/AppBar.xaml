@@ -68,36 +68,36 @@
                     <Label Content="Time" Style="{StaticResource AppTitle}" />
                 </StackPanel>
 
-                <Label Content="{Binding Path=Time}" Style="{StaticResource AppTitle}" />
+                <Label Content="{Binding Path=Time, Mode=OneWay}" Style="{StaticResource AppTitle}" />
                 
-                <ItemsControl ItemsSource="{Binding Path=MonitorManager.MonitorPanels}">
+                <ItemsControl ItemsSource="{Binding Path=MonitorManager.MonitorPanels, Mode=OneTime}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type monitor:MonitorPanel}">
                             <StackPanel Style="{StaticResource GroupPanel}">
                                 <StackPanel Style="{StaticResource MonitorTitle}">
-                                    <Path Data="{Binding Path=IconPath}" Style="{StaticResource AppIcon}" />
-                                    <Label Content="{Binding Path=Title}" Style="{StaticResource AppTitle}" />
+                                    <Path Data="{Binding Path=IconPath, Mode=OneTime}" Style="{StaticResource AppIcon}" />
+                                    <Label Content="{Binding Path=Title, Mode=OneTime}" Style="{StaticResource AppTitle}" />
                                 </StackPanel>
-                                <ItemsControl ItemsSource="{Binding Path=Monitors}">
-                                    <ItemsControl.ItemTemplate>
+                                <ItemsControl ItemsSource="{Binding Path=Monitors, Mode=OneTime}">
+                                    <ItemsControl.Resources>
                                         <DataTemplate DataType="{x:Type monitor:OHMMonitor}">
                                             <StackPanel Style="{StaticResource MonitorPanel}">
                                                 <ContentControl>
-                                                    <TextBlock Text="{Binding Path=Name}" Style="{StaticResource HardwareText}" />
+                                                    <TextBlock Text="{Binding Path=Name, Mode=OneTime}" Style="{StaticResource HardwareText}" />
                                                     <ContentControl.Style>
                                                         <Style TargetType="{x:Type ContentControl}">
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ShowName}" Value="false">
+                                                                <DataTrigger Binding="{Binding ShowName, Mode=OneTime}" Value="false">
                                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
                                                     </ContentControl.Style>
                                                 </ContentControl>
-                                                <ItemsControl ItemsSource="{Binding Path=Sensors}">
+                                                <ItemsControl ItemsSource="{Binding Path=Sensors, Mode=OneTime}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate DataType="{x:Type monitor:OHMSensor}">
-                                                            <TextBlock Text="{Binding Path=Text}" Style="{StaticResource SensorText}" />
+                                                            <TextBlock Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
                                                     <ItemsControl.ItemsPanel>
@@ -108,7 +108,46 @@
                                                 </ItemsControl>
                                             </StackPanel>
                                         </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
+                                        
+                                        <DataTemplate DataType="{x:Type monitor:DriveMonitor}">
+                                            <ItemsControl ItemsSource="{Binding Path=Drives, Mode=OneWay}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="{x:Type monitor:DriveData}">
+                                                        <StackPanel Style="{StaticResource MonitorPanel}">
+                                                            <TextBlock Text="{Binding Path=Label, Mode=OneTime}" Style="{StaticResource HardwareText}" />
+                                                            <TextBlock Text="{Binding Path=Load, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                            <TextBlock Text="{Binding Path=UsedGB, Mode=OneWay}" Style="{StaticResource DataText}" />
+                                                            <TextBlock Text="{Binding Path=FreeGB, Mode=OneWay}" Style="{StaticResource DataText}" />
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Style="{StaticResource VerticalPanel}" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </DataTemplate>
+
+                                        <DataTemplate DataType="{x:Type monitor:NetworkMonitor}">
+                                            <ItemsControl ItemsSource="{Binding Path=Nics, Mode=OneWay}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="{x:Type monitor:NicData}">
+                                                        <StackPanel Style="{StaticResource MonitorPanel}">
+                                                            <TextBlock Text="{Binding Path=Name, Mode=OneTime}" Style="{StaticResource HardwareText}" />
+                                                            <TextBlock Text="{Binding Path=InKB, Mode=OneWay}" Style="{StaticResource DataText}" />
+                                                            <TextBlock Text="{Binding Path=OutKB, Mode=OneWay}" Style="{StaticResource DataText}" />
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Style="{StaticResource VerticalPanel}" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </DataTemplate>
+                                    </ItemsControl.Resources>
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <StackPanel Style="{StaticResource VerticalPanel}" />

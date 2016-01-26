@@ -61,7 +61,7 @@ namespace SidebarDiagnostics
         {
             if (SidebarDiagnostics.Properties.Settings.Default.MonitorConfig == null)
             {
-                SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = new MonitorConfig[3]
+                SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = new MonitorConfig[5]
                 {
                     new MonitorConfig()
                     {
@@ -84,7 +84,7 @@ namespace SidebarDiagnostics
                         Order = 2,
                         Params = new ConfigParam[1]
                         {
-                            ConfigParam.Defaults.HardwareNames
+                            ConfigParam.Defaults.NoHardwareNames
                         }
                     },
                     new MonitorConfig()
@@ -97,6 +97,25 @@ namespace SidebarDiagnostics
                             ConfigParam.Defaults.HardwareNames,
                             ConfigParam.Defaults.UseFahrenheit,
                             ConfigParam.Defaults.TempAlert
+                        }
+                    },
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.HD,
+                        Enabled = true,
+                        Order = 4,
+                        Params = new ConfigParam[1]
+                        {
+                            ConfigParam.Defaults.UsedSpaceAlert
+                        }
+                    },
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.Network,
+                        Enabled = true,
+                        Order = 5,
+                        Params = new ConfigParam[0]
+                        {
                         }
                     }
                 };
