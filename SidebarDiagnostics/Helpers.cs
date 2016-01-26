@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using System.Reflection;
 using Microsoft.Win32.TaskScheduler;
 
@@ -37,7 +37,8 @@ namespace SidebarDiagnostics.Helpers
 
         private const string _taskName = "SidebarStartup";
     }
-     
+
+    [Serializable]
     public class FontSetting
     {
         private FontSetting() { }

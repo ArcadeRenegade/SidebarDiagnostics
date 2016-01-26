@@ -116,6 +116,7 @@
     </ApplicationDefinition>
     <Compile Include="AppBarModel.cs" />
     <Compile Include="Monitor.cs" />
+    <Compile Include="SettingsModel.cs" />
     <Compile Include="Updates.cs" />
     <Compile Include="Windows.cs" />
     <Compile Include="Settings.cs" />

@@ -308,6 +308,11 @@ namespace SidebarDiagnostics.Windows
             }
         }
 
+        public static bool IsRegistered(Window window)
+        {
+            return _windowDict.ContainsKey(window);
+        }
+
         private static Dictionary<Window, RegisterInfo> _windowDict = new Dictionary<Window, RegisterInfo>();
 
         private class RegisterInfo

@@ -32,14 +32,8 @@
     <Setting Name="BGOpacity" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.85</Value>
     </Setting>
-    <Setting Name="FontSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">14</Value>
-    </Setting>
-    <Setting Name="TitleFontSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">16</Value>
-    </Setting>
-    <Setting Name="IconSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">24</Value>
+    <Setting Name="FontSetting" Type="SidebarDiagnostics.Helpers.FontSetting" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="FontColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#FFFFFF</Value>

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using OpenHardwareMonitor.Hardware;
 using Hardcodet.Wpf.TaskbarNotification;
+using SidebarDiagnostics.Helpers;
 using SidebarDiagnostics.Updates;
 using SidebarDiagnostics.Monitor;
 
@@ -58,6 +59,11 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
+            if (SidebarDiagnostics.Properties.Settings.Default.FontSetting == null)
+            {
+                SidebarDiagnostics.Properties.Settings.Default.FontSetting = FontSetting.x14;
+            }
+
             if (SidebarDiagnostics.Properties.Settings.Default.MonitorConfig == null)
             {
                 SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = new MonitorConfig[3]
@@ -95,8 +101,6 @@ namespace SidebarDiagnostics
                         }
                     }
                 };
-
-                SidebarDiagnostics.Properties.Settings.Default.Save();
             }
         }
 

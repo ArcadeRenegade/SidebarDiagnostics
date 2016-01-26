@@ -145,42 +145,6 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("14")]
-        public int FontSize {
-            get {
-                return ((int)(this["FontSize"]));
-            }
-            set {
-                this["FontSize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("16")]
-        public int TitleFontSize {
-            get {
-                return ((int)(this["TitleFontSize"]));
-            }
-            set {
-                this["TitleFontSize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("24")]
-        public int IconSize {
-            get {
-                return ((int)(this["IconSize"]));
-            }
-            set {
-                this["IconSize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#FFFFFF")]
         public string FontColor {
             get {
@@ -211,6 +175,17 @@ namespace SidebarDiagnostics.Properties {
             }
             set {
                 this["MonitorConfig"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::SidebarDiagnostics.Helpers.FontSetting FontSetting {
+            get {
+                return ((global::SidebarDiagnostics.Helpers.FontSetting)(this["FontSetting"]));
+            }
+            set {
+                this["FontSetting"] = value;
             }
         }
     }

@@ -65,7 +65,7 @@ namespace SidebarDiagnostics
 
         private void ClearAppBar()
         {
-            if (Properties.Settings.Default.UseAppBar)
+            if (AppBarWindow.IsRegistered(this))
             {
                 AppBarWindow.SetAppBar(this, null, DockEdge.None);
             }
@@ -73,8 +73,7 @@ namespace SidebarDiagnostics
 
         private void InitContent()
         {
-            Model = new AppBarModel();
-            DataContext = Model;
+            DataContext = Model = new AppBarModel();
             
             _clockTimer = new DispatcherTimer();
             _clockTimer.Interval = TimeSpan.FromSeconds(1);
@@ -165,7 +164,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        public AppBarModel Model { get; set; }
+        public AppBarModel Model { get; private set; }
 
         public bool Shown { get; private set; } = true;
 

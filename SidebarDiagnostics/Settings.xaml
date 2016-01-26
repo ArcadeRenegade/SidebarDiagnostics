@@ -6,13 +6,17 @@
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
         xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitor"
         mc:Ignorable="d"
-        Closing="Window_Closing"
         Title="Sidebar Settings"
         Width="400"
         SizeToContent="Height"
         Icon="settings.ico"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <DataTemplate x:Key="MonitorConfigBool">
+            <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,5" />
+        </DataTemplate>
+    </Window.Resources>
     <StackPanel Orientation="Vertical">
         <TabControl Margin="10" Padding="15">
             <TabItem Header="General">
@@ -33,10 +37,10 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="Dock" VerticalAlignment="Center" />
-                    <ComboBox x:Name="DockEdgeComboBox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" ToolTip="Which edge the sidebar will dock to." />
+                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=DockEdgeItems}" SelectedValue="{Binding Path=DockEdge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" ToolTip="Which edge the sidebar will dock to." />
 
                     <Label Grid.Column="0" Grid.Row="1" Content="Screen" VerticalAlignment="Center" />
-                    <ComboBox x:Name="ScreenComboBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" ToolTip="Which screen the sidebar will be on." />
+                    <ComboBox ItemsSource="{Binding Path=ScreenItems}" DisplayMemberPath="Text" SelectedValuePath="Index" SelectedValue="{Binding Path=ScreenIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" ToolTip="Which screen the sidebar will be on." />
 
                     <Label Grid.Column="0" Grid.Row="2" Content="Polling Interval" VerticalAlignment="Center" />
                     <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
@@ -45,19 +49,19 @@
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Use App Bar" VerticalAlignment="Center" />
-                    <CheckBox x:Name="UseAppBarCheckBox" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Reserves space in the work area for the sidebar." />
+                    <CheckBox IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Reserves space in the work area for the sidebar." />
 
                     <Label Grid.Column="0" Grid.Row="4" Content="Allow Click Through" VerticalAlignment="Center" />
-                    <CheckBox x:Name="ClickThroughCheckBox" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes mouse events pass through the window." />
+                    <CheckBox IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes mouse events pass through the window." />
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Always On Top" VerticalAlignment="Center" />
-                    <CheckBox x:Name="AlwaysTopCheckBox" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes the sidebar always on top of other windows." />
+                    <CheckBox IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes the sidebar always on top of other windows." />
 
                     <Label Grid.Column="0" Grid.Row="6" Content="Check For Updates" VerticalAlignment="Center" />
-                    <CheckBox x:Name="UpdatesCheckBox" IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Check for updates on program start up." />
+                    <CheckBox IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Check for updates on program start up." />
 
                     <Label Grid.Column="0" Grid.Row="7" Content="Run at startup" VerticalAlignment="Center" />
-                    <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Runs the program when you first log in." />
+                    <CheckBox IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Runs the program when you first log in." />
                 </Grid>
             </TabItem>
             <TabItem Header="Customize">
@@ -82,7 +86,7 @@
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="1" Content="Background Color" VerticalAlignment="Center" />
-                    <TextBox x:Name="BGColorTextBox" Text="{Binding Path=BGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the sidebar background." />
+                    <TextBox Text="{Binding Path=BGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the background as a hex code." />
 
                     <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" VerticalAlignment="Center" />
                     <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
@@ -91,19 +95,19 @@
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Font Size" VerticalAlignment="Center" />
-                    <ComboBox x:Name="FontSizeComboBox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" ToolTip="Size of the text and icons in the sidebar." />
+                    <ComboBox ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" ToolTip="Size of the text and icons in the sidebar." />
                     
                     <Label Grid.Column="0" Grid.Row="4" Content="Font Color" VerticalAlignment="Center" />
-                    <TextBox x:Name="FontColorTextBox" Text="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the text and icons in the sidebar." />
+                    <TextBox Text="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the text and icons as a hex code." />
 
                     <Label Grid.Column="0" Grid.Row="5" Content="24 Hour Clock" VerticalAlignment="Center" />
-                    <CheckBox x:Name="Clock24HRCheckBox" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the time format to 24 hours." />
+                    <CheckBox IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the time format to 24 hours." />
                 </Grid>
             </TabItem>
             <TabItem Header="Monitors">
                 <StackPanel Orientation="Vertical">
                     <Label Margin="0,0,0,15" Padding="0" Content="Click a row to edit its settings." />
-                    <DataGrid x:Name="MonitorsDataGrid" ItemsSource="{Binding Path=MonitorConfig}"  AutoGenerateColumns="False" HeadersVisibility="Column" SelectionUnit="FullRow" SelectionMode="Single" GridLinesVisibility="None">
+                    <DataGrid ItemsSource="{Binding Path=MonitorConfig}"  AutoGenerateColumns="False" HeadersVisibility="Column" SelectionUnit="FullRow" SelectionMode="Single" GridLinesVisibility="None">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#e1e7e9" />
                         </DataGrid.Resources>
