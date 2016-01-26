@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using SidebarDiagnostics.Windows;
-using SidebarDiagnostics.Helpers;
+using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Monitor;
 
 namespace SidebarDiagnostics
@@ -42,7 +40,7 @@ namespace SidebarDiagnostics
                 _textbox.Text = "#000000";
             }
         }
-
+        
         private void MonitorUp_Click(object sender, RoutedEventArgs e)
         {
             MonitorConfig _row = (MonitorConfig)(sender as Button).DataContext;

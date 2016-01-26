@@ -115,6 +115,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBarModel.cs" />
+    <Compile Include="Converters.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="SettingsModel.cs" />
     <Compile Include="Updates.cs" />

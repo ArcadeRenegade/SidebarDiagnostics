@@ -59,11 +59,6 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
-            if (SidebarDiagnostics.Properties.Settings.Default.FontSetting == null)
-            {
-                SidebarDiagnostics.Properties.Settings.Default.FontSetting = FontSetting.x14;
-            }
-
             if (SidebarDiagnostics.Properties.Settings.Default.MonitorConfig == null)
             {
                 SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = new MonitorConfig[3]
@@ -73,12 +68,13 @@ namespace SidebarDiagnostics
                         Type = MonitorType.CPU,
                         Enabled = true,
                         Order = 1,
-                        Params = new ConfigParam[4]
+                        Params = new ConfigParam[5]
                         {
                             ConfigParam.Defaults.HardwareNames,
                             ConfigParam.Defaults.AllCoreClocks,
                             ConfigParam.Defaults.CoreLoads,
-                            ConfigParam.Defaults.UseFahrenheit
+                            ConfigParam.Defaults.UseFahrenheit,
+                            ConfigParam.Defaults.TempAlert
                         }
                     },
                     new MonitorConfig()
@@ -96,10 +92,11 @@ namespace SidebarDiagnostics
                         Type = MonitorType.GPU,
                         Enabled = true,
                         Order = 3,
-                        Params = new ConfigParam[2]
+                        Params = new ConfigParam[3]
                         {
                             ConfigParam.Defaults.HardwareNames,
-                            ConfigParam.Defaults.UseFahrenheit
+                            ConfigParam.Defaults.UseFahrenheit,
+                            ConfigParam.Defaults.TempAlert
                         }
                     }
                 };

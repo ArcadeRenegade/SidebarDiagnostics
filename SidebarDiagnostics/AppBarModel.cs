@@ -3,7 +3,7 @@ using System.Linq;
 using System.ComponentModel;
 using SidebarDiagnostics.Monitor;
 
-namespace SidebarDiagnostics
+namespace SidebarDiagnostics.Models
 {
     public class AppBarModel : INotifyPropertyChanged
     {

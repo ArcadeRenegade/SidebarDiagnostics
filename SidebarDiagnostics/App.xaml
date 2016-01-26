@@ -94,6 +94,11 @@
 
         <Style x:Key="SensorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HardwareText}">
             <Setter Property="Margin" Value="0" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsAlert}" Value="True">
+                    <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor}" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="ScrollBarTrackThumb" TargetType="{x:Type Thumb}">

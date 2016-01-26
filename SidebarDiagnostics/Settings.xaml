@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
         xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitor"
+        xmlns:convert="clr-namespace:SidebarDiagnostics.Converters"
         mc:Ignorable="d"
         Title="Sidebar Settings"
         Width="400"
@@ -13,8 +14,17 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <convert:IntToStringConverter x:Key="IntConverter" />
+        
         <DataTemplate x:Key="MonitorConfigBool">
             <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,5" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="MonitorConfigInt">
+            <StackPanel Margin="0,5" Orientation="Horizontal">
+                <Label Content="{Binding Path=Name}" Padding="0" Margin="0,0,10,0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" Width="40" MaxLines="1" VerticalAlignment="Center" />
+            </StackPanel>
         </DataTemplate>
     </Window.Resources>
     <StackPanel Orientation="Vertical">
@@ -76,6 +86,7 @@
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
@@ -91,17 +102,20 @@
                     <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" VerticalAlignment="Center" />
                     <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
                         <TextBox Text="{Binding ElementName=BGOpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-                        <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.05" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the sidebar background." />
+                        <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.05" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the background." />
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Font Size" VerticalAlignment="Center" />
-                    <ComboBox ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" ToolTip="Size of the text and icons in the sidebar." />
+                    <ComboBox ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" ToolTip="Size of text and icons in the sidebar." />
                     
                     <Label Grid.Column="0" Grid.Row="4" Content="Font Color" VerticalAlignment="Center" />
-                    <TextBox Text="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the text and icons as a hex code." />
+                    <TextBox Text="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of text and icons as a hex code." />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="24 Hour Clock" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the time format to 24 hours." />
+                    <Label Grid.Column="0" Grid.Row="5" Content="Alert Font Color" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of alert text as a hex code." />
+
+                    <Label Grid.Column="0" Grid.Row="6" Content="24 Hour Clock" VerticalAlignment="Center" />
+                    <CheckBox IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the time format to 24 hours." />
                 </Grid>
             </TabItem>
             <TabItem Header="Monitors">
@@ -190,6 +204,9 @@
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding Type}" Value="System.Boolean">
                                                                     <Setter Property="ContentTemplate" Value="{StaticResource MonitorConfigBool}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Type}" Value="System.Int32">
+                                                                    <Setter Property="ContentTemplate" Value="{StaticResource MonitorConfigInt}" />
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>

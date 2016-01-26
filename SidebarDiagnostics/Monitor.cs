@@ -144,16 +144,23 @@ namespace SidebarDiagnostics.Monitor
                     InitCPU(
                         board,
                         parameters.GetValue<bool>(ParamKey.AllCoreClocks),
-                        parameters.GetValue<bool>(ParamKey.CoreLoads)
+                        parameters.GetValue<bool>(ParamKey.CoreLoads),
+                        parameters.GetValue<bool>(ParamKey.UseFahrenheit),
+                        parameters.GetValue<int>(ParamKey.TempAlert)
                         );
                     break;
 
                 case MonitorType.RAM:
-                    InitRAM(board);
+                    InitRAM(
+                        board
+                        );
                     break;
 
                 case MonitorType.GPU:
-                    InitGPU();
+                    InitGPU(
+                        parameters.GetValue<bool>(ParamKey.UseFahrenheit),
+                        parameters.GetValue<int>(ParamKey.TempAlert)
+                        );
                     break;
             }
         }
@@ -178,31 +185,34 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
-        private void InitCPU(IHardware board, bool allCoreClocks, bool coreLoads)
+        private void InitCPU(IHardware board, bool allCoreClocks, bool coreLoads, bool useFahrenheit, double tempAlert)
         {
             List<OHMSensor> _sensorList = new List<OHMSensor>();
 
             ISensor[] _coreClocks = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("CPU")).ToArray();
 
-            if (allCoreClocks)
+            if (_coreClocks.Length > 0)
             {
-                for (int i = 1; i <= _coreClocks.Max(s => s.Index); i++)
+                if (allCoreClocks)
                 {
-                    ISensor _coreClock = _coreClocks.Where(s => s.Index == i).FirstOrDefault();
-
-                    if (_coreClock != null)
+                    for (int i = 1; i <= _coreClocks.Max(s => s.Index); i++)
                     {
-                        _sensorList.Add(new OHMSensor(_coreClock, string.Format("Core {0}", i - 1), " MHz", true));
+                        ISensor _coreClock = _coreClocks.Where(s => s.Index == i).FirstOrDefault();
+
+                        if (_coreClock != null)
+                        {
+                            _sensorList.Add(new OHMSensor(_coreClock, DataType.Clock, string.Format("Core {0}", i - 1), true));
+                        }
                     }
                 }
-            }
-            else
-            {
-                ISensor _firstClock = _coreClocks.FirstOrDefault();
-
-                if (_firstClock != null)
+                else
                 {
-                    _sensorList.Add(new OHMSensor(_firstClock, "Clock", " MHz", true));
+                    ISensor _firstClock = _coreClocks.FirstOrDefault(c => c.Index == 0);
+
+                    if (_firstClock != null)
+                    {
+                        _sensorList.Add(new OHMSensor(_firstClock, DataType.Clock, "Clock", true));
+                    }
                 }
             }
 
@@ -236,37 +246,40 @@ namespace SidebarDiagnostics.Monitor
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, "Volt", " V"));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Volt"));
             }
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_tempSensor, "Temp", " C"));
+                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, "Temp", false, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             if (_fanSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_fanSensor, "Fan", " RPM"));
+                _sensorList.Add(new OHMSensor(_fanSensor, DataType.RPM, "Fan"));
             }
 
-            List<ISensor> _loadSensors = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load).ToList();
+            ISensor[] _loadSensors = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load).ToArray();
 
-            ISensor _totalCPU = _loadSensors.Where(s => s.Index == 0).FirstOrDefault();
-
-            if (_totalCPU != null)
+            if (_loadSensors.Length > 0)
             {
-                _sensorList.Add(new OHMSensor(_totalCPU, "Load", "%"));
-            }
+                ISensor _totalCPU = _loadSensors.Where(s => s.Index == 0).FirstOrDefault();
 
-            if (coreLoads)
-            {
-                for (int i = 1; i <= _loadSensors.Max(s => s.Index); i++)
+                if (_totalCPU != null)
                 {
-                    ISensor _coreLoad = _loadSensors.Where(s => s.Index == i).FirstOrDefault();
+                    _sensorList.Add(new OHMSensor(_totalCPU, DataType.Percent, "Load"));
+                }
 
-                    if (_coreLoad != null)
+                if (coreLoads)
+                {
+                    for (int i = 1; i <= _loadSensors.Max(s => s.Index); i++)
                     {
-                        _sensorList.Add(new OHMSensor(_coreLoad, string.Format("Core {0}", i - 1), "%"));
+                        ISensor _coreLoad = _loadSensors.Where(s => s.Index == i).FirstOrDefault();
+
+                        if (_coreLoad != null)
+                        {
+                            _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, string.Format("Core {0}", i - 1)));
+                        }
                     }
                 }
             }
@@ -282,7 +295,7 @@ namespace SidebarDiagnostics.Monitor
 
             if (_ramClock != null)
             {
-                _sensorList.Add(new OHMSensor(_ramClock, "Clock", " MHz", true));
+                _sensorList.Add(new OHMSensor(_ramClock, DataType.Clock, "Clock", true));
             }
 
             ISensor _voltage = null;
@@ -299,34 +312,34 @@ namespace SidebarDiagnostics.Monitor
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, "Volt", " V"));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Volt"));
             }
 
             ISensor _loadSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_loadSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_loadSensor, "Load", "%"));
+                _sensorList.Add(new OHMSensor(_loadSensor, DataType.Percent, "Load"));
             }
 
             ISensor _usedSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 0).FirstOrDefault();
 
             if (_usedSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_usedSensor, "Used", " GB"));
+                _sensorList.Add(new OHMSensor(_usedSensor, DataType.Gigabyte, "Used"));
             }
 
             ISensor _availSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 1).FirstOrDefault();
 
             if (_availSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_availSensor, "Free", " GB"));
+                _sensorList.Add(new OHMSensor(_availSensor, DataType.Gigabyte, "Free"));
             }
 
             Sensors = _sensorList.ToArray();
         }
 
-        public void InitGPU()
+        public void InitGPU(bool useFahrenheit, double tempAlert)
         {
             List<OHMSensor> _sensorList = new List<OHMSensor>();
 
@@ -334,42 +347,42 @@ namespace SidebarDiagnostics.Monitor
 
             if (_coreClock != null)
             {
-                _sensorList.Add(new OHMSensor(_coreClock, "Core", " MHz", true));
+                _sensorList.Add(new OHMSensor(_coreClock, DataType.Clock, "Core", true));
             }
 
             ISensor _memoryClock = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 1).FirstOrDefault();
 
             if (_memoryClock != null)
             {
-                _sensorList.Add(new OHMSensor(_memoryClock, "VRAM", " MHz", true));
+                _sensorList.Add(new OHMSensor(_memoryClock, DataType.Clock, "VRAM", true));
             }
 
             ISensor _coreLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_coreLoad != null)
             {
-                _sensorList.Add(new OHMSensor(_coreLoad, "Core", "%"));
+                _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, "Core"));
             }
 
             ISensor _memoryLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 3).FirstOrDefault();
 
             if (_memoryLoad != null)
             {
-                _sensorList.Add(new OHMSensor(_memoryLoad, "VRAM", "%"));
+                _sensorList.Add(new OHMSensor(_memoryLoad, DataType.Percent, "VRAM"));
             }
 
             ISensor _tempSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_tempSensor, "Temp", " C"));
+                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, "Temp", false, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             ISensor _fanSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
 
             if (_fanSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_fanSensor, "Fan", "%"));
+                _sensorList.Add(new OHMSensor(_fanSensor, DataType.Percent, "Fan"));
             }
 
             Sensors = _sensorList.ToArray();
@@ -386,14 +399,25 @@ namespace SidebarDiagnostics.Monitor
 
     public class OHMSensor : INotifyPropertyChanged
     {
-        public OHMSensor(ISensor sensor, string label, string append, bool round = false, iConverter converter = null)
+        public OHMSensor(ISensor sensor, DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null)
         {
             _sensor = sensor;
-            _converter = _converter;
+            _converter = converter;
+
+            if (_converter == null)
+            {
+                DataType = dataType;
+                Append = dataType.GetAppend();
+            }
+            else
+            {
+                DataType = converter.TargetType;
+                Append = converter.TargetType.GetAppend();
+            }
 
             Label = label;
-            Append = append;
             Round = round;
+            AlertValue = alertValue;
         }
 
         public void Update()
@@ -410,6 +434,18 @@ namespace SidebarDiagnostics.Monitor
                 if (Round)
                 {
                     _value = Math.Round(_value);
+                }
+
+                if (AlertValue > 0 && AlertValue <= _value)
+                {
+                    if (!IsAlert)
+                    {
+                        IsAlert = true;
+                    }
+                }
+                else if (IsAlert)
+                {
+                    IsAlert = false;
                 }
 
                 Text = string.Format(
@@ -453,59 +489,35 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
+        public DataType DataType { get; private set; }
+
         public string Label { get; set; }
 
-        public string Append { get; set; }
-
+        public string Append { get; private set; }
+        
         public bool Round { get; set; }
+
+        public double AlertValue { get; private set; }
+
+        private bool _isAlert { get; set; } = false;
+
+        public bool IsAlert
+        {
+            get
+            {
+                return _isAlert;
+            }
+            set
+            {
+                _isAlert = value;
+
+                NotifyPropertyChanged("IsAlert");
+            }
+        }
 
         private ISensor _sensor { get; set; }
 
         private iConverter _converter { get; set; }
-    }
-
-    public enum DataType : byte
-    {
-        MHz,
-        Voltz,
-        Percent,
-        RPM,
-        Celcius,
-        Fahrenheit,
-        Gigabyte
-    }
-
-    public interface iConverter
-    {
-        void Convert(ref double value);
-
-        DataType SourceType { get; }
-
-        DataType TargetType { get; }
-    }
-
-    public class ConvertCtoF : iConverter
-    {
-        public void Convert(ref double value)
-        {
-            value = value * 1.8 + 32;
-        }
-
-        public DataType SourceType
-        {
-            get
-            {
-                return DataType.Celcius;
-            }
-        }
-
-        public DataType TargetType
-        {
-            get
-            {
-                return DataType.Fahrenheit;
-            }
-        }
     }
 
     [Serializable]
@@ -517,34 +529,7 @@ namespace SidebarDiagnostics.Monitor
         HD,
         Network
     }
-
-    public static class MonitorTypeExtensions
-    {
-        public static string GetDescription(this MonitorType type)
-        {
-            switch (type)
-            {
-                case MonitorType.CPU:
-                    return "CPU";
-
-                case MonitorType.RAM:
-                    return "RAM";
-
-                case MonitorType.GPU:
-                    return "GPU";
-
-                case MonitorType.HD:
-                    return "Drives";
-
-                case MonitorType.Network:
-                    return "Network";
-
-                default:
-                    return "Unknown";
-            }
-        }
-    }
-
+    
     [Serializable]
     public class MonitorConfig
     {
@@ -598,6 +583,9 @@ namespace SidebarDiagnostics.Monitor
                     case ParamKey.CoreLoads:
                         return "Show Core Loads";
 
+                    case ParamKey.TempAlert:
+                        return "Temperature Alert";
+
                     default:
                         return "Unknown";
                 }
@@ -606,10 +594,45 @@ namespace SidebarDiagnostics.Monitor
 
         public static class Defaults
         {
-            public static readonly ConfigParam HardwareNames = new ConfigParam() { Key = ParamKey.HardwareNames, Value = true };
-            public static readonly ConfigParam UseFahrenheit = new ConfigParam() { Key = ParamKey.UseFahrenheit, Value = false };
-            public static readonly ConfigParam AllCoreClocks = new ConfigParam() { Key = ParamKey.AllCoreClocks, Value = true };
-            public static readonly ConfigParam CoreLoads = new ConfigParam() { Key = ParamKey.CoreLoads, Value = true };
+            public static ConfigParam HardwareNames
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.HardwareNames, Value = true };
+                }
+            }
+
+            public static ConfigParam UseFahrenheit
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.UseFahrenheit, Value = false };
+                }
+            }
+
+            public static ConfigParam AllCoreClocks
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.AllCoreClocks, Value = true };
+                }
+            }
+
+            public static ConfigParam CoreLoads
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.CoreLoads, Value = true };
+                }
+            }
+
+            public static ConfigParam TempAlert
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.TempAlert, Value = 0 };
+                }
+            }
         }
     }
 
@@ -619,14 +642,120 @@ namespace SidebarDiagnostics.Monitor
         HardwareNames,
         UseFahrenheit,
         AllCoreClocks,
-        CoreLoads
+        CoreLoads,
+        TempAlert
     }
 
-    public static class ConfigParamExtensions
+    public enum DataType : byte
     {
+        Clock,
+        Voltage,
+        Percent,
+        RPM,
+        Celcius,
+        Fahrenheit,
+        Gigabyte
+    }
+
+    public interface iConverter
+    {
+        void Convert(ref double value);
+
+        DataType TargetType { get; }
+    }
+
+    public class CelciusToFahrenheit : iConverter
+    {
+        private CelciusToFahrenheit() { }
+
+        public void Convert(ref double value)
+        {
+            value = value * 1.8 + 32;
+        }
+
+        public DataType TargetType
+        {
+            get
+            {
+                return DataType.Fahrenheit;
+            }
+        }
+
+        private static CelciusToFahrenheit _instance { get; set; }
+
+        public static CelciusToFahrenheit Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new CelciusToFahrenheit();
+                }
+
+                return _instance;
+            }
+        }
+    }
+
+    public static class Extensions
+    {
+        public static string GetDescription(this MonitorType type)
+        {
+            switch (type)
+            {
+                case MonitorType.CPU:
+                    return "CPU";
+
+                case MonitorType.RAM:
+                    return "RAM";
+
+                case MonitorType.GPU:
+                    return "GPU";
+
+                case MonitorType.HD:
+                    return "Drives";
+
+                case MonitorType.Network:
+                    return "Network";
+
+                default:
+                    return "Unknown";
+            }
+        }
+
         public static T GetValue<T>(this ConfigParam[] parameters, ParamKey key)
         {
             return (T)parameters.Single(p => p.Key == key).Value;
+        }
+
+        public static string GetAppend(this DataType type)
+        {
+            switch (type)
+            {
+                case DataType.Clock:
+                    return " MHz";
+
+                case DataType.Voltage:
+                    return " V";
+
+                case DataType.Percent:
+                    return "%";
+
+                case DataType.RPM:
+                    return " RPM";
+
+                case DataType.Celcius:
+                    return " C";
+
+                case DataType.Fahrenheit:
+                    return " F";
+
+                case DataType.Gigabyte:
+                    return " GB";
+
+                default:
+                    return "";
+            }
         }
     }
 }

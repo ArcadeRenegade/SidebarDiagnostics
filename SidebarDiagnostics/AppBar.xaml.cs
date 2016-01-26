@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
-using SidebarDiagnostics.Monitor;
+using SidebarDiagnostics.Models;
 
 namespace SidebarDiagnostics
 {
@@ -100,7 +99,11 @@ namespace SidebarDiagnostics
         {
             Settings _settings = new Settings();
             _settings.Owner = this;
-            _settings.ShowDialog();
+
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+            {
+                _settings.ShowDialog();
+            }));
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.ComponentModel;
 using SidebarDiagnostics.Helpers;
 using SidebarDiagnostics.Monitor;
 using SidebarDiagnostics.Windows;
 
-namespace SidebarDiagnostics
+namespace SidebarDiagnostics.Models
 {
     public class SettingsModel : INotifyPropertyChanged
     {
@@ -57,6 +56,8 @@ namespace SidebarDiagnostics
 
             FontColor = Properties.Settings.Default.FontColor;
 
+            AlertFontColor = Properties.Settings.Default.AlertFontColor;
+
             Clock24HR = Properties.Settings.Default.Clock24HR;
 
             MonitorConfig = Properties.Settings.Default.MonitorConfig;
@@ -76,6 +77,7 @@ namespace SidebarDiagnostics
             Properties.Settings.Default.BGOpacity = BGOpacity;
             Properties.Settings.Default.FontSetting = FontSetting;
             Properties.Settings.Default.FontColor = FontColor;
+            Properties.Settings.Default.AlertFontColor = AlertFontColor;
             Properties.Settings.Default.Clock24HR = Clock24HR;
             Properties.Settings.Default.MonitorConfig = MonitorConfig;
             Properties.Settings.Default.Save();
@@ -355,6 +357,22 @@ namespace SidebarDiagnostics
                 _fontColor = value;
 
                 NotifyPropertyChanged("FontColor");
+            }
+        }
+
+        private string _alertFontColor { get; set; }
+
+        public string AlertFontColor
+        {
+            get
+            {
+                return _alertFontColor;
+            }
+            set
+            {
+                _alertFontColor = value;
+
+                NotifyPropertyChanged("AlertFontColor");
             }
         }
 
