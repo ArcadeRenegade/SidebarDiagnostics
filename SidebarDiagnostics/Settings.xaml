@@ -183,7 +183,7 @@
                                 <Border Background="#ecf0f1" Padding="35,6">
                                     <ItemsControl ItemsSource="{Binding Path=Params}">
                                         <ItemsControl.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type monitor:MonitorConfigParam}">
+                                            <DataTemplate DataType="{x:Type monitor:ConfigParam}">
                                                 <ContentControl Content="{Binding}">
                                                     <ContentControl.Style>
                                                         <Style TargetType="{x:Type ContentControl}">

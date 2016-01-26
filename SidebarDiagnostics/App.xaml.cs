@@ -73,10 +73,12 @@ namespace SidebarDiagnostics
                         Type = MonitorType.CPU,
                         Enabled = true,
                         Order = 1,
-                        Params = new MonitorConfigParam[2]
+                        Params = new ConfigParam[4]
                         {
-                            MonitorConfigParam.Defaults.HardwareNames,
-                            MonitorConfigParam.Defaults.UseFahrenheit
+                            ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.AllCoreClocks,
+                            ConfigParam.Defaults.CoreLoads,
+                            ConfigParam.Defaults.UseFahrenheit
                         }
                     },
                     new MonitorConfig()
@@ -84,9 +86,9 @@ namespace SidebarDiagnostics
                         Type = MonitorType.RAM,
                         Enabled = true,
                         Order = 2,
-                        Params = new MonitorConfigParam[1]
+                        Params = new ConfigParam[1]
                         {
-                            MonitorConfigParam.Defaults.HardwareNames
+                            ConfigParam.Defaults.HardwareNames
                         }
                     },
                     new MonitorConfig()
@@ -94,10 +96,10 @@ namespace SidebarDiagnostics
                         Type = MonitorType.GPU,
                         Enabled = true,
                         Order = 3,
-                        Params = new MonitorConfigParam[2]
+                        Params = new ConfigParam[2]
                         {
-                            MonitorConfigParam.Defaults.HardwareNames,
-                            MonitorConfigParam.Defaults.UseFahrenheit
+                            ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.UseFahrenheit
                         }
                     }
                 };
