@@ -630,14 +630,23 @@ namespace SidebarDiagnostics.Monitor
 
             if (ShowDetails)
             {
-                double _readRate = _counterReadRate.NextValue() / 1024d;
-                double _writeRate = _counterWriteRate.NextValue() / 1024d;
-
                 Load = string.Format("Load: {0:#,##0.##}%", _usedPercent);
                 UsedGB = string.Format("Used: {0:#,##0.##} GB", _usedGB);
                 FreeGB = string.Format("Free: {0:#,##0.##} GB", _freeGB);
-                ReadRate = string.Format("Read: {0:#,##0.##} KB/s", _readRate);
-                WriteRate = string.Format("Write: {0:#,##0.##} KB/s", _writeRate);
+
+                double _readRate = _counterReadRate.NextValue() / 1024d;
+
+                string _readFormat;
+                Data.MinifyKiloBytesPerSecond(ref _readRate, out _readFormat);
+
+                ReadRate = string.Format("Read: {0:#,##0.##} {1}", _readRate, _readFormat);
+
+                double _writeRate = _counterWriteRate.NextValue() / 1024d;
+
+                string _writeFormat;
+                Data.MinifyKiloBytesPerSecond(ref _writeRate, out _writeFormat);
+
+                WriteRate = string.Format("Write: {0:#,##0.##} {1}", _writeRate, _writeFormat);
             }
 
             if (UsedSpaceAlert > 0 && UsedSpaceAlert <= _usedPercent)
@@ -823,14 +832,16 @@ namespace SidebarDiagnostics.Monitor
             int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
             int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
 
-            Nics = NetworkInterface.GetAllNetworkInterfaces()
-                .Where(n =>
+            string[] _instances = new PerformanceCounterCategory("Network Interface").GetInstanceNames();
+            
+            NetworkInterface[] _nics = NetworkInterface.GetAllNetworkInterfaces().Where(n =>
                     n.OperationalStatus == OperationalStatus.Up &&
                     new NetworkInterfaceType[2] { NetworkInterfaceType.Ethernet, NetworkInterfaceType.Wireless80211 }.Contains(n.NetworkInterfaceType)
-                    )
-                .Select(n =>
+                    ).ToArray();
+            
+            Nics = _instances.Where(i => _nics.Any(n => i == n.Name || i == n.Description)).Select(instance =>
                     new NicInfo(
-                        n.Description,
+                        instance,
                         _showName,
                         _bandwidthInAlert,
                         _bandwidthOutAlert
@@ -924,7 +935,11 @@ namespace SidebarDiagnostics.Monitor
                 IsAlert = false;
             }
 
-            Text = string.Format("{0}: {1:#,##0.##} Kb/s", Label, _value);
+            string _format;
+
+            Data.MinifyKiloBitsPerSecond(ref _value, out _format);
+
+            Text = string.Format("{0}: {1:#,##0.##} {2}", Label, _value, _format);
         }
 
         public void Dispose()
@@ -1254,6 +1269,51 @@ namespace SidebarDiagnostics.Monitor
                 }
 
                 return _instance;
+            }
+        }
+    }
+
+    public static class Data
+    {
+        public static void MinifyKiloBytesPerSecond(ref double input, out string format)
+        {
+            if (input < 1024d)
+            {
+                format = "kB/s";
+                return;
+            }
+            else if (input < 1048576d)
+            {
+                input /= 1024d;
+                format = "MB/s";
+                return;
+            }
+            else
+            {
+                input /= 1048576d;
+                format = "GB/s";
+                return;
+            }
+        }
+
+        public static void MinifyKiloBitsPerSecond(ref double input, out string format)
+        {
+            if (input < 1024d)
+            {
+                format = "kbps";
+                return;
+            }
+            else if (input < 1048576d)
+            {
+                input /= 1024d;
+                format = "Mbps";
+                return;
+            }
+            else
+            {
+                input /= 1048576d;
+                format = "Gbps";
+                return;
             }
         }
     }
