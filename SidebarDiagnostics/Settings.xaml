@@ -17,13 +17,13 @@
         <convert:IntToStringConverter x:Key="IntConverter" />
         
         <DataTemplate x:Key="MonitorConfigBool">
-            <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,5" />
+            <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" VerticalAlignment="Center" Margin="0,5" />
         </DataTemplate>
 
         <DataTemplate x:Key="MonitorConfigInt">
             <StackPanel Margin="0,5" Orientation="Horizontal">
-                <Label Content="{Binding Path=Name}" Padding="0" Margin="0,0,10,0" VerticalAlignment="Center" />
-                <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" Width="40" MaxLines="1" VerticalAlignment="Center" />
+                <Label Content="{Binding Path=Name, Mode=OneTime}" Padding="0" Margin="0,0,10,0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" Width="40" MaxLines="1" VerticalAlignment="Center" />
             </StackPanel>
         </DataTemplate>
     </Window.Resources>

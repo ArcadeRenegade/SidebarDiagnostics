@@ -104,8 +104,9 @@ namespace SidebarDiagnostics
                         Type = MonitorType.HD,
                         Enabled = true,
                         Order = 4,
-                        Params = new ConfigParam[1]
+                        Params = new ConfigParam[2]
                         {
+                            ConfigParam.Defaults.DriveDetails,
                             ConfigParam.Defaults.UsedSpaceAlert
                         }
                     },
@@ -114,8 +115,11 @@ namespace SidebarDiagnostics
                         Type = MonitorType.Network,
                         Enabled = true,
                         Order = 5,
-                        Params = new ConfigParam[0]
+                        Params = new ConfigParam[3]
                         {
+                            ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.BandwidthInAlert,
+                            ConfigParam.Defaults.BandwidthOutAlert
                         }
                     }
                 };

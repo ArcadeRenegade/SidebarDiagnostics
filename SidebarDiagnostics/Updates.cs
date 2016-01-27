@@ -66,7 +66,7 @@ namespace SidebarDiagnostics.Updates
                     }
                 }
             }
-            catch (WebException webEx)
+            catch (WebException)
             {
                 return CheckResult.Failed;
             }

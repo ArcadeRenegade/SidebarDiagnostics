@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.IO;
 using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
 using System.Windows.Media;
 using OpenHardwareMonitor.Hardware;
 
@@ -482,7 +482,7 @@ namespace SidebarDiagnostics.Monitor
                 }
 
                 Text = string.Format(
-                    "{0}: {1:0.##}{2}",
+                    "{0}: {1:#,##0.##}{2}",
                     Label,
                     _value,
                     Append
@@ -553,25 +553,82 @@ namespace SidebarDiagnostics.Monitor
         private iConverter _converter { get; set; }
     }
 
-    public class DriveMonitor : iMonitor, INotifyPropertyChanged
+    public class DriveMonitor : iMonitor
     {
         public DriveMonitor(ConfigParam[] parameters)
-        {
-            UsedSpaceAlert = parameters.GetValue<int>(ParamKey.UsedSpaceAlert);
+        {            
+            bool _showDetails = parameters.GetValue<bool>(ParamKey.DriveDetails);
+            int _usedSpaceAlert = parameters.GetValue<int>(ParamKey.UsedSpaceAlert);
+
+            Regex _regex = new Regex("^[A-Z]:$");
+
+            Drives = new PerformanceCounterCategory("LogicalDisk").GetInstanceNames().Where(n => _regex.IsMatch(n)).Select(n => new DriveInfo(n, _showDetails, _usedSpaceAlert)).ToArray();
         }
 
         public void Update()
         {
-            // cooldown so we don't use up too much CPU and drive resources
+            foreach (DriveInfo _drive in Drives)
+            {
+                _drive.Update();
+            }
+        }
 
-            DateTime _now = DateTime.Now;
+        public DriveInfo[] Drives { get; private set; }
+    }
 
-            if ((_now - _lastUpdate).Minutes < 2)
-                return;
+    public class DriveInfo : INotifyPropertyChanged
+    {
+        public DriveInfo(string name, bool showDetails = false, double usedSpaceAlert = 0)
+        {
+            Label = name;
+            ShowDetails = showDetails;
+            UsedSpaceAlert = usedSpaceAlert;
 
-            _lastUpdate = _now;
+            _counterFreeMB = new PerformanceCounter("LogicalDisk", "Free Megabytes", name);
+            _counterFreePercent = new PerformanceCounter("LogicalDisk", "% Free Space", name);
 
-            Drives = DriveInfo.GetDrives().Select(d => new DriveData(d, UsedSpaceAlert)).ToArray();
+            if (showDetails)
+            {
+                _counterReadRate = new PerformanceCounter("LogicalDisk", "Disk Read Bytes/sec", name);
+                _counterWriteRate = new PerformanceCounter("LogicalDisk", "Disk Write Bytes/sec", name);
+            }
+        }
+
+        public void Update()
+        {
+            double _freeGB = _counterFreeMB.NextValue() / 1024d;
+            double _freePercent = _counterFreePercent.NextValue();
+
+            double _usedPercent = 100d - _freePercent;
+
+            double _totalGB = _freeGB / (_freePercent / 100);
+            double _usedGB = _totalGB - _freeGB;
+
+            Value = _usedPercent;
+
+            if (ShowDetails)
+            {
+                double _readRate = _counterReadRate.NextValue() / 1024d;
+                double _writeRate = _counterWriteRate.NextValue() / 1024d;
+
+                Load = string.Format("Load: {0:#,##0.##}%", _usedPercent);
+                UsedGB = string.Format("Used: {0:#,##0.##} GB", _usedGB);
+                FreeGB = string.Format("Free: {0:#,##0.##} GB", _freeGB);
+                ReadRate = string.Format("Read: {0:#,##0.##} KB/s", _readRate);
+                WriteRate = string.Format("Write: {0:#,##0.##} KB/s", _writeRate);
+            }
+
+            if (UsedSpaceAlert > 0 && UsedSpaceAlert <= _usedPercent)
+            {
+                if (!IsAlert)
+                {
+                    IsAlert = true;
+                }
+            }
+            else if (IsAlert)
+            {
+                IsAlert = false;
+            }
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -586,88 +643,229 @@ namespace SidebarDiagnostics.Monitor
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private DriveData[] _drives { get; set; }
+        public string Label { get; private set; }
 
-        public DriveData[] Drives
+        private double _value { get; set; }
+
+        public double Value
         {
             get
             {
-                return _drives;
+                return _value;
             }
             set
             {
-                _drives = value;
+                _value = value;
 
-                NotifyPropertyChanged("Drives");
+                NotifyPropertyChanged("Value");
+            }
+        }
+        
+        private string _load { get; set; }
+
+        public string Load
+        {
+            get
+            {
+                return _load;
+            }
+            set
+            {
+                _load = value;
+
+                NotifyPropertyChanged("Load");
             }
         }
 
+        private string _usedGB { get; set; }
+
+        public string UsedGB
+        {
+            get
+            {
+                return _usedGB;
+            }
+            set
+            {
+                _usedGB = value;
+
+                NotifyPropertyChanged("UsedGB");
+            }
+        }
+
+        private string _freeGB { get; set; }
+
+        public string FreeGB
+        {
+            get
+            {
+                return _freeGB;
+            }
+            set
+            {
+                _freeGB = value;
+
+                NotifyPropertyChanged("FreeGB");
+            }
+        }
+
+        public string _readRate { get; set; }
+
+        public string ReadRate
+        {
+            get
+            {
+                return _readRate;
+            }
+            set
+            {
+                _readRate = value;
+
+                NotifyPropertyChanged("ReadRate");
+            }
+        }
+
+        private string _writeRate { get; set; }
+
+        public string WriteRate
+        {
+            get
+            {
+                return _writeRate;
+            }
+            set
+            {
+                _writeRate = value;
+
+                NotifyPropertyChanged("WriteRate");
+            }
+        }
+
+        private bool _isAlert { get; set; }
+
+        public bool IsAlert
+        {
+            get
+            {
+                return _isAlert;
+            }
+            set
+            {
+                _isAlert = value;
+
+                NotifyPropertyChanged("IsAlert");
+            }
+        }
+
+        public bool ShowDetails { get; private set; }
+
         public double UsedSpaceAlert { get; private set; }
 
-        private DateTime _lastUpdate { get; set; }
-    }
+        private PerformanceCounter _counterFreeMB { get; set; }
 
-    public class DriveData
-    {
-        public DriveData(DriveInfo driveInfo, double usedSpaceAlert)
-        {
-            Label = string.Format("{0} {1}", driveInfo.Name, driveInfo.VolumeLabel);
+        private PerformanceCounter _counterFreePercent { get; set; }
 
-            double _freeGB = driveInfo.AvailableFreeSpace / 1073741824d;
-            double _totalGB = driveInfo.TotalSize / 1073741824d;
-            double _usedGB = (_totalGB - _freeGB);
-            double _load = _usedGB / _totalGB * 100d;
+        private PerformanceCounter _counterReadRate { get; set; }
 
-            Load = string.Format("Load: {0:0.##}%", _load);
-            UsedGB = string.Format("Used: {0:0.##} GB", _usedGB);
-            FreeGB = string.Format("Free: {0:0.##} GB", _freeGB);
-
-            IsAlert = usedSpaceAlert > 0 && _load > usedSpaceAlert;
-        }
-        
-        public string Label { get; private set; }
-
-        public string Load { get; private set; }
-
-        public string UsedGB { get; private set; }
-
-        public string FreeGB { get; private set; }
-
-        public bool IsAlert { get; private set; }
+        private PerformanceCounter _counterWriteRate { get; set; }
     }
 
     public class NetworkMonitor : iMonitor
     {
         public NetworkMonitor(ConfigParam[] parameters)
         {
-            Nics = NetworkInterface.GetAllNetworkInterfaces().Where(n => n.OperationalStatus == OperationalStatus.Up && new NetworkInterfaceType[2] { NetworkInterfaceType.Ethernet, NetworkInterfaceType.Wireless80211 }.Contains(n.NetworkInterfaceType)).Select(n => new NicData(n.Description)).ToArray();
+            bool _showName = parameters.GetValue<bool>(ParamKey.HardwareNames);
+            int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
+            int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
+
+            Nics = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(n =>
+                    n.OperationalStatus == OperationalStatus.Up &&
+                    new NetworkInterfaceType[2] { NetworkInterfaceType.Ethernet, NetworkInterfaceType.Wireless80211 }.Contains(n.NetworkInterfaceType)
+                    )
+                .Select(n =>
+                    new NicInfo(
+                        n.Description,
+                        _showName,
+                        _bandwidthInAlert,
+                        _bandwidthOutAlert
+                    )
+                ).ToArray();
         }
 
         public void Update()
         {
-            foreach (NicData _nic in Nics)
+            foreach (NicInfo _nic in Nics)
             {
                 _nic.Update();
             }
         }
         
-        public NicData[] Nics { get; private set; }
+        public NicInfo[] Nics { get; private set; }
     }
 
-    public class NicData : INotifyPropertyChanged
+    public class NicInfo
     {
-        public NicData(string name)
+        public NicInfo(string name, bool showName = true, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
         {
             Name = name;
+            ShowName = showName;
 
-            _outCounter = new PerformanceCounter("Network Interface", "Bytes Sent/sec", name);
-            _inCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", name);
+            InBandwidth = new Bandwidth(
+                new PerformanceCounter("Network Interface", "Bytes Received/sec", name),
+                "In",
+                bandwidthInAlert
+                );
+
+            OutBandwidth = new Bandwidth(
+                new PerformanceCounter("Network Interface", "Bytes Sent/sec", name),
+                "Out",
+                bandwidthOutAlert
+                );
         }
 
         public void Update()
         {
-            OutKB = string.Format("Out: {0:0.##} Kb/s", _outCounter.NextValue() / 128d);
-            InKB = string.Format("In: {0:0.##} Kb/s", _inCounter.NextValue() / 128d);
+            InBandwidth.Update();
+            OutBandwidth.Update();
+        }
+
+        public string Name { get; private set; }
+
+        public bool ShowName { get; private set; }
+        
+        public Bandwidth InBandwidth { get; private set; }
+
+        public Bandwidth OutBandwidth { get; private set; }
+    }
+
+    public class Bandwidth : INotifyPropertyChanged
+    {
+        public Bandwidth(PerformanceCounter counter, string label, double alertValue = 0)
+        {
+            _counter = counter;
+
+            Label = label;
+            AlertValue = alertValue;
+        }
+
+        public void Update()
+        {
+            double _value = _counter.NextValue() / 128d;
+
+            if (AlertValue > 0 && AlertValue <= _value)
+            {
+                if (!IsAlert)
+                {
+                    IsAlert = true;
+                }
+            }
+            else if (IsAlert)
+            {
+                IsAlert = false;
+            }
+
+            Text = string.Format("{0}: {1:#,##0.##} Kb/s", Label, _value);
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -682,43 +880,43 @@ namespace SidebarDiagnostics.Monitor
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Name { get; private set; }
+        public string Label { get; private set; }
 
-        private PerformanceCounter _outCounter { get; set; }
+        private string _text { get; set; }
 
-        private string _outKB { get; set; }
-
-        public string OutKB
+        public string Text
         {
             get
             {
-                return _outKB;
+                return _text;
             }
             set
             {
-                _outKB = value;
+                _text = value;
 
-                NotifyPropertyChanged("OutKB");
+                NotifyPropertyChanged("Text");
             }
         }
 
-        private PerformanceCounter _inCounter { get; set; }
+        private bool _isAlert { get; set; }
 
-        private string _inKB { get; set; }
-
-        public string InKB
+        public bool IsAlert
         {
             get
             {
-                return _inKB;
+                return _isAlert;
             }
             set
             {
-                _inKB = value;
+                _isAlert = value;
 
-                NotifyPropertyChanged("InKB");
+                NotifyPropertyChanged("IsAlert");
             }
         }
+
+        public double AlertValue { get; private set; }
+
+        private PerformanceCounter _counter { get; set; }
     }
 
     [Serializable]
@@ -787,8 +985,56 @@ namespace SidebarDiagnostics.Monitor
                     case ParamKey.TempAlert:
                         return "Temperature Alert";
 
+                    case ParamKey.DriveDetails:
+                        return "Show Drive Details";
+
                     case ParamKey.UsedSpaceAlert:
-                        return "% Used Alert";
+                        return "Used Space Alert";
+
+                    case ParamKey.BandwidthInAlert:
+                        return "Bandwidth In Alert";
+
+                    case ParamKey.BandwidthOutAlert:
+                        return "Bandwidth Out Alert";
+
+                    default:
+                        return "Unknown";
+                }
+            }
+        }
+
+        public string Tooltip
+        {
+            get
+            {
+                switch (Key)
+                {
+                    case ParamKey.HardwareNames:
+                        return "Shows hardware names.";
+
+                    case ParamKey.UseFahrenheit:
+                        return "Temperatures for sensors and alerts will be in Fahrenheit instead of Celcius.";
+
+                    case ParamKey.AllCoreClocks:
+                        return "Shows the clock speeds of all cores not just the first.";
+
+                    case ParamKey.CoreLoads:
+                        return "Shows the percentage load of all cores.";
+
+                    case ParamKey.TempAlert:
+                        return "The temperature threshold at which alerts occur. Use 0 to disable.";
+
+                    case ParamKey.DriveDetails:
+                        return "Shows extra drive details as text.";
+
+                    case ParamKey.UsedSpaceAlert:
+                        return "The percentage threshold at which used space alerts occur. Use 0 to disable.";
+
+                    case ParamKey.BandwidthInAlert:
+                        return "The Kb/s threshold at which bandwidth received alerts occur. Use 0 to disable.";
+
+                    case ParamKey.BandwidthOutAlert:
+                        return "The Kb/s threshold at which bandwidth sent alerts occur. Use 0 to disable.";
 
                     default:
                         return "Unknown";
@@ -846,11 +1092,35 @@ namespace SidebarDiagnostics.Monitor
                 }
             }
 
+            public static ConfigParam DriveDetails
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.DriveDetails, Value = false };
+                }
+            }
+
             public static ConfigParam UsedSpaceAlert
             {
                 get
                 {
                     return new ConfigParam() { Key = ParamKey.UsedSpaceAlert, Value = 0 };
+                }
+            }
+
+            public static ConfigParam BandwidthInAlert
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.BandwidthInAlert, Value = 0 };
+                }
+            }
+
+            public static ConfigParam BandwidthOutAlert
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.BandwidthOutAlert, Value = 0 };
                 }
             }
         }
@@ -864,7 +1134,10 @@ namespace SidebarDiagnostics.Monitor
         AllCoreClocks,
         CoreLoads,
         TempAlert,
-        UsedSpaceAlert
+        DriveDetails,
+        UsedSpaceAlert,
+        BandwidthInAlert,
+        BandwidthOutAlert
     }
 
     public enum DataType : byte
