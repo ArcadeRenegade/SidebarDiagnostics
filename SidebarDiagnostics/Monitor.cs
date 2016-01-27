@@ -1113,10 +1113,10 @@ namespace SidebarDiagnostics.Monitor
                         return "The percentage threshold at which used space alerts occur. Use 0 to disable.";
 
                     case ParamKey.BandwidthInAlert:
-                        return "The Kb/s threshold at which bandwidth received alerts occur. Use 0 to disable.";
+                        return "The kbps threshold at which bandwidth received alerts occur. Use 0 to disable.";
 
                     case ParamKey.BandwidthOutAlert:
-                        return "The Kb/s threshold at which bandwidth sent alerts occur. Use 0 to disable.";
+                        return "The kbps threshold at which bandwidth sent alerts occur. Use 0 to disable.";
 
                     default:
                         return "Unknown";
