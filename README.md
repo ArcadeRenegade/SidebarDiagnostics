@@ -2,7 +2,7 @@
 
 A simple sidebar for Windows desktop that displays hardware diagnostic information.
 
-Monitors CPU, RAM, and GPU. Has a clock too.
+Monitors CPU, RAM, GPU, storage and network. Has a clock too.
 
 Written in C# .NET WPF. Works in Windows 10.
 
