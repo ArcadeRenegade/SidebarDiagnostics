@@ -107,20 +107,14 @@
         <Style x:Key="DriveProgress" TargetType="{x:Type ProgressBar}">
             <Setter Property="Minimum" Value="0" />
             <Setter Property="Maximum" Value="100" />
-            <Setter Property="Width" Value="90" />
-            <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize}" />
+            <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarWidth, Mode=OneTime}" />
+            <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarHeight, Mode=OneTime}" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ProgressBar}">
-                        <ControlTemplate.Resources>
-                            <Style TargetType="{x:Type Rectangle}">
-                                <Setter Property="RadiusX" Value="2" />
-                                <Setter Property="RadiusY" Value="2" />
-                            </Style>
-                        </ControlTemplate.Resources>
                         <Grid>
                             <Rectangle Name="PART_Track" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}" StrokeThickness="1" />
                             <Rectangle Name="PART_Indicator" Fill="{TemplateBinding Foreground}" Stroke="{TemplateBinding Background}" StrokeThickness="0" HorizontalAlignment="Left" />

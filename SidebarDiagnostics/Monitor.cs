@@ -10,7 +10,7 @@ using OpenHardwareMonitor.Hardware;
 
 namespace SidebarDiagnostics.Monitor
 {
-    public class MonitorManager
+    public class MonitorManager : IDisposable
     {
         public MonitorManager(IComputer computer)
         {
@@ -162,11 +162,9 @@ namespace SidebarDiagnostics.Monitor
         public List<iMonitor> Monitors { get; private set; }
     }
 
-    public interface iMonitor
+    public interface iMonitor : IDisposable
     {
         void Update();
-
-        void Dispose();
     }
     
     public class OHMMonitor : iMonitor
@@ -598,7 +596,7 @@ namespace SidebarDiagnostics.Monitor
         public DriveInfo[] Drives { get; private set; }
     }
 
-    public class DriveInfo : INotifyPropertyChanged
+    public class DriveInfo : IDisposable, INotifyPropertyChanged
     {
         public DriveInfo(string name, bool showDetails = false, double usedSpaceAlert = 0)
         {
@@ -868,7 +866,7 @@ namespace SidebarDiagnostics.Monitor
         public NicInfo[] Nics { get; private set; }
     }
 
-    public class NicInfo
+    public class NicInfo : IDisposable
     {
         public NicInfo(string name, bool showName = true, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
         {
@@ -909,7 +907,7 @@ namespace SidebarDiagnostics.Monitor
         public Bandwidth OutBandwidth { get; private set; }
     }
 
-    public class Bandwidth : INotifyPropertyChanged
+    public class Bandwidth : IDisposable, INotifyPropertyChanged
     {
         public Bandwidth(PerformanceCounter counter, string label, double alertValue = 0)
         {

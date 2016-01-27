@@ -67,7 +67,25 @@ namespace SidebarDiagnostics.Helpers
         public static readonly FontSetting x18 = new FontSetting() { IconSize = 32, TitleFontSize = 20, FontSize = 18 };
 
         public int IconSize { get; set; }
+
         public int TitleFontSize { get; set; }
+
         public int FontSize { get; set; }
+
+        public int BarHeight
+        {
+            get
+            {
+                return FontSize - 3;
+            }
+        }
+
+        public int BarWidth
+        {
+            get
+            {
+                return BarHeight * 6;
+            }
+        }
     }
 }

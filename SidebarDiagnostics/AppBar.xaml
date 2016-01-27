@@ -133,7 +133,7 @@
                                                                                                 <RowDefinition Height="*" />
                                                                                             </Grid.RowDefinitions>
                                                                                             <TextBlock Grid.Column="0" Text="{Binding Path=Label, Mode=OneTime}" Style="{StaticResource SensorText}" />
-                                                                                            <ProgressBar Grid.Column="1" Value="{Binding Path=Value, Mode=OneWay}" Margin="12,2,0,0" Style="{StaticResource DriveProgress}" />
+                                                                                            <ProgressBar Grid.Column="1" Value="{Binding Path=Value, Mode=OneWay}" Margin="8,3,0,0" Style="{StaticResource DriveProgress}" />
                                                                                         </Grid>
                                                                                     </Setter.Value>
                                                                                 </Setter>
@@ -143,7 +143,6 @@
                                                                                     <Setter.Value>
                                                                                         <StackPanel Orientation="Vertical">
                                                                                             <TextBlock Text="{Binding Path=Label, Mode=OneTime}" Style="{StaticResource SensorText}" />
-                                                                                            <ProgressBar Value="{Binding Path=Value, Mode=OneWay}" Margin="0,4" Style="{StaticResource DriveProgress}" />
                                                                                             <TextBlock Text="{Binding Path=Load, Mode=OneWay}" Style="{StaticResource SensorText}" />
                                                                                             <TextBlock Text="{Binding Path=UsedGB, Mode=OneWay}" Style="{StaticResource DataText}" />
                                                                                             <TextBlock Text="{Binding Path=FreeGB, Mode=OneWay}" Style="{StaticResource DataText}" />
