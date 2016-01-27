@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using OpenHardwareMonitor.Hardware;
 using Hardcodet.Wpf.TaskbarNotification;
-using SidebarDiagnostics.Helpers;
 using SidebarDiagnostics.Updates;
 using SidebarDiagnostics.Monitor;
 
@@ -21,6 +19,9 @@ namespace SidebarDiagnostics
         {
             base.OnStartup(e);
 
+            // ERROR HANDLING
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(AppDomain_Error);
+            
             // SETTINGS
             CheckSettings();
             
@@ -191,6 +192,13 @@ namespace SidebarDiagnostics
             Application.Current.Shutdown();
         }
 
+        private static void AppDomain_Error(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = (Exception)e.ExceptionObject;
+
+            MessageBox.Show(ex.ToString(), "Sidebar Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+        }
+
         private static AppBar GetAppBar
         {
             get
@@ -201,7 +209,7 @@ namespace SidebarDiagnostics
 
         private static TaskbarIcon TrayIcon { get; set; }
 
-        internal static Computer _computer { get; set; }
+        internal static Computer _computer { get; private set; }
 
         internal static bool _reloading { get; set; } = false;
     }
