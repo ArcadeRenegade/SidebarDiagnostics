@@ -51,9 +51,9 @@ namespace SidebarDiagnostics.Updates
                         GitHubRelease _release = (GitHubRelease)_json.ReadObject(_responseStream);
 
                         string _newVersion = _release.tag_name;
-                        string _thisVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+                        string _thisVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 
-                        if (!_thisVersion.Equals(_newVersion, StringComparison.OrdinalIgnoreCase))
+                        if (!_thisVersion.StartsWith(_newVersion, StringComparison.OrdinalIgnoreCase))
                         {
                             return new CheckResult()
                             {
