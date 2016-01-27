@@ -74,6 +74,14 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
+        public void Dispose()
+        {
+            foreach (iMonitor _monitor in MonitorPanels.SelectMany(p => p.Monitors))
+            {
+                _monitor.Dispose();
+            }
+        }
+
         private IEnumerable<IHardware> GetHardware(params HardwareType[] types)
         {
             return _computer.Hardware.Where(h => types.Contains(h.HardwareType));
@@ -157,6 +165,8 @@ namespace SidebarDiagnostics.Monitor
     public interface iMonitor
     {
         void Update();
+
+        void Dispose();
     }
     
     public class OHMMonitor : iMonitor
@@ -206,6 +216,10 @@ namespace SidebarDiagnostics.Monitor
             {
                 _sensor.Update();
             }
+        }
+
+        public void Dispose()
+        {
         }
 
         private void UpdateHardware()
@@ -436,7 +450,7 @@ namespace SidebarDiagnostics.Monitor
         {
             _sensor = sensor;
             _converter = converter;
-
+            
             if (_converter == null)
             {
                 DataType = dataType;
@@ -573,6 +587,14 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
+        public void Dispose()
+        {
+            foreach (DriveInfo _drive in Drives)
+            {
+                _drive.Dispose();
+            }
+        }
+
         public DriveInfo[] Drives { get; private set; }
     }
 
@@ -628,6 +650,29 @@ namespace SidebarDiagnostics.Monitor
             else if (IsAlert)
             {
                 IsAlert = false;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_counterFreeMB != null)
+            {
+                _counterFreeMB.Dispose();
+            }
+
+            if (_counterFreePercent != null)
+            {
+                _counterFreePercent.Dispose();
+            }
+
+            if (_counterReadRate != null)
+            {
+                _counterReadRate.Dispose();
+            }
+
+            if (_counterWriteRate != null)
+            {
+                _counterWriteRate.Dispose();
             }
         }
 
@@ -800,6 +845,14 @@ namespace SidebarDiagnostics.Monitor
                 _nic.Update();
             }
         }
+
+        public void Dispose()
+        {
+            foreach (NicInfo _nic in Nics)
+            {
+                _nic.Dispose();
+            }
+        }
         
         public NicInfo[] Nics { get; private set; }
     }
@@ -828,6 +881,12 @@ namespace SidebarDiagnostics.Monitor
         {
             InBandwidth.Update();
             OutBandwidth.Update();
+        }
+
+        public void Dispose()
+        {
+            InBandwidth.Dispose();
+            OutBandwidth.Dispose();
         }
 
         public string Name { get; private set; }
@@ -866,6 +925,14 @@ namespace SidebarDiagnostics.Monitor
             }
 
             Text = string.Format("{0}: {1:#,##0.##} Kb/s", Label, _value);
+        }
+
+        public void Dispose()
+        {
+            if (_counter != null)
+            {
+                _counter.Dispose();
+            }
         }
 
         public void NotifyPropertyChanged(string propertyName)

@@ -31,6 +31,14 @@ namespace SidebarDiagnostics.Models
             MonitorManager.Update();
         }
 
+        public void Dispose()
+        {
+            if (MonitorManager != null)
+            {
+                MonitorManager.Dispose();
+            }
+        }
+
         public void NotifyPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler _handler = PropertyChanged;

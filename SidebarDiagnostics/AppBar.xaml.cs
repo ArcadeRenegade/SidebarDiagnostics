@@ -149,6 +149,11 @@ namespace SidebarDiagnostics
                 _clockTimer.Stop();
             }
 
+            if (Model != null)
+            {
+                Model.Dispose();
+            }
+
             ClearAppBar();
             AppBarWindow.DisposeWindow(this);
         }
