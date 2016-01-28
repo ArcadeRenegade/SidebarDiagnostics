@@ -2,7 +2,7 @@
 
 A simple sidebar for Windows desktop that displays hardware diagnostic information.
 
-Monitors CPU, RAM, GPU, storage and network. Has a clock too.
+Monitors CPU, RAM, GPU, drives and network. Has a clock too.
 
 Written in C# .NET WPF. Works in Windows 10.
 
@@ -14,4 +14,4 @@ You will need to run it as administrator.
 
 Data provided by <a href="http://openhardwaremonitor.org/">Open Hardware Monitor</a>.
 
-<img src="http://i.imgur.com/VD7OiLR.png" />
+<img src="http://i.imgur.com/BgG7mFP.png" />
