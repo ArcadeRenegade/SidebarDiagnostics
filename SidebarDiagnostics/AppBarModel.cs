@@ -9,7 +9,10 @@ namespace SidebarDiagnostics.Models
     {
         public AppBarModel()
         {
-            UpdateTime();
+            if (Properties.Settings.Default.ShowClock)
+            {
+                UpdateTime();
+            }
 
             MonitorManager = new MonitorManager(App._computer);
 

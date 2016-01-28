@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.Win32.TaskScheduler;
 
 namespace SidebarDiagnostics.Helpers
@@ -36,56 +35,5 @@ namespace SidebarDiagnostics.Helpers
         }
 
         private const string _taskName = "SidebarStartup";
-    }
-
-    [Serializable]
-    public class FontSetting
-    {
-        private FontSetting() { }
-
-        public override bool Equals(object obj)
-        {
-            FontSetting _that = obj as FontSetting;
-
-            if (_that == null)
-            {
-                return false;
-            }
-
-            return this.FontSize == _that.FontSize;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public static readonly FontSetting x10 = new FontSetting() { IconSize = 18, TitleFontSize = 12, FontSize = 10 };
-        public static readonly FontSetting x12 = new FontSetting() { IconSize = 22, TitleFontSize = 14, FontSize = 12 };
-        public static readonly FontSetting x14 = new FontSetting() { IconSize = 24, TitleFontSize = 16, FontSize = 14 };
-        public static readonly FontSetting x16 = new FontSetting() { IconSize = 28, TitleFontSize = 18, FontSize = 16 };
-        public static readonly FontSetting x18 = new FontSetting() { IconSize = 32, TitleFontSize = 20, FontSize = 18 };
-
-        public int IconSize { get; set; }
-
-        public int TitleFontSize { get; set; }
-
-        public int FontSize { get; set; }
-
-        public int BarHeight
-        {
-            get
-            {
-                return FontSize - 3;
-            }
-        }
-
-        public int BarWidth
-        {
-            get
-            {
-                return BarHeight * 6;
-            }
-        }
     }
 }

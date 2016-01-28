@@ -3,6 +3,7 @@ using System.ComponentModel;
 using SidebarDiagnostics.Helpers;
 using SidebarDiagnostics.Monitor;
 using SidebarDiagnostics.Windows;
+using SidebarDiagnostics.Properties;
 
 namespace SidebarDiagnostics.Models
 {
@@ -58,6 +59,8 @@ namespace SidebarDiagnostics.Models
 
             AlertFontColor = Properties.Settings.Default.AlertFontColor;
 
+            ShowClock = Properties.Settings.Default.ShowClock;
+
             Clock24HR = Properties.Settings.Default.Clock24HR;
 
             MonitorConfig = Properties.Settings.Default.MonitorConfig;
@@ -78,6 +81,7 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.FontSetting = FontSetting;
             Properties.Settings.Default.FontColor = FontColor;
             Properties.Settings.Default.AlertFontColor = AlertFontColor;
+            Properties.Settings.Default.ShowClock = ShowClock;
             Properties.Settings.Default.Clock24HR = Clock24HR;
             Properties.Settings.Default.MonitorConfig = MonitorConfig;
             Properties.Settings.Default.Save();
@@ -373,6 +377,22 @@ namespace SidebarDiagnostics.Models
                 _alertFontColor = value;
 
                 NotifyPropertyChanged("AlertFontColor");
+            }
+        }
+
+        private bool _showClock { get; set; }
+
+        public bool ShowClock
+        {
+            get
+            {
+                return _showClock;
+            }
+            set
+            {
+                _showClock = value;
+
+                NotifyPropertyChanged("ShowClock");
             }
         }
 

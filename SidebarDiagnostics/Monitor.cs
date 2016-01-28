@@ -291,7 +291,7 @@ namespace SidebarDiagnostics.Monitor
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Volt"));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage"));
             }
 
             if (_tempSensor != null)
@@ -357,7 +357,7 @@ namespace SidebarDiagnostics.Monitor
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Volt"));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage"));
             }
 
             ISensor _loadSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
@@ -414,6 +414,13 @@ namespace SidebarDiagnostics.Monitor
             if (_memoryLoad != null)
             {
                 _sensorList.Add(new OHMSensor(_memoryLoad, DataType.Percent, "VRAM"));
+            }
+
+            ISensor _voltage = _hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Index == 0).FirstOrDefault();
+
+            if (_voltage != null)
+            {
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage"));
             }
 
             ISensor _tempSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
@@ -574,7 +581,7 @@ namespace SidebarDiagnostics.Monitor
 
             Regex _regex = new Regex("^[A-Z]:$");
 
-            Drives = new PerformanceCounterCategory("LogicalDisk").GetInstanceNames().Where(n => _regex.IsMatch(n)).Select(n => new DriveInfo(n, _showDetails, _usedSpaceAlert)).ToArray();
+            Drives = new PerformanceCounterCategory("LogicalDisk").GetInstanceNames().Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(n => new DriveInfo(n, _showDetails, _usedSpaceAlert)).ToArray();
         }
 
         public void Update()

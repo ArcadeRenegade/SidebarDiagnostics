@@ -88,6 +88,7 @@
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="Sidebar Width" VerticalAlignment="Center" />
@@ -102,7 +103,7 @@
                     <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" VerticalAlignment="Center" />
                     <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
                         <TextBox Text="{Binding ElementName=BGOpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-                        <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.05" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the background." />
+                        <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the background." />
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Font Size" VerticalAlignment="Center" />
@@ -114,8 +115,11 @@
                     <Label Grid.Column="0" Grid.Row="5" Content="Alert Font Color" VerticalAlignment="Center" />
                     <TextBox Text="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of alert text as a hex code." />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="24 Hour Clock" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the time format to 24 hours." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Show Clock" VerticalAlignment="Center" />
+                    <CheckBox IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Shows the clock at the top of the sidebar." />
+                    
+                    <Label Grid.Column="0" Grid.Row="7" Content="24 Hour Clock" VerticalAlignment="Center" />
+                    <CheckBox IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the clock's time format to 24 hours." />
                 </Grid>
             </TabItem>
             <TabItem Header="Monitors">

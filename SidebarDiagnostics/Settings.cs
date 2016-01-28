@@ -1,28 +1,108 @@
-﻿namespace SidebarDiagnostics.Properties {
-    
-    
-    // This class allows you to handle specific events on the settings class:
-    //  The SettingChanging event is raised before a setting's value is changed.
-    //  The PropertyChanged event is raised after a setting's value is changed.
-    //  The SettingsLoaded event is raised after the setting values are loaded.
-    //  The SettingsSaving event is raised before the setting values are saved.
-    internal sealed partial class Settings {
+﻿using System;
+using System.Configuration;
+using System.ComponentModel;
+
+namespace SidebarDiagnostics.Properties
+{
+    internal sealed partial class Settings
+    {        
+        public Settings() { }
         
-        public Settings() {
-            // // To add event handlers for saving and changing settings, uncomment the lines below:
-            //
-            // this.SettingChanging += this.SettingChangingEventHandler;
-            //
-            // this.SettingsSaving += this.SettingsSavingEventHandler;
-            //
+        private void SettingChangingEventHandler(object sender, SettingChangingEventArgs e) { }
+        
+        private void SettingsSavingEventHandler(object sender, CancelEventArgs e) { }
+    }
+
+    [Serializable]
+    public class FontSetting
+    {
+        public FontSetting() { }
+
+        private FontSetting(int fontSize)
+        {
+            FontSize = fontSize;
         }
-        
-        private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {
-            // Add code to handle the SettingChangingEvent event here.
+
+        public override bool Equals(object obj)
+        {
+            FontSetting _that = obj as FontSetting;
+
+            if (_that == null)
+            {
+                return false;
+            }
+
+            return this.FontSize == _that.FontSize;
         }
-        
-        private void SettingsSavingEventHandler(object sender, System.ComponentModel.CancelEventArgs e) {
-            // Add code to handle the SettingsSaving event here.
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public static readonly FontSetting x10 = new FontSetting(10);
+        public static readonly FontSetting x12 = new FontSetting(12);
+        public static readonly FontSetting x14 = new FontSetting(14);
+        public static readonly FontSetting x16 = new FontSetting(16);
+        public static readonly FontSetting x18 = new FontSetting(18);
+
+        public int FontSize { get; set; }
+
+        public int TitleFontSize
+        {
+            get
+            {
+                return FontSize + 2;
+            }
+        }
+
+        public int IconSize
+        {
+            get
+            {
+                switch (FontSize)
+                {
+                    case 10:
+                        return 18;
+
+                    case 12:
+                        return 22;
+
+                    case 14:
+                    default:
+                        return 24;
+
+                    case 16:
+                        return 28;
+
+                    case 18:
+                        return 32;
+                }
+            }
+        }
+
+        public int BarHeight
+        {
+            get
+            {
+                return FontSize - 3;
+            }
+        }
+
+        public int BarWidth
+        {
+            get
+            {
+                return BarHeight * 6;
+            }
+        }
+
+        public int BarWidthWide
+        {
+            get
+            {
+                return BarHeight * 8;
+            }
         }
     }
 }

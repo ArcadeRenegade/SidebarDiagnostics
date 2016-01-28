@@ -115,6 +115,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBarModel.cs" />
+    <Compile Include="Commands.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="SettingsModel.cs" />
@@ -167,6 +168,7 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>

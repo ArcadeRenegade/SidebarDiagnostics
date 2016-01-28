@@ -65,11 +65,14 @@ namespace SidebarDiagnostics
         private void InitContent()
         {
             DataContext = Model = new AppBarModel();
-            
-            _clockTimer = new DispatcherTimer();
-            _clockTimer.Interval = TimeSpan.FromSeconds(1);
-            _clockTimer.Tick += new EventHandler(ClockTimer_Tick);
-            _clockTimer.Start();
+
+            if (Properties.Settings.Default.ShowClock)
+            {
+                _clockTimer = new DispatcherTimer();
+                _clockTimer.Interval = TimeSpan.FromSeconds(1);
+                _clockTimer.Tick += new EventHandler(ClockTimer_Tick);
+                _clockTimer.Start();
+            }
             
             _hardwareTimer = new DispatcherTimer();
             _hardwareTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);

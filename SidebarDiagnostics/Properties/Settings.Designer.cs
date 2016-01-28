@@ -145,13 +145,10 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?><FontSetting xmlns:xsi=\"http://www.w3.org/" +
-            "2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><IconSize>" +
-            "24</IconSize><TitleFontSize>16</TitleFontSize><FontSize>14</FontSize></FontSetti" +
-            "ng>")]
-        public global::SidebarDiagnostics.Helpers.FontSetting FontSetting {
+        [global::System.Configuration.DefaultSettingValueAttribute("<FontSetting><FontSize>14</FontSize></FontSetting>")]
+        public global::SidebarDiagnostics.Properties.FontSetting FontSetting {
             get {
-                return ((global::SidebarDiagnostics.Helpers.FontSetting)(this["FontSetting"]));
+                return ((global::SidebarDiagnostics.Properties.FontSetting)(this["FontSetting"]));
             }
             set {
                 this["FontSetting"] = value;
@@ -179,6 +176,18 @@ namespace SidebarDiagnostics.Properties {
             }
             set {
                 this["AlertFontColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowClock {
+            get {
+                return ((bool)(this["ShowClock"]));
+            }
+            set {
+                this["ShowClock"] = value;
             }
         }
         
