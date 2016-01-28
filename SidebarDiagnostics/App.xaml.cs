@@ -134,7 +134,9 @@ namespace SidebarDiagnostics
             AppBar _appBar = GetAppBar;
 
             if (_appBar == null)
+            {
                 return;
+            }
 
             Settings _settings = new Settings();
             _settings.Owner = _appBar;
@@ -146,7 +148,9 @@ namespace SidebarDiagnostics
             AppBar _appBar = GetAppBar;
 
             if (_appBar == null)
+            {
                 return;
+            }
 
             _appBar.Reload();
         }
@@ -156,20 +160,24 @@ namespace SidebarDiagnostics
             AppBar _appBar = GetAppBar;
 
             if (_appBar == null)
+            {
                 return;
+            }
 
             MenuItem _this = (MenuItem)sender;
 
-            (_this.Items.GetItemAt(0) as MenuItem).IsChecked = _appBar.Shown;
-            (_this.Items.GetItemAt(1) as MenuItem).IsChecked = !_appBar.Shown;
+            (_this.Items.GetItemAt(0) as MenuItem).IsChecked = _appBar.Visibility == Visibility.Visible;
+            (_this.Items.GetItemAt(1) as MenuItem).IsChecked = _appBar.Visibility == Visibility.Hidden;
         }
         
         private void Show_Click(object sender, EventArgs e)
         {
             AppBar _appBar = GetAppBar;
 
-            if (_appBar == null || _appBar.Shown)
+            if (_appBar == null || _appBar.Visibility == Visibility.Visible)
+            {
                 return;
+            }
 
             _appBar.ABShow();
         }
@@ -178,8 +186,10 @@ namespace SidebarDiagnostics
         {
             AppBar _appBar = GetAppBar;
 
-            if (_appBar == null || !_appBar.Shown)
+            if (_appBar == null || _appBar.Visibility == Visibility.Hidden)
+            {
                 return;
+            }
 
             _appBar.ABHide();
         }

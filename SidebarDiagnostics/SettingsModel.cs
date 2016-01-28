@@ -13,7 +13,7 @@ namespace SidebarDiagnostics.Models
             DockEdgeItems = new DockEdge[2] { DockEdge.Left, DockEdge.Right };
             DockEdge = Properties.Settings.Default.DockEdge;
 
-            Monitors.MonitorInfo[] _monitors = Monitors.GetMonitors();
+            MonitorInfo[] _monitors = Windows.Monitor.GetMonitors();
 
             ScreenItems = _monitors.Select((s, i) => new ScreenItem() { Index = i, Text = string.Format("#{0}", i + 1) }).ToArray();
 
@@ -36,7 +36,7 @@ namespace SidebarDiagnostics.Models
 
             CheckForUpdates = Properties.Settings.Default.CheckForUpdates;
 
-            RunAtStartup = Utilities.StartupTaskExists();
+            RunAtStartup = Startup.StartupTaskExists();
 
             SidebarWidth = Properties.Settings.Default.SidebarWidth;
 
@@ -84,11 +84,11 @@ namespace SidebarDiagnostics.Models
 
             if (RunAtStartup)
             {
-                Utilities.EnableStartupTask();
+                Startup.EnableStartupTask();
             }
             else
             {
-                Utilities.DisableStartupTask();
+                Startup.DisableStartupTask();
             }
         }
 

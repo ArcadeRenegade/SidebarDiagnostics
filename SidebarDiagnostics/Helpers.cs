@@ -4,7 +4,7 @@ using Microsoft.Win32.TaskScheduler;
 
 namespace SidebarDiagnostics.Helpers
 {
-    public static class Utilities
+    public static class Startup
     {        
         public static bool StartupTaskExists()
         {

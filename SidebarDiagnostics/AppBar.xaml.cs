@@ -10,7 +10,7 @@ namespace SidebarDiagnostics
     /// <summary>
     /// Interaction logic for AppBar.xaml
     /// </summary>
-    public partial class AppBar : Window
+    public partial class AppBar : AppBarWindow
     {
         public AppBar()
         {
@@ -19,19 +19,19 @@ namespace SidebarDiagnostics
 
         public void ABShow()
         {
-            Shown = true;
-
-            Show();
             InitAppBar();
+            Show();
             Activate();
         }
 
         public void ABHide()
         {
-            Shown = false;
-            
-            ClearAppBar();
             Hide();
+
+            if (IsAppBar)
+            {
+                ClearAppBar();
+            }
         }
 
         public void Reload()
@@ -43,7 +43,7 @@ namespace SidebarDiagnostics
 
         private void InitAppBar()
         {
-            WorkArea _workArea = Monitors.GetWorkArea(this);
+            WorkArea _workArea = Windows.Monitor.GetWorkArea(this);
 
             Left = _workArea.Left;
             Top = _workArea.Top;
@@ -53,20 +53,12 @@ namespace SidebarDiagnostics
 
             if (Properties.Settings.Default.ClickThrough)
             {
-                ClickThroughWindow.SetClickThrough(this);
+                ClickThrough.SetClickThrough(this);
             }
 
             if (Properties.Settings.Default.UseAppBar)
             {
-                AppBarWindow.SetAppBar(this, _workArea, Properties.Settings.Default.DockEdge);
-            }
-        }
-
-        private void ClearAppBar()
-        {
-            if (AppBarWindow.IsRegistered(this))
-            {
-                AppBarWindow.SetAppBar(this, null, DockEdge.None);
+                SetAppBar(_workArea, Properties.Settings.Default.DockEdge);
             }
         }
 
@@ -154,8 +146,10 @@ namespace SidebarDiagnostics
                 Model.Dispose();
             }
 
-            ClearAppBar();
-            AppBarWindow.DisposeWindow(this);
+            if (IsAppBar)
+            {
+                ClearAppBar();
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -173,8 +167,6 @@ namespace SidebarDiagnostics
         }
 
         public AppBarModel Model { get; private set; }
-
-        public bool Shown { get; private set; } = true;
 
         private DispatcherTimer _clockTimer { get; set; }
 

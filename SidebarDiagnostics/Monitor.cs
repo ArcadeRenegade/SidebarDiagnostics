@@ -839,7 +839,7 @@ namespace SidebarDiagnostics.Monitor
 
             Regex _regex = new Regex("[^A-Za-z]");
 
-            Nics = _instances.Join(_nics, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new NicInfo(i, n.Description, _showName, _bandwidthInAlert, _bandwidthOutAlert)).ToArray();
+            Nics = _instances.Join(_nics, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new NicInfo(i, n.Description, _showName, _bandwidthInAlert, _bandwidthOutAlert), StringComparer.Ordinal).ToArray();
         }
 
         public void Update()
