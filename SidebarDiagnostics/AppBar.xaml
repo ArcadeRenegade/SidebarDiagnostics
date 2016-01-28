@@ -13,7 +13,7 @@
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
         Title="Sidebar"
-        Width="{Binding Source={x:Static prop:Settings.Default}, Path=SidebarWidth}"
+        Width="{Binding Source={x:Static prop:Settings.Default}, Path=SidebarWidth, Mode=OneTime}"
         Height="800"
         Icon="/App.ico"
         AllowsTransparency="True"
@@ -21,7 +21,7 @@
         ResizeMode="NoResize"
         WindowStyle="None">
     <Window.Background>
-        <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor}" />
+        <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity, Mode=OneTime}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor, Mode=OneTime}" />
     </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -126,14 +126,14 @@
                                                                                     <Setter.Value>
                                                                                         <Grid>
                                                                                             <Grid.ColumnDefinitions>
-                                                                                                <ColumnDefinition Width="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize}" />
+                                                                                                <ColumnDefinition Width="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize, Mode=OneTime}" />
                                                                                                 <ColumnDefinition Width="*" />
                                                                                             </Grid.ColumnDefinitions>
                                                                                             <Grid.RowDefinitions>
                                                                                                 <RowDefinition Height="*" />
                                                                                             </Grid.RowDefinitions>
                                                                                             <TextBlock Grid.Column="0" Text="{Binding Path=Label, Mode=OneTime}" Style="{StaticResource SensorText}" />
-                                                                                            <ProgressBar Grid.Column="1" Value="{Binding Path=Value, Mode=OneWay}" Margin="8,3,0,0" Style="{StaticResource DriveProgress}" />
+                                                                                            <ProgressBar Grid.Column="1" Value="{Binding Path=Value, Mode=OneWay}" Style="{StaticResource DriveProgress}" />
                                                                                         </Grid>
                                                                                     </Setter.Value>
                                                                                 </Setter>

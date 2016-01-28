@@ -831,20 +831,15 @@ namespace SidebarDiagnostics.Monitor
             int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
 
             string[] _instances = new PerformanceCounterCategory("Network Interface").GetInstanceNames();
-            
+
             NetworkInterface[] _nics = NetworkInterface.GetAllNetworkInterfaces().Where(n =>
                     n.OperationalStatus == OperationalStatus.Up &&
                     new NetworkInterfaceType[2] { NetworkInterfaceType.Ethernet, NetworkInterfaceType.Wireless80211 }.Contains(n.NetworkInterfaceType)
                     ).ToArray();
-            
-            Nics = _instances.Where(i => _nics.Any(n => i == n.Name || i == n.Description)).Select(instance =>
-                    new NicInfo(
-                        instance,
-                        _showName,
-                        _bandwidthInAlert,
-                        _bandwidthOutAlert
-                    )
-                ).ToArray();
+
+            Regex _regex = new Regex("[^A-Za-z]");
+
+            Nics = _instances.Join(_nics, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new NicInfo(i, n.Description, _showName, _bandwidthInAlert, _bandwidthOutAlert)).ToArray();
         }
 
         public void Update()
@@ -868,19 +863,19 @@ namespace SidebarDiagnostics.Monitor
 
     public class NicInfo : IDisposable
     {
-        public NicInfo(string name, bool showName = true, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
+        public NicInfo(string instance, string name, bool showName = true, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
         {
             Name = name;
             ShowName = showName;
 
             InBandwidth = new Bandwidth(
-                new PerformanceCounter("Network Interface", "Bytes Received/sec", name),
+                new PerformanceCounter("Network Interface", "Bytes Received/sec", instance),
                 "In",
                 bandwidthInAlert
                 );
 
             OutBandwidth = new Bandwidth(
-                new PerformanceCounter("Network Interface", "Bytes Sent/sec", name),
+                new PerformanceCounter("Network Interface", "Bytes Sent/sec", instance),
                 "Out",
                 bandwidthOutAlert
                 );

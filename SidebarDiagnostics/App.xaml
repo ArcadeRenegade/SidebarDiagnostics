@@ -25,7 +25,7 @@
         </tb:TaskbarIcon>
 
         <Style x:Key="AppButton" TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor}" />
+            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Template">
@@ -45,19 +45,19 @@
         </Style>
 
         <Style x:Key="AppIcon" TargetType="{x:Type Path}">
-            <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize}" />
-            <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize}" />
+            <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize, Mode=OneTime}" />
+            <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize, Mode=OneTime}" />
             <Setter Property="Margin" Value="0,0,10,0" />
             <Setter Property="Stretch" Value="Uniform" />
-            <Setter Property="Fill" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor}" />
+            <Setter Property="Fill" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
         <Style x:Key="AppTitle" TargetType="{x:Type Label}">
-            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor}" />
+            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="0" />
-            <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.TitleFontSize}" />
+            <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.TitleFontSize, Mode=OneTime}" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
@@ -85,10 +85,10 @@
         </Style>
 
         <Style x:Key="DataText" TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor}" />
+            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="0" />
-            <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize}" />
+            <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize, Mode=OneTime}" />
             <Setter Property="TextWrapping" Value="WrapWithOverflow" />
         </Style>
 
@@ -99,7 +99,7 @@
         <Style x:Key="SensorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataText}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
-                    <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor}" />
+                    <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor, Mode=OneTime}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -107,21 +107,21 @@
         <Style x:Key="DriveProgress" TargetType="{x:Type ProgressBar}">
             <Setter Property="Minimum" Value="0" />
             <Setter Property="Maximum" Value="100" />
+            <Setter Property="Margin" Value="8,3,0,0" />
             <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarWidth, Mode=OneTime}" />
             <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarHeight, Mode=OneTime}" />
             <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor}" />
+            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ProgressBar}">
-                        <Grid>
-                            <Rectangle Name="PART_Track" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}" StrokeThickness="1" />
-                            <Rectangle Name="PART_Indicator" Fill="{TemplateBinding Foreground}" Stroke="{TemplateBinding Background}" StrokeThickness="0" HorizontalAlignment="Left" />
-                        </Grid>
+                        <Border Name="PART_Track" CornerRadius="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1">
+                            <Border Name="PART_Indicator" CornerRadius="2,0,0,2" Background="{TemplateBinding Foreground}" BorderBrush="{TemplateBinding Background}" BorderThickness="1" HorizontalAlignment="Left" />
+                        </Border>
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
-                                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor}" />
+                                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor, Mode=OneTime}" />
                             </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -174,7 +174,7 @@
 
         <Style TargetType="{x:Type ScrollBar}">
             <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor}" />
+            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Width" Value="7" />
             <Setter Property="Template">
@@ -197,13 +197,6 @@
                             </Track>
                         </Grid>
                         <ControlTemplate.Triggers>
-                            <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
-                                <Setter Value="{DynamicResource ButtonSelectBrush}" TargetName="Thumb" Property="Background" />
-                            </Trigger>
-                            <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
-                                <Setter Value="{DynamicResource DarkBrush}" Property="Background" />
-                            </Trigger>
-
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
                             </Trigger>

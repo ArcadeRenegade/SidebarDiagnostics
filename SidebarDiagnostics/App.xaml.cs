@@ -20,7 +20,9 @@ namespace SidebarDiagnostics
             base.OnStartup(e);
 
             // ERROR HANDLING
+            #if !DEBUG
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(AppDomain_Error);
+            #endif
             
             // SETTINGS
             CheckSettings();
@@ -192,12 +194,14 @@ namespace SidebarDiagnostics
             Application.Current.Shutdown();
         }
 
+        #if !DEBUG
         private static void AppDomain_Error(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = (Exception)e.ExceptionObject;
 
             MessageBox.Show(ex.ToString(), "Sidebar Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
+        #endif
 
         private static AppBar GetAppBar
         {
