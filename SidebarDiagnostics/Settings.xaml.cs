@@ -31,6 +31,16 @@ namespace SidebarDiagnostics
             }));
         }
 
+        private void ClickThroughCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            ShowTrayIconCheckbox.IsChecked = true;
+        }
+
+        private void ShowTrayIconCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ClickThroughCheckbox.IsChecked = false;
+        }
+
         private void ColorTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox _textbox = (TextBox)sender;

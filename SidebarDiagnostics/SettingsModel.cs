@@ -31,9 +31,11 @@ namespace SidebarDiagnostics.Models
 
             UseAppBar = Properties.Settings.Default.UseAppBar;
 
+            AlwaysTop = Properties.Settings.Default.AlwaysTop;
+
             ClickThrough = Properties.Settings.Default.ClickThrough;
 
-            AlwaysTop = Properties.Settings.Default.AlwaysTop;
+            ShowTrayIcon = Properties.Settings.Default.ShowTrayIcon;
 
             CheckForUpdates = Properties.Settings.Default.CheckForUpdates;
 
@@ -72,8 +74,9 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.ScreenIndex = ScreenIndex;
             Properties.Settings.Default.PollingInterval = PollingInterval;
             Properties.Settings.Default.UseAppBar = UseAppBar;
-            Properties.Settings.Default.ClickThrough = ClickThrough;
             Properties.Settings.Default.AlwaysTop = AlwaysTop;
+            Properties.Settings.Default.ClickThrough = ClickThrough;
+            Properties.Settings.Default.ShowTrayIcon = ShowTrayIcon;
             Properties.Settings.Default.CheckForUpdates = CheckForUpdates;
             Properties.Settings.Default.SidebarWidth = SidebarWidth;
             Properties.Settings.Default.BGColor = BGColor;
@@ -85,6 +88,8 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.Clock24HR = Clock24HR;
             Properties.Settings.Default.MonitorConfig = _monitorConfig;
             Properties.Settings.Default.Save();
+
+            App.RefreshIcon();
 
             if (RunAtStartup)
             {
@@ -204,6 +209,22 @@ namespace SidebarDiagnostics.Models
             }
         }
 
+        private bool _alwaysTop { get; set; }
+
+        public bool AlwaysTop
+        {
+            get
+            {
+                return _alwaysTop;
+            }
+            set
+            {
+                _alwaysTop = value;
+
+                NotifyPropertyChanged("AlwaysTop");
+            }
+        }
+
         private bool _clickThrough { get; set; }
 
         public bool ClickThrough
@@ -220,19 +241,19 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _alwaysTop { get; set; }
+        private bool _showTrayIcon { get; set; }
 
-        public bool AlwaysTop
+        public bool ShowTrayIcon
         {
             get
             {
-                return _alwaysTop;
+                return _showTrayIcon;
             }
             set
             {
-                _alwaysTop = value;
+                _showTrayIcon = value;
 
-                NotifyPropertyChanged("AlwaysTop");
+                NotifyPropertyChanged("ShowTrayIcon");
             }
         }
 

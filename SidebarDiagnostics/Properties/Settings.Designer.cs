@@ -73,6 +73,18 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AlwaysTop {
+            get {
+                return ((bool)(this["AlwaysTop"]));
+            }
+            set {
+                this["AlwaysTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ClickThrough {
             get {
@@ -85,13 +97,13 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AlwaysTop {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowTrayIcon {
             get {
-                return ((bool)(this["AlwaysTop"]));
+                return ((bool)(this["ShowTrayIcon"]));
             }
             set {
-                this["AlwaysTop"] = value;
+                this["ShowTrayIcon"] = value;
             }
         }
         

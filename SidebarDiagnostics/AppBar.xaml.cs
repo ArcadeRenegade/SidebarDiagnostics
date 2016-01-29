@@ -79,7 +79,7 @@ namespace SidebarDiagnostics
             _hardwareTimer.Tick += new EventHandler(HardwareTimer_Tick);
             _hardwareTimer.Start();
         }
-        
+
         private void ClockTimer_Tick(object sender, EventArgs e)
         {
             Model.UpdateTime();

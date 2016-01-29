@@ -26,11 +26,12 @@ namespace SidebarDiagnostics
             
             // SETTINGS
             CheckSettings();
-            
+
             // TRAY ICON
-            TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            TrayIcon.ToolTipText = Assembly.GetExecutingAssembly().GetName().Name;
-            TrayIcon.Visibility = Visibility.Visible;
+            _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            _trayIcon.ToolTipText = Assembly.GetExecutingAssembly().GetName().Name;
+
+            RefreshIcon();
 
             // OHM COMPUTER
             _computer = new Computer()
@@ -55,9 +56,14 @@ namespace SidebarDiagnostics
         protected override void OnExit(ExitEventArgs e)
         {
             _computer.Close();
-            TrayIcon.Dispose();
+            _trayIcon.Dispose();
 
             base.OnExit(e);
+        }
+
+        public static void RefreshIcon()
+        {
+            _trayIcon.Visibility = SidebarDiagnostics.Properties.Settings.Default.ShowTrayIcon ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void CheckSettings()
@@ -153,16 +159,16 @@ namespace SidebarDiagnostics
             MessageBox.Show(ex.ToString(), "Sidebar Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
         #endif
-
-        private static AppBar GetAppBar
+        
+        private AppBar GetAppBar
         {
             get
             {
-                return Application.Current.Windows.OfType<AppBar>().FirstOrDefault();
+                return Windows.OfType<AppBar>().FirstOrDefault();
             }
         }
 
-        private static TaskbarIcon TrayIcon { get; set; }
+        private static TaskbarIcon _trayIcon { get; set; }
 
         internal static Computer _computer { get; private set; }
 

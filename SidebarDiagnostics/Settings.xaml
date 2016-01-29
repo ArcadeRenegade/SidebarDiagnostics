@@ -44,6 +44,7 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="Dock" VerticalAlignment="Center" />
@@ -61,17 +62,20 @@
                     <Label Grid.Column="0" Grid.Row="3" Content="Use App Bar" VerticalAlignment="Center" />
                     <CheckBox IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Reserves space in the work area for the sidebar." />
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Allow Click Through" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes mouse events pass through the window." />
+                    <Label Grid.Column="0" Grid.Row="4" Content="Always On Top" VerticalAlignment="Center" />
+                    <CheckBox IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes the sidebar always on top of other windows." />
+                    
+                    <Label Grid.Column="0" Grid.Row="5" Content="Allow Click Through" VerticalAlignment="Center" />
+                    <CheckBox x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="Always On Top" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes the sidebar always on top of other windows." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Show Tray Icon" VerticalAlignment="Center" />
+                    <CheckBox x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Shows the tray icon in the taskbar.&#x0a;Required if 'Allow Click Through' is checked." />
+                    
+                    <Label Grid.Column="0" Grid.Row="7" Content="Check For Updates" VerticalAlignment="Center" />
+                    <CheckBox IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Check for updates on program start up." />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Check For Updates" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Check for updates on program start up." />
-
-                    <Label Grid.Column="0" Grid.Row="7" Content="Run at startup" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Runs the program when you first log in." />
+                    <Label Grid.Column="0" Grid.Row="8" Content="Run at startup" VerticalAlignment="Center" />
+                    <CheckBox IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Runs the program when you first log in." />
                 </Grid>
             </TabItem>
             <TabItem Header="Customize">
@@ -103,7 +107,7 @@
                     <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" VerticalAlignment="Center" />
                     <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
                         <TextBox Text="{Binding ElementName=BGOpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-                        <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the background." />
+                        <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0.01" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the background." />
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Font Size" VerticalAlignment="Center" />
