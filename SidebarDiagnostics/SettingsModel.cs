@@ -63,7 +63,7 @@ namespace SidebarDiagnostics.Models
 
             Clock24HR = Properties.Settings.Default.Clock24HR;
 
-            MonitorConfig = Properties.Settings.Default.MonitorConfig;
+            _monitorConfig = Properties.Settings.Default.MonitorConfig;
         }
 
         public void Save()
@@ -83,7 +83,7 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.AlertFontColor = AlertFontColor;
             Properties.Settings.Default.ShowClock = ShowClock;
             Properties.Settings.Default.Clock24HR = Clock24HR;
-            Properties.Settings.Default.MonitorConfig = MonitorConfig;
+            Properties.Settings.Default.MonitorConfig = _monitorConfig;
             Properties.Settings.Default.Save();
 
             if (RunAtStartup)
@@ -418,13 +418,7 @@ namespace SidebarDiagnostics.Models
         {
             get
             {
-                return _monitorConfig;
-            }
-            set
-            {
-                _monitorConfig = value;
-
-                NotifyPropertyChanged("MonitorConfig");
+                return _monitorConfig.OrderBy(c => c.Order).ToArray();
             }
         }
     }

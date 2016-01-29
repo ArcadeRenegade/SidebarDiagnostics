@@ -834,6 +834,7 @@ namespace SidebarDiagnostics.Monitor
         public NetworkMonitor(ConfigParam[] parameters)
         {
             bool _showName = parameters.GetValue<bool>(ParamKey.HardwareNames);
+            bool _useBytes = parameters.GetValue<bool>(ParamKey.UseBytes);
             int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
             int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
 
@@ -846,7 +847,7 @@ namespace SidebarDiagnostics.Monitor
 
             Regex _regex = new Regex("[^A-Za-z]");
 
-            Nics = _instances.Join(_nics, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new NicInfo(i, n.Description, _showName, _bandwidthInAlert, _bandwidthOutAlert), StringComparer.Ordinal).ToArray();
+            Nics = _instances.Join(_nics, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new NicInfo(i, n.Description, _showName, _useBytes, _bandwidthInAlert, _bandwidthOutAlert), StringComparer.Ordinal).ToArray();
         }
 
         public void Update()
@@ -870,7 +871,7 @@ namespace SidebarDiagnostics.Monitor
 
     public class NicInfo : IDisposable
     {
-        public NicInfo(string instance, string name, bool showName = true, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
+        public NicInfo(string instance, string name, bool showName = true, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
         {
             Name = name;
             ShowName = showName;
@@ -878,12 +879,14 @@ namespace SidebarDiagnostics.Monitor
             InBandwidth = new Bandwidth(
                 new PerformanceCounter("Network Interface", "Bytes Received/sec", instance),
                 "In",
+                useBytes,
                 bandwidthInAlert
                 );
 
             OutBandwidth = new Bandwidth(
                 new PerformanceCounter("Network Interface", "Bytes Sent/sec", instance),
                 "Out",
+                useBytes,
                 bandwidthOutAlert
                 );
         }
@@ -911,17 +914,18 @@ namespace SidebarDiagnostics.Monitor
 
     public class Bandwidth : IDisposable, INotifyPropertyChanged
     {
-        public Bandwidth(PerformanceCounter counter, string label, double alertValue = 0)
+        public Bandwidth(PerformanceCounter counter, string label, bool useBytes = false, double alertValue = 0)
         {
             _counter = counter;
 
             Label = label;
+            UseBytes = useBytes;
             AlertValue = alertValue;
         }
 
         public void Update()
         {
-            double _value = _counter.NextValue() / 128d;
+            double _value = _counter.NextValue() / (UseBytes ? 1024d : 128d);
 
             if (AlertValue > 0 && AlertValue <= _value)
             {
@@ -937,7 +941,14 @@ namespace SidebarDiagnostics.Monitor
 
             string _format;
 
-            Data.MinifyKiloBitsPerSecond(ref _value, out _format);
+            if (UseBytes)
+            {
+                Data.MinifyKiloBytesPerSecond(ref _value, out _format);
+            }
+            else
+            {
+                Data.MinifyKiloBitsPerSecond(ref _value, out _format);
+            }
 
             Text = string.Format("{0}: {1:#,##0.##} {2}", Label, _value, _format);
         }
@@ -996,6 +1007,8 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
+        public bool UseBytes { get; set; }
+
         public double AlertValue { get; private set; }
 
         private PerformanceCounter _counter { get; set; }
@@ -1030,16 +1043,41 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
-        public static MonitorConfig[] CheckConfig(MonitorConfig[] config)
+        public static bool CheckConfig(MonitorConfig[] config, ref MonitorConfig[] output)
         {
-            MonitorType[] _types = (MonitorType[])Enum.GetValues(typeof(MonitorType));
+            MonitorConfig[] _default = Default;
 
-            if (config == null || config.Length != _types.Length || config.Any(c => c == null) || _types.Any(t => config.Count(c => c.Type == t) != 1))
+            if (config == null || config.Length != _default.Length)
             {
-                return Default;
+                output = _default;
+                return false;
             }
-            
-            return config;
+
+            for (int i = 0; i < config.Length; i++)
+            {
+                MonitorConfig _record = config[i];
+                MonitorConfig _defaultRecord = _default[i];
+
+                if (_record == null || _record.Type != _defaultRecord.Type || _record.Params.Length != _defaultRecord.Params.Length)
+                {
+                    output = _default;
+                    return false;
+                }
+
+                for (int v = 0; v < _record.Params.Length; v++)
+                {
+                    ConfigParam _param = _record.Params[v];
+                    ConfigParam _defaultParam = _defaultRecord.Params[v];
+
+                    if (_param == null || _param.Key != _defaultParam.Key)
+                    {
+                        output = _default;
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         public static MonitorConfig[] Default
@@ -1100,9 +1138,10 @@ namespace SidebarDiagnostics.Monitor
                         Type = MonitorType.Network,
                         Enabled = true,
                         Order = 5,
-                        Params = new ConfigParam[3]
+                        Params = new ConfigParam[4]
                         {
                             ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.UseBytes,
                             ConfigParam.Defaults.BandwidthInAlert,
                             ConfigParam.Defaults.BandwidthOutAlert
                         }
@@ -1119,11 +1158,19 @@ namespace SidebarDiagnostics.Monitor
 
         public object Value { get; set; }
 
-        public string Type
+        public Type Type
         {
             get
             {
-                return Value.GetType().ToString();
+                return Value.GetType();
+            }
+        }
+
+        public string TypeString
+        {
+            get
+            {
+                return Type.ToString();
             }
         }
 
@@ -1160,6 +1207,9 @@ namespace SidebarDiagnostics.Monitor
                     case ParamKey.BandwidthOutAlert:
                         return "Bandwidth Out Alert";
 
+                    case ParamKey.UseBytes:
+                        return "Use Bytes Per Second";
+
                     default:
                         return "Unknown";
                 }
@@ -1194,10 +1244,13 @@ namespace SidebarDiagnostics.Monitor
                         return "The percentage threshold at which used space alerts occur. Use 0 to disable.";
 
                     case ParamKey.BandwidthInAlert:
-                        return "The kbps threshold at which bandwidth received alerts occur. Use 0 to disable.";
+                        return "The kbps or kBps threshold at which bandwidth received alerts occur. Use 0 to disable.";
 
                     case ParamKey.BandwidthOutAlert:
-                        return "The kbps threshold at which bandwidth sent alerts occur. Use 0 to disable.";
+                        return "The kbps or kBps threshold at which bandwidth sent alerts occur. Use 0 to disable.";
+
+                    case ParamKey.UseBytes:
+                        return "Shows bandwidth in bytes instead of bits per second.";
 
                     default:
                         return "Unknown";
@@ -1286,6 +1339,14 @@ namespace SidebarDiagnostics.Monitor
                     return new ConfigParam() { Key = ParamKey.BandwidthOutAlert, Value = 0 };
                 }
             }
+
+            public static ConfigParam UseBytes
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.UseBytes, Value = false };
+                }
+            }
         }
     }
 
@@ -1300,7 +1361,8 @@ namespace SidebarDiagnostics.Monitor
         DriveDetails,
         UsedSpaceAlert,
         BandwidthInAlert,
-        BandwidthOutAlert
+        BandwidthOutAlert,
+        UseBytes
     }
 
     public enum DataType : byte

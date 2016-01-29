@@ -62,8 +62,12 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
-            SidebarDiagnostics.Properties.Settings.Default.MonitorConfig =
-                MonitorConfig.CheckConfig(SidebarDiagnostics.Properties.Settings.Default.MonitorConfig);
+            MonitorConfig[] _new = null;
+
+            if (!MonitorConfig.CheckConfig(SidebarDiagnostics.Properties.Settings.Default.MonitorConfig, ref _new))
+            {
+                SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = _new;
+            }
         }
 
         private void Settings_Click(object sender, EventArgs e)

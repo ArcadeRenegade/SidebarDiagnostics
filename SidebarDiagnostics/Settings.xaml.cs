@@ -45,7 +45,7 @@ namespace SidebarDiagnostics
         {
             MonitorConfig _row = (MonitorConfig)(sender as Button).DataContext;
 
-            if (_row.Order == 1)
+            if (_row.Order <= 1)
                 return;
 
             MonitorConfig[] _config = Model.MonitorConfig;
@@ -53,7 +53,7 @@ namespace SidebarDiagnostics
             _config.Where(c => c.Order == _row.Order - 1).Single().Order += 1;
             _row.Order -= 1;
 
-            Model.MonitorConfig = _config.OrderBy(c => c.Order).ToArray();
+            Model.NotifyPropertyChanged("MonitorConfig");
         }
 
         private void MonitorDown_Click(object sender, RoutedEventArgs e)
@@ -62,13 +62,13 @@ namespace SidebarDiagnostics
 
             MonitorConfig[] _config = Model.MonitorConfig;
 
-            if (_row.Order == _config.Length)
+            if (_row.Order >= _config.Length)
                 return;
 
             _config.Where(c => c.Order == _row.Order + 1).Single().Order -= 1;
             _row.Order += 1;
 
-            Model.MonitorConfig = _config.OrderBy(c => c.Order).ToArray();
+            Model.NotifyPropertyChanged("MonitorConfig");
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

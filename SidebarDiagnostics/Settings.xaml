@@ -125,7 +125,7 @@
             <TabItem Header="Monitors">
                 <StackPanel Orientation="Vertical">
                     <Label Margin="0,0,0,15" Padding="0" Content="Click a row to edit its settings." />
-                    <DataGrid ItemsSource="{Binding Path=MonitorConfig}"  AutoGenerateColumns="False" HeadersVisibility="Column" SelectionUnit="FullRow" SelectionMode="Single" GridLinesVisibility="None">
+                    <DataGrid ItemsSource="{Binding Path=MonitorConfig, Mode=OneWay}" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionUnit="FullRow" SelectionMode="Single" GridLinesVisibility="None">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#e1e7e9" />
                         </DataGrid.Resources>
@@ -206,10 +206,10 @@
                                                     <ContentControl.Style>
                                                         <Style TargetType="{x:Type ContentControl}">
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Type}" Value="System.Boolean">
+                                                                <DataTrigger Binding="{Binding TypeString}" Value="System.Boolean">
                                                                     <Setter Property="ContentTemplate" Value="{StaticResource MonitorConfigBool}" />
                                                                 </DataTrigger>
-                                                                <DataTrigger Binding="{Binding Type}" Value="System.Int32">
+                                                                <DataTrigger Binding="{Binding TypeString}" Value="System.Int32">
                                                                     <Setter Property="ContentTemplate" Value="{StaticResource MonitorConfigInt}" />
                                                                 </DataTrigger>
                                                             </Style.Triggers>
