@@ -31,6 +31,9 @@ namespace SidebarDiagnostics.Windows
 
         [DllImport("shcore.dll")]
         internal static extern IntPtr GetDpiForMonitor(IntPtr hmonitor, Monitor.MONITOR_DPI_TYPE dpiType, out uint dpiX, out uint dpiY);
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -151,30 +154,35 @@ namespace SidebarDiagnostics.Windows
 
         internal delegate bool EnumCallback(IntPtr hDesktop, IntPtr hdc, ref RECT pRect, int dwData);
 
+        public static MonitorInfo GetMonitor(IntPtr hMonitor)
+        {
+            MONITORINFO _info = new MONITORINFO();
+            _info.cbSize = Marshal.SizeOf(_info);
+
+            NativeMethods.GetMonitorInfo(hMonitor, ref _info);
+
+            uint _dpiX;
+            uint _dpiY;
+
+            NativeMethods.GetDpiForMonitor(hMonitor, MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out _dpiX, out _dpiY);
+
+            return new MonitorInfo()
+            {
+                Size = _info.Size,
+                WorkArea = _info.WorkArea,
+                DPIx = _dpiX,
+                DPIy = _dpiY,
+                IsPrimary = _info.IsPrimary
+            };
+        }
+
         public static MonitorInfo[] GetMonitors()
         {
             List<MonitorInfo> _monitors = new List<MonitorInfo>();
 
             EnumCallback _callback = (IntPtr hMonitor, IntPtr hdc, ref RECT pRect, int dwData) =>
             {
-                MONITORINFO _info = new MONITORINFO();
-                _info.cbSize = Marshal.SizeOf(_info);
-
-                NativeMethods.GetMonitorInfo(hMonitor, ref _info);
-
-                uint _dpiX;
-                uint _dpiY;
-
-                NativeMethods.GetDpiForMonitor(hMonitor, MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out _dpiX, out _dpiY);
-                
-                _monitors.Add(new MonitorInfo()
-                {
-                    Size = _info.Size,
-                    WorkArea = _info.WorkArea,
-                    DPIx = _dpiX,
-                    DPIy = _dpiY,
-                    IsPrimary = _info.IsPrimary
-                });
+                _monitors.Add(GetMonitor(hMonitor));
 
                 return true;
             };
@@ -198,21 +206,21 @@ namespace SidebarDiagnostics.Windows
         {
             MonitorInfo _screen = GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
 
-            PresentationSource _presentationSource = PresentationSource.FromVisual(window);
+            //PresentationSource _presentationSource = PresentationSource.FromVisual(window);
 
-            double _wpfX = _presentationSource.CompositionTarget.TransformToDevice.M11;
-            double _wpfY = _presentationSource.CompositionTarget.TransformToDevice.M22;
+            //double _wpfX = _presentationSource.CompositionTarget.TransformToDevice.M11;
+            //double _wpfY = _presentationSource.CompositionTarget.TransformToDevice.M22;
 
-            double _iwpfX = 1d / _wpfX;
-            double _iwpfY = 1d / _wpfY;
+            //double _iwpfX = 1d / _wpfX;
+            //double _iwpfY = 1d / _wpfY;
 
             double _screenX = _screen.ScaleX;
             double _screenY = _screen.ScaleY;
 
-            double _iScreenX = _screen.InverseScaleX;
-            double _iScreenY = _screen.InverseScaleY;
+            //double _iScreenX = _screen.InverseScaleX;
+            //double _iScreenY = _screen.InverseScaleY;
 
-            window.UpdateScale(_screen.ScaleX, _screen.ScaleY);
+            window.UpdateScale(_screen.ScaleX, _screen.ScaleY, false);
 
             WorkArea _workArea = new WorkArea()
             {
@@ -222,7 +230,7 @@ namespace SidebarDiagnostics.Windows
                 Bottom = _screen.WorkArea.Bottom
             };
 
-            double _windowWidth = window.OriginalWidth * _screenX;
+            double _windowWidth = Properties.Settings.Default.SidebarWidth * _screenX;
 
             switch (Properties.Settings.Default.DockEdge)
             {
@@ -239,19 +247,45 @@ namespace SidebarDiagnostics.Windows
         }
     }
 
-    public class DPIAwareWindow : Window
+    public partial class DPIAwareWindow : Window
     {
-        public void UpdateScale(double scaleX, double scaleY)
+        public override void EndInit()
         {
-            OriginalWidth = ActualWidth;
-            OriginalHeight = ActualHeight;
+            base.EndInit();
 
-            GetVisualChild(0).SetValue(LayoutTransformProperty, new ScaleTransform(scaleX, scaleY));
+            Loaded += DPIAwareWindow_Loaded;
         }
 
-        public double OriginalWidth { get; private set; }
+        private void DPIAwareWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!HandleOwnDPI)
+            {
+                IntPtr _hwnd = new WindowInteropHelper(this).Handle;
 
-        public double OriginalHeight { get; private set; }
+                IntPtr _hmonitor = NativeMethods.MonitorFromWindow(_hwnd, 0);
+
+                MonitorInfo _monitorInfo = Monitor.GetMonitor(_hmonitor);
+
+                UpdateScale(_monitorInfo.ScaleX, _monitorInfo.ScaleY, true);
+            }
+        }
+
+        public void UpdateScale(double scaleX, double scaleY, bool resize)
+        {
+            GetVisualChild(0).SetValue(LayoutTransformProperty, new ScaleTransform(scaleX, scaleY));
+
+            if (resize)
+            {
+                Width *= scaleX;
+                Height *= scaleY;
+            }
+        }
+
+        public bool HandleOwnDPI { get; set; } = false;
+
+        public int OriginalWidth { get; set; }
+
+        public int OriginalHeight { get; set; }
     }
 
     [Serializable]
@@ -264,7 +298,7 @@ namespace SidebarDiagnostics.Windows
         None
     }
 
-    public class AppBarWindow : DPIAwareWindow
+    public partial class AppBarWindow : DPIAwareWindow
     {
         [StructLayout(LayoutKind.Sequential)]
         internal struct APPBARDATA

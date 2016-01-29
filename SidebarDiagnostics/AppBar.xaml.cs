@@ -14,6 +14,8 @@ namespace SidebarDiagnostics
     {
         public AppBar()
         {
+            HandleOwnDPI = true;
+
             InitializeComponent();
         }
 

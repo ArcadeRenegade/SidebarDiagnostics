@@ -6,13 +6,14 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Monitor;
+using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
 {
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : Window
+    public partial class Settings : DPIAwareWindow
     {
         public Settings()
         {

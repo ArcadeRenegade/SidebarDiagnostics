@@ -1,4 +1,5 @@
-﻿<Window x:Class="SidebarDiagnostics.Settings"
+﻿<win:DPIAwareWindow
+        x:Class="SidebarDiagnostics.Settings"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,6 +7,7 @@
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
         xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitor"
         xmlns:convert="clr-namespace:SidebarDiagnostics.Converters"
+        xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
         Title="Sidebar Settings"
         Width="400"
@@ -59,7 +61,7 @@
                         <Slider x:Name="PollingIntervalSlider" Value="{Binding Path=PollingInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="5000" TickFrequency="100" TickPlacement="None" LargeChange="1000" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Time between polling for data in milliseconds." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Use App Bar" VerticalAlignment="Center" />
+                    <Label Grid.Column="0" Grid.Row="3" Content="Reserve Space" VerticalAlignment="Center" />
                     <CheckBox IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Reserves space in the work area for the sidebar." />
 
                     <Label Grid.Column="0" Grid.Row="4" Content="Always On Top" VerticalAlignment="Center" />
@@ -240,4 +242,4 @@
             <Button Content="Cancel" Click="CancelButton_Click"></Button>
         </StackPanel>
     </StackPanel>
-</Window>
+</win:DPIAwareWindow>
