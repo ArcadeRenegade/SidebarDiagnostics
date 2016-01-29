@@ -1029,6 +1029,87 @@ namespace SidebarDiagnostics.Monitor
                 return Type.GetDescription();
             }
         }
+
+        public static MonitorConfig[] CheckConfig(MonitorConfig[] config)
+        {
+            MonitorType[] _types = (MonitorType[])Enum.GetValues(typeof(MonitorType));
+
+            if (config == null || config.Length != _types.Length || config.Any(c => c == null) || _types.Any(t => config.Count(c => c.Type == t) != 1))
+            {
+                return Default;
+            }
+            
+            return config;
+        }
+
+        public static MonitorConfig[] Default
+        {
+            get
+            {
+                return new MonitorConfig[5]
+                {
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.CPU,
+                        Enabled = true,
+                        Order = 1,
+                        Params = new ConfigParam[5]
+                        {
+                            ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.AllCoreClocks,
+                            ConfigParam.Defaults.CoreLoads,
+                            ConfigParam.Defaults.UseFahrenheit,
+                            ConfigParam.Defaults.TempAlert
+                        }
+                    },
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.RAM,
+                        Enabled = true,
+                        Order = 2,
+                        Params = new ConfigParam[1]
+                        {
+                            ConfigParam.Defaults.NoHardwareNames
+                        }
+                    },
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.GPU,
+                        Enabled = true,
+                        Order = 3,
+                        Params = new ConfigParam[3]
+                        {
+                            ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.UseFahrenheit,
+                            ConfigParam.Defaults.TempAlert
+                        }
+                    },
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.HD,
+                        Enabled = true,
+                        Order = 4,
+                        Params = new ConfigParam[2]
+                        {
+                            ConfigParam.Defaults.DriveDetails,
+                            ConfigParam.Defaults.UsedSpaceAlert
+                        }
+                    },
+                    new MonitorConfig()
+                    {
+                        Type = MonitorType.Network,
+                        Enabled = true,
+                        Order = 5,
+                        Params = new ConfigParam[3]
+                        {
+                            ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.BandwidthInAlert,
+                            ConfigParam.Defaults.BandwidthOutAlert
+                        }
+                    }
+                };
+            }
+        }
     }
 
     [Serializable]

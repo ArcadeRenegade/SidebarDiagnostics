@@ -62,71 +62,8 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
-            if (SidebarDiagnostics.Properties.Settings.Default.MonitorConfig == null)
-            {
-                SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = new MonitorConfig[5]
-                {
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.CPU,
-                        Enabled = true,
-                        Order = 1,
-                        Params = new ConfigParam[5]
-                        {
-                            ConfigParam.Defaults.HardwareNames,
-                            ConfigParam.Defaults.AllCoreClocks,
-                            ConfigParam.Defaults.CoreLoads,
-                            ConfigParam.Defaults.UseFahrenheit,
-                            ConfigParam.Defaults.TempAlert
-                        }
-                    },
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.RAM,
-                        Enabled = true,
-                        Order = 2,
-                        Params = new ConfigParam[1]
-                        {
-                            ConfigParam.Defaults.NoHardwareNames
-                        }
-                    },
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.GPU,
-                        Enabled = true,
-                        Order = 3,
-                        Params = new ConfigParam[3]
-                        {
-                            ConfigParam.Defaults.HardwareNames,
-                            ConfigParam.Defaults.UseFahrenheit,
-                            ConfigParam.Defaults.TempAlert
-                        }
-                    },
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.HD,
-                        Enabled = true,
-                        Order = 4,
-                        Params = new ConfigParam[2]
-                        {
-                            ConfigParam.Defaults.DriveDetails,
-                            ConfigParam.Defaults.UsedSpaceAlert
-                        }
-                    },
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.Network,
-                        Enabled = true,
-                        Order = 5,
-                        Params = new ConfigParam[3]
-                        {
-                            ConfigParam.Defaults.HardwareNames,
-                            ConfigParam.Defaults.BandwidthInAlert,
-                            ConfigParam.Defaults.BandwidthOutAlert
-                        }
-                    }
-                };
-            }
+            SidebarDiagnostics.Properties.Settings.Default.MonitorConfig =
+                MonitorConfig.CheckConfig(SidebarDiagnostics.Properties.Settings.Default.MonitorConfig);
         }
 
         private void Settings_Click(object sender, EventArgs e)
