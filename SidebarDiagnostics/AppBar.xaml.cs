@@ -47,7 +47,8 @@ namespace SidebarDiagnostics
 
             Left = _workArea.Left;
             Top = _workArea.Top;
-            Height = _workArea.Bottom - _workArea.Top;
+            Width = _workArea.Width;
+            Height = _workArea.Height;
             
             Topmost = Properties.Settings.Default.AlwaysTop;
 
@@ -58,7 +59,7 @@ namespace SidebarDiagnostics
 
             if (Properties.Settings.Default.UseAppBar)
             {
-                SetAppBar(_workArea, Properties.Settings.Default.DockEdge);
+                SetAppBar(Properties.Settings.Default.DockEdge, _workArea);
             }
         }
 
