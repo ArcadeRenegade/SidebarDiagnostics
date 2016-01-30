@@ -6,7 +6,9 @@ Features:
 * Monitors CPU, RAM, GPU, network, and virtual drives.
 * Allows for lots of customization.
 * Allows alerts for various values.
-* Clock
+* Allows binding hotkeys.
+* Supports monitors of all DPI types.
+* Has a clock at the top.
 
 Written in C# .NET WPF. Works in Windows 10.
 
