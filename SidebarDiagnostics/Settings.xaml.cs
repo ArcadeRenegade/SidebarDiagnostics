@@ -171,13 +171,11 @@ namespace SidebarDiagnostics
             _hotkey.WinKey = Key.Escape;
 
             KeyDown += Window_KeyDown;
-            KeyUp += Window_KeyUp;
         }
 
         private void EndBind()
         {
             KeyDown -= Window_KeyDown;
-            KeyUp -= Window_KeyUp;
 
             Hotkey.KeyAction _action = _hotkey.Action;
 
@@ -214,54 +212,38 @@ namespace SidebarDiagnostics
         
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            Key _key = e.Key == Key.System ? e.SystemKey : e.Key;
+
+            if (new Key[] { Key.LeftAlt, Key.RightAlt, Key.LeftCtrl, Key.RightCtrl, Key.LeftShift, Key.RightShift, Key.LWin, Key.RWin }.Contains(_key))
             {
-                case Key.System:
-                    return;
-
-                case Key.LeftAlt:
-                    _hotkey.AltMod = true;
-                    return;
-
-                case Key.LeftCtrl:
-                    _hotkey.CtrlMod = true;
-                    return;
-
-                case Key.LeftShift:
-                    _hotkey.ShiftMod = true;
-                    return;
-
-                case Key.LWin:
-                    _hotkey.WinMod = true;
-                    return;
-
-                default:
-                    _hotkey.WinKey = e.Key;
-                    EndBind();
-                    break;
+                return;
             }
-        }
 
-        private void Window_KeyUp(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
+            if ((e.KeyboardDevice.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
-                case Key.LeftAlt:
-                    _hotkey.AltMod = false;
-                    return;
-
-                case Key.LeftCtrl:
-                    _hotkey.CtrlMod = false;
-                    return;
-
-                case Key.LeftShift:
-                    _hotkey.ShiftMod = false;
-                    return;
-
-                case Key.LWin:
-                    _hotkey.WinMod = false;
-                    return;
+                _hotkey.CtrlMod = true;
             }
+
+            if ((e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+            {
+                _hotkey.ShiftMod = true;
+            }
+            
+            if ((e.KeyboardDevice.Modifiers & ModifierKeys.Windows) == ModifierKeys.Windows)
+            {
+                _hotkey.WinMod = true;
+            }
+
+            if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+            {
+                _hotkey.AltMod = true;
+            }
+
+            _hotkey.WinKey = _key;
+
+            EndBind();
+
+            e.Handled = true;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
