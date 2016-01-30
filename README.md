@@ -16,7 +16,7 @@ Go to the <a target="_blank" href="https://github.com/ArcadeRenegade/SidebarDiag
 
 ### Important
 
-If you are changing your screen's DPI in Windows, <atarget="_blank" href="http://arcaderenegade.github.io/SidebarDiagnostics">see this page!</a>
+If you are changing your screen's DPI in Windows, <a target="_blank" href="http://arcaderenegade.github.io/SidebarDiagnostics">see this page!</a>
 
 ### Info
 
