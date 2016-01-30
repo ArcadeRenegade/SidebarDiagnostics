@@ -141,6 +141,11 @@ namespace SidebarDiagnostics
             _appBar.AppBarHide();
         }
 
+        private void Donate_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.patreon.com/arcaderenegade");
+        }
+
         private async void Update_Click(object sender, EventArgs e)
         {
             await UpdateManager.Check(true);
