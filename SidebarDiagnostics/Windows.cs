@@ -35,20 +35,38 @@ namespace SidebarDiagnostics.Windows
 
                 if (_version.Major == 10)
                 {
-                    return WinOS.Win10;
+                    _os = WinOS.Win10;
+                }
+                else if (_version.Major == 6 && new int[2] { 2, 3 }.Contains(_version.Minor))
+                {
+                    _os = WinOS.Win8;
                 }
                 else if (_version.Major == 6 && _version.Minor == 1)
                 {
-                    return WinOS.Win7;
-                }
-                else if (_version.Major == 6)
-                {
-                    return WinOS.Win8;
+                    _os = WinOS.Win7;
                 }
                 else
                 {
-                    return WinOS.Other;
+                    _os = WinOS.Other;
                 }
+
+                return _os;
+            }
+        }
+
+        public static bool SupportDPI
+        {
+            get
+            {
+                return OS.Get >= WinOS.Win8;
+            }
+        }
+
+        public static bool SupportVirtualDesktop
+        {
+            get
+            {
+                return OS.Get >= WinOS.Win10;
             }
         }
     }
@@ -208,7 +226,7 @@ namespace SidebarDiagnostics.Windows
             uint _dpiX = MonitorInfo.DPICONST;
             uint _dpiY = MonitorInfo.DPICONST;
 
-            if (OS.Get >= WinOS.Win8)
+            if (OS.SupportDPI)
             {
                 NativeMethods.GetDpiForMonitor(hMonitor, MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out _dpiX, out _dpiY);
             }
@@ -256,7 +274,10 @@ namespace SidebarDiagnostics.Windows
             double _screenX = _screen.ScaleX;
             double _screenY = _screen.ScaleY;
 
-            window.UpdateScale(_screen.ScaleX, _screen.ScaleY, false);
+            if (OS.SupportDPI)
+            {
+                window.UpdateScale(_screen.ScaleX, _screen.ScaleY, false);
+            }
 
             WorkArea _workArea = new WorkArea()
             {
@@ -287,7 +308,7 @@ namespace SidebarDiagnostics.Windows
     {
         public override void BeginInit()
         {
-            if (!HandleOwnDPI)
+            if (OS.SupportDPI && !HandleOwnDPI)
             {
                 Loaded += DPIAwareWindow_Loaded;
             }

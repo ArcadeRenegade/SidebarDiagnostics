@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Models;
+using WindowsDesktop;
 
 namespace SidebarDiagnostics
 {
@@ -43,6 +44,21 @@ namespace SidebarDiagnostics
             Close();
         }
 
+        private void InitWindow()
+        {
+            Topmost = Properties.Settings.Default.AlwaysTop;
+
+            if (Properties.Settings.Default.ClickThrough)
+            {
+                ClickThrough.SetClickThrough(this);
+            }
+
+            if (OS.SupportVirtualDesktop)
+            {
+                VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
+            }
+        }
+
         private void InitAppBar()
         {
             WorkArea _workArea = Windows.Monitor.GetWorkArea(this);
@@ -51,13 +67,6 @@ namespace SidebarDiagnostics
             Top = _workArea.Top;
             Width = _workArea.Width;
             Height = _workArea.Height;
-            
-            Topmost = Properties.Settings.Default.AlwaysTop;
-
-            if (Properties.Settings.Default.ClickThrough)
-            {
-                ClickThrough.SetClickThrough(this);
-            }
 
             if (Properties.Settings.Default.UseAppBar)
             {
@@ -81,6 +90,11 @@ namespace SidebarDiagnostics
             _hardwareTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
             _hardwareTimer.Tick += new EventHandler(HardwareTimer_Tick);
             _hardwareTimer.Start();
+        }
+
+        private void VirtualDesktop_CurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
+        {
+            this.MoveToDesktop(VirtualDesktop.Current);
         }
 
         private void ClockTimer_Tick(object sender, EventArgs e)
@@ -121,6 +135,7 @@ namespace SidebarDiagnostics
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            InitWindow();
             InitAppBar();
             InitContent();
         }
