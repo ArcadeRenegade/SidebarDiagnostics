@@ -126,7 +126,7 @@ namespace SidebarDiagnostics
                 return;
             }
 
-            _appBar.ABShow();
+            _appBar.AppBarShow();
         }
 
         private void Hide_Click(object sender, EventArgs e)
@@ -138,7 +138,7 @@ namespace SidebarDiagnostics
                 return;
             }
 
-            _appBar.ABHide();
+            _appBar.AppBarHide();
         }
 
         private async void Update_Click(object sender, EventArgs e)

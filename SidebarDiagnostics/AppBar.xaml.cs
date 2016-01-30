@@ -19,23 +19,6 @@ namespace SidebarDiagnostics
             InitializeComponent();
         }
 
-        public void ABShow()
-        {
-            InitAppBar();
-            Show();
-            Activate();
-        }
-
-        public void ABHide()
-        {
-            Hide();
-
-            if (IsAppBar)
-            {
-                ClearAppBar();
-            }
-        }
-
         public void Reload()
         {
             App._reloading = true;

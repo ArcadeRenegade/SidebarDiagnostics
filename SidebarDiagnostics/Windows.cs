@@ -271,7 +271,7 @@ namespace SidebarDiagnostics.Windows
                 return _monitors.Where(s => s.IsPrimary).Single();
         }
         
-        public static WorkArea GetWorkArea(DPIAwareWindow window)
+        public static WorkArea GetWorkArea(AppBarWindow window)
         {
             MonitorInfo _screen = GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
 
@@ -293,14 +293,23 @@ namespace SidebarDiagnostics.Windows
 
             double _windowWidth = Properties.Settings.Default.SidebarWidth * _screenX;
 
+            double _modifyX = 0d;
+
+            if (window.IsAppBar)
+            {
+                _modifyX = window.AppBarWidth;
+            }
+
             switch (Properties.Settings.Default.DockEdge)
             {
                 case DockEdge.Left:
-                    _workArea.Right = _workArea.Left + _windowWidth;
+                    _workArea.Right = _workArea.Left + _windowWidth - _modifyX;
+                    _workArea.Left -= _modifyX;
                     break;
 
                 case DockEdge.Right:
-                    _workArea.Left = _workArea.Right - _windowWidth;
+                    _workArea.Left = _workArea.Right - _windowWidth + _modifyX;
+                    _workArea.Right += _modifyX;
                     break;
             }
 
@@ -542,6 +551,29 @@ namespace SidebarDiagnostics.Windows
             IsAppBar = false;
         }
 
+        public void AppBarShow()
+        {
+            if (Properties.Settings.Default.UseAppBar)
+            {
+                WorkArea _workArea = Monitor.GetWorkArea(this);
+
+                SetAppBar(DockEdge, _workArea);
+            }
+
+            Show();
+            Activate();
+        }
+
+        public void AppBarHide()
+        {
+            Hide();
+
+            if (IsAppBar)
+            {
+                ClearAppBar();
+            }
+        }
+
         private APPBARDATA NewData()
         {
             APPBARDATA _data = new APPBARDATA();
@@ -567,6 +599,8 @@ namespace SidebarDiagnostics.Windows
 
             NativeMethods.SHAppBarMessage(APPBARMSG.ABM_SETPOS, ref _data);
 
+            AppBarWidth = workArea.Width;
+
             _source = HwndSource.FromHwnd(_data.hWnd);
 
             Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
@@ -576,10 +610,7 @@ namespace SidebarDiagnostics.Windows
                 Width = workArea.Width;
                 Height = workArea.Height;
 
-                Task.Delay(150).ContinueWith(_ =>
-                {
-                    _source.AddHook(AppBarHook);
-                });
+                _source.AddHook(AppBarHook);
             }));
         }
 
@@ -590,15 +621,7 @@ namespace SidebarDiagnostics.Windows
                 switch (wParam.ToInt32())
                 {
                     case APPBARNOTIFY.ABN_POSCHANGED:
-                        ClearAppBar();
-
-                        Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-                        {
-                            WorkArea _workArea = Monitor.GetWorkArea(this);
-
-                            SetAppBar(DockEdge, _workArea);
-                        }));
-
+                        DockAppBar(DockEdge, Monitor.GetWorkArea(this));
                         break;
 
                     case APPBARNOTIFY.ABN_FULLSCREENAPP:
@@ -613,7 +636,6 @@ namespace SidebarDiagnostics.Windows
                                 SetTop();
                             }
                         }
-
                         break;
                 }
 
@@ -626,6 +648,8 @@ namespace SidebarDiagnostics.Windows
         public bool IsAppBar { get; private set; } = false;
 
         public DockEdge DockEdge { get; private set; } = DockEdge.None;
+
+        public double AppBarWidth { get; private set; } = 0;
 
         private int _callbackID { get; set; }
 
