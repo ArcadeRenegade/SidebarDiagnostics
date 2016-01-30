@@ -2,7 +2,7 @@
 
 A simple sidebar for Windows desktop that displays hardware diagnostic information.
 
-Features:
+### Features
 * Monitors CPU, RAM, GPU, network, and logical drives.
 * Allows for lots of customization.
 * Allows alerts for various values.
@@ -10,11 +10,19 @@ Features:
 * Supports monitors of all DPI types.
 * Has a clock at the top.
 
+### Download
+
+Go to the <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases">releases tab</a>.
+
+### Important
+
+If you are changing your screen's DPI in Windows, <a href="http://arcaderenegade.github.io/SidebarDiagnostics">see this page!</a>
+
+### Info
+
 Written in C# .NET WPF. Works in Windows 10.
 
 Currently compiled in <a href="https://www.microsoft.com/en-us/download/details.aspx?id=49981">.NET 4.6.1</a>.
-
-Go to the <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases">releases tab</a> to download the latest version of the software.
 
 You will need to run it as administrator.
 
