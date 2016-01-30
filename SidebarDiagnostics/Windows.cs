@@ -599,6 +599,11 @@ namespace SidebarDiagnostics.Windows
 
             NativeMethods.SHAppBarMessage(APPBARMSG.ABM_SETPOS, ref _data);
 
+            workArea.Left = _data.rc.Left;
+            workArea.Top = _data.rc.Top;
+            workArea.Right = _data.rc.Right;
+            workArea.Bottom = _data.rc.Bottom;
+
             AppBarWidth = workArea.Width;
 
             _source = HwndSource.FromHwnd(_data.hWnd);
