@@ -10,9 +10,9 @@
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
         Title="Sidebar Settings"
+        Icon="settings.ico"
         Width="400"
         SizeToContent="Height"
-        Icon="settings.ico"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>

@@ -4,7 +4,8 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Models;
-using WindowsDesktop;
+using System.ComponentModel;
+//using WindowsDesktop;
 
 namespace SidebarDiagnostics
 {
@@ -15,8 +16,6 @@ namespace SidebarDiagnostics
     {
         public AppBar()
         {
-            HandleOwnDPI = true;
-
             InitializeComponent();
         }
 
@@ -46,17 +45,20 @@ namespace SidebarDiagnostics
 
         private void InitWindow()
         {
-            Topmost = Properties.Settings.Default.AlwaysTop;
+            if (Properties.Settings.Default.AlwaysTop)
+            {
+                SetTop();
+            }
 
             if (Properties.Settings.Default.ClickThrough)
             {
                 ClickThrough.SetClickThrough(this);
             }
 
-            if (OS.SupportVirtualDesktop)
-            {
-                VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
-            }
+            //if (OS.SupportVirtualDesktop)
+            //{
+            //    VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
+            //}
         }
 
         private void InitAppBar()
@@ -92,10 +94,10 @@ namespace SidebarDiagnostics
             _hardwareTimer.Start();
         }
 
-        private void VirtualDesktop_CurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
-        {
-            this.MoveToDesktop(VirtualDesktop.Current);
-        }
+        //private void VirtualDesktop_CurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
+        //{
+        //    this.MoveToDesktop(VirtualDesktop.Current);
+        //}
 
         private void ClockTimer_Tick(object sender, EventArgs e)
         {

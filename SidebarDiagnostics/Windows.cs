@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Windows.Media;
+using System.ComponentModel;
 
 namespace SidebarDiagnostics.Windows
 {
@@ -78,6 +79,9 @@ namespace SidebarDiagnostics.Windows
 
         [DllImport("user32.dll")]
         internal static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
+
+        [DllImport("user32.dll")]
+        internal static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwnd_after, int x, int y, int cx, int cy, uint uflags);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         internal static extern int RegisterWindowMessage(string msg);
@@ -306,17 +310,29 @@ namespace SidebarDiagnostics.Windows
 
     public partial class DPIAwareWindow : Window
     {
-        public override void BeginInit()
+        private static class WM_MESSAGES
         {
-            if (OS.SupportDPI && !HandleOwnDPI)
+            public const int WM_DPICHANGED = 0x02E0;
+            public const int WM_GETMINMAXINFO = 0x0024;
+            public const int WM_SIZE = 0x0005;
+            public const int WM_WINDOWPOSCHANGING = 0x0046;
+            public const int WM_WINDOWPOSCHANGED = 0x0047;
+        }
+
+        public override void EndInit()
+        {
+            base.EndInit();
+
+            _originalWidth = base.Width;
+            _originalHeight = base.Height;
+
+            if (AutoDPI && OS.SupportDPI)
             {
                 Loaded += DPIAwareWindow_Loaded;
             }
-
-            base.BeginInit();
         }
 
-        private void DPIAwareWindow_Loaded(object sender, RoutedEventArgs e)
+        public void HandleDPI()
         {
             IntPtr _hwnd = new WindowInteropHelper(this).Handle;
 
@@ -333,12 +349,76 @@ namespace SidebarDiagnostics.Windows
 
             if (resize)
             {
-                Width *= scaleX;
-                Height *= scaleY;
+                SizeToContent _autosize = SizeToContent;
+                SizeToContent = SizeToContent.Manual;
+
+                base.Width = _originalWidth * scaleX;
+                base.Height = _originalHeight * scaleY;
+
+                SizeToContent = _autosize;
             }
         }
 
-        public bool HandleOwnDPI { get; set; } = false;
+        private void DPIAwareWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            HandleDPI();
+
+            //(PresentationSource.FromVisual(this) as HwndSource).AddHook(WindowHook);
+        }
+
+        private IntPtr WindowHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_MESSAGES.WM_DPICHANGED)
+            {
+                HandleDPI();
+
+                handled = true;
+            }
+
+            return IntPtr.Zero;
+        }
+
+        public static readonly DependencyProperty AutoDPIProperty = DependencyProperty.Register("AutoDPI", typeof(bool), typeof(DPIAwareWindow), new UIPropertyMetadata(true));
+
+        public bool AutoDPI
+        {
+            get
+            {
+                return (bool)GetValue(AutoDPIProperty);
+            }
+            set
+            {
+                SetValue(AutoDPIProperty, value);
+            }
+        }
+
+        public new double Width
+        {
+            get
+            {
+                return base.Width;
+            }
+            set
+            {
+                _originalWidth = base.Width = value;
+            }
+        }
+
+        public new double Height
+        {
+            get
+            {
+                return base.Height;
+            }
+            set
+            {
+                _originalHeight = base.Height = value;
+            }
+        }
+
+        private double _originalWidth { get; set; }
+
+        private double _originalHeight { get; set; }
     }
 
     [Serializable]
@@ -364,27 +444,63 @@ namespace SidebarDiagnostics.Windows
             public IntPtr lParam;
         }
 
-        private enum APPBARMSG : int
+        private static class APPBARMSG
         {
-            ABM_NEW,
-            ABM_REMOVE,
-            ABM_QUERYPOS,
-            ABM_SETPOS,
-            ABM_GETSTATE,
-            ABM_GETTASKBARPOS,
-            ABM_ACTIVATE,
-            ABM_GETAUTOHIDEBAR,
-            ABM_SETAUTOHIDEBAR,
-            ABM_WINDOWPOSCHANGED,
-            ABM_SETSTATE
+            public const int ABM_NEW = 0;
+            public const int ABM_REMOVE = 1;
+            public const int ABM_QUERYPOS = 2;
+            public const int ABM_SETPOS = 3;
+            public const int ABM_GETSTATE = 4;
+            public const int ABM_GETTASKBARPOS = 5;
+            public const int ABM_ACTIVATE = 6;
+            public const int ABM_GETAUTOHIDEBAR = 7;
+            public const int ABM_SETAUTOHIDEBAR = 8;
+            public const int ABM_WINDOWPOSCHANGED = 9;
+            public const int ABM_SETSTATE = 10;
         }
 
-        private enum APPBARNOTIFY : int
+        private static class APPBARNOTIFY
         {
-            ABN_STATECHANGE,
-            ABN_POSCHANGED,
-            ABN_FULLSCREENAPP,
-            ABN_WINDOWARRANGE
+            public const int ABN_STATECHANGE = 0;
+            public const int ABN_POSCHANGED = 1;
+            public const int ABN_FULLSCREENAPP = 2;
+            public const int ABN_WINDOWARRANGE = 3;
+        }
+
+        private static class HWND_FLAG
+        {
+            public static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
+            public static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+
+            public const uint SWP_NOSIZE = 0x0001;
+            public const uint SWP_NOMOVE = 0x0002;
+            public const uint SWP_NOACTIVATE = 0x0010;
+        }
+
+        public void SetTop()
+        {
+            NativeMethods.SetWindowPos(
+                new WindowInteropHelper(this).Handle,
+                HWND_FLAG.HWND_TOPMOST,
+                0,
+                0,
+                0,
+                0,
+                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE
+                );
+        }
+
+        public void SetBottom()
+        {
+            NativeMethods.SetWindowPos(
+                new WindowInteropHelper(this).Handle,
+                HWND_FLAG.HWND_BOTTOM,
+                0,
+                0,
+                0,
+                0,
+                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE | HWND_FLAG.SWP_NOACTIVATE
+                );
         }
 
         public void SetAppBar(DockEdge edge, WorkArea workArea)
@@ -403,7 +519,7 @@ namespace SidebarDiagnostics.Windows
 
                 _callbackID = _data.uCallbackMessage = NativeMethods.RegisterWindowMessage("AppBarMessage");
 
-                NativeMethods.SHAppBarMessage((int)APPBARMSG.ABM_NEW, ref _data);
+                NativeMethods.SHAppBarMessage(APPBARMSG.ABM_NEW, ref _data);
             }
             
             DockAppBar(edge, workArea);
@@ -416,14 +532,12 @@ namespace SidebarDiagnostics.Windows
                 throw new InvalidOperationException("This window is not a registered AppBar.");
             }
 
-            _source.RemoveHook(_hook);
-
+            _source.RemoveHook(AppBarHook);
             _source = null;
-            _hook = null;
 
             APPBARDATA _data = NewData();
 
-            NativeMethods.SHAppBarMessage((int)APPBARMSG.ABM_REMOVE, ref _data);
+            NativeMethods.SHAppBarMessage(APPBARMSG.ABM_REMOVE, ref _data);
 
             IsAppBar = false;
         }
@@ -449,18 +563,10 @@ namespace SidebarDiagnostics.Windows
                 Bottom = (int)Math.Round(workArea.Bottom)
             };
 
-            NativeMethods.SHAppBarMessage((int)APPBARMSG.ABM_QUERYPOS, ref _data);
+            NativeMethods.SHAppBarMessage(APPBARMSG.ABM_QUERYPOS, ref _data);
 
-            NativeMethods.SHAppBarMessage((int)APPBARMSG.ABM_SETPOS, ref _data);
+            NativeMethods.SHAppBarMessage(APPBARMSG.ABM_SETPOS, ref _data);
 
-            //Rect _rect = new Rect(
-            //    _data.rc.Left,
-            //    _data.rc.Top,
-            //    (_data.rc.Right - _data.rc.Left),
-            //    (_data.rc.Bottom - _data.rc.Top)
-            //    );
-
-            _hook = new HwndSourceHook(AppBarCallback);
             _source = HwndSource.FromHwnd(_data.hWnd);
 
             Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
@@ -469,8 +575,10 @@ namespace SidebarDiagnostics.Windows
                 Left = workArea.Left;
                 Width = workArea.Width;
                 Height = workArea.Height;
-                
-                LocationChanged += AppBarWindow_LocationChanged;
+
+                //LocationChanged += AppBarWindow_LocationChanged;
+
+                _source.AddHook(AppBarHook);
             }));
         }
 
@@ -478,23 +586,41 @@ namespace SidebarDiagnostics.Windows
         {
             LocationChanged -= AppBarWindow_LocationChanged;
 
-            _source.AddHook(_hook);
+            _source.AddHook(AppBarHook);
         }
 
-        private IntPtr AppBarCallback(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr AppBarHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == _callbackID)
             {
-                if (wParam.ToInt32() == (int)APPBARNOTIFY.ABN_POSCHANGED)
+                switch (wParam.ToInt32())
                 {
-                    ClearAppBar();
+                    case APPBARNOTIFY.ABN_POSCHANGED:
+                        ClearAppBar();
 
-                    Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-                    {
-                        WorkArea _workArea = Monitor.GetWorkArea(this);
+                        Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+                        {
+                            WorkArea _workArea = Monitor.GetWorkArea(this);
 
-                        SetAppBar(DockEdge, _workArea);
-                    }));
+                            SetAppBar(DockEdge, _workArea);
+                        }));
+
+                        break;
+
+                    case APPBARNOTIFY.ABN_FULLSCREENAPP:
+                        if (lParam.ToInt32() == 1)
+                        {
+                            SetBottom();
+                        }
+                        else
+                        {
+                            if (Properties.Settings.Default.AlwaysTop)
+                            {
+                                SetTop();
+                            }
+                        }
+
+                        break;
                 }
 
                 handled = true;
@@ -509,8 +635,8 @@ namespace SidebarDiagnostics.Windows
 
         private int _callbackID { get; set; }
 
-        private HwndSource _source { get; set; }
+        private int _prevZOrder { get; set; }
 
-        private HwndSourceHook _hook { get; set; }
+        private HwndSource _source { get; set; }
     }
 }
