@@ -34,7 +34,7 @@ namespace SidebarDiagnostics.Windows
 
                 Version _version = Environment.OSVersion.Version;
 
-                if (_version.Major == 10)
+                if (_version.Major >= 10)
                 {
                     _os = WinOS.Win10;
                 }
