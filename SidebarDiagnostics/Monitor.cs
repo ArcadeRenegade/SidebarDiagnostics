@@ -574,6 +574,8 @@ namespace SidebarDiagnostics.Monitor
 
     public class DriveMonitor : iMonitor
     {
+        internal const string CATEGORYNAME = "LogicalDisk";
+
         public DriveMonitor(ConfigParam[] parameters)
         {            
             bool _showDetails = parameters.GetValue<bool>(ParamKey.DriveDetails);
@@ -581,7 +583,7 @@ namespace SidebarDiagnostics.Monitor
 
             Regex _regex = new Regex("^[A-Z]:$");
 
-            Drives = new PerformanceCounterCategory("LogicalDisk").GetInstanceNames().Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(n => new DriveInfo(n, _showDetails, _usedSpaceAlert)).ToArray();
+            Drives = new PerformanceCounterCategory(CATEGORYNAME).GetInstanceNames().Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(n => new DriveInfo(n, _showDetails, _usedSpaceAlert)).ToArray();
         }
 
         public void Update()
@@ -605,24 +607,34 @@ namespace SidebarDiagnostics.Monitor
 
     public class DriveInfo : IDisposable, INotifyPropertyChanged
     {
+        private const string FREEMB = "Free Megabytes";
+        private const string PERCENTFREE = "% Free Space";
+        private const string BYTESREADPERSECOND = "Disk Read Bytes/sec";
+        private const string BYTESWRITEPERSECOND = "Disk Write Bytes/sec";
+
         public DriveInfo(string name, bool showDetails = false, double usedSpaceAlert = 0)
         {
-            Label = name;
+            Label = Instance = name;
             ShowDetails = showDetails;
             UsedSpaceAlert = usedSpaceAlert;
 
-            _counterFreeMB = new PerformanceCounter("LogicalDisk", "Free Megabytes", name);
-            _counterFreePercent = new PerformanceCounter("LogicalDisk", "% Free Space", name);
+            _counterFreeMB = new PerformanceCounter(DriveMonitor.CATEGORYNAME, FREEMB, name);
+            _counterFreePercent = new PerformanceCounter(DriveMonitor.CATEGORYNAME, PERCENTFREE, name);
 
             if (showDetails)
             {
-                _counterReadRate = new PerformanceCounter("LogicalDisk", "Disk Read Bytes/sec", name);
-                _counterWriteRate = new PerformanceCounter("LogicalDisk", "Disk Write Bytes/sec", name);
+                _counterReadRate = new PerformanceCounter(DriveMonitor.CATEGORYNAME, BYTESREADPERSECOND, name);
+                _counterWriteRate = new PerformanceCounter(DriveMonitor.CATEGORYNAME, BYTESWRITEPERSECOND, name);
             }
         }
 
         public void Update()
         {
+            if (!PerformanceCounterCategory.InstanceExists(Instance, DriveMonitor.CATEGORYNAME))
+            {
+                return;
+            }
+
             double _freeGB = _counterFreeMB.NextValue() / 1024d;
             double _freePercent = _counterFreePercent.NextValue();
 
@@ -701,6 +713,8 @@ namespace SidebarDiagnostics.Monitor
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Instance { get; private set; }
 
         public string Label { get; private set; }
 
@@ -831,6 +845,8 @@ namespace SidebarDiagnostics.Monitor
 
     public class NetworkMonitor : iMonitor
     {
+        internal const string CATEGORYNAME = "Network Interface";
+
         public NetworkMonitor(ConfigParam[] parameters)
         {
             bool _showName = parameters.GetValue<bool>(ParamKey.HardwareNames);
@@ -838,7 +854,7 @@ namespace SidebarDiagnostics.Monitor
             int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
             int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
 
-            string[] _instances = new PerformanceCounterCategory("Network Interface").GetInstanceNames();
+            string[] _instances = new PerformanceCounterCategory(CATEGORYNAME).GetInstanceNames();
 
             NetworkInterface[] _nics = NetworkInterface.GetAllNetworkInterfaces().Where(n =>
                     n.OperationalStatus == OperationalStatus.Up &&
@@ -871,20 +887,24 @@ namespace SidebarDiagnostics.Monitor
 
     public class NicInfo : IDisposable
     {
+        private const string BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
+        private const string BYTESSENTPERSECOND = "Bytes Sent/sec";
+
         public NicInfo(string instance, string name, bool showName = true, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
         {
+            Instance = instance;
             Name = name;
             ShowName = showName;
 
             InBandwidth = new Bandwidth(
-                new PerformanceCounter("Network Interface", "Bytes Received/sec", instance),
+                new PerformanceCounter(NetworkMonitor.CATEGORYNAME, BYTESRECEIVEDPERSECOND, instance),
                 "In",
                 useBytes,
                 bandwidthInAlert
                 );
 
             OutBandwidth = new Bandwidth(
-                new PerformanceCounter("Network Interface", "Bytes Sent/sec", instance),
+                new PerformanceCounter(NetworkMonitor.CATEGORYNAME, BYTESSENTPERSECOND, instance),
                 "Out",
                 useBytes,
                 bandwidthOutAlert
@@ -893,6 +913,11 @@ namespace SidebarDiagnostics.Monitor
 
         public void Update()
         {
+            if (!PerformanceCounterCategory.InstanceExists(Instance, NetworkMonitor.CATEGORYNAME))
+            {
+                return;
+            }
+
             InBandwidth.Update();
             OutBandwidth.Update();
         }
@@ -902,6 +927,8 @@ namespace SidebarDiagnostics.Monitor
             InBandwidth.Dispose();
             OutBandwidth.Dispose();
         }
+
+        public string Instance { get; private set; }
 
         public string Name { get; private set; }
 

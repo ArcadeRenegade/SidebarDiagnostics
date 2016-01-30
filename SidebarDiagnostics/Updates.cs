@@ -11,8 +11,8 @@ namespace SidebarDiagnostics.Updates
 {
     public static class UpdateManager
     {
-        private const string GitHubAPI = "https://api.github.com/repos/ArcadeRenegade/SidebarDiagnostics/releases/latest";
-        private const string UserAgent = "ArcadeRenegade-SidebarDiagnostics";
+        private const string GITHUBAPI = "https://api.github.com/repos/ArcadeRenegade/SidebarDiagnostics/releases/latest";
+        private const string USERAGENT = "ArcadeRenegade-SidebarDiagnostics";
 
         public async static Task Check(bool showInfoDialogs)
         {
@@ -37,9 +37,9 @@ namespace SidebarDiagnostics.Updates
 
         private async static Task<CheckResult> CheckVersionAsync()
         {
-            HttpWebRequest _request = (HttpWebRequest)WebRequest.Create(GitHubAPI);
+            HttpWebRequest _request = (HttpWebRequest)WebRequest.Create(GITHUBAPI);
             _request.Method = WebRequestMethods.Http.Get;
-            _request.UserAgent = UserAgent;
+            _request.UserAgent = USERAGENT;
 
             try
             {
