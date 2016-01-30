@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Windows.Media;
-using System.ComponentModel;
 
 namespace SidebarDiagnostics.Windows
 {
@@ -363,7 +363,7 @@ namespace SidebarDiagnostics.Windows
         {
             HandleDPI();
 
-            //(PresentationSource.FromVisual(this) as HwndSource).AddHook(WindowHook);
+            (PresentationSource.FromVisual(this) as HwndSource).AddHook(WindowHook);
         }
 
         private IntPtr WindowHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -576,17 +576,11 @@ namespace SidebarDiagnostics.Windows
                 Width = workArea.Width;
                 Height = workArea.Height;
 
-                //LocationChanged += AppBarWindow_LocationChanged;
-
-                _source.AddHook(AppBarHook);
+                Task.Delay(150).ContinueWith(_ =>
+                {
+                    _source.AddHook(AppBarHook);
+                });
             }));
-        }
-
-        private void AppBarWindow_LocationChanged(object sender, EventArgs e)
-        {
-            LocationChanged -= AppBarWindow_LocationChanged;
-
-            _source.AddHook(AppBarHook);
         }
 
         private IntPtr AppBarHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
