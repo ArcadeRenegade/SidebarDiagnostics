@@ -106,6 +106,14 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="VirtualDesktop, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VirtualDesktop.1.0.3\lib\net46\VirtualDesktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VirtualDesktop.WPF, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VirtualDesktop.WPF.1.0.3\lib\net46\VirtualDesktop.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -118,6 +126,7 @@
     <Compile Include="AppBarModel.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Converters.cs" />
+    <Compile Include="Interop.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="SettingsModel.cs" />
     <Compile Include="Updates.cs" />
