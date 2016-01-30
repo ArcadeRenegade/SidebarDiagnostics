@@ -41,6 +41,8 @@ namespace SidebarDiagnostics
             {
                 VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
             }
+
+            Hotkey.Initialize(this, Properties.Settings.Default.Hotkeys);
         }
 
         private void InitAppBar()

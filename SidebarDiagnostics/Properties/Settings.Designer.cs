@@ -225,5 +225,16 @@ namespace SidebarDiagnostics.Properties {
                 this["MonitorConfig"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public SidebarDiagnostics.Windows.Hotkey[] Hotkeys {
+            get {
+                return ((SidebarDiagnostics.Windows.Hotkey[])(this["Hotkeys"]));
+            }
+            set {
+                this["Hotkeys"] = value;
+            }
+        }
     }
 }

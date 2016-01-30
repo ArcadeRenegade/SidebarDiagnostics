@@ -136,6 +136,7 @@
             <Style.Resources>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Margin" Value="0,5,15,0" />
+                    <Setter Property="MinWidth" Value="60" />
                 </Style>
             </Style.Resources>
         </Style>
@@ -151,6 +152,17 @@
                     <Setter Property="Padding" Value="16,6" />
                 </Style>
             </Style.Resources>
+        </Style>
+
+        <Style x:Key="HotkeyToggle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Content" Value="Bind" />
+            <Setter Property="Height" Value="22" />
+        </Style>
+
+        <Style x:Key="HotkeyLabel" TargetType="{x:Type TextBox}">
+            <Setter Property="Height" Value="22" />
+            <Setter Property="Padding" Value="5,0" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
 
         <Style x:Key="ScrollBarTrackThumb" TargetType="{x:Type Thumb}">

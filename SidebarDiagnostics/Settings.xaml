@@ -9,6 +9,8 @@
         xmlns:convert="clr-namespace:SidebarDiagnostics.Converters"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed"
         Title="Sidebar Settings"
         Icon="settings.ico"
         Width="400"
@@ -17,7 +19,8 @@
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <convert:IntToStringConverter x:Key="IntConverter" />
-        
+        <convert:HotkeyToStringConverter x:Key="HotkeyConverter" />
+
         <DataTemplate x:Key="MonitorConfigBool">
             <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" VerticalAlignment="Center" Margin="0,5" />
         </DataTemplate>
@@ -235,6 +238,42 @@
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
                 </StackPanel>
+            </TabItem>
+            <TabItem Header="Hotkeys">
+                <Grid Style="{StaticResource SettingGrid}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    
+                    <Label Grid.Column="0" Grid.Row="0" Content="Toggle" />
+                    <ToggleButton Grid.Column="1" Grid.Row="0" Click="BindToggle_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
+                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Path=ToggleKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" IsReadOnly="True" Style="{StaticResource HotkeyLabel}" />
+
+                    <Label Grid.Column="0" Grid.Row="1" Content="Show" />
+                    <ToggleButton Grid.Column="1" Grid.Row="1" Click="BindShow_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Path=ShowKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" IsReadOnly="True" Style="{StaticResource HotkeyLabel}" />
+
+                    <Label Grid.Column="0" Grid.Row="2" Content="Hide" />
+                    <ToggleButton Grid.Column="1" Grid.Row="2" Click="BindHide_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
+                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Path=HideKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" IsReadOnly="True" Style="{StaticResource HotkeyLabel}" />
+
+                    <Label Grid.Column="0" Grid.Row="3" Content="Reload" />
+                    <ToggleButton Grid.Column="1" Grid.Row="3" Click="BindReload_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
+                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Path=ReloadKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" IsReadOnly="True" Style="{StaticResource HotkeyLabel}" />
+
+                    <Label Grid.Column="0" Grid.Row="4" Content="Close" />
+                    <ToggleButton Grid.Column="1" Grid.Row="4" Click="BindClose_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
+                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Path=CloseKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" IsReadOnly="True" Style="{StaticResource HotkeyLabel}" />
+                </Grid>
             </TabItem>
         </TabControl>
         <StackPanel Style="{StaticResource SettingButtons}">

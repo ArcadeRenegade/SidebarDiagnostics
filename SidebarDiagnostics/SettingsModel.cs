@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using System.ComponentModel;
 using SidebarDiagnostics.Helpers;
 using SidebarDiagnostics.Monitor;
@@ -66,6 +67,19 @@ namespace SidebarDiagnostics.Models
             Clock24HR = Properties.Settings.Default.Clock24HR;
 
             _monitorConfig = Properties.Settings.Default.MonitorConfig;
+
+            if (Properties.Settings.Default.Hotkeys != null)
+            {
+                ToggleKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Toggle);
+
+                ShowKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Show);
+
+                HideKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Hide);
+
+                ReloadKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Reload);
+
+                CloseKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Close);
+            }
         }
 
         public void Save()
@@ -87,6 +101,36 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.ShowClock = ShowClock;
             Properties.Settings.Default.Clock24HR = Clock24HR;
             Properties.Settings.Default.MonitorConfig = _monitorConfig;
+
+            List<Hotkey> _hotkeys = new List<Hotkey>();
+
+            if (ToggleKey != null)
+            {
+                _hotkeys.Add(ToggleKey);
+            }
+            
+            if (ShowKey != null)
+            {
+                _hotkeys.Add(ShowKey);
+            }
+
+            if (HideKey != null)
+            {
+                _hotkeys.Add(HideKey);
+            }
+
+            if (ReloadKey != null)
+            {
+                _hotkeys.Add(ReloadKey);
+            }
+
+            if (CloseKey != null)
+            {
+                _hotkeys.Add(CloseKey);
+            }
+
+            Properties.Settings.Default.Hotkeys = _hotkeys.ToArray();
+
             Properties.Settings.Default.Save();
 
             App.RefreshIcon();
@@ -440,6 +484,86 @@ namespace SidebarDiagnostics.Models
             get
             {
                 return _monitorConfig.OrderBy(c => c.Order).ToArray();
+            }
+        }
+
+        private Hotkey _toggleKey { get; set; }
+
+        public Hotkey ToggleKey
+        {
+            get
+            {
+                return _toggleKey;
+            }
+            set
+            {
+                _toggleKey = value;
+
+                NotifyPropertyChanged("ToggleKey");
+            }
+        }
+
+        private Hotkey _showKey { get; set; }
+
+        public Hotkey ShowKey
+        {
+            get
+            {
+                return _showKey;
+            }
+            set
+            {
+                _showKey = value;
+
+                NotifyPropertyChanged("ShowKey");
+            }
+        }
+
+        private Hotkey _hideKey { get; set; }
+
+        public Hotkey HideKey
+        {
+            get
+            {
+                return _hideKey;
+            }
+            set
+            {
+                _hideKey = value;
+
+                NotifyPropertyChanged("HideKey");
+            }
+        }
+
+        private Hotkey _reloadKey { get; set; }
+
+        public Hotkey ReloadKey
+        {
+            get
+            {
+                return _reloadKey;
+            }
+            set
+            {
+                _reloadKey = value;
+
+                NotifyPropertyChanged("ReloadKey");
+            }
+        }
+
+        private Hotkey _closeKey { get; set; }
+
+        public Hotkey CloseKey
+        {
+            get
+            {
+                return _closeKey;
+            }
+            set
+            {
+                _closeKey = value;
+
+                NotifyPropertyChanged("CloseKey");
             }
         }
     }

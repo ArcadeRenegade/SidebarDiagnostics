@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Windows.Media;
@@ -100,6 +100,212 @@ namespace SidebarDiagnostics.Windows
 
         [DllImport("user32.dll")]
         internal static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+
+        [DllImport("user32.dll")]
+        internal static extern bool RegisterHotKey(IntPtr hwnd, int id, uint modifiers, uint vk);
+
+        [DllImport("user32.dll")]
+        internal static extern bool UnregisterHotKey(IntPtr hwnd, int id);
+    }
+
+    [Serializable]
+    public class Hotkey
+    {
+        private const int WM_HOTKEY = 0x0312;
+
+        private const uint MOD_NOREPEAT = 0x4000;
+        private const uint MOD_ALT = 0x0001;
+        private const uint MOD_CONTROL = 0x0002;
+        private const uint MOD_SHIFT = 0x0004;
+        private const uint MOD_WIN = 0x0008;
+
+        public enum KeyAction : byte
+        {
+            Toggle,
+            Show,
+            Hide,
+            Reload,
+            Close
+        }
+
+        public Hotkey() { }
+
+        public Hotkey(int index, KeyAction action, uint virtualKey, bool altMod = false, bool ctrlMod = false, bool shiftMod = false, bool winMod = false)
+        {
+            Index = index;
+            Action = action;
+            VirtualKey = virtualKey;
+            AltMod = altMod;
+            CtrlMod = ctrlMod;
+            ShiftMod = shiftMod;
+            WinMod = winMod;
+        }
+
+        public KeyAction Action { get; set; }
+
+        public uint VirtualKey { get; set; }
+
+        public bool AltMod { get; set; }
+
+        public bool CtrlMod { get; set; }
+
+        public bool ShiftMod { get; set; }
+
+        public bool WinMod { get; set; }
+
+        public Key WinKey
+        {
+            get
+            {
+                return KeyInterop.KeyFromVirtualKey((int)VirtualKey);
+            }
+            set
+            {
+                VirtualKey = (uint)KeyInterop.VirtualKeyFromKey(value);
+            }
+        }
+
+        private int Index { get; set; }
+
+        public static void Initialize(AppBar window, Hotkey[] settings)
+        {
+            _window = window;
+            _index = 0;
+
+            RegisteredKeys = new List<Hotkey>();
+
+            if (settings != null)
+            {
+                foreach (Hotkey _hotkey in settings)
+                {
+                    Add(_hotkey);
+                }
+            }
+
+            (PresentationSource.FromVisual(window) as HwndSource).AddHook(KeyHook);
+        }
+
+        public static void Enable()
+        {
+            foreach (Hotkey _hotkey in RegisteredKeys)
+            {
+                Register(_hotkey, false);
+            }
+        }
+
+        public static void Disable()
+        {
+            foreach (Hotkey _hotkey in RegisteredKeys)
+            {
+                Unregister(_hotkey);
+            }
+        }
+
+        public static void Add(Hotkey hotkey)
+        {
+            Register(hotkey, true);
+        }
+
+        private static void Register(Hotkey hotkey, bool add)
+        {
+            uint _mods = MOD_NOREPEAT;
+
+            if (hotkey.AltMod)
+            {
+                _mods |= MOD_ALT;
+            }
+
+            if (hotkey.CtrlMod)
+            {
+                _mods |= MOD_CONTROL;
+            }
+
+            if (hotkey.ShiftMod)
+            {
+                _mods |= MOD_SHIFT;
+            }
+
+            if (hotkey.WinMod)
+            {
+                _mods |= MOD_WIN;
+            }
+
+            if (add)
+            {
+                hotkey.Index = _index;
+                _index++;
+
+                RegisteredKeys.Add(hotkey);
+            }
+
+            NativeMethods.RegisterHotKey(
+                new WindowInteropHelper(_window).Handle,
+                hotkey.Index,
+                _mods,
+                hotkey.VirtualKey
+                );
+        }
+
+        private static void Unregister(Hotkey hotkey)
+        {
+            NativeMethods.UnregisterHotKey(
+                new WindowInteropHelper(_window).Handle,
+                hotkey.Index
+                );
+        }
+
+        public static List<Hotkey> RegisteredKeys { get; private set; }
+        
+        private static IntPtr KeyHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_HOTKEY)
+            {
+                int _id = wParam.ToInt32();
+
+                Hotkey _hotkey = RegisteredKeys.FirstOrDefault(k => k.Index == _id);
+
+                if (_hotkey != null && _window != null && _window.IsInitialized)
+                {
+                    switch (_hotkey.Action)
+                    {
+                        case KeyAction.Toggle:
+                            if (_window.Visibility == Visibility.Visible)
+                            {
+                                _window.AppBarHide();
+                            }
+                            else
+                            {
+                                _window.AppBarShow();
+                            }
+                            break;
+
+                        case KeyAction.Show:
+                            _window.AppBarShow();
+                            break;
+
+                        case KeyAction.Hide:
+                            _window.AppBarHide();
+                            break;
+
+                        case KeyAction.Reload:
+                            _window.Reload();
+                            break;
+
+                        case KeyAction.Close:
+                            Application.Current.Shutdown();
+                            break;
+                    }
+                }
+
+                handled = true;
+            }
+
+            return IntPtr.Zero;
+        }
+
+        private static AppBar _window { get; set; }
+
+        private static int _index { get; set; }
     }
 
     public static class ClickThrough

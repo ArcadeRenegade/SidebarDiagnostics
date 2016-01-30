@@ -53,5 +53,8 @@
     <Setting Name="MonitorConfig" Type="SidebarDiagnostics.Monitor.MonitorConfig[]" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="Hotkeys" Type="SidebarDiagnostics.Windows.Hotkey[]" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

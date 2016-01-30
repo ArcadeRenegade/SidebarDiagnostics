@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Input;
+using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics.Converters
 {
@@ -27,6 +29,31 @@ namespace SidebarDiagnostics.Converters
             int.TryParse(value.ToString(), out _return);
 
             return _return;
+        }
+    }
+
+    public class HotkeyToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Hotkey _hotkey = (Hotkey)value;
+
+            if (_hotkey == null)
+            {
+                return "None";
+            }
+
+            return
+                (_hotkey.AltMod ? "Alt + " : "") +
+                (_hotkey.CtrlMod ? "Ctrl + " : "") +
+                (_hotkey.ShiftMod ? "Shift + " : "") +
+                (_hotkey.WinMod ? "Win + " : "") +
+                new KeyConverter().ConvertToString(_hotkey.WinKey);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
         }
     }
 }
