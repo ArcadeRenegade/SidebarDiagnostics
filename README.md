@@ -3,7 +3,7 @@
 A simple sidebar for Windows desktop that displays hardware diagnostic information.
 
 Features:
-* Monitors CPU, RAM, GPU, network, and virtual drives.
+* Monitors CPU, RAM, GPU, network, and logical drives.
 * Allows for lots of customization.
 * Allows alerts for various values.
 * Allows binding hotkeys.
