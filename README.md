@@ -12,11 +12,11 @@ A simple sidebar for Windows desktop that displays hardware diagnostic informati
 
 ### Download
 
-Go to the <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases">releases tab</a>.
+Go to the <a target="_blank" href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases">releases tab</a>.
 
 ### Important
 
-If you are changing your screen's DPI in Windows, <a href="http://arcaderenegade.github.io/SidebarDiagnostics">see this page!</a>
+If you are changing your screen's DPI in Windows, <atarget="_blank" href="http://arcaderenegade.github.io/SidebarDiagnostics">see this page!</a>
 
 ### Info
 
