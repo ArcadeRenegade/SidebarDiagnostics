@@ -9,6 +9,50 @@ using System.Windows.Media;
 
 namespace SidebarDiagnostics.Windows
 {
+    public enum WinOS : byte
+    {
+        Unknown,
+        Other,
+        Win7,
+        Win8,
+        Win10
+    }
+
+    public static class OS
+    {
+        private static WinOS _os { get; set; } = WinOS.Unknown;
+
+        public static WinOS Get
+        {
+            get
+            {
+                if (_os != WinOS.Unknown)
+                {
+                    return _os;
+                }
+
+                Version _version = Environment.OSVersion.Version;
+
+                if (_version.Major == 10)
+                {
+                    return WinOS.Win10;
+                }
+                else if (_version.Major == 6 && _version.Minor == 1)
+                {
+                    return WinOS.Win7;
+                }
+                else if (_version.Major == 6)
+                {
+                    return WinOS.Win8;
+                }
+                else
+                {
+                    return WinOS.Other;
+                }
+            }
+        }
+    }
+
     internal static class NativeMethods
     {
         [DllImport("user32.dll")]
@@ -22,7 +66,7 @@ namespace SidebarDiagnostics.Windows
 
         [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
         internal static extern UIntPtr SHAppBarMessage(int dwMessage, ref AppBarWindow.APPBARDATA pData);
-        
+
         [DllImport("user32.dll")]
         internal static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lpRect, Monitor.EnumCallback callback, int dwData);
 
@@ -34,15 +78,6 @@ namespace SidebarDiagnostics.Windows
 
         [DllImport("user32.dll")]
         internal static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
-    {
-        public int Left;
-        public int Top;
-        public int Right;
-        public int Bottom;
     }
 
     public static class ClickThrough
@@ -59,9 +94,18 @@ namespace SidebarDiagnostics.Windows
         }
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
+
     public class MonitorInfo
     {
-        private const double DPICONST = 96d;
+        internal const uint DPICONST = 96u;
 
         public RECT Size { get; set; }
 
@@ -161,10 +205,13 @@ namespace SidebarDiagnostics.Windows
 
             NativeMethods.GetMonitorInfo(hMonitor, ref _info);
 
-            uint _dpiX;
-            uint _dpiY;
+            uint _dpiX = MonitorInfo.DPICONST;
+            uint _dpiY = MonitorInfo.DPICONST;
 
-            NativeMethods.GetDpiForMonitor(hMonitor, MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out _dpiX, out _dpiY);
+            if (OS.Get >= WinOS.Win8)
+            {
+                NativeMethods.GetDpiForMonitor(hMonitor, MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out _dpiX, out _dpiY);
+            }
 
             return new MonitorInfo()
             {
@@ -206,19 +253,8 @@ namespace SidebarDiagnostics.Windows
         {
             MonitorInfo _screen = GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
 
-            //PresentationSource _presentationSource = PresentationSource.FromVisual(window);
-
-            //double _wpfX = _presentationSource.CompositionTarget.TransformToDevice.M11;
-            //double _wpfY = _presentationSource.CompositionTarget.TransformToDevice.M22;
-
-            //double _iwpfX = 1d / _wpfX;
-            //double _iwpfY = 1d / _wpfY;
-
             double _screenX = _screen.ScaleX;
             double _screenY = _screen.ScaleY;
-
-            //double _iScreenX = _screen.InverseScaleX;
-            //double _iScreenY = _screen.InverseScaleY;
 
             window.UpdateScale(_screen.ScaleX, _screen.ScaleY, false);
 
@@ -249,25 +285,25 @@ namespace SidebarDiagnostics.Windows
 
     public partial class DPIAwareWindow : Window
     {
-        public override void EndInit()
+        public override void BeginInit()
         {
-            base.EndInit();
+            if (!HandleOwnDPI)
+            {
+                Loaded += DPIAwareWindow_Loaded;
+            }
 
-            Loaded += DPIAwareWindow_Loaded;
+            base.BeginInit();
         }
 
         private void DPIAwareWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!HandleOwnDPI)
-            {
-                IntPtr _hwnd = new WindowInteropHelper(this).Handle;
+            IntPtr _hwnd = new WindowInteropHelper(this).Handle;
 
-                IntPtr _hmonitor = NativeMethods.MonitorFromWindow(_hwnd, 0);
+            IntPtr _hmonitor = NativeMethods.MonitorFromWindow(_hwnd, 0);
 
-                MonitorInfo _monitorInfo = Monitor.GetMonitor(_hmonitor);
+            MonitorInfo _monitorInfo = Monitor.GetMonitor(_hmonitor);
 
-                UpdateScale(_monitorInfo.ScaleX, _monitorInfo.ScaleY, true);
-            }
+            UpdateScale(_monitorInfo.ScaleX, _monitorInfo.ScaleY, true);
         }
 
         public void UpdateScale(double scaleX, double scaleY, bool resize)
@@ -282,10 +318,6 @@ namespace SidebarDiagnostics.Windows
         }
 
         public bool HandleOwnDPI { get; set; } = false;
-
-        public int OriginalWidth { get; set; }
-
-        public int OriginalHeight { get; set; }
     }
 
     [Serializable]

@@ -168,10 +168,10 @@ namespace SidebarDiagnostics
             }
         }
 
-        private static TaskbarIcon _trayIcon { get; set; }
-
         internal static Computer _computer { get; private set; }
 
         internal static bool _reloading { get; set; } = false;
+
+        private static TaskbarIcon _trayIcon { get; set; }
     }
 }
