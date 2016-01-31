@@ -184,18 +184,21 @@
                                     <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
                                             <StackPanel.Resources>
-                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource AppButton}">
+                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}">
                                                     <Setter Property="Width" Value="14" />
                                                     <Setter Property="Height" Value="14" />
                                                     <Setter Property="Margin" Value="4,0" />
-                                                </Style>
-                                                <Style TargetType="{x:Type Path}">
-                                                    <Setter Property="Width" Value="8" />
-                                                    <Setter Property="Height" Value="8" />
-                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                                    <Setter Property="Fill" Value="#666666" />
-                                                    <Setter Property="Stretch" Value="Uniform" />
+                                                    <Setter Property="Foreground" Value="#666666" />
+                                                    <Style.Resources>
+                                                        <Style TargetType="{x:Type Path}">
+                                                            <Setter Property="Width" Value="8" />
+                                                            <Setter Property="Height" Value="8" />
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+                                                            <Setter Property="Stretch" Value="Uniform" />
+                                                        </Style>
+                                                    </Style.Resources>
                                                 </Style>
                                             </StackPanel.Resources>
                                             <Button Click="MonitorUp_Click">

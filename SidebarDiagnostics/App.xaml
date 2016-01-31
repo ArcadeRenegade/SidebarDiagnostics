@@ -35,18 +35,13 @@
             <Setter Property="Orientation" Value="Horizontal" />
             <Setter Property="Visibility" Value="Hidden" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Source={x:Static prop:Settings.Default}, Path=CollapseMenuBar}" Value="True">
+                <DataTrigger Binding="{Binding Source={x:Static prop:Settings.Default}, Path=CollapseMenuBar, Mode=OneWay}" Value="True">
                     <Setter Property="Visibility" Value="Collapsed" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="MenuButton" TargetType="{x:Type Button}">
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Width" Value="14" />
-            <Setter Property="Height" Value="14" />
-            <Setter Property="Margin" Value="10,0,0,0" />
+        <Style x:Key="IconButton" TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -71,7 +66,15 @@
                 </Style>
             </Style.Resources>
         </Style>
-        
+
+        <Style x:Key="MenuButton" TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Width" Value="14" />
+            <Setter Property="Height" Value="14" />
+            <Setter Property="Margin" Value="10,0,0,0" />
+        </Style>
+
         <Style x:Key="AppIcon" TargetType="{x:Type Path}">
             <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize, Mode=OneTime}" />
             <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize, Mode=OneTime}" />
