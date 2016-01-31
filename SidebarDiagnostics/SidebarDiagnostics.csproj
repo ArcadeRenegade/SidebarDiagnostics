@@ -125,6 +125,7 @@
     </ApplicationDefinition>
     <Compile Include="AppBarModel.cs" />
     <Compile Include="Commands.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="SettingsModel.cs" />

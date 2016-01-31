@@ -583,7 +583,20 @@ namespace SidebarDiagnostics.Monitor
 
             Regex _regex = new Regex("^[A-Z]:$");
 
-            Drives = new PerformanceCounterCategory(CATEGORYNAME).GetInstanceNames().Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(n => new DriveInfo(n, _showDetails, _usedSpaceAlert)).ToArray();
+            string[] _instances;
+
+            try
+            {
+                _instances = new PerformanceCounterCategory(CATEGORYNAME).GetInstanceNames();
+            }
+            catch (InvalidOperationException)
+            {
+                _instances = new string[0];
+
+                App.ShowPerformanceCounterError();
+            }
+
+            Drives = _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(n => new DriveInfo(n, _showDetails, _usedSpaceAlert)).ToArray();
         }
 
         public void Update()
@@ -854,7 +867,18 @@ namespace SidebarDiagnostics.Monitor
             int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
             int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
 
-            string[] _instances = new PerformanceCounterCategory(CATEGORYNAME).GetInstanceNames();
+            string[] _instances;
+
+            try
+            {
+                _instances = new PerformanceCounterCategory(CATEGORYNAME).GetInstanceNames();
+            }
+            catch (InvalidOperationException)
+            {
+                _instances = new string[0];
+
+                App.ShowPerformanceCounterError();
+            }
 
             NetworkInterface[] _nics = NetworkInterface.GetAllNetworkInterfaces().Where(n =>
                     n.OperationalStatus == OperationalStatus.Up &&

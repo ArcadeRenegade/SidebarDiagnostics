@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.IO;
 using System.Reflection;
@@ -11,9 +12,6 @@ namespace SidebarDiagnostics.Updates
 {
     public static class UpdateManager
     {
-        private const string GITHUBAPI = "https://api.github.com/repos/ArcadeRenegade/SidebarDiagnostics/releases/latest";
-        private const string USERAGENT = "ArcadeRenegade-SidebarDiagnostics";
-
         public async static Task Check(bool showInfoDialogs)
         {
             CheckResult _result = await CheckVersionAsync();
@@ -37,9 +35,9 @@ namespace SidebarDiagnostics.Updates
 
         private async static Task<CheckResult> CheckVersionAsync()
         {
-            HttpWebRequest _request = (HttpWebRequest)WebRequest.Create(GITHUBAPI);
+            HttpWebRequest _request = (HttpWebRequest)WebRequest.Create(Constants.GITHUB.GITHUBAPI);
             _request.Method = WebRequestMethods.Http.Get;
-            _request.UserAgent = USERAGENT;
+            _request.UserAgent = Constants.GITHUB.USERAGENT;
 
             try
             {
@@ -85,7 +83,7 @@ namespace SidebarDiagnostics.Updates
 
             if (_result == MessageBoxResult.Yes)
             {
-                System.Diagnostics.Process.Start(downloadURL);
+                Process.Start(downloadURL);
             }
         }
 

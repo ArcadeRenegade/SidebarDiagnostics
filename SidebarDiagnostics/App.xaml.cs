@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -64,6 +65,16 @@ namespace SidebarDiagnostics
         public static void RefreshIcon()
         {
             _trayIcon.Visibility = SidebarDiagnostics.Properties.Settings.Default.ShowTrayIcon ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public static void ShowPerformanceCounterError()
+        {
+            MessageBoxResult _result = MessageBox.Show(Constants.Generic.PERFORMANCECOUNTERERROR, Constants.Generic.ERRORTITLE, MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+
+            if (_result == MessageBoxResult.OK)
+            {
+                Process.Start(Constants.URL.WIKI);
+            }
         }
 
         private void CheckSettings()
@@ -143,7 +154,7 @@ namespace SidebarDiagnostics
 
         private void Donate_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.patreon.com/arcaderenegade");
+            Process.Start(Constants.URL.DONATE);
         }
 
         private async void Update_Click(object sender, EventArgs e)
@@ -161,7 +172,7 @@ namespace SidebarDiagnostics
         {
             Exception ex = (Exception)e.ExceptionObject;
 
-            MessageBox.Show(ex.ToString(), "Sidebar Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBox.Show(ex.ToString(), Constants.Generic.ERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
         #endif
         
