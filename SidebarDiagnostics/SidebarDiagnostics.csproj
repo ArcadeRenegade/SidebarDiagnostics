@@ -126,7 +126,6 @@
     <Compile Include="AppBarModel.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Converters.cs" />
-    <Compile Include="Interop.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="SettingsModel.cs" />
     <Compile Include="Updates.cs" />
