@@ -16,7 +16,7 @@ Go to the <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases
 
 ### Important
 
-If you are changing your screen's DPI settings, <a target="_blank" href="https://github.com/ArcadeRenegade/SidebarDiagnostics/wiki/DPI-Settings">view this page!</a>
+If you are changing your screen's DPI settings, <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/wiki/DPI-Settings">view this page!</a>
 
 ### Info
 
