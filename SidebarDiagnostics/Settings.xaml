@@ -98,6 +98,7 @@
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="Sidebar Width" VerticalAlignment="Center" />
@@ -124,11 +125,14 @@
                     <Label Grid.Column="0" Grid.Row="5" Content="Alert Font Color" VerticalAlignment="Center" />
                     <TextBox Text="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of alert text as a hex code." />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Show Clock" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Shows the clock at the top of the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Collapse Menu Bar" VerticalAlignment="Center" />
+                    <CheckBox IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
                     
-                    <Label Grid.Column="0" Grid.Row="7" Content="24 Hour Clock" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the clock's time format to 24 hours." />
+                    <Label Grid.Column="0" Grid.Row="7" Content="Show Clock" VerticalAlignment="Center" />
+                    <CheckBox IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Shows the clock." />
+                    
+                    <Label Grid.Column="0" Grid.Row="8" Content="24 Hour Clock" VerticalAlignment="Center" />
+                    <CheckBox IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Changes the clock's time format to 24 hours." />
                 </Grid>
             </TabItem>
             <TabItem Header="Monitors">

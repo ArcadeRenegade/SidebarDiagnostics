@@ -136,7 +136,7 @@ namespace SidebarDiagnostics
 
         private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            WindowControls.Visibility = Visibility.Hidden;
+            WindowControls.Visibility = Properties.Settings.Default.CollapseMenuBar ? Visibility.Collapsed : Visibility.Hidden;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

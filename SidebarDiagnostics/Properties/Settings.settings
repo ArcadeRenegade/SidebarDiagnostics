@@ -44,6 +44,9 @@
     <Setting Name="AlertFontColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#FF4136</Value>
     </Setting>
+    <Setting Name="CollapseMenuBar" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="ShowClock" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>

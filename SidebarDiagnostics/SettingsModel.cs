@@ -62,6 +62,8 @@ namespace SidebarDiagnostics.Models
 
             AlertFontColor = Properties.Settings.Default.AlertFontColor;
 
+            CollapseMenuBar = Properties.Settings.Default.CollapseMenuBar;
+
             ShowClock = Properties.Settings.Default.ShowClock;
 
             Clock24HR = Properties.Settings.Default.Clock24HR;
@@ -98,6 +100,7 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.FontSetting = FontSetting;
             Properties.Settings.Default.FontColor = FontColor;
             Properties.Settings.Default.AlertFontColor = AlertFontColor;
+            Properties.Settings.Default.CollapseMenuBar = CollapseMenuBar;
             Properties.Settings.Default.ShowClock = ShowClock;
             Properties.Settings.Default.Clock24HR = Clock24HR;
             Properties.Settings.Default.MonitorConfig = _monitorConfig;
@@ -442,6 +445,22 @@ namespace SidebarDiagnostics.Models
                 _alertFontColor = value;
 
                 NotifyPropertyChanged("AlertFontColor");
+            }
+        }
+
+        private bool _collapseMenuBar { get; set; }
+
+        public bool CollapseMenuBar
+        {
+            get
+            {
+                return _collapseMenuBar;
+            }
+            set
+            {
+                _collapseMenuBar = value;
+
+                NotifyPropertyChanged("CollapseMenuBar");
             }
         }
 
