@@ -218,11 +218,10 @@ namespace SidebarDiagnostics.Monitor
     {
         public OHMMonitor(MonitorType type, IHardware hardware, IHardware board, ConfigParam[] parameters)
         {
-            Name = hardware.Name;
-
-            ShowName = parameters.GetValue<bool>(ParamKey.HardwareNames);
-
             _hardware = hardware;
+
+            Name = hardware.Name;
+            ShowName = parameters.GetValue<bool>(ParamKey.HardwareNames);
 
             UpdateHardware();
 
