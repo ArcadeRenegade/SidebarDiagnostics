@@ -101,6 +101,18 @@
             <Setter Property="TextWrapping" Value="WrapWithOverflow" />
         </Style>
 
+        <Style x:Key="ContentView" TargetType="ScrollViewer">
+            <Setter Property="Margin" Value="5,15" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+        </Style>
+
+        <Style x:Key="ContentPanel" TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="15,0" />
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
         <Style x:Key="VerticalPanel" TargetType="{x:Type StackPanel}">
             <Setter Property="Orientation" Value="Vertical" />
         </Style>
@@ -171,9 +183,32 @@
 
         <Style x:Key="SettingGrid" TargetType="{x:Type Grid}">
             <Style.Resources>
-                <Style TargetType="{x:Type Label}">
+                <Style TargetType="{x:Type FrameworkElement}">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type FrameworkElement}}">
                     <Setter Property="Margin" Value="0,5,15,0" />
                     <Setter Property="MinWidth" Value="60" />
+                </Style>
+                <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+                <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}">
+                    <Setter Property="Margin" Value="0,6,0,0" />
+                </Style>
+                <Style TargetType="{x:Type DockPanel}" BasedOn="{StaticResource {x:Type FrameworkElement}}">
+                    <Style.Resources>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="DockPanel.Dock" Value="Right" />
+                            <Setter Property="Width" Value="40" />
+                            <Setter Property="Margin" Value="5,0,0,0" />
+                            <Setter Property="IsReadOnly" Value="True" />
+                        </Style>
+                        <Style TargetType="{x:Type Slider}">
+                            <Setter Property="DockPanel.Dock" Value="Left" />
+                            <Setter Property="TickPlacement" Value="None" />
+                            <Setter Property="IsSnapToTickEnabled" Value="True" />
+                        </Style>
+                    </Style.Resources>
                 </Style>
             </Style.Resources>
         </Style>

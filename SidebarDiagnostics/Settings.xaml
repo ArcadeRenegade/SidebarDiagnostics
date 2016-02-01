@@ -52,35 +52,35 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0" Content="Dock" VerticalAlignment="Center" />
-                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=DockEdgeItems}" SelectedValue="{Binding Path=DockEdge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" ToolTip="Which edge the sidebar will dock to." />
+                    <Label Grid.Column="0" Grid.Row="0" Content="Dock" />
+                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=DockEdgeItems}" SelectedValue="{Binding Path=DockEdge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which edge the sidebar will dock to." />
 
-                    <Label Grid.Column="0" Grid.Row="1" Content="Screen" VerticalAlignment="Center" />
-                    <ComboBox ItemsSource="{Binding Path=ScreenItems}" DisplayMemberPath="Text" SelectedValuePath="Index" SelectedValue="{Binding Path=ScreenIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" ToolTip="Which screen the sidebar will be on." />
+                    <Label Grid.Column="0" Grid.Row="1" Content="Screen" />
+                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ScreenItems}" DisplayMemberPath="Text" SelectedValuePath="Index" SelectedValue="{Binding Path=ScreenIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which screen the sidebar will be on." />
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Polling Interval" VerticalAlignment="Center" />
-                    <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
-                        <TextBox Text="{Binding ElementName=PollingIntervalSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-                        <Slider x:Name="PollingIntervalSlider" Value="{Binding Path=PollingInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="5000" TickFrequency="100" TickPlacement="None" LargeChange="1000" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Time between polling for data in milliseconds." />
+                    <Label Grid.Column="0" Grid.Row="2" Content="Polling Interval" />
+                    <DockPanel Grid.Column="1" Grid.Row="2">
+                        <TextBox Text="{Binding ElementName=PollingIntervalSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+                        <Slider x:Name="PollingIntervalSlider" Value="{Binding Path=PollingInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="5000" TickFrequency="100" LargeChange="1000" ToolTip="Time between polling for data in milliseconds." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Reserve Space" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Reserves space in the work area for the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="3" Content="Reserve Space" />
+                    <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Reserves space in the work area for the sidebar." />
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Always On Top" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes the sidebar always on top of other windows." />
+                    <Label Grid.Column="0" Grid.Row="4" Content="Always On Top" />
+                    <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes the sidebar always on top of other windows." />
                     
-                    <Label Grid.Column="0" Grid.Row="5" Content="Allow Click Through" VerticalAlignment="Center" />
-                    <CheckBox x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="5" Content="Allow Click Through" />
+                    <CheckBox Grid.Column="1" Grid.Row="5" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Show Tray Icon" VerticalAlignment="Center" />
-                    <CheckBox x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Shows the tray icon in the taskbar.&#x0a;Required if 'Allow Click Through' is checked." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Show Tray Icon" />
+                    <CheckBox Grid.Column="1" Grid.Row="6" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;Required if 'Allow Click Through' is checked." />
                     
-                    <Label Grid.Column="0" Grid.Row="7" Content="Check For Updates" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Check for updates on program start up." />
+                    <Label Grid.Column="0" Grid.Row="7" Content="Check For Updates" />
+                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Check for updates on program start up." />
 
-                    <Label Grid.Column="0" Grid.Row="8" Content="Run at startup" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Runs the program when you first log in." />
+                    <Label Grid.Column="0" Grid.Row="8" Content="Run at startup" />
+                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the program when you first log in." />
                 </Grid>
             </TabItem>
             <TabItem Header="Customize">
@@ -102,41 +102,41 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0" Content="Sidebar Width" VerticalAlignment="Center" />
-                    <DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center">
-                        <TextBox Text="{Binding ElementName=SidebarWidthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-                        <Slider x:Name="SidebarWidthSlider" Value="{Binding Path=SidebarWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="300" TickFrequency="5" TickPlacement="None" LargeChange="100" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Width of the sidebar in pixels." />
+                    <Label Grid.Column="0" Grid.Row="0" Content="Sidebar Width" />
+                    <DockPanel Grid.Column="1" Grid.Row="0">
+                        <TextBox Text="{Binding ElementName=SidebarWidthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+                        <Slider x:Name="SidebarWidthSlider" Value="{Binding Path=SidebarWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="300" TickFrequency="5" LargeChange="100" ToolTip="Width of the sidebar in pixels." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="1" Content="Background Color" VerticalAlignment="Center" />
-                    <TextBox Text="{Binding Path=BGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the background as a hex code." />
+                    <Label Grid.Column="0" Grid.Row="1" Content="Background Color" />
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Path=BGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the background as a hex code." />
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" VerticalAlignment="Center" />
-                    <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
-                        <TextBox Text="{Binding ElementName=BGOpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Width="40" Margin="5,0,0,0" IsReadOnly="True" VerticalAlignment="Center" />
-                        <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0.01" Maximum="1.0" LargeChange="0.1" TickPlacement="None" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" ToolTip="Opacity of the background." />
+                    <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" />
+                    <DockPanel Grid.Column="1" Grid.Row="2">
+                        <TextBox Text="{Binding ElementName=BGOpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+                        <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0.01" Maximum="1.0" LargeChange="0.1" TickFrequency="0.01" ToolTip="Opacity of the background." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Font Size" VerticalAlignment="Center" />
-                    <ComboBox ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" ToolTip="Size of text and icons in the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="3" Content="Font Size" />
+                    <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Size of text and icons in the sidebar." />
                     
-                    <Label Grid.Column="0" Grid.Row="4" Content="Font Color" VerticalAlignment="Center" />
-                    <TextBox Text="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of text and icons as a hex code." />
+                    <Label Grid.Column="0" Grid.Row="4" Content="Font Color" />
+                    <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of text and icons as a hex code." />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="Alert Font Color" VerticalAlignment="Center" />
-                    <TextBox Text="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of alert text as a hex code." />
+                    <Label Grid.Column="0" Grid.Row="5" Content="Alert Font Color" />
+                    <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of alert text as a hex code." />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Date Format" VerticalAlignment="Center" />
-                    <ComboBox Grid.Column="1" Grid.Row="6" ItemsSource="{Binding Path=DateSettingItems}" DisplayMemberPath="Display" SelectedValue="{Binding Path=DateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" VerticalAlignment="Center" ToolTip="Format of the date below the clock." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Date Format" />
+                    <ComboBox Grid.Column="1" Grid.Row="6" ItemsSource="{Binding Path=DateSettingItems}" DisplayMemberPath="Display" SelectedValue="{Binding Path=DateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Format of the date below the clock." />
                     
-                    <Label Grid.Column="0" Grid.Row="7" Content="Collapse Menu Bar" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="7" Content="Collapse Menu Bar" />
+                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
                     
-                    <Label Grid.Column="0" Grid.Row="8" Content="Show Clock" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8" Margin="0,6,0,0" VerticalAlignment="Center" ToolTip="Shows the clock." />
+                    <Label Grid.Column="0" Grid.Row="8" Content="Show Clock" />
+                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the clock." />
                     
-                    <Label Grid.Column="0" Grid.Row="9" Content="24 Hour Clock" VerticalAlignment="Center" />
-                    <CheckBox IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="9" Margin="0,6,0,0" VerticalAlignment="Center" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Changes the clock's time format to 24 hours." />
+                    <Label Grid.Column="0" Grid.Row="9" Content="24 Hour Clock" />
+                    <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Changes the clock's time format to 24 hours." />
                 </Grid>
             </TabItem>
             <TabItem Header="Monitors">
@@ -144,7 +144,7 @@
                     <Label Margin="0,0,0,15" Padding="0" Content="Click a row to edit its settings." />
                     <DataGrid ItemsSource="{Binding Path=MonitorConfig, Mode=OneWay}" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionUnit="FullRow" SelectionMode="Single" GridLinesVisibility="None">
                         <DataGrid.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#e1e7e9" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#E1E7E9" />
                         </DataGrid.Resources>
                         <DataGrid.CellStyle>
                             <Style TargetType="{x:Type DataGridCell}">
@@ -218,7 +218,7 @@
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>
-                                <Border Background="#ecf0f1" Padding="35,6">
+                                <Border Background="#ECF0F1" Padding="35,6">
                                     <ItemsControl ItemsSource="{Binding Path=Params}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="{x:Type monitor:ConfigParam}">
