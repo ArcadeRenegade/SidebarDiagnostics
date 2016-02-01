@@ -34,6 +34,8 @@ namespace SidebarDiagnostics.Models
 
             AlwaysTop = Properties.Settings.Default.AlwaysTop;
 
+            Enable4K = Properties.Settings.Default.Enabled4K;
+
             ClickThrough = Properties.Settings.Default.ClickThrough;
 
             ShowTrayIcon = Properties.Settings.Default.ShowTrayIcon;
@@ -100,6 +102,7 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.PollingInterval = PollingInterval;
             Properties.Settings.Default.UseAppBar = UseAppBar;
             Properties.Settings.Default.AlwaysTop = AlwaysTop;
+            Properties.Settings.Default.Enabled4K = Enable4K;
             Properties.Settings.Default.ClickThrough = ClickThrough;
             Properties.Settings.Default.ShowTrayIcon = ShowTrayIcon;
             Properties.Settings.Default.CheckForUpdates = CheckForUpdates;
@@ -279,6 +282,22 @@ namespace SidebarDiagnostics.Models
                 _alwaysTop = value;
 
                 NotifyPropertyChanged("AlwaysTop");
+            }
+        }
+
+        private bool _enable4K { get; set; }
+
+        public bool Enable4K
+        {
+            get
+            {
+                return _enable4K;
+            }
+            set
+            {
+                _enable4K = value;
+
+                NotifyPropertyChanged("Enable4K");
             }
         }
 

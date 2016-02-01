@@ -26,9 +26,9 @@ namespace SidebarDiagnostics.Monitor
             _computer.Open();
             _board = GetHardware(HardwareType.Mainboard).FirstOrDefault();
 
-            _monitorPanels = new List<MonitorPanel>();
-
             UpdateBoard();
+
+            _monitorPanels = new List<MonitorPanel>();
         }
 
         public void AddPanel(MonitorConfig config)

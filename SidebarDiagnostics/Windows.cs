@@ -603,6 +603,9 @@ namespace SidebarDiagnostics.Windows
             double _screenX = _screen.ScaleX;
             double _screenY = _screen.ScaleY;
 
+            double _inverseX = _screen.InverseScaleX;
+            double _inverseY = _screen.InverseScaleY;
+
             if (OS.SupportDPI)
             {
                 window.UpdateScale(_screen.ScaleX, _screen.ScaleY, false);
@@ -615,6 +618,14 @@ namespace SidebarDiagnostics.Windows
                 Right = _screen.WorkArea.Right,
                 Bottom = _screen.WorkArea.Bottom
             };
+
+            if (Properties.Settings.Default.Enabled4K)
+            {
+                _workArea.Left *= _inverseX;
+                _workArea.Top *= _inverseY;
+                _workArea.Right *= _inverseX;
+                _workArea.Bottom *= _inverseY;
+            }
 
             double _windowWidth = Properties.Settings.Default.SidebarWidth * _screenX;
 
@@ -679,7 +690,10 @@ namespace SidebarDiagnostics.Windows
 
         public void UpdateScale(double scaleX, double scaleY, bool resize)
         {
-            GetVisualChild(0).SetValue(LayoutTransformProperty, new ScaleTransform(scaleX, scaleY));
+            if (VisualChildrenCount > 0)
+            {
+                GetVisualChild(0).SetValue(LayoutTransformProperty, new ScaleTransform(scaleX, scaleY));
+            }
 
             if (resize)
             {
@@ -933,7 +947,7 @@ namespace SidebarDiagnostics.Windows
 
             _source = HwndSource.FromHwnd(_data.hWnd);
 
-            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
             {
                 Top = workArea.Top;
                 Left = workArea.Left;
@@ -951,7 +965,27 @@ namespace SidebarDiagnostics.Windows
                 switch (wParam.ToInt32())
                 {
                     case APPBARNOTIFY.ABN_POSCHANGED:
-                        DockAppBar(DockEdge, Monitor.GetWorkArea(this));
+                        if (_cancelReposition != null)
+                        {
+                            _cancelReposition.Cancel();
+                        }
+
+                        _cancelReposition = new CancellationTokenSource();
+
+                        Task.Delay(TimeSpan.FromMilliseconds(50), _cancelReposition.Token).ContinueWith(_ =>
+                        {
+                            if (_.IsCanceled)
+                            {
+                                return;
+                            }
+
+                            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
+                            {
+                                DockAppBar(DockEdge, Monitor.GetWorkArea(this));
+                            }));
+
+                            _cancelReposition = null;
+                        });
                         break;
 
                     case APPBARNOTIFY.ABN_FULLSCREENAPP:
@@ -986,5 +1020,7 @@ namespace SidebarDiagnostics.Windows
         private int _prevZOrder { get; set; }
 
         private HwndSource _source { get; set; }
+
+        private CancellationTokenSource _cancelReposition { get; set; }
     }
 }

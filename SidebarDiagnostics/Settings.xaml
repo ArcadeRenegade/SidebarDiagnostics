@@ -50,6 +50,7 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="Dock" />
@@ -69,18 +70,21 @@
 
                     <Label Grid.Column="0" Grid.Row="4" Content="Always On Top" />
                     <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes the sidebar always on top of other windows." />
-                    
-                    <Label Grid.Column="0" Grid.Row="5" Content="Allow Click Through" />
-                    <CheckBox Grid.Column="1" Grid.Row="5" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Show Tray Icon" />
-                    <CheckBox Grid.Column="1" Grid.Row="6" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;Required if 'Allow Click Through' is checked." />
-                    
-                    <Label Grid.Column="0" Grid.Row="7" Content="Check For Updates" />
-                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Check for updates on program start up." />
+                    <Label Grid.Column="0" Grid.Row="5" Content="4K Monitor Support" />
+                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=Enable4K, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables support for 4K and high PPI monitors." />
 
-                    <Label Grid.Column="0" Grid.Row="8" Content="Run at startup" />
-                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the program when you first log in." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Allow Click Through" />
+                    <CheckBox Grid.Column="1" Grid.Row="6" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
+
+                    <Label Grid.Column="0" Grid.Row="7" Content="Show Tray Icon" />
+                    <CheckBox Grid.Column="1" Grid.Row="7" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;Required if 'Allow Click Through' is checked." />
+                    
+                    <Label Grid.Column="0" Grid.Row="8" Content="Check For Updates" />
+                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Check for updates on program start up." />
+
+                    <Label Grid.Column="0" Grid.Row="9" Content="Run at startup" />
+                    <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the program when you first log in." />
                 </Grid>
             </TabItem>
             <TabItem Header="Customize">
@@ -128,15 +132,15 @@
 
                     <Label Grid.Column="0" Grid.Row="6" Content="Date Format" />
                     <ComboBox Grid.Column="1" Grid.Row="6" ItemsSource="{Binding Path=DateSettingItems}" DisplayMemberPath="Display" SelectedValue="{Binding Path=DateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Format of the date below the clock." />
+
+                    <Label Grid.Column="0" Grid.Row="7" Content="Show Clock" />
+                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the clock." />
                     
-                    <Label Grid.Column="0" Grid.Row="7" Content="Collapse Menu Bar" />
-                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
-                    
-                    <Label Grid.Column="0" Grid.Row="8" Content="Show Clock" />
-                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the clock." />
-                    
-                    <Label Grid.Column="0" Grid.Row="9" Content="24 Hour Clock" />
-                    <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Changes the clock's time format to 24 hours." />
+                    <Label Grid.Column="0" Grid.Row="8" Content="24 Hour Clock" />
+                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Changes the clock's time format to 24 hours." />
+
+                    <Label Grid.Column="0" Grid.Row="9" Content="Collapse Menu Bar" />
+                    <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
                 </Grid>
             </TabItem>
             <TabItem Header="Monitors">
