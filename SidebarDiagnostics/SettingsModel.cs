@@ -28,6 +28,10 @@ namespace SidebarDiagnostics.Models
                 ScreenIndex = _monitors.Where(s => s.IsPrimary).Select((s, i) => i).Single();
             }
 
+            XOffset = Properties.Settings.Default.XOffset;
+
+            YOffset = Properties.Settings.Default.YOffset;
+
             PollingInterval = Properties.Settings.Default.PollingInterval;
 
             UseAppBar = Properties.Settings.Default.UseAppBar;
@@ -99,6 +103,8 @@ namespace SidebarDiagnostics.Models
         {
             Properties.Settings.Default.DockEdge = DockEdge;
             Properties.Settings.Default.ScreenIndex = ScreenIndex;
+            Properties.Settings.Default.XOffset = XOffset;
+            Properties.Settings.Default.YOffset = YOffset;
             Properties.Settings.Default.PollingInterval = PollingInterval;
             Properties.Settings.Default.UseAppBar = UseAppBar;
             Properties.Settings.Default.AlwaysTop = AlwaysTop;
@@ -234,6 +240,38 @@ namespace SidebarDiagnostics.Models
                 _screenItems = value;
 
                 NotifyPropertyChanged("ScreenItems");
+            }
+        }
+
+        private int _xOffset { get; set; }
+
+        public int XOffset
+        {
+            get
+            {
+                return _xOffset;
+            }
+            set
+            {
+                _xOffset = value;
+
+                NotifyPropertyChanged("XOffset");
+            }
+        }
+
+        private int _yOffset { get; set; }
+
+        public int YOffset
+        {
+            get
+            {
+                return _yOffset;
+            }
+            set
+            {
+                _yOffset = value;
+
+                NotifyPropertyChanged("YOffset");
             }
         }
 

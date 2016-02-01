@@ -12,7 +12,7 @@ namespace SidebarDiagnostics
         public static class URL
         {
             public const string WIKI = "https://github.com/ArcadeRenegade/SidebarDiagnostics/wiki";
-            public const string DONATE = "https://www.patreon.com/arcaderenegade";
+            public const string DONATE = "https://www.paypal.me/arcaderenegade";
         }
 
         public static class GITHUB

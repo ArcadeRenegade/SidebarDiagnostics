@@ -44,6 +44,8 @@
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -59,32 +61,44 @@
                     <Label Grid.Column="0" Grid.Row="1" Content="Screen" />
                     <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ScreenItems}" DisplayMemberPath="Text" SelectedValuePath="Index" SelectedValue="{Binding Path=ScreenIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which screen the sidebar will be on." />
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Polling Interval" />
+                    <Label Grid.Column="0" Grid.Row="2" Content="Horizontal Offset" />
                     <DockPanel Grid.Column="1" Grid.Row="2">
+                        <TextBox Text="{Binding ElementName=XOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+                        <Slider x:Name="XOffsetSlider" Value="{Binding Path=XOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-3000" Maximum="3000" TickFrequency="1" LargeChange="1000" ToolTip="Horizontal offset of the sidebar." />
+                    </DockPanel>
+
+                    <Label Grid.Column="0" Grid.Row="3" Content="Vertical Offset" />
+                    <DockPanel Grid.Column="1" Grid.Row="3">
+                        <TextBox Text="{Binding ElementName=YOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+                        <Slider x:Name="YOffsetSlider" Value="{Binding Path=YOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-3000" Maximum="3000" TickFrequency="1" LargeChange="1000" ToolTip="Vertical offset of the sidebar." />
+                    </DockPanel>
+
+                    <Label Grid.Column="0" Grid.Row="4" Content="Polling Interval" />
+                    <DockPanel Grid.Column="1" Grid.Row="4">
                         <TextBox Text="{Binding ElementName=PollingIntervalSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
                         <Slider x:Name="PollingIntervalSlider" Value="{Binding Path=PollingInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="5000" TickFrequency="100" LargeChange="1000" ToolTip="Time between polling for data in milliseconds." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Reserve Space" />
-                    <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Reserves space in the work area for the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="5" Content="Reserve Space" />
+                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Reserves space in the work area for the sidebar." />
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Always On Top" />
-                    <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes the sidebar always on top of other windows." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Always On Top" />
+                    <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes the sidebar always on top of other windows." />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="4K Monitor Support" />
-                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=Enable4K, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables support for 4K and high PPI monitors." />
+                    <Label Grid.Column="0" Grid.Row="7" Content="4K Monitor Support" />
+                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=Enable4K, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables support for 4K and high PPI monitors." />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Allow Click Through" />
-                    <CheckBox Grid.Column="1" Grid.Row="6" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="8" Content="Allow Click Through" />
+                    <CheckBox Grid.Column="1" Grid.Row="8" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
 
-                    <Label Grid.Column="0" Grid.Row="7" Content="Show Tray Icon" />
-                    <CheckBox Grid.Column="1" Grid.Row="7" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;Required if 'Allow Click Through' is checked." />
+                    <Label Grid.Column="0" Grid.Row="9" Content="Show Tray Icon" />
+                    <CheckBox Grid.Column="1" Grid.Row="9" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;Required if 'Allow Click Through' is checked." />
                     
-                    <Label Grid.Column="0" Grid.Row="8" Content="Check For Updates" />
-                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Check for updates on program start up." />
+                    <Label Grid.Column="0" Grid.Row="10" Content="Check For Updates" />
+                    <CheckBox Grid.Column="1" Grid.Row="10" IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Check for updates on program start up." />
 
-                    <Label Grid.Column="0" Grid.Row="9" Content="Run at startup" />
-                    <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the program when you first log in." />
+                    <Label Grid.Column="0" Grid.Row="11" Content="Run at startup" />
+                    <CheckBox Grid.Column="1" Grid.Row="11" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the program when you first log in." />
                 </Grid>
             </TabItem>
             <TabItem Header="Customize">

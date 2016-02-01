@@ -649,6 +649,14 @@ namespace SidebarDiagnostics.Windows
                     break;
             }
 
+            int _offsetX = Properties.Settings.Default.XOffset;
+            int _offsetY = Properties.Settings.Default.YOffset;
+
+            _workArea.Left += _offsetX;
+            _workArea.Top += _offsetY;
+            _workArea.Right += _offsetX;
+            _workArea.Bottom += _offsetY;
+
             return _workArea;
         }
     }

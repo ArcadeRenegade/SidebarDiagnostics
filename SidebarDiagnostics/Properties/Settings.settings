@@ -8,6 +8,12 @@
     <Setting Name="ScreenIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="XOffset" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="YOffset" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
     <Setting Name="PollingInterval" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
