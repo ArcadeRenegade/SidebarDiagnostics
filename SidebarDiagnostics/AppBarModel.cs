@@ -16,8 +16,27 @@ namespace SidebarDiagnostics.Models
 
         public void Dispose()
         {
-            DisposeClock();
-            DisposeMonitors();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    DisposeClock();
+                    DisposeMonitors();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~AppBarModel()
+        {
+            Dispose(false);
         }
 
         public void Restart()
@@ -188,5 +207,7 @@ namespace SidebarDiagnostics.Models
         private DispatcherTimer _clockTimer { get; set; }
 
         private DispatcherTimer _monitorTimer { get; set; }
+
+        private bool _disposed { get; set; } = false;
     }
 }

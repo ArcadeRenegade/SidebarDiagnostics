@@ -31,6 +31,35 @@ namespace SidebarDiagnostics.Monitor
             _monitorPanels = new List<MonitorPanel>();
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    foreach (iMonitor _monitor in MonitorPanels.SelectMany(p => p.Monitors))
+                    {
+                        _monitor.Dispose();
+                    }
+
+                    _computer.Close();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~MonitorManager()
+        {
+            Dispose(false);
+        }
+
         public void AddPanel(MonitorConfig config)
         {
             switch (config.Type)
@@ -90,16 +119,6 @@ namespace SidebarDiagnostics.Monitor
             {
                 _monitor.Update();
             }
-        }
-
-        public void Dispose()
-        {
-            foreach (iMonitor _monitor in MonitorPanels.SelectMany(p => p.Monitors))
-            {
-                _monitor.Dispose();
-            }
-
-            _computer.Close();
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -174,6 +193,8 @@ namespace SidebarDiagnostics.Monitor
         private IHardware _board { get; set; }
 
         private List<MonitorPanel> _monitorPanels { get; set; }
+
+        private bool _disposed { get; set; } = false;
     }
 
     public class MonitorPanel : INotifyPropertyChanged
@@ -264,6 +285,29 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~OHMMonitor()
+        {
+            Dispose(false);
+        }
+
         public void Update()
         {
             UpdateHardware();
@@ -272,10 +316,6 @@ namespace SidebarDiagnostics.Monitor
             {
                 _sensor.Update();
             }
-        }
-
-        public void Dispose()
-        {
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -531,6 +571,8 @@ namespace SidebarDiagnostics.Monitor
         }
 
         private IHardware _hardware { get; set; }
+
+        private bool _disposed { get; set; } = false;
     }
 
     public class OHMSensor : INotifyPropertyChanged
@@ -683,19 +725,38 @@ namespace SidebarDiagnostics.Monitor
             Drives = _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(n => new DriveInfo(n, _showDetails, _usedSpaceAlert)).ToArray();
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    foreach (DriveInfo _drive in Drives)
+                    {
+                        _drive.Dispose();
+                    }
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~DriveMonitor()
+        {
+            Dispose(false);
+        }
+
         public void Update()
         {
             foreach (DriveInfo _drive in Drives)
             {
                 _drive.Update();
-            }
-        }
-
-        public void Dispose()
-        {
-            foreach (DriveInfo _drive in Drives)
-            {
-                _drive.Dispose();
             }
         }
 
@@ -726,6 +787,8 @@ namespace SidebarDiagnostics.Monitor
                 NotifyPropertyChanged("Drives");
             }
         }
+
+        private bool _disposed { get; set; } = false;
     }
 
     public class DriveInfo : IDisposable, INotifyPropertyChanged
@@ -749,6 +812,48 @@ namespace SidebarDiagnostics.Monitor
                 _counterReadRate = new PerformanceCounter(DriveMonitor.CATEGORYNAME, BYTESREADPERSECOND, name);
                 _counterWriteRate = new PerformanceCounter(DriveMonitor.CATEGORYNAME, BYTESWRITEPERSECOND, name);
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (_counterFreeMB != null)
+                    {
+                        _counterFreeMB.Dispose();
+                    }
+
+                    if (_counterFreePercent != null)
+                    {
+                        _counterFreePercent.Dispose();
+                    }
+
+                    if (_counterReadRate != null)
+                    {
+                        _counterReadRate.Dispose();
+                    }
+
+                    if (_counterWriteRate != null)
+                    {
+                        _counterWriteRate.Dispose();
+                    }
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~DriveInfo()
+        {
+            Dispose(false);
         }
 
         public void Update()
@@ -799,29 +904,6 @@ namespace SidebarDiagnostics.Monitor
             else if (IsAlert)
             {
                 IsAlert = false;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (_counterFreeMB != null)
-            {
-                _counterFreeMB.Dispose();
-            }
-
-            if (_counterFreePercent != null)
-            {
-                _counterFreePercent.Dispose();
-            }
-
-            if (_counterReadRate != null)
-            {
-                _counterReadRate.Dispose();
-            }
-
-            if (_counterWriteRate != null)
-            {
-                _counterWriteRate.Dispose();
             }
         }
 
@@ -964,6 +1046,8 @@ namespace SidebarDiagnostics.Monitor
         private PerformanceCounter _counterReadRate { get; set; }
 
         private PerformanceCounter _counterWriteRate { get; set; }
+
+        private bool _disposed { get; set; } = false;
     }
 
     public class NetworkMonitor : iMonitor
@@ -1000,19 +1084,38 @@ namespace SidebarDiagnostics.Monitor
             Nics = _instances.Join(_networkInterfaces, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new NicInfo(i, n.Description, _showName, _useBytes, _bandwidthInAlert, _bandwidthOutAlert), StringComparer.Ordinal).ToArray();
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    foreach (NicInfo _nic in Nics)
+                    {
+                        _nic.Dispose();
+                    }
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~NetworkMonitor()
+        {
+            Dispose(false);
+        }
+
         public void Update()
         {
             foreach (NicInfo _nic in Nics)
             {
                 _nic.Update();
-            }
-        }
-
-        public void Dispose()
-        {
-            foreach (NicInfo _nic in Nics)
-            {
-                _nic.Dispose();
             }
         }
 
@@ -1043,6 +1146,8 @@ namespace SidebarDiagnostics.Monitor
                 NotifyPropertyChanged("Nics");
             }
         }
+
+        private bool _disposed { get; set; } = false;
     }
 
     public class NicInfo : IDisposable
@@ -1071,6 +1176,31 @@ namespace SidebarDiagnostics.Monitor
                 );
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    InBandwidth.Dispose();
+                    OutBandwidth.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~NicInfo()
+        {
+            Dispose(false);
+        }
+
         public void Update()
         {
             if (!PerformanceCounterCategory.InstanceExists(Instance, NetworkMonitor.CATEGORYNAME))
@@ -1082,12 +1212,6 @@ namespace SidebarDiagnostics.Monitor
             OutBandwidth.Update();
         }
 
-        public void Dispose()
-        {
-            InBandwidth.Dispose();
-            OutBandwidth.Dispose();
-        }
-
         public string Instance { get; private set; }
 
         public string Name { get; private set; }
@@ -1097,6 +1221,8 @@ namespace SidebarDiagnostics.Monitor
         public Bandwidth InBandwidth { get; private set; }
 
         public Bandwidth OutBandwidth { get; private set; }
+
+        private bool _disposed { get; set; } = false;
     }
 
     public class Bandwidth : INotifyPropertyChanged, IDisposable
@@ -1108,6 +1234,33 @@ namespace SidebarDiagnostics.Monitor
             Label = label;
             UseBytes = useBytes;
             AlertValue = alertValue;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (_counter != null)
+                    {
+                        _counter.Dispose();
+                    }
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~Bandwidth()
+        {
+            Dispose(false);
         }
 
         public void Update()
@@ -1138,14 +1291,6 @@ namespace SidebarDiagnostics.Monitor
             }
 
             Text = string.Format("{0}: {1:#,##0.##} {2}", Label, _value, _format);
-        }
-
-        public void Dispose()
-        {
-            if (_counter != null)
-            {
-                _counter.Dispose();
-            }
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -1199,6 +1344,8 @@ namespace SidebarDiagnostics.Monitor
         public double AlertValue { get; private set; }
 
         private PerformanceCounter _counter { get; set; }
+
+        private bool _disposed { get; set; } = false;
     }
 
     [Serializable]
