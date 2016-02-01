@@ -43,6 +43,7 @@ namespace SidebarDiagnostics
             }
 
             Hotkey.Initialize(this, Properties.Settings.Default.Hotkeys);
+            Devices.Initialize(this);
         }
 
         private void InitAppBar()

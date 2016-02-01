@@ -86,7 +86,7 @@
                     </ContentControl.Style>
                 </ContentControl>
 
-                <ItemsControl ItemsSource="{Binding Path=MonitorManager.MonitorPanels, Mode=OneWay}">
+                <ItemsControl DataContext="{Binding Path=MonitorManager, Mode=OneWay}" ItemsSource="{Binding Path=MonitorPanels, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type monitor:MonitorPanel}">
                             <StackPanel Style="{StaticResource GroupPanel}">

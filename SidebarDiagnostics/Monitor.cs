@@ -12,10 +12,20 @@ namespace SidebarDiagnostics.Monitor
 {
     public class MonitorManager : INotifyPropertyChanged, IDisposable
     {
-        public MonitorManager(IComputer computer)
+        public MonitorManager()
         {
-            _computer = computer;
+            _computer = new Computer()
+            {
+                CPUEnabled = true,
+                FanControllerEnabled = true,
+                GPUEnabled = true,
+                HDDEnabled = false,
+                MainboardEnabled = true,
+                RAMEnabled = true
+            };
+            _computer.Open();
             _board = GetHardware(HardwareType.Mainboard).FirstOrDefault();
+
             _monitorPanels = new List<MonitorPanel>();
 
             UpdateBoard();
@@ -88,6 +98,8 @@ namespace SidebarDiagnostics.Monitor
             {
                 _monitor.Dispose();
             }
+
+            _computer.Close();
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -157,7 +169,7 @@ namespace SidebarDiagnostics.Monitor
 
         public MonitorPanel[] MonitorPanels { get; private set; }
 
-        private IComputer _computer { get; set; }
+        private Computer _computer { get; set; }
 
         private IHardware _board { get; set; }
 
@@ -209,7 +221,7 @@ namespace SidebarDiagnostics.Monitor
         private List<iMonitor> _monitors { get; set; }
     }
 
-    public interface iMonitor : IDisposable
+    public interface iMonitor : INotifyPropertyChanged, IDisposable
     {
         void Update();
     }
@@ -265,6 +277,18 @@ namespace SidebarDiagnostics.Monitor
         public void Dispose()
         {
         }
+
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler _handler = PropertyChanged;
+
+            if (_handler != null)
+            {
+                _handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void UpdateHardware()
         {
@@ -490,7 +514,21 @@ namespace SidebarDiagnostics.Monitor
 
         public bool ShowName { get; private set; }
 
-        public OHMSensor[] Sensors { get; private set; }
+        private OHMSensor[] _sensors { get; set; }
+
+        public OHMSensor[] Sensors
+        {
+            get
+            {
+                return _sensors;
+            }
+            private set
+            {
+                _sensors = value;
+
+                NotifyPropertyChanged("Sensors");
+            }
+        }
 
         private IHardware _hardware { get; set; }
     }
@@ -661,7 +699,33 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
-        public DriveInfo[] Drives { get; private set; }
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler _handler = PropertyChanged;
+
+            if (_handler != null)
+            {
+                _handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private DriveInfo[] _drives { get; set; }
+
+        public DriveInfo[] Drives
+        {
+            get
+            {
+                return _drives;
+            }
+            private set
+            {
+                _drives = value;
+
+                NotifyPropertyChanged("Drives");
+            }
+        }
     }
 
     public class DriveInfo : IDisposable, INotifyPropertyChanged
@@ -926,14 +990,14 @@ namespace SidebarDiagnostics.Monitor
                 App.ShowPerformanceCounterError();
             }
 
-            NetworkInterface[] _nics = NetworkInterface.GetAllNetworkInterfaces().Where(n =>
+            NetworkInterface[] _networkInterfaces = NetworkInterface.GetAllNetworkInterfaces().Where(n =>
                     n.OperationalStatus == OperationalStatus.Up &&
                     new NetworkInterfaceType[2] { NetworkInterfaceType.Ethernet, NetworkInterfaceType.Wireless80211 }.Contains(n.NetworkInterfaceType)
                     ).ToArray();
 
             Regex _regex = new Regex("[^A-Za-z]");
 
-            Nics = _instances.Join(_nics, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new NicInfo(i, n.Description, _showName, _useBytes, _bandwidthInAlert, _bandwidthOutAlert), StringComparer.Ordinal).ToArray();
+            Nics = _instances.Join(_networkInterfaces, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new NicInfo(i, n.Description, _showName, _useBytes, _bandwidthInAlert, _bandwidthOutAlert), StringComparer.Ordinal).ToArray();
         }
 
         public void Update()
@@ -951,8 +1015,34 @@ namespace SidebarDiagnostics.Monitor
                 _nic.Dispose();
             }
         }
-        
-        public NicInfo[] Nics { get; private set; }
+
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler _handler = PropertyChanged;
+
+            if (_handler != null)
+            {
+                _handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private NicInfo[] _nics { get; set; }
+
+        public NicInfo[] Nics
+        {
+            get
+            {
+                return _nics;
+            }
+            private set
+            {
+                _nics = value;
+
+                NotifyPropertyChanged("Nics");
+            }
+        }
     }
 
     public class NicInfo : IDisposable
@@ -1009,7 +1099,7 @@ namespace SidebarDiagnostics.Monitor
         public Bandwidth OutBandwidth { get; private set; }
     }
 
-    public class Bandwidth : IDisposable, INotifyPropertyChanged
+    public class Bandwidth : INotifyPropertyChanged, IDisposable
     {
         public Bandwidth(PerformanceCounter counter, string label, bool useBytes = false, double alertValue = 0)
         {

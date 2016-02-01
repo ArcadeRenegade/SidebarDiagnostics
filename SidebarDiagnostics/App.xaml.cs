@@ -34,19 +34,6 @@ namespace SidebarDiagnostics
 
             RefreshIcon();
 
-            // OHM COMPUTER
-            _computer = new Computer()
-            {
-                CPUEnabled = true,
-                FanControllerEnabled = true,
-                GPUEnabled = true,
-                HDDEnabled = false,
-                MainboardEnabled = true,
-                RAMEnabled = true
-            };
-
-            _computer.Open();
-
             // CHECK FOR UPDATES
             if (SidebarDiagnostics.Properties.Settings.Default.CheckForUpdates)
             {
@@ -56,7 +43,6 @@ namespace SidebarDiagnostics
 
         protected override void OnExit(ExitEventArgs e)
         {
-            _computer.Close();
             _trayIcon.Dispose();
 
             base.OnExit(e);
@@ -176,15 +162,13 @@ namespace SidebarDiagnostics
         }
         #endif
         
-        private AppBar GetAppBar
+        public AppBar GetAppBar
         {
             get
             {
                 return Windows.OfType<AppBar>().FirstOrDefault();
             }
         }
-
-        internal static Computer _computer { get; private set; }
 
         internal static bool _reloading { get; set; } = false;
 

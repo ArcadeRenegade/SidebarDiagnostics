@@ -10,30 +10,20 @@ namespace SidebarDiagnostics.Models
     {
         public AppBarModel()
         {
-            if (Properties.Settings.Default.ShowClock)
-            {
-                InitClock();
-            }
-
+            InitClock();
             InitMonitors();
         }
 
         public void Dispose()
         {
-            if (_hardwareTimer != null)
-            {
-                _hardwareTimer.Stop();
-            }
+            DisposeClock();
+            DisposeMonitors();
+        }
 
-            if (_clockTimer != null)
-            {
-                _clockTimer.Stop();
-            }
-
-            if (MonitorManager != null)
-            {
-                MonitorManager.Dispose();
-            }
+        public void Restart()
+        {
+            DisposeMonitors();
+            InitMonitors();
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -50,6 +40,11 @@ namespace SidebarDiagnostics.Models
 
         private void InitClock()
         {
+            if (!Properties.Settings.Default.ShowClock)
+            {
+                return;
+            }
+
             ShowDate = !Properties.Settings.Default.DateSetting.Equals(Properties.DateSetting.Disabled);
 
             UpdateClock();
@@ -62,7 +57,7 @@ namespace SidebarDiagnostics.Models
 
         private void InitMonitors()
         {
-            MonitorManager = new MonitorManager(App._computer);
+            MonitorManager = new MonitorManager();
 
             foreach (MonitorConfig _config in Properties.Settings.Default.MonitorConfig.Where(c => c.Enabled).OrderBy(c => c.Order))
             {
@@ -72,10 +67,10 @@ namespace SidebarDiagnostics.Models
             MonitorManager.Initialize();
             MonitorManager.Update();
 
-            _hardwareTimer = new DispatcherTimer();
-            _hardwareTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
-            _hardwareTimer.Tick += new EventHandler(HardwareTimer_Tick);
-            _hardwareTimer.Start();
+            _monitorTimer = new DispatcherTimer();
+            _monitorTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
+            _monitorTimer.Tick += new EventHandler(MonitorTimer_Tick);
+            _monitorTimer.Start();
         }
 
         private void UpdateClock()
@@ -95,12 +90,33 @@ namespace SidebarDiagnostics.Models
             MonitorManager.Update();
         }
 
+        private void DisposeClock()
+        {
+            if (_clockTimer != null)
+            {
+                _clockTimer.Stop();
+            }
+        }
+
+        private void DisposeMonitors()
+        {
+            if (_monitorTimer != null)
+            {
+                _monitorTimer.Stop();
+            }
+            
+            if (MonitorManager != null)
+            {
+                MonitorManager.Dispose();
+            }
+        }
+
         private void ClockTimer_Tick(object sender, EventArgs e)
         {
             UpdateClock();
         }
 
-        private void HardwareTimer_Tick(object sender, EventArgs e)
+        private void MonitorTimer_Tick(object sender, EventArgs e)
         {
             UpdateMonitors();
         }
@@ -153,10 +169,24 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        public MonitorManager MonitorManager { get; private set; }
+        private MonitorManager _monitorManager { get; set; }
+
+        public MonitorManager MonitorManager
+        {
+            get
+            {
+                return _monitorManager;
+            }
+            set
+            {
+                _monitorManager = value;
+
+                NotifyPropertyChanged("MonitorManager");
+            }
+        }
 
         private DispatcherTimer _clockTimer { get; set; }
 
-        private DispatcherTimer _hardwareTimer { get; set; }
+        private DispatcherTimer _monitorTimer { get; set; }
     }
 }

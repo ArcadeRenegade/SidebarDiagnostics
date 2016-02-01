@@ -162,8 +162,6 @@ namespace SidebarDiagnostics.Windows
 
         public static void Initialize(AppBar window)
         {
-            _window = window;
-
             DEV_BROADCAST_HDR _data = new DEV_BROADCAST_HDR();
             _data.dbch_size = Marshal.SizeOf(_data);
             _data.dbch_devicetype = DBCH_DEVICETYPE.DBT_DEVTYP_DEVICEINTERFACE;
@@ -198,12 +196,24 @@ namespace SidebarDiagnostics.Windows
 
                         _cancelRestart = new CancellationTokenSource();
 
-                        Task.Delay(TimeSpan.FromMilliseconds(100), _cancelRestart.Token).ContinueWith(_ =>
+                        Task.Delay(TimeSpan.FromSeconds(1), _cancelRestart.Token).ContinueWith(_ =>
                         {
-                            if (!_.IsCanceled)
+                            if (_.IsCanceled)
                             {
-                                _cancelRestart = null;
+                                return;
                             }
+
+                            App.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+                            {
+                                AppBar _appBar = (App.Current as App).GetAppBar;
+
+                                if (_appBar != null)
+                                {
+                                    _appBar.Model.Restart();
+                                }
+                            }));
+
+                            _cancelRestart = null;
                         });
                         break;
                 }
@@ -213,8 +223,6 @@ namespace SidebarDiagnostics.Windows
 
             return IntPtr.Zero;
         }
-
-        private static AppBar _window { get; set; }
 
         private static CancellationTokenSource _cancelRestart { get; set; }
     }
