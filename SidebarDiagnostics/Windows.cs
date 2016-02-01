@@ -596,7 +596,7 @@ namespace SidebarDiagnostics.Windows
                 return _monitors.Where(s => s.IsPrimary).Single();
         }
         
-        public static WorkArea GetWorkArea(AppBarWindow window)
+        public static void GetWorkArea(AppBarWindow window, out WorkArea windowWA, out WorkArea appbarWA)
         {
             MonitorInfo _screen = GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
 
@@ -611,7 +611,7 @@ namespace SidebarDiagnostics.Windows
                 window.UpdateScale(_screen.ScaleX, _screen.ScaleY, false);
             }
 
-            WorkArea _workArea = new WorkArea()
+            windowWA = new WorkArea()
             {
                 Left = _screen.WorkArea.Left,
                 Top = _screen.WorkArea.Top,
@@ -621,10 +621,10 @@ namespace SidebarDiagnostics.Windows
 
             if (Properties.Settings.Default.Enabled4K)
             {
-                _workArea.Left *= _inverseX;
-                _workArea.Top *= _inverseY;
-                _workArea.Right *= _inverseX;
-                _workArea.Bottom *= _inverseY;
+                windowWA.Left *= _inverseX;
+                windowWA.Top *= _inverseY;
+                windowWA.Right *= _inverseX;
+                windowWA.Bottom *= _inverseY;
             }
 
             double _windowWidth = Properties.Settings.Default.SidebarWidth * _screenX;
@@ -639,25 +639,49 @@ namespace SidebarDiagnostics.Windows
             switch (Properties.Settings.Default.DockEdge)
             {
                 case DockEdge.Left:
-                    _workArea.Right = _workArea.Left + _windowWidth - _modifyX;
-                    _workArea.Left -= _modifyX;
+                    windowWA.Right = windowWA.Left + _windowWidth - _modifyX;
+                    windowWA.Left -= _modifyX;
                     break;
 
                 case DockEdge.Right:
-                    _workArea.Left = _workArea.Right - _windowWidth + _modifyX;
-                    _workArea.Right += _modifyX;
+                    windowWA.Left = windowWA.Right - _windowWidth + _modifyX;
+                    windowWA.Right += _modifyX;
                     break;
             }
 
             int _offsetX = Properties.Settings.Default.XOffset;
             int _offsetY = Properties.Settings.Default.YOffset;
 
-            _workArea.Left += _offsetX;
-            _workArea.Top += _offsetY;
-            _workArea.Right += _offsetX;
-            _workArea.Bottom += _offsetY;
+            windowWA.Left += _offsetX;
+            windowWA.Top += _offsetY;
+            windowWA.Right += _offsetX;
+            windowWA.Bottom += _offsetY;
 
-            return _workArea;
+            appbarWA = new WorkArea()
+            {
+                Left = windowWA.Left,
+                Top = windowWA.Top,
+                Right = windowWA.Right,
+                Bottom = windowWA.Bottom
+            };
+
+            if (Properties.Settings.Default.Enabled4K)
+            {
+                double _oldWidth = appbarWA.Width;
+                double _newWidth = _oldWidth * _screenX;
+                double _delta = _newWidth - _oldWidth;
+
+                switch (Properties.Settings.Default.DockEdge)
+                {
+                    case DockEdge.Left:
+                        appbarWA.Right += _delta;
+                        break;
+
+                    case DockEdge.Right:
+                        appbarWA.Left -= _delta;
+                        break;
+                }
+            }
         }
     }
 
@@ -859,7 +883,7 @@ namespace SidebarDiagnostics.Windows
                 );
         }
 
-        public void SetAppBar(DockEdge edge, WorkArea workArea)
+        public void SetAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
         {
             if (edge == DockEdge.None)
             {
@@ -878,7 +902,7 @@ namespace SidebarDiagnostics.Windows
                 NativeMethods.SHAppBarMessage(APPBARMSG.ABM_NEW, ref _data);
             }
             
-            DockAppBar(edge, workArea);
+            DockAppBar(edge, windowWA, appbarWA);
         }
 
         public void ClearAppBar()
@@ -902,9 +926,12 @@ namespace SidebarDiagnostics.Windows
         {
             if (Properties.Settings.Default.UseAppBar)
             {
-                WorkArea _workArea = Monitor.GetWorkArea(this);
+                WorkArea _windowWA;
+                WorkArea _appbarWA;
 
-                SetAppBar(DockEdge, _workArea);
+                Monitor.GetWorkArea(this, out _windowWA, out _appbarWA);
+
+                SetAppBar(DockEdge, _windowWA, _appbarWA);
             }
 
             Show();
@@ -930,37 +957,37 @@ namespace SidebarDiagnostics.Windows
             return _data;
         }
 
-        private void DockAppBar(DockEdge edge, WorkArea workArea)
+        private void DockAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
         {
             APPBARDATA _data = NewData();
             _data.uEdge = (int)edge;
             _data.rc = new RECT()
             {
-                Left = (int)Math.Round(workArea.Left),
-                Top = (int)Math.Round(workArea.Top),
-                Right = (int)Math.Round(workArea.Right),
-                Bottom = (int)Math.Round(workArea.Bottom)
+                Left = (int)Math.Round(appbarWA.Left),
+                Top = (int)Math.Round(appbarWA.Top),
+                Right = (int)Math.Round(appbarWA.Right),
+                Bottom = (int)Math.Round(appbarWA.Bottom)
             };
 
             NativeMethods.SHAppBarMessage(APPBARMSG.ABM_QUERYPOS, ref _data);
 
             NativeMethods.SHAppBarMessage(APPBARMSG.ABM_SETPOS, ref _data);
 
-            workArea.Left = _data.rc.Left;
-            workArea.Top = _data.rc.Top;
-            workArea.Right = _data.rc.Right;
-            workArea.Bottom = _data.rc.Bottom;
+            appbarWA.Left = _data.rc.Left;
+            appbarWA.Top = _data.rc.Top;
+            appbarWA.Right = _data.rc.Right;
+            appbarWA.Bottom = _data.rc.Bottom;
 
-            AppBarWidth = workArea.Width;
+            AppBarWidth = appbarWA.Width;
 
             _source = HwndSource.FromHwnd(_data.hWnd);
 
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
             {
-                Top = workArea.Top;
-                Left = workArea.Left;
-                Width = workArea.Width;
-                Height = workArea.Height;
+                Top = windowWA.Top;
+                Left = windowWA.Left;
+                Width = windowWA.Width;
+                Height = windowWA.Height;
 
                 _source.AddHook(AppBarHook);
             }));
@@ -989,7 +1016,12 @@ namespace SidebarDiagnostics.Windows
 
                             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
                             {
-                                DockAppBar(DockEdge, Monitor.GetWorkArea(this));
+                                WorkArea _windowWA;
+                                WorkArea _appbarWA;
+
+                                Monitor.GetWorkArea(this, out _windowWA, out _appbarWA);
+
+                                SetAppBar(DockEdge, _windowWA, _appbarWA);
                             }));
 
                             _cancelReposition = null;

@@ -48,16 +48,19 @@ namespace SidebarDiagnostics
 
         private void InitAppBar()
         {
-            WorkArea _workArea = Windows.Monitor.GetWorkArea(this);
+            WorkArea _windowWA;
+            WorkArea _appbarWA;
 
-            Left = _workArea.Left;
-            Top = _workArea.Top;
-            Width = _workArea.Width;
-            Height = _workArea.Height;
+            Windows.Monitor.GetWorkArea(this, out _windowWA, out _appbarWA);
+            
+            Left = _windowWA.Left;
+            Top = _windowWA.Top;
+            Width = _windowWA.Width;
+            Height = _windowWA.Height;
 
             if (Properties.Settings.Default.UseAppBar)
             {
-                SetAppBar(Properties.Settings.Default.DockEdge, _workArea);
+                SetAppBar(Properties.Settings.Default.DockEdge, _windowWA, _appbarWA);
             }
         }
 
