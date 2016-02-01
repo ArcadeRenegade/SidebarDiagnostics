@@ -69,6 +69,7 @@ namespace SidebarDiagnostics.Models
                 MonitorManager.AddPanel(_config);
             }
 
+            MonitorManager.Initialize();
             MonitorManager.Update();
 
             _hardwareTimer = new DispatcherTimer();
