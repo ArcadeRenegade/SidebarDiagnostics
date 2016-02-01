@@ -193,6 +193,18 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<DateSetting><Format>M</Format></DateSetting>")]
+        public global::SidebarDiagnostics.Properties.DateSetting DateSetting {
+            get {
+                return ((global::SidebarDiagnostics.Properties.DateSetting)(this["DateSetting"]));
+            }
+            set {
+                this["DateSetting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool CollapseMenuBar {
             get {

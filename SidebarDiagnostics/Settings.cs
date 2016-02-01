@@ -14,9 +14,9 @@ namespace SidebarDiagnostics.Properties
     }
 
     [Serializable]
-    public class FontSetting
+    public sealed class FontSetting
     {
-        public FontSetting() { }
+        internal FontSetting() { }
 
         private FontSetting(int fontSize)
         {
@@ -53,6 +53,14 @@ namespace SidebarDiagnostics.Properties
             get
             {
                 return FontSize + 2;
+            }
+        }
+
+        public int SmallFontSize
+        {
+            get
+            {
+                return FontSize - 2;
             }
         }
 
@@ -104,5 +112,53 @@ namespace SidebarDiagnostics.Properties
                 return BarHeight * 8;
             }
         }
+    }
+
+    [Serializable]
+    public sealed class DateSetting
+    {
+        internal DateSetting() { }
+
+        private DateSetting(string format)
+        {
+            Format = format;
+        }
+
+        public string Format { get; set; }
+
+        public string Display
+        {
+            get
+            {
+                if (string.Equals(Format, "Disabled", StringComparison.Ordinal))
+                {
+                    return Format;
+                }
+
+                return DateTime.Today.ToString(Format);
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            DateSetting _that = obj as DateSetting;
+
+            if (_that == null)
+            {
+                return false;
+            }
+
+            return string.Equals(this.Format, _that.Format, StringComparison.Ordinal);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public static readonly DateSetting Disabled = new DateSetting("Disabled");
+        public static readonly DateSetting Short = new DateSetting("M");
+        public static readonly DateSetting Normal = new DateSetting("d");
+        public static readonly DateSetting Long = new DateSetting("D");
     }
 }

@@ -63,19 +63,6 @@ namespace SidebarDiagnostics
         private void InitContent()
         {
             DataContext = Model = new AppBarModel();
-
-            if (Properties.Settings.Default.ShowClock)
-            {
-                _clockTimer = new DispatcherTimer();
-                _clockTimer.Interval = TimeSpan.FromSeconds(1);
-                _clockTimer.Tick += new EventHandler(ClockTimer_Tick);
-                _clockTimer.Start();
-            }
-            
-            _hardwareTimer = new DispatcherTimer();
-            _hardwareTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
-            _hardwareTimer.Tick += new EventHandler(HardwareTimer_Tick);
-            _hardwareTimer.Start();
         }
 
         private void VirtualDesktop_CurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
@@ -84,16 +71,6 @@ namespace SidebarDiagnostics
             {
                 this.MoveToDesktop(VirtualDesktop.Current);
             }));
-        }
-
-        private void ClockTimer_Tick(object sender, EventArgs e)
-        {
-            Model.UpdateTime();
-        }
-
-        private void HardwareTimer_Tick(object sender, EventArgs e)
-        {
-            Model.UpdateMonitors();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
@@ -141,16 +118,6 @@ namespace SidebarDiagnostics
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (_hardwareTimer != null)
-            {
-                _hardwareTimer.Stop();
-            }
-
-            if (_clockTimer != null)
-            {
-                _clockTimer.Stop();
-            }
-
             if (Model != null)
             {
                 Model.Dispose();
@@ -177,9 +144,5 @@ namespace SidebarDiagnostics
         }
 
         public AppBarModel Model { get; private set; }
-
-        private DispatcherTimer _clockTimer { get; set; }
-
-        private DispatcherTimer _hardwareTimer { get; set; }
     }
 }

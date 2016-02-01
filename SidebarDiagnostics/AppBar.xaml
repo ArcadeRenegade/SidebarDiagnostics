@@ -61,6 +61,21 @@
                                                 </StackPanel>
                                                 <StackPanel Style="{StaticResource MonitorPanel}">
                                                     <Label Content="{Binding Path=Time, Mode=OneWay}" Style="{StaticResource AppTitle}" />
+                                                    <ContentControl>
+                                                        <ContentControl.Style>
+                                                            <Style TargetType="{x:Type ContentControl}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=ShowDate, Mode=OneTime}" Value="True">
+                                                                        <Setter Property="Content">
+                                                                            <Setter.Value>
+                                                                                <TextBlock Text="{Binding Path=Date, Mode=OneWay}" Margin="0,4,0,0" Style="{StaticResource AppText}" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </ContentControl.Style>
+                                                    </ContentControl>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Setter.Value>
@@ -87,7 +102,7 @@
                                                     <ContentControl.Style>
                                                         <Style TargetType="{x:Type ContentControl}">
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ShowName, Mode=OneTime}" Value="True">
+                                                                <DataTrigger Binding="{Binding Path=ShowName, Mode=OneTime}" Value="True">
                                                                     <Setter Property="Content">
                                                                         <Setter.Value>
                                                                             <TextBlock Text="{Binding Path=Name, Mode=OneTime}" Style="{StaticResource HardwareText}" />

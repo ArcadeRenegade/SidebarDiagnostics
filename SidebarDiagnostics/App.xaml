@@ -85,11 +85,20 @@
         </Style>
 
         <Style x:Key="AppTitle" TargetType="{x:Type Label}">
-            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="0" />
-            <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.TitleFontSize, Mode=OneTime}" />
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
+            <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.TitleFontSize, Mode=OneTime}" />
+        </Style>
+
+        <Style x:Key="AppText" TargetType="{x:Type TextBlock}">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
+            <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.SmallFontSize, Mode=OneTime}" />
+            <Setter Property="TextWrapping" Value="WrapWithOverflow" />
         </Style>
 
         <Style x:Key="VerticalPanel" TargetType="{x:Type StackPanel}">

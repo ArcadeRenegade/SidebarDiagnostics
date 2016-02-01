@@ -62,6 +62,15 @@ namespace SidebarDiagnostics.Models
 
             AlertFontColor = Properties.Settings.Default.AlertFontColor;
 
+            DateSettingItems = new DateSetting[4]
+            {
+                DateSetting.Disabled,
+                DateSetting.Short,
+                DateSetting.Normal,
+                DateSetting.Long
+            };
+            DateSetting = Properties.Settings.Default.DateSetting;
+
             CollapseMenuBar = Properties.Settings.Default.CollapseMenuBar;
 
             ShowClock = Properties.Settings.Default.ShowClock;
@@ -100,6 +109,7 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.FontSetting = FontSetting;
             Properties.Settings.Default.FontColor = FontColor;
             Properties.Settings.Default.AlertFontColor = AlertFontColor;
+            Properties.Settings.Default.DateSetting = DateSetting;
             Properties.Settings.Default.CollapseMenuBar = CollapseMenuBar;
             Properties.Settings.Default.ShowClock = ShowClock;
             Properties.Settings.Default.Clock24HR = Clock24HR;
@@ -445,6 +455,38 @@ namespace SidebarDiagnostics.Models
                 _alertFontColor = value;
 
                 NotifyPropertyChanged("AlertFontColor");
+            }
+        }
+
+        private DateSetting _dateSetting { get; set; }
+
+        public DateSetting DateSetting
+        {
+            get
+            {
+                return _dateSetting;
+            }
+            set
+            {
+                _dateSetting = value;
+
+                NotifyPropertyChanged("DateSetting");
+            }
+        }
+
+        private DateSetting[] _dateSettingItems { get; set; }
+
+        public DateSetting[] DateSettingItems
+        {
+            get
+            {
+                return _dateSettingItems;
+            }
+            set
+            {
+                _dateSettingItems = value;
+
+                NotifyPropertyChanged("DateSettingItems");
             }
         }
 

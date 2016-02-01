@@ -44,6 +44,9 @@
     <Setting Name="AlertFontColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#FF4136</Value>
     </Setting>
+    <Setting Name="DateSetting" Type="SidebarDiagnostics.Properties.DateSetting" Scope="User">
+      <Value Profile="(Default)">&lt;DateSetting&gt;&lt;Format&gt;M&lt;/Format&gt;&lt;/DateSetting&gt;</Value>
+    </Setting>
     <Setting Name="CollapseMenuBar" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
