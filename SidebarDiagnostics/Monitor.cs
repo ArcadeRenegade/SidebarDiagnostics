@@ -43,12 +43,17 @@ namespace SidebarDiagnostics.Monitor
             {
                 if (disposing)
                 {
-                    foreach (iMonitor _monitor in MonitorPanels.SelectMany(p => p.Monitors))
+                    foreach (MonitorPanel _panel in MonitorPanels)
                     {
-                        _monitor.Dispose();
+                        _panel.Dispose();
                     }
 
                     _computer.Close();
+
+                    MonitorPanels = null;
+                    _monitorPanels = null;
+                    _computer = null;
+                    _board = null;
                 }
 
                 _disposed = true;
@@ -197,7 +202,7 @@ namespace SidebarDiagnostics.Monitor
         private bool _disposed { get; set; } = false;
     }
 
-    public class MonitorPanel : INotifyPropertyChanged
+    public class MonitorPanel : INotifyPropertyChanged, IDisposable
     {
         public MonitorPanel(string title, string iconData)
         {
@@ -205,6 +210,36 @@ namespace SidebarDiagnostics.Monitor
             Title = title;
 
             _monitors = new List<iMonitor>();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    foreach (iMonitor _monitor in Monitors)
+                    {
+                        _monitor.Dispose();
+                    }
+
+                    Monitors = null;
+                    _monitors = null;
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~MonitorPanel()
+        {
+            Dispose(false);
         }
 
         public void Add(iMonitor monitor)
@@ -240,6 +275,8 @@ namespace SidebarDiagnostics.Monitor
         public iMonitor[] Monitors { get; private set; }
 
         private List<iMonitor> _monitors { get; set; }
+
+        private bool _disposed { get; set; } = false;
     }
 
     public interface iMonitor : INotifyPropertyChanged, IDisposable
@@ -297,6 +334,13 @@ namespace SidebarDiagnostics.Monitor
             {
                 if (disposing)
                 {
+                    foreach (OHMSensor _sensor in Sensors)
+                    {
+                        _sensor.Dispose();
+                    }
+
+                    _sensors = null;
+                    _hardware = null;
                 }
 
                 _disposed = true;
@@ -575,7 +619,7 @@ namespace SidebarDiagnostics.Monitor
         private bool _disposed { get; set; } = false;
     }
 
-    public class OHMSensor : INotifyPropertyChanged
+    public class OHMSensor : INotifyPropertyChanged, IDisposable
     {
         public OHMSensor(ISensor sensor, DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null)
         {
@@ -596,6 +640,31 @@ namespace SidebarDiagnostics.Monitor
             Label = label;
             Round = round;
             AlertValue = alertValue;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _sensor = null;
+                    _converter = null;
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~OHMSensor()
+        {
+            Dispose(false);
         }
 
         public void Update()
@@ -696,6 +765,8 @@ namespace SidebarDiagnostics.Monitor
         private ISensor _sensor { get; set; }
 
         private iConverter _converter { get; set; }
+
+        private bool _disposed { get; set; } = false;
     }
 
     public class DriveMonitor : iMonitor
@@ -741,6 +812,8 @@ namespace SidebarDiagnostics.Monitor
                     {
                         _drive.Dispose();
                     }
+
+                    _drives = null;
                 }
 
                 _disposed = true;
@@ -829,21 +902,25 @@ namespace SidebarDiagnostics.Monitor
                     if (_counterFreeMB != null)
                     {
                         _counterFreeMB.Dispose();
+                        _counterFreeMB = null;
                     }
 
                     if (_counterFreePercent != null)
                     {
                         _counterFreePercent.Dispose();
+                        _counterFreePercent = null;
                     }
 
                     if (_counterReadRate != null)
                     {
                         _counterReadRate.Dispose();
+                        _counterReadRate = null;
                     }
 
                     if (_counterWriteRate != null)
                     {
                         _counterWriteRate.Dispose();
+                        _counterWriteRate = null;
                     }
                 }
 
@@ -1100,6 +1177,8 @@ namespace SidebarDiagnostics.Monitor
                     {
                         _nic.Dispose();
                     }
+
+                    _nics = null;
                 }
 
                 _disposed = true;
@@ -1189,7 +1268,10 @@ namespace SidebarDiagnostics.Monitor
                 if (disposing)
                 {
                     InBandwidth.Dispose();
+                    InBandwidth = null;
+
                     OutBandwidth.Dispose();
+                    OutBandwidth = null;
                 }
 
                 _disposed = true;
@@ -1251,6 +1333,7 @@ namespace SidebarDiagnostics.Monitor
                     if (_counter != null)
                     {
                         _counter.Dispose();
+                        _counter = null;
                     }
                 }
 
@@ -1265,6 +1348,11 @@ namespace SidebarDiagnostics.Monitor
 
         public void Update()
         {
+            if (!PerformanceCounterCategory.InstanceExists(_counter.InstanceName, NetworkMonitor.CATEGORYNAME))
+            {
+                return;
+            }
+
             double _value = _counter.NextValue() / (UseBytes ? 1024d : 128d);
 
             if (AlertValue > 0 && AlertValue <= _value)
