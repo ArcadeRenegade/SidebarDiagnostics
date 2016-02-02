@@ -110,12 +110,12 @@ namespace SidebarDiagnostics.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Enabled4K {
+        public bool HighDPISupport {
             get {
-                return ((bool)(this["Enabled4K"]));
+                return ((bool)(this["HighDPISupport"]));
             }
             set {
-                this["Enabled4K"] = value;
+                this["HighDPISupport"] = value;
             }
         }
         

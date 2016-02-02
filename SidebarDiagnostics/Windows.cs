@@ -160,7 +160,7 @@ namespace SidebarDiagnostics.Windows
             public int dbch_reserved;
         }
 
-        public static void Initialize(AppBar window)
+        public static void Initialize(Window window)
         {
             DEV_BROADCAST_HDR _data = new DEV_BROADCAST_HDR();
             _data.dbch_size = Marshal.SizeOf(_data);
@@ -619,7 +619,7 @@ namespace SidebarDiagnostics.Windows
                 Bottom = _screen.WorkArea.Bottom
             };
 
-            if (Properties.Settings.Default.Enabled4K)
+            if (Properties.Settings.Default.HighDPISupport)
             {
                 windowWA.Left *= _inverseX;
                 windowWA.Top *= _inverseY;
@@ -665,7 +665,7 @@ namespace SidebarDiagnostics.Windows
                 Bottom = windowWA.Bottom
             };
 
-            if (Properties.Settings.Default.Enabled4K)
+            if (Properties.Settings.Default.HighDPISupport)
             {
                 double _oldWidth = appbarWA.Width;
                 double _newWidth = _oldWidth * _screenX;
@@ -890,12 +890,12 @@ namespace SidebarDiagnostics.Windows
                 throw new ArgumentException("This parameter cannot be set to 'none'.", "edge");
             }
 
-            APPBARDATA _data = NewData();
-
             if (!IsAppBar)
             {
                 IsAppBar = true;
                 DockEdge = edge;
+
+                APPBARDATA _data = NewData();
 
                 _callbackID = _data.uCallbackMessage = NativeMethods.RegisterWindowMessage("AppBarMessage");
 
@@ -1021,7 +1021,7 @@ namespace SidebarDiagnostics.Windows
 
                                 Monitor.GetWorkArea(this, out _windowWA, out _appbarWA);
 
-                                SetAppBar(DockEdge, _windowWA, _appbarWA);
+                                DockAppBar(DockEdge, _windowWA, _appbarWA);
                             }));
 
                             _cancelReposition = null;

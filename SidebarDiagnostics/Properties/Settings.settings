@@ -23,7 +23,7 @@
     <Setting Name="AlwaysTop" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="Enabled4K" Type="System.Boolean" Scope="User">
+    <Setting Name="HighDPISupport" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ClickThrough" Type="System.Boolean" Scope="User">

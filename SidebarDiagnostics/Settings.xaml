@@ -64,13 +64,13 @@
                     <Label Grid.Column="0" Grid.Row="2" Content="Horizontal Offset" />
                     <DockPanel Grid.Column="1" Grid.Row="2">
                         <TextBox Text="{Binding ElementName=XOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
-                        <Slider x:Name="XOffsetSlider" Value="{Binding Path=XOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-3000" Maximum="3000" TickFrequency="1" LargeChange="1000" ToolTip="Horizontal offset of the sidebar." />
+                        <Slider x:Name="XOffsetSlider" Value="{Binding Path=XOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="Horizontal offset of the sidebar." />
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Vertical Offset" />
                     <DockPanel Grid.Column="1" Grid.Row="3">
                         <TextBox Text="{Binding ElementName=YOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
-                        <Slider x:Name="YOffsetSlider" Value="{Binding Path=YOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-3000" Maximum="3000" TickFrequency="1" LargeChange="1000" ToolTip="Vertical offset of the sidebar." />
+                        <Slider x:Name="YOffsetSlider" Value="{Binding Path=YOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="Vertical offset of the sidebar." />
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="4" Content="Polling Interval" />
@@ -85,14 +85,14 @@
                     <Label Grid.Column="0" Grid.Row="6" Content="Always On Top" />
                     <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes the sidebar always on top of other windows." />
 
-                    <Label Grid.Column="0" Grid.Row="7" Content="4K Monitor Support" />
-                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=Enable4K, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables support for 4K and high PPI monitors." />
+                    <Label Grid.Column="0" Grid.Row="7" Content="High DPI Support" />
+                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=HighDPISupport, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables support for 4K and high DPI monitors." />
 
                     <Label Grid.Column="0" Grid.Row="8" Content="Allow Click Through" />
                     <CheckBox Grid.Column="1" Grid.Row="8" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
 
                     <Label Grid.Column="0" Grid.Row="9" Content="Show Tray Icon" />
-                    <CheckBox Grid.Column="1" Grid.Row="9" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;Required if 'Allow Click Through' is checked." />
+                    <CheckBox Grid.Column="1" Grid.Row="9" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;This is sometimes required." />
                     
                     <Label Grid.Column="0" Grid.Row="10" Content="Check For Updates" />
                     <CheckBox Grid.Column="1" Grid.Row="10" IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Check for updates on program start up." />

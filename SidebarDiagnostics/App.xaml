@@ -199,9 +199,8 @@
                     <Style.Resources>
                         <Style TargetType="{x:Type TextBox}">
                             <Setter Property="DockPanel.Dock" Value="Right" />
-                            <Setter Property="Width" Value="40" />
+                            <Setter Property="Width" Value="50" />
                             <Setter Property="Margin" Value="5,0,0,0" />
-                            <!--<Setter Property="IsReadOnly" Value="True" />-->
                         </Style>
                         <Style TargetType="{x:Type Slider}">
                             <Setter Property="DockPanel.Dock" Value="Left" />

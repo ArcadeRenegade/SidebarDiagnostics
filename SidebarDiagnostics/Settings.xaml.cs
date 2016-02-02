@@ -34,6 +34,14 @@ namespace SidebarDiagnostics
             }));
         }
 
+        private void OffsetSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (e.NewValue != 0d)
+            {
+                ShowTrayIconCheckbox.IsChecked = true;
+            }
+        }
+
         private void ClickThroughCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             ShowTrayIconCheckbox.IsChecked = true;
@@ -41,6 +49,9 @@ namespace SidebarDiagnostics
 
         private void ShowTrayIconCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
+            XOffsetSlider.Value = 0d;
+            YOffsetSlider.Value = 0d;
+
             ClickThroughCheckbox.IsChecked = false;
         }
 
