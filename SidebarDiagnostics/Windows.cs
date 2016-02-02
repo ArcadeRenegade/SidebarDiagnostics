@@ -291,24 +291,26 @@ namespace SidebarDiagnostics.Windows
 
         public static void Initialize(AppBar window, Hotkey[] settings)
         {
+            if (settings == null)
+            {
+                return;
+            }
+
             _window = window;
             _index = 0;
 
-            RegisteredKeys = new List<Hotkey>();
-
-            if (settings != null)
-            {
-                foreach (Hotkey _hotkey in settings)
-                {
-                    Add(_hotkey);
-                }
-            }
+            RegisteredKeys = settings.Select(h => Register(h, true)).ToArray();
 
             (PresentationSource.FromVisual(window) as HwndSource).AddHook(KeyHook);
         }
 
         public static void Enable()
         {
+            if (RegisteredKeys == null)
+            {
+                return;
+            }
+
             foreach (Hotkey _hotkey in RegisteredKeys)
             {
                 Register(_hotkey, false);
@@ -317,6 +319,11 @@ namespace SidebarDiagnostics.Windows
 
         public static void Disable()
         {
+            if (RegisteredKeys == null)
+            {
+                return;
+            }
+
             foreach (Hotkey _hotkey in RegisteredKeys)
             {
                 Unregister(_hotkey);
@@ -328,7 +335,7 @@ namespace SidebarDiagnostics.Windows
             Register(hotkey, true);
         }
 
-        private static void Register(Hotkey hotkey, bool add)
+        private static Hotkey Register(Hotkey hotkey, bool add)
         {
             uint _mods = MODIFIERS.MOD_NOREPEAT;
 
@@ -356,8 +363,6 @@ namespace SidebarDiagnostics.Windows
             {
                 hotkey.Index = _index;
                 _index++;
-
-                RegisteredKeys.Add(hotkey);
             }
 
             NativeMethods.RegisterHotKey(
@@ -366,6 +371,8 @@ namespace SidebarDiagnostics.Windows
                 _mods,
                 hotkey.VirtualKey
                 );
+
+            return hotkey;
         }
 
         private static void Unregister(Hotkey hotkey)
@@ -376,7 +383,7 @@ namespace SidebarDiagnostics.Windows
                 );
         }
 
-        public static List<Hotkey> RegisteredKeys { get; private set; }
+        public static Hotkey[] RegisteredKeys { get; private set; }
         
         private static IntPtr KeyHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
