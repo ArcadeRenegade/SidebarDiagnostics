@@ -28,7 +28,7 @@ namespace SidebarDiagnostics.Monitor
 
             UpdateBoard();
 
-            _monitorPanels = new List<MonitorPanel>();
+            _panelList = new List<MonitorPanel>();
         }
 
         public void Dispose()
@@ -50,8 +50,8 @@ namespace SidebarDiagnostics.Monitor
 
                     _computer.Close();
 
-                    MonitorPanels = null;
                     _monitorPanels = null;
+                    _panelList = null;
                     _computer = null;
                     _board = null;
                 }
@@ -109,11 +109,9 @@ namespace SidebarDiagnostics.Monitor
 
         public void Initialize()
         {
-            MonitorPanels = _monitorPanels.ToArray();
+            MonitorPanels = _panelList.ToArray();
 
-            _monitorPanels = null;
-
-            NotifyPropertyChanged("MonitorPanels");
+            _panelList = null;
         }
 
         public void Update()
@@ -145,40 +143,40 @@ namespace SidebarDiagnostics.Monitor
 
         private void OHMPanel(MonitorType type, string pathData, ConfigParam[] parameters, params HardwareType[] hardwareTypes)
         {
-            MonitorPanel _monitorPanel = new MonitorPanel(type.GetDescription(), pathData);
+            MonitorPanel _panel = new MonitorPanel(type.GetDescription(), pathData);
             
             foreach (IHardware _hardware in GetHardware(hardwareTypes))
             {
-                _monitorPanel.Add(new OHMMonitor(type, _hardware, _board, parameters));
+                _panel.Add(new OHMMonitor(type, _hardware, _board, parameters));
             }
 
-            _monitorPanel.Initialize();
+            _panel.Initialize();
 
-            _monitorPanels.Add(_monitorPanel);
+            _panelList.Add(_panel);
         }
 
         private void DrivePanel(MonitorType type, ConfigParam[] parameters)
         {
-            MonitorPanel _monitorPanel = new MonitorPanel(
+            MonitorPanel _panel = new MonitorPanel(
                 type.GetDescription(),
                 "M 17.30,0.77 C 17.30,0.77 28.12,0.77 28.12,0.77 28.12,0.77 60.79,0.77 60.79,0.77 68.68,0.76 73.39,6.12 73.40,13.87 73.40,13.87 73.40,61.84 73.40,61.84 73.40,61.84 73.40,88.31 73.40,88.31 73.32,95.25 68.55,100.74 61.46,100.75 61.46,100.75 12.12,100.75 12.12,100.75 5.26,100.74 0.42,95.28 0.40,88.53 0.40,88.53 0.40,22.47 0.40,22.47 0.40,22.47 0.40,15.91 0.40,15.91 0.40,11.04 0.35,7.57 4.24,3.94 5.01,3.21 5.99,2.54 6.94,2.06 8.46,1.30 9.58,1.09 11.22,0.77 11.22,0.77 17.30,0.77 17.30,0.77 Z M 21.14,9.43 C 21.92,9.69 26.51,9.57 27.67,9.57 27.67,9.57 50.87,9.57 50.87,9.57 51.51,9.57 52.32,9.62 52.89,9.31 53.92,8.74 54.05,7.48 53.09,6.77 52.53,6.34 51.77,6.41 51.10,6.44 51.10,6.44 31.27,6.44 31.27,6.44 31.27,6.44 21.14,6.44 21.14,6.44 19.63,7.17 19.68,8.94 21.14,9.43 Z M 7.69,25.25 C 4.40,28.65 7.47,34.30 12.12,33.48 16.13,32.78 17.48,27.79 14.56,25.03 13.26,23.81 11.77,23.69 10.09,23.91 9.14,24.18 8.39,24.53 7.69,25.25 Z M 59.44,24.82 C 55.67,27.91 58.21,34.41 63.49,33.48 66.89,32.88 68.46,28.64 66.50,25.86 65.22,24.05 63.54,23.67 61.46,23.90 60.66,24.09 60.10,24.28 59.44,24.82 Z M 25.64,32.07 C 17.25,35.67 11.13,42.35 8.65,51.20 8.18,52.88 7.64,55.59 7.62,57.31 7.56,62.48 7.75,65.76 9.74,70.66 13.30,79.41 20.86,85.68 29.92,87.94 31.42,88.31 34.02,88.74 35.55,88.76 40.84,88.82 44.67,88.14 49.52,85.95 52.72,84.50 55.63,82.20 58.08,79.71 60.38,77.37 62.21,74.55 63.56,71.56 69.22,59.05 65.62,44.26 54.70,35.87 51.76,33.61 48.36,31.96 44.79,30.94 41.52,30.00 37.37,29.68 33.98,30.00 30.96,30.44 28.49,30.84 25.64,32.07 Z M 39.16,50.68 C 46.63,52.49 48.08,63.05 41.19,66.92 39.60,67.81 38.22,67.96 36.45,67.94 30.35,67.87 26.41,61.27 28.77,55.73 30.22,52.31 32.76,50.91 36.23,50.39 37.22,50.29 38.19,50.44 39.16,50.68 Z M 15.88,58.90 C 15.88,58.90 16.27,62.74 16.27,62.74 16.67,65.06 17.58,67.49 18.75,69.53 21.48,74.29 26.01,77.88 31.27,79.39 32.52,79.74 33.81,80.00 35.10,80.12 35.88,80.20 36.89,80.06 37.57,80.43 39.14,81.26 38.86,83.41 37.13,83.73 35.38,84.06 31.41,83.29 29.70,82.73 23.12,80.57 17.81,76.32 14.78,69.98 13.36,67.01 12.90,64.59 12.48,61.38 12.26,59.72 12.01,58.12 13.92,57.48 14.90,57.51 15.62,57.87 15.88,58.90 Z M 12.12,94.54 C 15.89,93.83 17.48,89.11 14.78,86.31 13.44,84.92 11.90,84.79 10.09,84.99 3.87,86.53 6.04,95.68 12.12,94.54 Z M 62.14,94.62 C 66.64,94.93 69.16,89.28 65.90,86.16 64.53,84.86 63.01,84.76 61.24,85.00 55.71,86.67 56.99,94.26 62.14,94.62 Z"
                 );
-            _monitorPanel.Add(new DriveMonitor(parameters));
-            _monitorPanel.Initialize();
+            _panel.Add(new DriveMonitor(parameters));
+            _panel.Initialize();
 
-            _monitorPanels.Add(_monitorPanel);
+            _panelList.Add(_panel);
         }
 
         private void NetworkPanel(MonitorType type, ConfigParam[] parameters)
         {
-            MonitorPanel _monitorPanel = new MonitorPanel(
+            MonitorPanel _panel = new MonitorPanel(
                 type.GetDescription(),
                 "M 40,44L 39.9999,51L 44,51C 45.1046,51 46,51.8954 46,53L 46,57C 46,58.1046 45.1045,59 44,59L 32,59C 30.8954,59 30,58.1046 30,57L 30,53C 30,51.8954 30.8954,51 32,51L 36,51L 36,44L 40,44 Z M 47,53L 57,53L 57,57L 47,57L 47,53 Z M 29,53L 29,57L 19,57L 19,53L 29,53 Z M 19,22L 57,22L 57,31L 19,31L 19,22 Z M 55,24L 53,24L 53,29L 55,29L 55,24 Z M 51,24L 49,24L 49,29L 51,29L 51,24 Z M 47,24L 45,24L 45,29L 47,29L 47,24 Z M 21,27L 21,29L 23,29L 23,27L 21,27 Z M 19,33L 57,33L 57,42L 19,42L 19,33 Z M 55,35L 53,35L 53,40L 55,40L 55,35 Z M 51,35L 49,35L 49,40L 51,40L 51,35 Z M 47,35L 45,35L 45,40L 47,40L 47,35 Z M 21,38L 21,40L 23,40L 23,38L 21,38 Z"
                 );
-            _monitorPanel.Add(new NetworkMonitor(parameters));
-            _monitorPanel.Initialize();
+            _panel.Add(new NetworkMonitor(parameters));
+            _panel.Initialize();
 
-            _monitorPanels.Add(_monitorPanel);
+            _panelList.Add(_panel);
         }
 
         private void UpdateBoard()
@@ -191,13 +189,27 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
-        public MonitorPanel[] MonitorPanels { get; private set; }
+        private MonitorPanel[] _monitorPanels { get; set; }
+
+        public MonitorPanel[] MonitorPanels
+        {
+            get
+            {
+                return _monitorPanels;
+            }
+            set
+            {
+                _monitorPanels = value;
+
+                NotifyPropertyChanged("MonitorPanels");
+            }
+        }
+
+        private List<MonitorPanel> _panelList { get; set; }
 
         private Computer _computer { get; set; }
 
         private IHardware _board { get; set; }
-
-        private List<MonitorPanel> _monitorPanels { get; set; }
 
         private bool _disposed { get; set; } = false;
     }
@@ -209,7 +221,7 @@ namespace SidebarDiagnostics.Monitor
             IconPath = Geometry.Parse(iconData);
             Title = title;
 
-            _monitors = new List<iMonitor>();
+            _monitorList = new List<iMonitor>();
         }
 
         public void Dispose()
@@ -229,8 +241,8 @@ namespace SidebarDiagnostics.Monitor
                         _monitor.Dispose();
                     }
 
-                    Monitors = null;
                     _monitors = null;
+                    _monitorList = null;
                 }
 
                 _disposed = true;
@@ -244,16 +256,14 @@ namespace SidebarDiagnostics.Monitor
 
         public void Add(iMonitor monitor)
         {
-            _monitors.Add(monitor);
+            _monitorList.Add(monitor);
         }
 
         public void Initialize()
         {
-            Monitors = _monitors.ToArray();
+            Monitors = _monitorList.ToArray();
 
-            _monitors = null;
-
-            NotifyPropertyChanged("Monitors");
+            _monitorList = null;
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -272,9 +282,23 @@ namespace SidebarDiagnostics.Monitor
 
         public string Title { get; private set; }
 
-        public iMonitor[] Monitors { get; private set; }
+        private iMonitor[] _monitors { get; set; }
 
-        private List<iMonitor> _monitors { get; set; }
+        public iMonitor[] Monitors
+        {
+            get
+            {
+                return _monitors;
+            }
+            set
+            {
+                _monitors = value;
+
+                NotifyPropertyChanged("Monitors");
+            }
+        }
+
+        private List<iMonitor> _monitorList { get; set; }
 
         private bool _disposed { get; set; } = false;
     }

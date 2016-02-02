@@ -118,6 +118,8 @@ namespace SidebarDiagnostics.Windows
 
     public static class Devices
     {
+        private const int WM_DEVICECHANGE = 0x0219;
+
         private static class DBCH_DEVICETYPE
         {
             public const int DBT_DEVTYP_DEVICEINTERFACE = 5;
@@ -133,8 +135,6 @@ namespace SidebarDiagnostics.Windows
             public const int DEVICE_NOTIFY_SERVICE_HANDLE = 1;
             public const int DEVICE_NOTIFY_ALL_INTERFACE_CLASSES = 4;
         }
-
-        private const int WM_DEVICECHANGE = 0x0219;
 
         private static class WM_DEVICECHANGE_EVENT
         {
@@ -203,9 +203,9 @@ namespace SidebarDiagnostics.Windows
                                 return;
                             }
 
-                            App.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
                             {
-                                AppBar _appBar = (App.Current as App).GetAppBar;
+                                AppBar _appBar = (Application.Current as App).GetAppBar;
 
                                 if (_appBar != null)
                                 {
@@ -232,11 +232,14 @@ namespace SidebarDiagnostics.Windows
     {
         private const int WM_HOTKEY = 0x0312;
 
-        private const uint MOD_NOREPEAT = 0x4000;
-        private const uint MOD_ALT = 0x0001;
-        private const uint MOD_CONTROL = 0x0002;
-        private const uint MOD_SHIFT = 0x0004;
-        private const uint MOD_WIN = 0x0008;
+        private static class MODIFIERS
+        {
+            public const uint MOD_NOREPEAT = 0x4000;
+            public const uint MOD_ALT = 0x0001;
+            public const uint MOD_CONTROL = 0x0002;
+            public const uint MOD_SHIFT = 0x0004;
+            public const uint MOD_WIN = 0x0008;
+        }
 
         public enum KeyAction : byte
         {
@@ -327,26 +330,26 @@ namespace SidebarDiagnostics.Windows
 
         private static void Register(Hotkey hotkey, bool add)
         {
-            uint _mods = MOD_NOREPEAT;
+            uint _mods = MODIFIERS.MOD_NOREPEAT;
 
             if (hotkey.AltMod)
             {
-                _mods |= MOD_ALT;
+                _mods |= MODIFIERS.MOD_ALT;
             }
 
             if (hotkey.CtrlMod)
             {
-                _mods |= MOD_CONTROL;
+                _mods |= MODIFIERS.MOD_CONTROL;
             }
 
             if (hotkey.ShiftMod)
             {
-                _mods |= MOD_SHIFT;
+                _mods |= MODIFIERS.MOD_SHIFT;
             }
 
             if (hotkey.WinMod)
             {
-                _mods |= MOD_WIN;
+                _mods |= MODIFIERS.MOD_WIN;
             }
 
             if (add)
