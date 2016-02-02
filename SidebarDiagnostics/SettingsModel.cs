@@ -83,6 +83,31 @@ namespace SidebarDiagnostics.Models
 
             Clock24HR = Properties.Settings.Default.Clock24HR;
 
+            //AppBar _appBar = (App.Current as App).GetAppBar;
+
+            //if (_appBar != null)
+            //{
+            //    AppBarModel _model = _appBar.Model;
+
+            //    if (_model != null)
+            //    {
+            //        MonitorManager _manager = _model.MonitorManager;
+
+            //        if (_manager != null)
+            //        {
+            //            foreach (MonitorConfig _record in Properties.Settings.Default.MonitorConfig)
+            //            {
+            //                _record.Hardware = (
+            //                    from name in _manager.GetHardwareNames(_record.Type)
+            //                    join config in _record.Hardware on name equals config.Name into c
+            //                    from config in c.DefaultIfEmpty(new HardwareConfig() { Name = name, Enabled = true })
+            //                    select config
+            //                    ).ToArray();
+            //            }
+            //        }
+            //    }
+            //}
+
             _monitorConfig = Properties.Settings.Default.MonitorConfig;
 
             if (Properties.Settings.Default.Hotkeys != null)

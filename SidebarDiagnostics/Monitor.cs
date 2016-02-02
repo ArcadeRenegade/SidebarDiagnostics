@@ -1482,6 +1482,8 @@ namespace SidebarDiagnostics.Monitor
 
         public byte Order { get; set; }
 
+        public HardwareConfig[] Hardware { get; set; }
+
         public ConfigParam[] Params { get; set; }
 
         public string Name
@@ -1507,7 +1509,7 @@ namespace SidebarDiagnostics.Monitor
                 MonitorConfig _record = config[i];
                 MonitorConfig _defaultRecord = _default[i];
 
-                if (_record == null || _record.Type != _defaultRecord.Type || _record.Params.Length != _defaultRecord.Params.Length)
+                if (_record == null || _record.Type != _defaultRecord.Type || _record.Hardware == null || _record.Params == null || _record.Params.Length != _defaultRecord.Params.Length)
                 {
                     output = _default;
                     return false;
@@ -1540,6 +1542,7 @@ namespace SidebarDiagnostics.Monitor
                         Type = MonitorType.CPU,
                         Enabled = true,
                         Order = 1,
+                        Hardware = new HardwareConfig[0],
                         Params = new ConfigParam[5]
                         {
                             ConfigParam.Defaults.HardwareNames,
@@ -1554,6 +1557,7 @@ namespace SidebarDiagnostics.Monitor
                         Type = MonitorType.RAM,
                         Enabled = true,
                         Order = 2,
+                        Hardware = new HardwareConfig[0],
                         Params = new ConfigParam[1]
                         {
                             ConfigParam.Defaults.NoHardwareNames
@@ -1564,6 +1568,7 @@ namespace SidebarDiagnostics.Monitor
                         Type = MonitorType.GPU,
                         Enabled = true,
                         Order = 3,
+                        Hardware = new HardwareConfig[0],
                         Params = new ConfigParam[3]
                         {
                             ConfigParam.Defaults.HardwareNames,
@@ -1576,6 +1581,7 @@ namespace SidebarDiagnostics.Monitor
                         Type = MonitorType.HD,
                         Enabled = true,
                         Order = 4,
+                        Hardware = new HardwareConfig[0],
                         Params = new ConfigParam[2]
                         {
                             ConfigParam.Defaults.DriveDetails,
@@ -1587,6 +1593,7 @@ namespace SidebarDiagnostics.Monitor
                         Type = MonitorType.Network,
                         Enabled = true,
                         Order = 5,
+                        Hardware = new HardwareConfig[0],
                         Params = new ConfigParam[4]
                         {
                             ConfigParam.Defaults.HardwareNames,
@@ -1598,6 +1605,16 @@ namespace SidebarDiagnostics.Monitor
                 };
             }
         }
+    }
+
+    [Serializable]
+    public struct HardwareConfig
+    {
+        public string ID { get; set; }
+
+        public string Name { get; set; }
+
+        public bool Enabled { get; set; }
     }
 
     [Serializable]
