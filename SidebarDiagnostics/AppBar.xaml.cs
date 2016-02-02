@@ -73,7 +73,11 @@ namespace SidebarDiagnostics
         {
             Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
             {
-                this.MoveToDesktop(VirtualDesktop.Current);
+                try
+                {
+                    this.MoveToDesktop(VirtualDesktop.Current);
+                }
+                catch (InvalidOperationException) { }
             }));
         }
 
