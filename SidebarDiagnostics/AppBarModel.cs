@@ -76,14 +76,7 @@ namespace SidebarDiagnostics.Models
 
         private void InitMonitors()
         {
-            MonitorManager = new MonitorManager();
-
-            foreach (MonitorConfig _config in Properties.Settings.Default.MonitorConfig.Where(c => c.Enabled).OrderBy(c => c.Order))
-            {
-                MonitorManager.AddPanel(_config);
-            }
-
-            MonitorManager.Initialize();
+            MonitorManager = new MonitorManager(Properties.Settings.Default.MonitorConfig);
             MonitorManager.Update();
 
             _monitorTimer = new DispatcherTimer();
