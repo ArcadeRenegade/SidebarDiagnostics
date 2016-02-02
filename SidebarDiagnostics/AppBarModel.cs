@@ -114,6 +114,7 @@ namespace SidebarDiagnostics.Models
             if (_clockTimer != null)
             {
                 _clockTimer.Stop();
+                _clockTimer = null;
             }
         }
 
@@ -122,11 +123,13 @@ namespace SidebarDiagnostics.Models
             if (_monitorTimer != null)
             {
                 _monitorTimer.Stop();
+                _monitorTimer = null;
             }
             
             if (MonitorManager != null)
             {
                 MonitorManager.Dispose();
+                _monitorManager = null;
             }
         }
 
