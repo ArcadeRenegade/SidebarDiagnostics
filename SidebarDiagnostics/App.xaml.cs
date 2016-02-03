@@ -82,9 +82,7 @@ namespace SidebarDiagnostics
                 return;
             }
 
-            Settings _settings = new Settings();
-            _settings.Owner = _appBar;
-            _settings.ShowDialog();
+            new Settings(_appBar);
         }
 
         private void Reload_Click(object sender, EventArgs e)

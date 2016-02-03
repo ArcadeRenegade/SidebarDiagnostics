@@ -83,13 +83,7 @@ namespace SidebarDiagnostics
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            Settings _settings = new Settings();
-            _settings.Owner = this;
-
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-            {
-                _settings.ShowDialog();
-            }));
+            new Settings(this);
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -112,6 +106,8 @@ namespace SidebarDiagnostics
             InitWindow();
             InitAppBar();
             InitContent();
+
+            Ready = true;
         }
 
         private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -126,6 +122,8 @@ namespace SidebarDiagnostics
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Ready = false;
+
             if (Model != null)
             {
                 Model.Dispose();
@@ -150,6 +148,8 @@ namespace SidebarDiagnostics
                 Application.Current.Shutdown();
             }
         }
+
+        public bool Ready { get; private set; } = false;
 
         public AppBarModel Model { get; private set; }
     }

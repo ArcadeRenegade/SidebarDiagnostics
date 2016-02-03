@@ -64,20 +64,26 @@ namespace SidebarDiagnostics.Monitor
             Dispose(false);
         }
 
-        public string[] GetHardwareNames(MonitorType type)
+        public HardwareConfig[] GetHardware(MonitorType type)
         {
             switch (type)
             {
                 case MonitorType.CPU:
                 case MonitorType.RAM:
                 case MonitorType.GPU:
-                    return GetHardware(type.GetHardwareTypes()).Select(h => h.Name).ToArray();
+                    return GetHardware(type.GetHardwareTypes()).Select(h =>
+                        new HardwareConfig()
+                        {
+                            ID = h.Identifier.ToString(),
+                            Name = h.Name,
+                            Enabled = true
+                        }).ToArray();
 
                 case MonitorType.HD:
-                    return DriveMonitor.GetHardwareNames().ToArray();
+                    return DriveMonitor.GetHardware().ToArray();
 
                 case MonitorType.Network:
-                    return DriveMonitor.GetHardwareNames().ToArray();
+                    return NetworkMonitor.GetHardware().ToArray();
 
                 default:
                     throw new ArgumentException("Invalid MonitorType.");
@@ -783,7 +789,7 @@ namespace SidebarDiagnostics.Monitor
             bool _showDetails = parameters.GetValue<bool>(ParamKey.DriveDetails);
             int _usedSpaceAlert = parameters.GetValue<int>(ParamKey.UsedSpaceAlert);
 
-            Drives = GetHardwareNames().Select(d => new DriveInfo(d, _showDetails, _usedSpaceAlert)).ToArray();
+            Drives = GetHardware().Select(d => new DriveInfo(d.ID, d.Name, _showDetails, _usedSpaceAlert)).ToArray();
         }
 
         public void Dispose()
@@ -815,7 +821,7 @@ namespace SidebarDiagnostics.Monitor
             Dispose(false);
         }
 
-        public static IEnumerable<string> GetHardwareNames()
+        public static IEnumerable<HardwareConfig> GetHardware()
         {
             Regex _regex = new Regex("^[A-Z]:$");
 
@@ -832,7 +838,7 @@ namespace SidebarDiagnostics.Monitor
                 App.ShowPerformanceCounterError();
             }
 
-            return _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]);
+            return _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(h => new HardwareConfig() { ID = h, Name = h, Enabled = true });
         }
 
         public void Update()
@@ -881,9 +887,10 @@ namespace SidebarDiagnostics.Monitor
         private const string BYTESREADPERSECOND = "Disk Read Bytes/sec";
         private const string BYTESWRITEPERSECOND = "Disk Write Bytes/sec";
 
-        public DriveInfo(string name, bool showDetails = false, double usedSpaceAlert = 0)
+        public DriveInfo(string instance, string name, bool showDetails = false, double usedSpaceAlert = 0)
         {
-            Label = Instance = name;
+            Instance = instance;
+            Label = name;
             ShowDetails = showDetails;
             UsedSpaceAlert = usedSpaceAlert;
 
@@ -1148,7 +1155,7 @@ namespace SidebarDiagnostics.Monitor
             int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
             int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
 
-            Nics = GetHardware().Select(n => new NicInfo(n.Instance, n.Name, _showName, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)).ToArray();
+            Nics = GetHardware().Select(n => new NicInfo(n.ID, n.Name, _showName, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)).ToArray();
         }
 
         public void Dispose()
@@ -1180,12 +1187,7 @@ namespace SidebarDiagnostics.Monitor
             Dispose(false);
         }
 
-        public static IEnumerable<string> GetHardwareNames()
-        {
-            return GetHardware().Select(h => h.Name);
-        }
-
-        private static IEnumerable<NicName> GetHardware()
+        public static IEnumerable<HardwareConfig> GetHardware()
         {
             string[] _instances;
 
@@ -1207,7 +1209,7 @@ namespace SidebarDiagnostics.Monitor
 
             Regex _regex = new Regex("[^A-Za-z]");
 
-            return _instances.Join(_networkInterfaces, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new NicName() { Name = n.Description, Instance = i }, StringComparer.Ordinal);
+            return _instances.Join(_networkInterfaces, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new HardwareConfig() { ID = i, Name = n.Description, Enabled = true }, StringComparer.Ordinal);
         }
 
         public void Update()
@@ -1247,13 +1249,6 @@ namespace SidebarDiagnostics.Monitor
         }
 
         private bool _disposed { get; set; } = false;
-
-        private struct NicName
-        {
-            public string Name { get; set; }
-
-            public string Instance { get; set; }
-        }
     }
 
     public class NicInfo : IDisposable

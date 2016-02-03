@@ -207,7 +207,7 @@ namespace SidebarDiagnostics.Windows
                             {
                                 AppBar _appBar = (Application.Current as App).GetAppBar;
 
-                                if (_appBar != null)
+                                if (_appBar != null && _appBar.Ready)
                                 {
                                     _appBar.Model.Restart();
                                 }
@@ -393,7 +393,7 @@ namespace SidebarDiagnostics.Windows
 
                 Hotkey _hotkey = RegisteredKeys.FirstOrDefault(k => k.Index == _id);
 
-                if (_hotkey != null && _window != null && _window.IsInitialized)
+                if (_hotkey != null && _window != null && _window.Ready)
                 {
                     switch (_hotkey.Action)
                     {

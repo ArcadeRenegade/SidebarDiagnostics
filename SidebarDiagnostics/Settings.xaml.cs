@@ -17,11 +17,15 @@ namespace SidebarDiagnostics
     /// </summary>
     public partial class Settings : DPIAwareWindow
     {
-        public Settings()
+        public Settings(AppBar appbar)
         {
+            Owner = appbar;
+
             InitializeComponent();
 
-            DataContext = Model = new SettingsModel();
+            DataContext = Model = new SettingsModel(appbar);
+
+            ShowDialog();
         }
 
         private void Save()

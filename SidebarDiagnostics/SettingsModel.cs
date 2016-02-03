@@ -10,7 +10,7 @@ namespace SidebarDiagnostics.Models
 {
     public class SettingsModel : INotifyPropertyChanged
     {
-        public SettingsModel()
+        public SettingsModel(AppBar appbar)
         {
             DockEdgeItems = new DockEdge[2] { DockEdge.Left, DockEdge.Right };
             DockEdge = Properties.Settings.Default.DockEdge;
@@ -82,31 +82,19 @@ namespace SidebarDiagnostics.Models
             ShowClock = Properties.Settings.Default.ShowClock;
 
             Clock24HR = Properties.Settings.Default.Clock24HR;
-
-            //AppBar _appBar = (App.Current as App).GetAppBar;
-
-            //if (_appBar != null)
-            //{
-            //    AppBarModel _model = _appBar.Model;
-
-            //    if (_model != null)
-            //    {
-            //        MonitorManager _manager = _model.MonitorManager;
-
-            //        if (_manager != null)
-            //        {
-            //            foreach (MonitorConfig _record in Properties.Settings.Default.MonitorConfig)
-            //            {
-            //                _record.Hardware = (
-            //                    from name in _manager.GetHardwareNames(_record.Type)
-            //                    join config in _record.Hardware on name equals config.Name into c
-            //                    from config in c.DefaultIfEmpty(new HardwareConfig() { Name = name, Enabled = true })
-            //                    select config
-            //                    ).ToArray();
-            //            }
-            //        }
-            //    }
-            //}
+            
+            if (appbar.Ready)
+            {
+                foreach (MonitorConfig _record in Properties.Settings.Default.MonitorConfig)
+                {
+                    _record.Hardware = (
+                        from hw in appbar.Model.MonitorManager.GetHardware(_record.Type)
+                        join config in _record.Hardware on hw.ID equals config.ID into c
+                        from config in c.DefaultIfEmpty(hw)
+                        select config
+                        ).ToArray();
+                }
+            }
 
             _monitorConfig = Properties.Settings.Default.MonitorConfig;
 
