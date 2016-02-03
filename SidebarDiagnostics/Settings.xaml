@@ -20,17 +20,6 @@
     <Window.Resources>
         <convert:IntToStringConverter x:Key="IntConverter" />
         <convert:HotkeyToStringConverter x:Key="HotkeyConverter" />
-
-        <DataTemplate x:Key="MonitorConfigBool">
-            <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" VerticalAlignment="Center" Margin="0,5" />
-        </DataTemplate>
-
-        <DataTemplate x:Key="MonitorConfigInt">
-            <StackPanel Margin="0,5" Orientation="Horizontal">
-                <Label Content="{Binding Path=Name, Mode=OneTime}" Padding="0" Margin="0,0,10,0" VerticalAlignment="Center" />
-                <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" Width="40" MaxLines="1" VerticalAlignment="Center" />
-            </StackPanel>
-        </DataTemplate>
     </Window.Resources>
     <StackPanel Orientation="Vertical">
         <TabControl Margin="10" Padding="15">
@@ -291,10 +280,25 @@
                                                             <Style TargetType="{x:Type ContentControl}">
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding TypeString}" Value="System.Boolean">
-                                                                        <Setter Property="ContentTemplate" Value="{StaticResource MonitorConfigBool}" />
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" VerticalAlignment="Center" Margin="0,5" />
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
                                                                     </DataTrigger>
                                                                     <DataTrigger Binding="{Binding TypeString}" Value="System.Int32">
-                                                                        <Setter Property="ContentTemplate" Value="{StaticResource MonitorConfigInt}" />
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                                                                                        <Label Content="{Binding Path=Name, Mode=OneTime}" Padding="0" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                                                                        <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" Width="40" MaxLines="1" VerticalAlignment="Center" />
+                                                                                    </StackPanel>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>

@@ -96,7 +96,7 @@ namespace SidebarDiagnostics.Models
                 }
             }
 
-            _monitorConfig = Properties.Settings.Default.MonitorConfig;
+            MonitorConfig = Properties.Settings.Default.MonitorConfig;
 
             if (Properties.Settings.Default.Hotkeys != null)
             {
@@ -615,6 +615,12 @@ namespace SidebarDiagnostics.Models
             get
             {
                 return _monitorConfig.OrderBy(c => c.Order).ToArray();
+            }
+            set
+            {
+                _monitorConfig = value;
+
+                NotifyPropertyChanged("MonitorConfig");
             }
         }
 
