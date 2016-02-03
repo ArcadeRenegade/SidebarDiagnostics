@@ -65,11 +65,28 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
+            bool _save = false;
+
+            if (SidebarDiagnostics.Properties.Settings.Default.UpgradeRequired)
+            {
+                SidebarDiagnostics.Properties.Settings.Default.Upgrade();
+                SidebarDiagnostics.Properties.Settings.Default.UpgradeRequired = false;
+
+                _save = true;
+            }
+
             MonitorConfig[] _new = null;
 
             if (!MonitorConfig.CheckConfig(SidebarDiagnostics.Properties.Settings.Default.MonitorConfig, ref _new))
             {
                 SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = _new;
+
+                _save = true;
+            }
+
+            if (_save)
+            {
+                SidebarDiagnostics.Properties.Settings.Default.Save();
             }
         }
 

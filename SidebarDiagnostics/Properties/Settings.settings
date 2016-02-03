@@ -2,6 +2,9 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SidebarDiagnostics.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
+    <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
     <Setting Name="DockEdge" Type="SidebarDiagnostics.Windows.DockEdge" Scope="User">
       <Value Profile="(Default)">Right</Value>
     </Setting>
