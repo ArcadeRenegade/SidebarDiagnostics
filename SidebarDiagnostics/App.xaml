@@ -225,6 +225,99 @@
             </Style.Resources>
         </Style>
 
+        <Style x:Key="MonitorGrid" TargetType="{x:Type DataGrid}">
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="HeadersVisibility" Value="Column" />
+            <Setter Property="SelectionUnit" Value="FullRow" />
+            <Setter Property="SelectionMode" Value="Single" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="CanUserResizeColumns" Value="False" />
+            <Setter Property="CanUserResizeRows" Value="False" />
+            <Setter Property="CanUserSortColumns" Value="False" />
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="GridLinesVisibility" Value="None" />
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#E1E7E9" />
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="MonitorGridHeader" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Padding" Value="12,4" />
+        </Style>
+
+        <Style x:Key="MonitorGridHeaderCenter" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MonitorGridHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="MonitorOrderPanel" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Style.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}">
+                    <Setter Property="Width" Value="14" />
+                    <Setter Property="Height" Value="14" />
+                    <Setter Property="Margin" Value="4,0" />
+                    <Setter Property="Foreground" Value="#666666" />
+                    <Style.Resources>
+                        <Style TargetType="{x:Type Path}">
+                            <Setter Property="Width" Value="8" />
+                            <Setter Property="Height" Value="8" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+                            <Setter Property="Stretch" Value="Uniform" />
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="MonitorDetailsBorder" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="#ECF0F1" />
+            <Setter Property="Padding" Value="15,15,15,5" />
+        </Style>
+
+        <Style x:Key="MonitorHardwareHeader" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Padding" Value="12,4" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+
+        <Style x:Key="MonitorHardwareHeaderCenter" TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource MonitorHardwareHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="MonitorParams" TargetType="{x:Type ItemsControl}">
+            <Setter Property="Margin" Value="10" />
+        </Style>
+
+        <Style x:Key="MonitorParamBool" TargetType="{x:Type CheckBox}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,5" />
+        </Style>
+
+        <Style x:Key="MonitorParamInt" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Margin" Value="0,5" />
+            <Style.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Margin" Value="0,0,10,0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Width" Value="40" />
+                    <Setter Property="MaxLines" Value="1" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
         <Style x:Key="HotkeyToggle" TargetType="{x:Type ToggleButton}">
             <Setter Property="Content" Value="Bind" />
             <Setter Property="Height" Value="22" />

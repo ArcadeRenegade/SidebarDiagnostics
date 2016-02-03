@@ -158,70 +158,27 @@
             </TabItem>
             <TabItem Header="Monitors">
                 <StackPanel Orientation="Vertical">
-                    <Label Margin="0,0,0,15" Padding="0" Content="Click a row to edit its settings." />
-                    <DataGrid ItemsSource="{Binding Path=MonitorConfig, Mode=OneWay}" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionUnit="FullRow" SelectionMode="Single" GridLinesVisibility="None">
-                        <DataGrid.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#E1E7E9" />
-                        </DataGrid.Resources>
-                        <DataGrid.CellStyle>
-                            <Style TargetType="{x:Type DataGridCell}">
-                                <Setter Property="BorderThickness" Value="0" />
-                            </Style>
-                        </DataGrid.CellStyle>
+                    <TextBlock Margin="0,0,0,15" Text="Click a row to edit its settings." />
+                    <DataGrid ItemsSource="{Binding Path=MonitorConfig, Mode=OneWay}" Style="{StaticResource MonitorGrid}">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Enabled">
-                                <DataGridTemplateColumn.HeaderStyle>
-                                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                        <Setter Property="Padding" Value="12,4" />
-                                    </Style>
-                                </DataGridTemplateColumn.HeaderStyle>
+                            <DataGridTemplateColumn Header="Enabled" HeaderStyle="{StaticResource MonitorGridHeaderCenter}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
                                         <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enables this monitor." />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Monitor" Width="*">
-                                <DataGridTemplateColumn.HeaderStyle>
-                                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                                        <Setter Property="Padding" Value="12,4" />
-                                    </Style>
-                                </DataGridTemplateColumn.HeaderStyle>
+                            <DataGridTemplateColumn Header="Monitor" Width="*" HeaderStyle="{StaticResource MonitorGridHeader}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
                                         <Label Content="{Binding Path=Name}" VerticalAlignment="Center" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Order">
-                                <DataGridTemplateColumn.HeaderStyle>
-                                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                        <Setter Property="Padding" Value="12,4" />
-                                    </Style>
-                                </DataGridTemplateColumn.HeaderStyle>
+                            <DataGridTemplateColumn Header="Order" HeaderStyle="{StaticResource MonitorGridHeaderCenter}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                                            <StackPanel.Resources>
-                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}">
-                                                    <Setter Property="Width" Value="14" />
-                                                    <Setter Property="Height" Value="14" />
-                                                    <Setter Property="Margin" Value="4,0" />
-                                                    <Setter Property="Foreground" Value="#666666" />
-                                                    <Style.Resources>
-                                                        <Style TargetType="{x:Type Path}">
-                                                            <Setter Property="Width" Value="8" />
-                                                            <Setter Property="Height" Value="8" />
-                                                            <Setter Property="HorizontalAlignment" Value="Center" />
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
-                                                            <Setter Property="Stretch" Value="Uniform" />
-                                                        </Style>
-                                                    </Style.Resources>
-                                                </Style>
-                                            </StackPanel.Resources>
+                                        <StackPanel Style="{StaticResource MonitorOrderPanel}">
                                             <Button Click="MonitorUp_Click">
                                                 <Path Data="F1 M 37.8516,35.625L 34.6849,38.7917L 23.6016,50.2708L 23.6016,39.9792L 37.8516,24.9375L 52.1016,39.9792L 52.1016,50.2708L 41.0182,38.7917L 37.8516,35.625 Z" />
                                             </Button>
@@ -235,42 +192,34 @@
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>
-                                <Border Background="#ECF0F1" Padding="20,20,20,5">
+                                <Border Style="{StaticResource MonitorDetailsBorder}">
                                     <StackPanel Style="{StaticResource VerticalPanel}">
-                                        <DataGrid ItemsSource="{Binding Path=Hardware, Mode=OneWay}" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionUnit="FullRow" SelectionMode="Single" GridLinesVisibility="None">
-                                            <DataGrid.CellStyle>
-                                                <Style TargetType="{x:Type DataGridCell}">
-                                                    <Setter Property="BorderThickness" Value="0" />
+                                        <ListView ItemsSource="{Binding Path=Hardware, Mode=OneWay}">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="{x:Type ListViewItem}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                    <Setter Property="Focusable" Value="False" />
                                                 </Style>
-                                            </DataGrid.CellStyle>
-                                            <DataGrid.Columns>
-                                                <DataGridTemplateColumn Header="Enabled">
-                                                    <DataGridTemplateColumn.HeaderStyle>
-                                                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                            <Setter Property="Padding" Value="12,4" />
-                                                        </Style>
-                                                    </DataGridTemplateColumn.HeaderStyle>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate DataType="{x:Type monitor:HardwareConfig}">
-                                                            <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enables this hardware." />
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                                <DataGridTemplateColumn Header="Hardware">
-                                                    <DataGridTemplateColumn.HeaderStyle>
-                                                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                                                            <Setter Property="Padding" Value="12,4" />
-                                                        </Style>
-                                                    </DataGridTemplateColumn.HeaderStyle>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate DataType="{x:Type monitor:HardwareConfig}">
-                                                            <TextBlock Text="{Binding Path=Name}" Margin="8,4" VerticalAlignment="Center" />
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="False">
+                                                    <GridViewColumn Header="Enabled" HeaderContainerStyle="{StaticResource MonitorHardwareHeaderCenter}">
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enables this hardware." />
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                    <GridViewColumn Header="Hardware" HeaderContainerStyle="{StaticResource MonitorHardwareHeader}" Width="230">
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Foreground="#000000" />
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
                                         
                                         <ItemsControl ItemsSource="{Binding Path=Params}" Margin="10">
                                             <ItemsControl.ItemTemplate>
@@ -283,7 +232,7 @@
                                                                         <Setter Property="ContentTemplate">
                                                                             <Setter.Value>
                                                                                 <DataTemplate>
-                                                                                    <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" VerticalAlignment="Center" Margin="0,5" />
+                                                                                    <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" Style="{StaticResource MonitorParamBool}" />
                                                                                 </DataTemplate>
                                                                             </Setter.Value>
                                                                         </Setter>
@@ -292,9 +241,9 @@
                                                                         <Setter Property="ContentTemplate">
                                                                             <Setter.Value>
                                                                                 <DataTemplate>
-                                                                                    <StackPanel Margin="0,5" Orientation="Horizontal">
-                                                                                        <Label Content="{Binding Path=Name, Mode=OneTime}" Padding="0" Margin="0,0,10,0" VerticalAlignment="Center" />
-                                                                                        <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" Width="40" MaxLines="1" VerticalAlignment="Center" />
+                                                                                    <StackPanel Style="{StaticResource MonitorParamInt}">
+                                                                                        <Label Content="{Binding Path=Name, Mode=OneTime}" />
+                                                                                        <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" />
                                                                                     </StackPanel>
                                                                                 </DataTemplate>
                                                                             </Setter.Value>
@@ -308,7 +257,7 @@
                                             </ItemsControl.ItemTemplate>
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <StackPanel Orientation="Vertical" />
+                                                    <StackPanel Style="{StaticResource VerticalPanel}" />
                                                 </ItemsPanelTemplate>
                                             </ItemsControl.ItemsPanel>
                                         </ItemsControl>
