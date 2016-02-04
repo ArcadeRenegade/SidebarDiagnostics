@@ -282,6 +282,19 @@
             <Setter Property="Padding" Value="15,15,15,5" />
         </Style>
 
+        <Style x:Key="MonitorHardwareItem" TargetType="{x:Type ListViewItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="MonitorHardwareHeader" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Padding" Value="12,4" />
             <Setter Property="IsHitTestVisible" Value="False" />

@@ -194,13 +194,7 @@
                             <DataTemplate>
                                 <Border Style="{StaticResource MonitorDetailsBorder}">
                                     <StackPanel Style="{StaticResource VerticalPanel}">
-                                        <ListView ItemsSource="{Binding Path=Hardware, Mode=OneWay}">
-                                            <ListView.ItemContainerStyle>
-                                                <Style TargetType="{x:Type ListViewItem}">
-                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                    <Setter Property="Focusable" Value="False" />
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
+                                        <ListView ItemsSource="{Binding Path=Hardware, Mode=OneWay}" ItemContainerStyle="{StaticResource MonitorHardwareItem}">
                                             <ListView.View>
                                                 <GridView AllowsColumnReorder="False">
                                                     <GridViewColumn Header="Enabled" HeaderContainerStyle="{StaticResource MonitorHardwareHeaderCenter}">
