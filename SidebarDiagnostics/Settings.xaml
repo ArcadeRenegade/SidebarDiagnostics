@@ -12,7 +12,7 @@
         Loaded="Window_Loaded"
         Closed="Window_Closed"
         Title="Sidebar Settings"
-        Icon="Settings.ico"
+        Icon="Dark.ico"
         Width="400"
         SizeToContent="Height"
         ResizeMode="NoResize"
