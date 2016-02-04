@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
         xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitor"
         xmlns:convert="clr-namespace:SidebarDiagnostics.Converters"
@@ -129,7 +130,7 @@
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="1" Content="Background Color" />
-                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Path=BGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of the background as a hex code." />
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="1" SelectedColor="{Binding Path=BGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UsingAlphaChannel="False" ColorMode="ColorCanvas" DisplayColorAndName="True" Margin="0,6,0,6" ShowStandardColors="False" AdvancedButtonHeader="Advanced" AvailableColorsHeader="Colors" StandardButtonHeader="Standard" ToolTip="Color of the background." />
 
                     <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" />
                     <DockPanel Grid.Column="1" Grid.Row="2">
@@ -141,10 +142,10 @@
                     <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Size of text and icons in the sidebar." />
 
                     <Label Grid.Column="0" Grid.Row="4" Content="Font Color" />
-                    <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of text and icons as a hex code." />
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="4" SelectedColor="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UsingAlphaChannel="False" ColorMode="ColorCanvas" DisplayColorAndName="True" Margin="0,6,0,6" ShowStandardColors="False" AdvancedButtonHeader="Advanced" AvailableColorsHeader="Colors" StandardButtonHeader="Standard" ToolTip="Color of text and icons."/>
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Alert Font Color" />
-                    <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="ColorTextBox_LostFocus" ToolTip="Color of alert text as a hex code." />
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="5" SelectedColor="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UsingAlphaChannel="False" ColorMode="ColorCanvas" DisplayColorAndName="True" Margin="0,6,0,6" ShowStandardColors="False" AdvancedButtonHeader="Advanced" AvailableColorsHeader="Colors" StandardButtonHeader="Standard" ToolTip="Color of alert text."/>
 
                     <Label Grid.Column="0" Grid.Row="6" Content="Date Format" />
                     <ComboBox Grid.Column="1" Grid.Row="6" ItemsSource="{Binding Path=DateSettingItems}" DisplayMemberPath="Display" SelectedValue="{Binding Path=DateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Format of the date below the clock." />
