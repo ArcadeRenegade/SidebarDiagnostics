@@ -893,7 +893,7 @@ namespace SidebarDiagnostics.Windows
                 );
         }
 
-        public void SetAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
+        public async Task SetAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
         {
             if (edge == DockEdge.None)
             {
@@ -912,7 +912,7 @@ namespace SidebarDiagnostics.Windows
                 NativeMethods.SHAppBarMessage(APPBARMSG.ABM_NEW, ref _data);
             }
             
-            DockAppBar(edge, windowWA, appbarWA);
+            await DockAppBar(edge, windowWA, appbarWA);
         }
 
         public void ClearAppBar()
@@ -932,7 +932,7 @@ namespace SidebarDiagnostics.Windows
             IsAppBar = false;
         }
 
-        public void AppBarShow()
+        public async Task AppBarShow()
         {
             if (Properties.Settings.Default.UseAppBar)
             {
@@ -941,7 +941,7 @@ namespace SidebarDiagnostics.Windows
 
                 Monitor.GetWorkArea(this, out _windowWA, out _appbarWA);
 
-                SetAppBar(DockEdge, _windowWA, _appbarWA);
+                await SetAppBar(DockEdge, _windowWA, _appbarWA);
             }
 
             Show();
@@ -967,7 +967,7 @@ namespace SidebarDiagnostics.Windows
             return _data;
         }
 
-        private void DockAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
+        private async Task DockAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
         {
             APPBARDATA _data = NewData();
             _data.uEdge = (int)edge;
@@ -992,7 +992,7 @@ namespace SidebarDiagnostics.Windows
 
             _source = HwndSource.FromHwnd(_data.hWnd);
 
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
+            await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
             {
                 Top = windowWA.Top;
                 Left = windowWA.Left;

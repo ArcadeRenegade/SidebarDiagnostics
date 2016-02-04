@@ -27,6 +27,15 @@
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
 
+        <Style x:Key="ContentGrid" TargetType="{x:Type Grid}">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Ready, Mode=OneWay}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="MenuBar" TargetType="{x:Type StackPanel}">
             <Setter Property="Margin" Value="10" />
             <Setter Property="HorizontalAlignment" Value="Right" />
@@ -365,6 +374,14 @@
                     <Setter Property="Padding" Value="0" />
                 </Style>
             </Style.Resources>
+        </Style>
+
+        <Style x:Key="SidebarLabel" TargetType="{x:Type StackPanel}" BasedOn="{StaticResource DummyLabel}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Ready, Mode=OneWay}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="SetupPage" TargetType="{x:Type DockPanel}">

@@ -27,47 +27,100 @@
         <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity, Mode=OneTime}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor, Mode=OneTime}" />
     </Window.Background>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <StackPanel x:Name="WindowControls" Grid.Row="0" Style="{StaticResource MenuBar}">
-            <Button Click="SettingsButton_Click" Style="{StaticResource MenuButton}">
-                <Path Data="M 38,23.5C 38.8643,23.5 39.7109,23.5756 40.5337,23.7206L 42.6275,18.5381L 48.1901,20.787L 46.0964,25.9692C 47.6473,27.0149 48.9851,28.3527 50.0308,29.9036L 55.213,27.8099L 57.4619,33.3725L 52.2794,35.4664C 52.4244,36.2891 52.5,37.1357 52.5,38C 52.5,38.8643 52.4244,39.7109 52.2794,40.5337L 57.4619,42.6275L 55.213,48.1901L 50.0308,46.0964C 49.0795,47.5073 47.8865,48.7418 46.5112,49.7405L 48.7844,54.8462L 43.3041,57.2891L 41.0307,52.1828C 40.0533,52.3906 39.0394,52.5 38,52.5C 37.1357,52.5 36.2891,52.4244 35.4664,52.2794L 33.3725,57.462L 27.8099,55.213L 29.9036,50.0309C 28.3527,48.9851 27.0149,47.6473 25.9691,46.0964L 20.787,48.1901L 18.538,42.6275L 23.7206,40.5336C 23.5756,39.7109 23.5,38.8643 23.5,38C 23.5,37.1357 23.5756,36.2891 23.7206,35.4664L 18.538,33.3725L 20.787,27.8099L 25.9691,29.9036C 26.9205,28.4927 28.1135,27.2582 29.4889,26.2594L 27.2157,21.1537L 32.6959,18.7109L 34.9694,23.8172C 35.9468,23.6094 36.9606,23.5 38,23.5 Z M 38,28C 32.4771,28 28,32.4772 28,38C 28,43.5229 32.4771,48 38,48C 43.5228,48 48,43.5229 48,38C 48,32.4772 43.5228,28 38,28 Z" />
-            </Button>
-
-            <Button Click="CloseButton_Click" Style="{StaticResource MenuButton}">
-                <Path Width="12" Height="12" Data="M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z" />
-            </Button>
+        <StackPanel Style="{StaticResource SidebarLabel}">
+            <StackPanel.LayoutTransform>
+                <RotateTransform Angle="90" />
+            </StackPanel.LayoutTransform>            
+            <Label Content="S" />
+            <Label Content="I" />
+            <Label Content="D" />
+            <Label Content="E" />
+            <Label Content="B" />
+            <Label Content="A" />
+            <Label Content="R" />
         </StackPanel>
+        
+        <Grid Style="{StaticResource ContentGrid}">            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="1" MouseEnter="ScrollViewer_MouseEnter" MouseLeave="ScrollViewer_MouseLeave" Style="{StaticResource ContentView}">
-            <StackPanel Style="{StaticResource ContentPanel}">
-                <ContentControl>
-                    <ContentControl.Style>
-                        <Style TargetType="{x:Type ContentControl}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Source={x:Static prop:Settings.Default}, Path=ShowClock, Mode=OneTime}" Value="True">
-                                    <Setter Property="Content">
-                                        <Setter.Value>
-                                            <StackPanel Style="{StaticResource GroupPanel}">
-                                                <StackPanel Style="{StaticResource MonitorTitle}">
-                                                    <Path Style="{StaticResource AppIcon}" Data="M256,0C114.625,0,0,114.625,0,256s114.625,256,256,256s256-114.625,256-256S397.375,0,256,0z M272,479.188V448h-32v31.188  C129.281,471.313,40.688,382.719,32.813,272H64v-32H32.813C40.688,129.281,129.281,40.688,240,32.813V64h32V32.813  C382.719,40.688,471.313,129.281,479.188,240H448v32h31.188C471.313,382.719,382.719,471.313,272,479.188z M373.781,188  c2.188,3.813,0.875,8.719-2.938,10.938l-84.516,48.781c0.734,2.719,1.672,5.344,1.672,8.281c0,17.688-14.328,32-32,32  s-32-14.313-32-32l-86.844-50.125c-7.656-4.438-10.281-14.219-5.859-21.875c4.406-7.688,14.203-10.313,21.859-5.875l87.344,50.438  c4.656-2.625,9.75-4.563,15.5-4.563c8.938,0,16.984,3.688,22.797,9.625l84.047-48.563C366.594,182.844,371.5,184.156,373.781,188z"></Path>
-                                                    <Label Content="Time" Style="{StaticResource AppTitle}" />
+            <StackPanel x:Name="WindowControls" Grid.Row="0" Style="{StaticResource MenuBar}">
+                <Button Click="SettingsButton_Click" Style="{StaticResource MenuButton}">
+                    <Path Data="M 38,23.5C 38.8643,23.5 39.7109,23.5756 40.5337,23.7206L 42.6275,18.5381L 48.1901,20.787L 46.0964,25.9692C 47.6473,27.0149 48.9851,28.3527 50.0308,29.9036L 55.213,27.8099L 57.4619,33.3725L 52.2794,35.4664C 52.4244,36.2891 52.5,37.1357 52.5,38C 52.5,38.8643 52.4244,39.7109 52.2794,40.5337L 57.4619,42.6275L 55.213,48.1901L 50.0308,46.0964C 49.0795,47.5073 47.8865,48.7418 46.5112,49.7405L 48.7844,54.8462L 43.3041,57.2891L 41.0307,52.1828C 40.0533,52.3906 39.0394,52.5 38,52.5C 37.1357,52.5 36.2891,52.4244 35.4664,52.2794L 33.3725,57.462L 27.8099,55.213L 29.9036,50.0309C 28.3527,48.9851 27.0149,47.6473 25.9691,46.0964L 20.787,48.1901L 18.538,42.6275L 23.7206,40.5336C 23.5756,39.7109 23.5,38.8643 23.5,38C 23.5,37.1357 23.5756,36.2891 23.7206,35.4664L 18.538,33.3725L 20.787,27.8099L 25.9691,29.9036C 26.9205,28.4927 28.1135,27.2582 29.4889,26.2594L 27.2157,21.1537L 32.6959,18.7109L 34.9694,23.8172C 35.9468,23.6094 36.9606,23.5 38,23.5 Z M 38,28C 32.4771,28 28,32.4772 28,38C 28,43.5229 32.4771,48 38,48C 43.5228,48 48,43.5229 48,38C 48,32.4772 43.5228,28 38,28 Z" />
+                </Button>
+
+                <Button Click="CloseButton_Click" Style="{StaticResource MenuButton}">
+                    <Path Width="12" Height="12" Data="M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z" />
+                </Button>
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="1" MouseEnter="ScrollViewer_MouseEnter" MouseLeave="ScrollViewer_MouseLeave" Style="{StaticResource ContentView}">
+                <StackPanel Style="{StaticResource ContentPanel}">
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="{x:Type ContentControl}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Source={x:Static prop:Settings.Default}, Path=ShowClock, Mode=OneTime}" Value="True">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <StackPanel Style="{StaticResource GroupPanel}">
+                                                    <StackPanel Style="{StaticResource MonitorTitle}">
+                                                        <Path Style="{StaticResource AppIcon}" Data="M256,0C114.625,0,0,114.625,0,256s114.625,256,256,256s256-114.625,256-256S397.375,0,256,0z M272,479.188V448h-32v31.188  C129.281,471.313,40.688,382.719,32.813,272H64v-32H32.813C40.688,129.281,129.281,40.688,240,32.813V64h32V32.813  C382.719,40.688,471.313,129.281,479.188,240H448v32h31.188C471.313,382.719,382.719,471.313,272,479.188z M373.781,188  c2.188,3.813,0.875,8.719-2.938,10.938l-84.516,48.781c0.734,2.719,1.672,5.344,1.672,8.281c0,17.688-14.328,32-32,32  s-32-14.313-32-32l-86.844-50.125c-7.656-4.438-10.281-14.219-5.859-21.875c4.406-7.688,14.203-10.313,21.859-5.875l87.344,50.438  c4.656-2.625,9.75-4.563,15.5-4.563c8.938,0,16.984,3.688,22.797,9.625l84.047-48.563C366.594,182.844,371.5,184.156,373.781,188z"></Path>
+                                                        <Label Content="Time" Style="{StaticResource AppTitle}" />
+                                                    </StackPanel>
+                                                    <StackPanel Style="{StaticResource MonitorPanel}">
+                                                        <Label Content="{Binding Path=Time, Mode=OneWay}" Style="{StaticResource AppTitle}" />
+                                                        <ContentControl>
+                                                            <ContentControl.Style>
+                                                                <Style TargetType="{x:Type ContentControl}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Path=ShowDate, Mode=OneTime}" Value="True">
+                                                                            <Setter Property="Content">
+                                                                                <Setter.Value>
+                                                                                    <TextBlock Text="{Binding Path=Date, Mode=OneWay}" Margin="0,4,0,0" Style="{StaticResource AppText}" />
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ContentControl.Style>
+                                                        </ContentControl>
+                                                    </StackPanel>
                                                 </StackPanel>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+
+                    <ItemsControl DataContext="{Binding Path=MonitorManager, Mode=OneWay}" ItemsSource="{Binding Path=MonitorPanels, Mode=OneWay}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type monitor:MonitorPanel}">
+                                <StackPanel Style="{StaticResource GroupPanel}">
+                                    <StackPanel Style="{StaticResource MonitorTitle}">
+                                        <Path Data="{Binding Path=IconPath, Mode=OneWay}" Style="{StaticResource AppIcon}" />
+                                        <Label Content="{Binding Path=Title, Mode=OneWay}" Style="{StaticResource AppTitle}" />
+                                    </StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Path=Monitors, Mode=OneWay}">
+                                        <ItemsControl.Resources>
+                                            <DataTemplate DataType="{x:Type monitor:OHMMonitor}">
                                                 <StackPanel Style="{StaticResource MonitorPanel}">
-                                                    <Label Content="{Binding Path=Time, Mode=OneWay}" Style="{StaticResource AppTitle}" />
                                                     <ContentControl>
                                                         <ContentControl.Style>
                                                             <Style TargetType="{x:Type ContentControl}">
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Path=ShowDate, Mode=OneTime}" Value="True">
+                                                                    <DataTrigger Binding="{Binding Path=ShowName, Mode=OneWay}" Value="True">
                                                                         <Setter Property="Content">
                                                                             <Setter.Value>
-                                                                                <TextBlock Text="{Binding Path=Date, Mode=OneWay}" Margin="0,4,0,0" Style="{StaticResource AppText}" />
+                                                                                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Style="{StaticResource HardwareText}" />
                                                                             </Setter.Value>
                                                                         </Setter>
                                                                     </DataTrigger>
@@ -75,47 +128,67 @@
                                                             </Style>
                                                         </ContentControl.Style>
                                                     </ContentControl>
+                                                    <ItemsControl ItemsSource="{Binding Path=Sensors, Mode=OneWay}">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate DataType="{x:Type monitor:OHMSensor}">
+                                                                <TextBlock Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Style="{StaticResource VerticalPanel}" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                    </ItemsControl>
                                                 </StackPanel>
-                                            </StackPanel>
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ContentControl.Style>
-                </ContentControl>
+                                            </DataTemplate>
 
-                <ItemsControl DataContext="{Binding Path=MonitorManager, Mode=OneWay}" ItemsSource="{Binding Path=MonitorPanels, Mode=OneWay}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type monitor:MonitorPanel}">
-                            <StackPanel Style="{StaticResource GroupPanel}">
-                                <StackPanel Style="{StaticResource MonitorTitle}">
-                                    <Path Data="{Binding Path=IconPath, Mode=OneWay}" Style="{StaticResource AppIcon}" />
-                                    <Label Content="{Binding Path=Title, Mode=OneWay}" Style="{StaticResource AppTitle}" />
-                                </StackPanel>
-                                <ItemsControl ItemsSource="{Binding Path=Monitors, Mode=OneWay}">
-                                    <ItemsControl.Resources>
-                                        <DataTemplate DataType="{x:Type monitor:OHMMonitor}">
-                                            <StackPanel Style="{StaticResource MonitorPanel}">
-                                                <ContentControl>
-                                                    <ContentControl.Style>
-                                                        <Style TargetType="{x:Type ContentControl}">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Path=ShowName, Mode=OneWay}" Value="True">
-                                                                    <Setter Property="Content">
-                                                                        <Setter.Value>
-                                                                            <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Style="{StaticResource HardwareText}" />
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </ContentControl.Style>
-                                                </ContentControl>
-                                                <ItemsControl ItemsSource="{Binding Path=Sensors, Mode=OneWay}">
+                                            <DataTemplate DataType="{x:Type monitor:DriveMonitor}">
+                                                <ItemsControl ItemsSource="{Binding Path=Drives, Mode=OneWay}">
                                                     <ItemsControl.ItemTemplate>
-                                                        <DataTemplate DataType="{x:Type monitor:OHMSensor}">
-                                                            <TextBlock Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                        <DataTemplate DataType="{x:Type monitor:DriveInfo}">
+                                                            <StackPanel Style="{StaticResource MonitorPanel}">
+                                                                <ContentControl>
+                                                                    <ContentControl.Style>
+                                                                        <Style TargetType="{x:Type ContentControl}">
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding ShowDetails, Mode=OneWay}" Value="False">
+                                                                                    <Setter Property="Content">
+                                                                                        <Setter.Value>
+                                                                                            <Grid>
+                                                                                                <Grid.ColumnDefinitions>
+                                                                                                    <ColumnDefinition Width="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize, Mode=OneWay}" />
+                                                                                                    <ColumnDefinition Width="*" />
+                                                                                                </Grid.ColumnDefinitions>
+                                                                                                <Grid.RowDefinitions>
+                                                                                                    <RowDefinition Height="*" />
+                                                                                                </Grid.RowDefinitions>
+                                                                                                <TextBlock Grid.Column="0" Text="{Binding Path=Label, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                                                                <ProgressBar Grid.Column="1" Value="{Binding Path=Value, Mode=OneWay}" Style="{StaticResource DriveProgress}" />
+                                                                                            </Grid>
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding ShowDetails, Mode=OneWay}" Value="True">
+                                                                                    <Setter Property="Content">
+                                                                                        <Setter.Value>
+                                                                                            <StackPanel Orientation="Vertical">
+                                                                                                <TextBlock Text="{Binding Path=Label, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                                                                <ProgressBar Value="{Binding Path=Value, Mode=OneWay}" Margin="0,4" Width="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarWidthWide, Mode=OneWay}" Style="{StaticResource DriveProgress}" />
+                                                                                                <TextBlock Text="{Binding Path=Load, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                                                                <TextBlock Text="{Binding Path=UsedGB, Mode=OneWay}" Style="{StaticResource DataText}" />
+                                                                                                <TextBlock Text="{Binding Path=FreeGB, Mode=OneWay}" Style="{StaticResource DataText}" />
+                                                                                                <TextBlock Text="{Binding Path=ReadRate, Mode=OneWay}" Style="{StaticResource DataText}" />
+                                                                                                <TextBlock Text="{Binding Path=WriteRate, Mode=OneWay}" Style="{StaticResource DataText}" />
+                                                                                            </StackPanel>
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </ContentControl.Style>
+                                                                </ContentControl>
+                                                            </StackPanel>
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
                                                     <ItemsControl.ItemsPanel>
@@ -124,114 +197,58 @@
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
                                                 </ItemsControl>
-                                            </StackPanel>
-                                        </DataTemplate>
+                                            </DataTemplate>
 
-                                        <DataTemplate DataType="{x:Type monitor:DriveMonitor}">
-                                            <ItemsControl ItemsSource="{Binding Path=Drives, Mode=OneWay}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate DataType="{x:Type monitor:DriveInfo}">
-                                                        <StackPanel Style="{StaticResource MonitorPanel}">
-                                                            <ContentControl>
-                                                                <ContentControl.Style>
-                                                                    <Style TargetType="{x:Type ContentControl}">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding ShowDetails, Mode=OneWay}" Value="False">
-                                                                                <Setter Property="Content">
-                                                                                    <Setter.Value>
-                                                                                        <Grid>
-                                                                                            <Grid.ColumnDefinitions>
-                                                                                                <ColumnDefinition Width="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize, Mode=OneWay}" />
-                                                                                                <ColumnDefinition Width="*" />
-                                                                                            </Grid.ColumnDefinitions>
-                                                                                            <Grid.RowDefinitions>
-                                                                                                <RowDefinition Height="*" />
-                                                                                            </Grid.RowDefinitions>
-                                                                                            <TextBlock Grid.Column="0" Text="{Binding Path=Label, Mode=OneWay}" Style="{StaticResource SensorText}" />
-                                                                                            <ProgressBar Grid.Column="1" Value="{Binding Path=Value, Mode=OneWay}" Style="{StaticResource DriveProgress}" />
-                                                                                        </Grid>
-                                                                                    </Setter.Value>
-                                                                                </Setter>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding ShowDetails, Mode=OneWay}" Value="True">
-                                                                                <Setter Property="Content">
-                                                                                    <Setter.Value>
-                                                                                        <StackPanel Orientation="Vertical">
-                                                                                            <TextBlock Text="{Binding Path=Label, Mode=OneWay}" Style="{StaticResource SensorText}" />
-                                                                                            <ProgressBar Value="{Binding Path=Value, Mode=OneWay}" Margin="0,4" Width="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarWidthWide, Mode=OneWay}" Style="{StaticResource DriveProgress}" />
-                                                                                            <TextBlock Text="{Binding Path=Load, Mode=OneWay}" Style="{StaticResource SensorText}" />
-                                                                                            <TextBlock Text="{Binding Path=UsedGB, Mode=OneWay}" Style="{StaticResource DataText}" />
-                                                                                            <TextBlock Text="{Binding Path=FreeGB, Mode=OneWay}" Style="{StaticResource DataText}" />
-                                                                                            <TextBlock Text="{Binding Path=ReadRate, Mode=OneWay}" Style="{StaticResource DataText}" />
-                                                                                            <TextBlock Text="{Binding Path=WriteRate, Mode=OneWay}" Style="{StaticResource DataText}" />
-                                                                                        </StackPanel>
-                                                                                    </Setter.Value>
-                                                                                </Setter>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </ContentControl.Style>
-                                                            </ContentControl>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Style="{StaticResource VerticalPanel}" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                            </ItemsControl>
-                                        </DataTemplate>
-
-                                        <DataTemplate DataType="{x:Type monitor:NetworkMonitor}">
-                                            <ItemsControl ItemsSource="{Binding Path=Nics, Mode=OneWay}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate DataType="{x:Type monitor:NicInfo}">
-                                                        <StackPanel Style="{StaticResource MonitorPanel}">
-                                                            <ContentControl>
-                                                                <ContentControl.Style>
-                                                                    <Style TargetType="{x:Type ContentControl}">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding ShowName, Mode=OneWay}" Value="True">
-                                                                                <Setter Property="Content">
-                                                                                    <Setter.Value>
-                                                                                        <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Style="{StaticResource HardwareText}" />
-                                                                                    </Setter.Value>
-                                                                                </Setter>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </ContentControl.Style>
-                                                            </ContentControl>
-                                                            <TextBlock DataContext="{Binding Path=InBandwidth}" Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
-                                                            <TextBlock DataContext="{Binding Path=OutBandwidth}" Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Style="{StaticResource VerticalPanel}" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                            </ItemsControl>
-                                        </DataTemplate>
-                                    </ItemsControl.Resources>
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Style="{StaticResource VerticalPanel}" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Style="{StaticResource VerticalPanel}" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </StackPanel>
-        </ScrollViewer>
+                                            <DataTemplate DataType="{x:Type monitor:NetworkMonitor}">
+                                                <ItemsControl ItemsSource="{Binding Path=Nics, Mode=OneWay}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate DataType="{x:Type monitor:NicInfo}">
+                                                            <StackPanel Style="{StaticResource MonitorPanel}">
+                                                                <ContentControl>
+                                                                    <ContentControl.Style>
+                                                                        <Style TargetType="{x:Type ContentControl}">
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding ShowName, Mode=OneWay}" Value="True">
+                                                                                    <Setter Property="Content">
+                                                                                        <Setter.Value>
+                                                                                            <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Style="{StaticResource HardwareText}" />
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </ContentControl.Style>
+                                                                </ContentControl>
+                                                                <TextBlock DataContext="{Binding Path=InBandwidth}" Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                                <TextBlock DataContext="{Binding Path=OutBandwidth}" Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Style="{StaticResource VerticalPanel}" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </ItemsControl.Resources>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Style="{StaticResource VerticalPanel}" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Style="{StaticResource VerticalPanel}" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </win:AppBarWindow>

@@ -136,6 +136,22 @@ namespace SidebarDiagnostics.Models
             UpdateMonitors();
         }
 
+        private bool _ready { get; set; } = false;
+
+        public bool Ready
+        {
+            get
+            {
+                return _ready;
+            }
+            set
+            {
+                _ready = value;
+
+                NotifyPropertyChanged("Ready");
+            }
+        }
+
         private string _time { get; set; }
 
         public string Time

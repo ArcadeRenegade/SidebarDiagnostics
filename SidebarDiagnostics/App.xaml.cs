@@ -144,7 +144,7 @@ namespace SidebarDiagnostics
             (_this.Items.GetItemAt(1) as MenuItem).IsChecked = _appBar.Visibility == Visibility.Hidden;
         }
         
-        private void Show_Click(object sender, EventArgs e)
+        private async void Show_Click(object sender, EventArgs e)
         {
             AppBar _appBar = GetAppBar;
 
@@ -153,7 +153,7 @@ namespace SidebarDiagnostics
                 return;
             }
 
-            _appBar.AppBarShow();
+            await _appBar.AppBarShow();
         }
 
         private void Hide_Click(object sender, EventArgs e)

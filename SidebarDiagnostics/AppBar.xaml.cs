@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -27,6 +29,25 @@ namespace SidebarDiagnostics
             Close();
         }
 
+        private async Task InitAll()
+        {
+            InitWindow();
+
+            await InitAppBar();
+
+            await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+            {
+                InitContent();
+
+                Ready = true;
+
+                if (_openSettings)
+                {
+                    new Settings(this);
+                }
+            }));
+        }
+
         private void InitWindow()
         {
             if (Properties.Settings.Default.AlwaysTop)
@@ -48,7 +69,7 @@ namespace SidebarDiagnostics
             Devices.Initialize(this);
         }
 
-        private void InitAppBar()
+        private async Task InitAppBar()
         {
             WorkArea _windowWA;
             WorkArea _appbarWA;
@@ -62,7 +83,7 @@ namespace SidebarDiagnostics
 
             if (Properties.Settings.Default.UseAppBar)
             {
-                SetAppBar(Properties.Settings.Default.DockEdge, _windowWA, _appbarWA);
+                await SetAppBar(Properties.Settings.Default.DockEdge, _windowWA, _appbarWA);
             }
         }
 
@@ -103,18 +124,9 @@ namespace SidebarDiagnostics
             (sender as ScrollViewer).VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            InitWindow();
-            InitAppBar();
-            InitContent();
-
-            Ready = true;
-
-            if (_openSettings)
-            {
-                new Settings(this);
-            }
+            await InitAll();
         }
 
         private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -156,7 +168,24 @@ namespace SidebarDiagnostics
             }
         }
 
-        public bool Ready { get; private set; } = false;
+        private bool _ready { get; set; } = false;
+
+        public bool Ready
+        {
+            get
+            {
+                return _ready;
+            }
+            set
+            {
+                _ready = value;
+
+                if (Model != null)
+                {
+                    Model.Ready = value;
+                }
+            }
+        }
 
         public AppBarModel Model { get; private set; }
 
