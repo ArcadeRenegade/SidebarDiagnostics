@@ -129,6 +129,9 @@
     <Compile Include="Converters.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="SettingsModel.cs" />
+    <Compile Include="Setup.xaml.cs">
+      <DependentUpon>Setup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Updates.cs" />
     <Compile Include="Windows.cs" />
     <Compile Include="Settings.cs" />
@@ -149,6 +152,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Setup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -188,17 +195,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Settings.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Tray.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App.ico" />

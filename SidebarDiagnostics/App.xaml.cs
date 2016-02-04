@@ -41,6 +41,18 @@ namespace SidebarDiagnostics
             }
         }
 
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            if (SidebarDiagnostics.Properties.Settings.Default.InitialSetup)
+            {
+                new Setup().Show();
+            }
+            else
+            {
+                new AppBar();
+            }
+        }
+
         protected override void OnExit(ExitEventArgs e)
         {
             _trayIcon.Dispose();

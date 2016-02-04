@@ -37,6 +37,18 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool InitialSetup {
+            get {
+                return ((bool)(this["InitialSetup"]));
+            }
+            set {
+                this["InitialSetup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Right")]
         public global::SidebarDiagnostics.Windows.DockEdge DockEdge {
             get {

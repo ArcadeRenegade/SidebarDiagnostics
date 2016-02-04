@@ -12,7 +12,7 @@
         Loaded="Window_Loaded"
         Closed="Window_Closed"
         Title="Sidebar Settings"
-        Icon="settings.ico"
+        Icon="App.ico"
         Width="400"
         SizeToContent="Height"
         ResizeMode="NoResize"
@@ -21,7 +21,7 @@
         <convert:IntToStringConverter x:Key="IntConverter" />
         <convert:HotkeyToStringConverter x:Key="HotkeyConverter" />
     </Window.Resources>
-    <StackPanel Orientation="Vertical">
+    <StackPanel Style="{StaticResource VerticalPanel}">
         <TabControl Margin="10" Padding="15">
             <TabItem Header="General">
                 <Grid Style="{StaticResource SettingGrid}">

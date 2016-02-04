@@ -1,0 +1,34 @@
+﻿<win:DPIAwareWindow
+        x:Class="SidebarDiagnostics.Setup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SidebarDiagnostics"
+        xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
+        mc:Ignorable="d"
+        Title="Initial Setup"
+        Icon="App.ico"
+        Height="400"
+        Width="400"
+        Topmost="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DockPanel x:Name="InitialPage" LastChildFill="True">
+            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
+                <Button Content="Yes" Style="{StaticResource SuccessButton}" />
+                <Button Content="No" Style="{StaticResource ErrorButton}" />
+                <Button Content="Skip" />
+            </StackPanel>
+            <StackPanel Style="{StaticResource VerticalPanel}">
+                <StackPanel Style="{StaticResource SetupProgress}">
+                    <Ellipse />
+                    <Ellipse IsEnabled="False" />
+                    <Ellipse IsEnabled="False" />
+                </StackPanel>
+                <Label Content="Initial Setup" Style="{StaticResource SetupTitle}" />
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</win:DPIAwareWindow>
