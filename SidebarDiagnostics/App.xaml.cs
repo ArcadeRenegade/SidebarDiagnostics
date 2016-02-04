@@ -32,24 +32,20 @@ namespace SidebarDiagnostics
             _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
             _trayIcon.ToolTipText = Assembly.GetExecutingAssembly().GetName().Name;
 
-            RefreshIcon();
-
             // CHECK FOR UPDATES
             if (SidebarDiagnostics.Properties.Settings.Default.CheckForUpdates)
             {
                 await UpdateManager.Check(false);
             }
-        }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
-        {
+            // START APP
             if (SidebarDiagnostics.Properties.Settings.Default.InitialSetup)
             {
-                new Setup().Show();
+                new Setup();
             }
             else
             {
-                new AppBar();
+                StartApp(false);
             }
         }
 
@@ -58,6 +54,13 @@ namespace SidebarDiagnostics
             _trayIcon.Dispose();
 
             base.OnExit(e);
+        }
+
+        public static void StartApp(bool openSettings)
+        {
+            new AppBar(openSettings).Show();
+
+            RefreshIcon();
         }
 
         public static void RefreshIcon()

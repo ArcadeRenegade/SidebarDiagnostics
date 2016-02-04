@@ -13,9 +13,11 @@ namespace SidebarDiagnostics
     /// </summary>
     public partial class AppBar : AppBarWindow
     {
-        public AppBar()
+        public AppBar(bool openSettings)
         {
             InitializeComponent();
+
+            _openSettings = openSettings;
         }
 
         public void Reload()
@@ -108,6 +110,11 @@ namespace SidebarDiagnostics
             InitContent();
 
             Ready = true;
+
+            if (_openSettings)
+            {
+                new Settings(this);
+            }
         }
 
         private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -141,7 +148,7 @@ namespace SidebarDiagnostics
             {
                 App._reloading = false;
 
-                new AppBar().Show();
+                new AppBar(false).Show();
             }
             else
             {
@@ -152,5 +159,7 @@ namespace SidebarDiagnostics
         public bool Ready { get; private set; } = false;
 
         public AppBarModel Model { get; private set; }
+
+        private bool _openSettings { get; set; } = false;
     }
 }

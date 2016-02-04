@@ -19,12 +19,11 @@ namespace SidebarDiagnostics
     {
         public Settings(AppBar appbar)
         {
-            Owner = appbar;
-
             InitializeComponent();
 
             DataContext = Model = new SettingsModel(appbar);
 
+            Owner = appbar;
             ShowDialog();
         }
 
@@ -36,6 +35,14 @@ namespace SidebarDiagnostics
             {
                 (Owner as AppBar).Reload();
             }));
+        }
+
+        private void NumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (new Regex("[^0-9.-]+").IsMatch(e.Text))
+            {
+                e.Handled = true;
+            }
         }
 
         private void OffsetSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -68,7 +75,7 @@ namespace SidebarDiagnostics
                 _textbox.Text = "#000000";
             }
         }
-        
+
         private void MonitorUp_Click(object sender, RoutedEventArgs e)
         {
             MonitorConfig _row = (MonitorConfig)(sender as Button).DataContext;
@@ -198,7 +205,7 @@ namespace SidebarDiagnostics
             {
                 _hotkey = null;
             }
-            
+
             switch (_action)
             {
                 case Hotkey.KeyAction.Toggle:
@@ -224,7 +231,7 @@ namespace SidebarDiagnostics
 
             _keybinder.IsChecked = false;
         }
-        
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             Key _key = e.Key == Key.System ? e.SystemKey : e.Key;
@@ -243,7 +250,7 @@ namespace SidebarDiagnostics
             {
                 _hotkey.ShiftMod = true;
             }
-            
+
             if ((e.KeyboardDevice.Modifiers & ModifierKeys.Windows) == ModifierKeys.Windows)
             {
                 _hotkey.WinMod = true;

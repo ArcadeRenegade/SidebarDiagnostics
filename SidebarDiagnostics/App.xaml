@@ -5,7 +5,6 @@
              xmlns:local="clr-namespace:SidebarDiagnostics"
              xmlns:prop="clr-namespace:SidebarDiagnostics.Properties"
              xmlns:command="clr-namespace:SidebarDiagnostics.Commands"
-             Startup="Application_Startup"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
         <command:ActivateCommand x:Key="ShowCommand" />
@@ -147,7 +146,7 @@
         <Style x:Key="HardwareText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataText}">
             <Setter Property="Margin" Value="0,0,0,6" />
         </Style>
-        
+
         <Style x:Key="SensorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataText}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
@@ -351,8 +350,33 @@
             <Setter Property="Height" Value="22" />
             <Setter Property="Padding" Value="5,0" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="IsReadOnly" Value="True" />
         </Style>
-        
+
+        <Style x:Key="DummyLabel" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Style.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="FontSize" Value="48" />
+                    <Setter Property="Foreground" Value="#FFFFFF" />
+                    <Setter Property="Margin" Value="6,0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="SetupPage" TargetType="{x:Type DockPanel}">
+            <Setter Property="IsEnabled" Value="False" />
+            <Setter Property="LastChildFill" Value="True" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="SetupProgress" TargetType="{x:Type StackPanel}">
             <Setter Property="Orientation" Value="Horizontal" />
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -365,7 +389,7 @@
                     <Setter Property="Fill" Value="#9F9F9F" />
                     <Style.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Fill" Value="#DDDDDD" />
+                            <Setter Property="Fill" Value="#DDD" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -373,16 +397,41 @@
         </Style>
 
         <Style x:Key="SetupTitle" TargetType="{x:Type Label}">
-            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="Margin" Value="0,10,0,0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Foreground" Value="#333" />
             <Setter Property="FontSize" Value="18" />
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
 
+        <Style x:Key="SetupSubtitle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0,10" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="MaxWidth" Value="220" />
+            <Setter Property="Foreground" Value="#111" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="SetupText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SetupSubtitle}">
+            <Setter Property="Margin" Value="0,10" />
+        </Style>
+
+        <Style x:Key="SetupContent" TargetType="{x:Type Grid}">
+            <Setter Property="Margin" Value="0,10" />
+        </Style>
+
+        <Style x:Key="SetupCustom" TargetType="{x:Type Grid}" BasedOn="{StaticResource SettingGrid}">
+            <Setter Property="Margin" Value="40,20" />
+        </Style>
+
         <Style x:Key="WindowButton" TargetType="{x:Type Button}">
-            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontSize" Value="14" />
             <Setter Property="FontWeight" Value="500" />
             <Setter Property="Margin" Value="10,0,0,0" />
-            <Setter Property="Padding" Value="24,8" />
+            <Setter Property="Padding" Value="20,8" />
             <Setter Property="Foreground" Value="#FFFFFF" />
             <Setter Property="Background" Value="#3498DB" />
             <Setter Property="BorderBrush" Value="Transparent" />
@@ -421,11 +470,20 @@
             </Style.Triggers>
         </Style>
 
+        <Style x:Key="NeutralButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowButton}">
+            <Setter Property="Background" Value="#95A5A6" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="WindowButtons" TargetType="{x:Type StackPanel}">
             <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="VerticalAlignment" Value="Bottom" />
             <Setter Property="Orientation" Value="Horizontal" />
-            <Setter Property="Margin" Value="15" />
+            <Setter Property="Margin" Value="20" />
             <Style.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource WindowButton}" />
             </Style.Resources>

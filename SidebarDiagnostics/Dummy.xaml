@@ -1,0 +1,38 @@
+﻿<win:AppBarWindow
+        x:Class="SidebarDiagnostics.Dummy"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SidebarDiagnostics"
+        xmlns:prop="clr-namespace:SidebarDiagnostics.Properties"
+        xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Title="Sidebar"
+        Icon="App.ico"
+        Width="{Binding Source={x:Static prop:Settings.Default}, Path=SidebarWidth, Mode=OneTime}"
+        Height="800"
+        AutoDPI="False"
+        AllowsTransparency="True"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        WindowStyle="None">
+    <Window.Background>
+        <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity, Mode=OneTime}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor, Mode=OneTime}" />
+    </Window.Background>
+    <Grid>
+        <StackPanel Style="{StaticResource DummyLabel}">
+            <StackPanel.LayoutTransform>
+                <RotateTransform Angle="90" />
+            </StackPanel.LayoutTransform>
+            <Label Content="S" />
+            <Label Content="I" />
+            <Label Content="D" />
+            <Label Content="E" />
+            <Label Content="B" />
+            <Label Content="A" />
+            <Label Content="R" />
+        </StackPanel>
+    </Grid>
+</win:AppBarWindow>

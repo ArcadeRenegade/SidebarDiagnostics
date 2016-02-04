@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
+        Closed="Window_Closed"
         Title="Initial Setup"
         Icon="App.ico"
         Height="400"
@@ -14,21 +15,116 @@
         Topmost="True"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
-    <Grid>
-        <DockPanel x:Name="InitialPage" LastChildFill="True">
-            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
-                <Button Content="Yes" Style="{StaticResource SuccessButton}" />
-                <Button Content="No" Style="{StaticResource ErrorButton}" />
-                <Button Content="Skip" />
-            </StackPanel>
-            <StackPanel Style="{StaticResource VerticalPanel}">
+    <Grid x:Name="SetupGrid">
+        <DockPanel x:Name="Initial" IsEnabled="True" Style="{StaticResource SetupPage}">
+            <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
                 <StackPanel Style="{StaticResource SetupProgress}">
                     <Ellipse />
                     <Ellipse IsEnabled="False" />
                     <Ellipse IsEnabled="False" />
                 </StackPanel>
                 <Label Content="Initial Setup" Style="{StaticResource SetupTitle}" />
+                <TextBlock Text="This is a quick setup to get the sidebar in the correct position." Style="{StaticResource SetupSubtitle}" />
             </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
+                <Button Content="Yes" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
+                <Button Content="No" Click="No_Click" Style="{StaticResource ErrorButton}" />
+                <Button Content="Skip" Click="Close_Click" />
+            </StackPanel>
+            <Grid Style="{StaticResource SetupContent}">
+                <TextBlock Style="{StaticResource SetupText}">Is the sidebar <TextBlock FontWeight="Bold">visible</TextBlock> and docked to the <TextBlock FontWeight="Bold">right edge</TextBlock> of your <TextBlock FontWeight="Bold">primary</TextBlock> monitor?</TextBlock>
+            </Grid>
+        </DockPanel>
+        <DockPanel x:Name="BeginHighDPI" Style="{StaticResource SetupPage}">
+            <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
+                <StackPanel Style="{StaticResource SetupProgress}">
+                    <Ellipse IsEnabled="False" />
+                    <Ellipse  />
+                    <Ellipse IsEnabled="False" />
+                </StackPanel>
+                <Label Content="DPI" Style="{StaticResource SetupTitle}" />
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
+                <Button Content="Yes" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
+                <Button Content="No" Click="No_Click" Style="{StaticResource ErrorButton}" />
+                <Button Content="Skip" Click="Close_Click" />
+            </StackPanel>
+            <Grid Style="{StaticResource SetupContent}">
+                <TextBlock Style="{StaticResource SetupText}">Is this a <TextBlock FontWeight="Bold">high DPI</TextBlock> monitor?</TextBlock>
+            </Grid>
+        </DockPanel>
+        <DockPanel x:Name="EndHighDPI" Style="{StaticResource SetupPage}">
+            <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
+                <StackPanel Style="{StaticResource SetupProgress}">
+                    <Ellipse IsEnabled="False" />
+                    <Ellipse  />
+                    <Ellipse IsEnabled="False" />
+                </StackPanel>
+                <Label Content="High DPI Support" Style="{StaticResource SetupTitle}" />
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
+                <Button Content="Yes" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
+                <Button Content="No" Click="No_Click" Style="{StaticResource ErrorButton}" />
+                <Button Content="Skip" Click="Close_Click" />
+            </StackPanel>
+            <Grid Style="{StaticResource SetupContent}">
+                <TextBlock Style="{StaticResource SetupText}">Is the sidebar in the correct position now?</TextBlock>
+            </Grid>
+        </DockPanel>
+        <DockPanel x:Name="BeginCustom" Style="{StaticResource SetupPage}">
+            <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
+                <StackPanel Style="{StaticResource SetupProgress}">
+                    <Ellipse IsEnabled="False" />
+                    <Ellipse  />
+                    <Ellipse IsEnabled="False" />
+                </StackPanel>
+                <Label Content="Custom" Style="{StaticResource SetupTitle}" />
+                <TextBlock Text="Use the sliders and textboxes to move the sidebar to the correct position." Style="{StaticResource SetupSubtitle}" />
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
+                <Button Content="Done" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
+                <Button Content="Skip" Click="Close_Click" />
+            </StackPanel>
+            <Grid Style="{StaticResource SetupCustom}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="38px"></RowDefinition>
+                    <RowDefinition Height="38px"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Content="Horizontal Offset" />
+                <DockPanel Grid.Column="1" Grid.Row="0">
+                    <TextBox Text="{Binding ElementName=XOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" />
+                    <Slider x:Name="XOffsetSlider" Value="{Binding Path=XOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="Horizontal offset of the sidebar." />
+                </DockPanel>
+
+                <Label Grid.Column="0" Grid.Row="1" Content="Vertical Offset" />
+                <DockPanel Grid.Column="1" Grid.Row="1">
+                    <TextBox Text="{Binding ElementName=YOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" />
+                    <Slider x:Name="YOffsetSlider" Value="{Binding Path=YOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="Vertical offset of the sidebar." />
+                </DockPanel>
+            </Grid>
+        </DockPanel>
+        <DockPanel x:Name="Final" Style="{StaticResource SetupPage}">
+            <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
+                <StackPanel Style="{StaticResource SetupProgress}">
+                    <Ellipse IsEnabled="False" />
+                    <Ellipse IsEnabled="False" />
+                    <Ellipse />
+                </StackPanel>
+                <Label Content="Done!" Style="{StaticResource SetupTitle}" />
+                <TextBlock Text="If you want to customize the sidebar click the settings button." Style="{StaticResource SetupSubtitle}" />
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
+                <Button Content="Settings" Click="Settings_Click" />
+                <Button Content="Close" Click="Close_Click" Style="{StaticResource NeutralButton}" />
+            </StackPanel>
+            <Grid Style="{StaticResource SetupContent}">
+                <TextBlock Style="{StaticResource SetupText}">You can also access the settings via the <TextBlock FontWeight="Bold">gear icon</TextBlock> at the top-right of the sidebar or via the <TextBlock FontWeight="Bold">tray icon</TextBlock> in the taskbar.</TextBlock>
+            </Grid>
         </DockPanel>
     </Grid>
 </win:DPIAwareWindow>

@@ -127,6 +127,9 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters.cs" />
+    <Compile Include="Dummy.xaml.cs">
+      <DependentUpon>Dummy.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Monitor.cs" />
     <Compile Include="SettingsModel.cs" />
     <Compile Include="Setup.xaml.cs">
@@ -151,6 +154,10 @@
       <DependentUpon>AppBar.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Dummy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
