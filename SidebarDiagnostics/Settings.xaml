@@ -206,14 +206,14 @@
                                                     <GridViewColumn Header="Enabled" HeaderContainerStyle="{StaticResource MonitorHardwareHeaderCenter}">
                                                         <GridViewColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enables this hardware." />
+                                                                <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables this hardware." Style="{StaticResource MonitorHardwareCheckbox}" />
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>
                                                     <GridViewColumn Header="Hardware" HeaderContainerStyle="{StaticResource MonitorHardwareHeader}" Width="230">
                                                         <GridViewColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Foreground="#000000" />
+                                                                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Style="{StaticResource MonitorHardwareText}" />
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>

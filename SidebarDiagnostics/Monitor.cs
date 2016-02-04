@@ -1213,14 +1213,7 @@ namespace SidebarDiagnostics.Monitor
                 App.ShowPerformanceCounterError();
             }
 
-            NetworkInterface[] _networkInterfaces = NetworkInterface.GetAllNetworkInterfaces().Where(n =>
-                    n.OperationalStatus == OperationalStatus.Up &&
-                    new NetworkInterfaceType[2] { NetworkInterfaceType.Ethernet, NetworkInterfaceType.Wireless80211 }.Contains(n.NetworkInterfaceType)
-                    ).ToArray();
-
-            Regex _regex = new Regex("[^A-Za-z]");
-
-            return _instances.Join(_networkInterfaces, i => _regex.Replace(i, ""), n => _regex.Replace(n.Description, ""), (i, n) => new HardwareConfig() { ID = i, Name = n.Description, Enabled = true }, StringComparer.Ordinal);
+            return _instances.OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h, Enabled = true });
         }
 
         public void Update()
