@@ -18,6 +18,12 @@ namespace SidebarDiagnostics
     {
         public Setup()
         {
+            Properties.Settings.Default.ScreenIndex = 0;
+            Properties.Settings.Default.DockEdge = DockEdge.Right;
+            Properties.Settings.Default.HighDPISupport = false;
+            Properties.Settings.Default.XOffset = 0;
+            Properties.Settings.Default.YOffset = 0;
+
             Sidebar = new Dummy();
             Sidebar.Show();
 
