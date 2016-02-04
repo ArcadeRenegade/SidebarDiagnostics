@@ -1,4 +1,4 @@
-# SidebarDiagnostics
+# Sidebar Diagnostics
 
 A simple sidebar for Windows desktop that displays hardware diagnostic information.
 
@@ -18,7 +18,12 @@ Go to the <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases
 
 If you are changing your screen's DPI settings, <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/wiki/DPI-Settings">view this page!</a>
 
-### Info
+### Author Note
+
+This software will always be free on GitHub. I am purchasing a $200 a year code signing certificate for it out of pocket and if you really like it please consider donating. I'd appreciate it!
+Thanks.
+
+https://www.paypal.me/arcaderenegade### Info
 
 Written in C# .NET WPF. Works in Windows 10.
 
