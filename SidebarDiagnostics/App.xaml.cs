@@ -183,6 +183,21 @@ namespace SidebarDiagnostics
             Application.Current.Shutdown();
         }
 
+        private void PART_CLOSE_Click(object sender, RoutedEventArgs e)
+        {
+            Button _button = (Button)sender;
+
+            if (_button != null)
+            {
+                Window _window = Window.GetWindow(_button);
+
+                if (_window != null && _window.IsInitialized)
+                {
+                    _window.Close();
+                }
+            }
+        }
+
         #if !DEBUG
         private static void AppDomain_Error(object sender, UnhandledExceptionEventArgs e)
         {

@@ -12,7 +12,7 @@
         Loaded="Window_Loaded"
         Closed="Window_Closed"
         Title="Sidebar Settings"
-        Icon="App.ico"
+        Icon="Settings.ico"
         Width="400"
         SizeToContent="Height"
         ResizeMode="NoResize"

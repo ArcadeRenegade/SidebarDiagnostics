@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -116,16 +117,21 @@ namespace SidebarDiagnostics
         {
             _openSettings = true;
 
-            Sidebar.Close();
+            Close();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            Sidebar.Close();
+            Close();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            if (Sidebar != null && Sidebar.IsInitialized)
+            {
+                Sidebar.Close();
+            }
+
             Properties.Settings.Default.InitialSetup = false;
             Properties.Settings.Default.Save();
 
