@@ -66,16 +66,6 @@ namespace SidebarDiagnostics
             ClickThroughCheckbox.IsChecked = false;
         }
 
-        private void ColorTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox _textbox = (TextBox)sender;
-
-            if (!new Regex("^#[a-fA-F0-9]{6}$").IsMatch(_textbox.Text))
-            {
-                _textbox.Text = "#000000";
-            }
-        }
-
         private void MonitorUp_Click(object sender, RoutedEventArgs e)
         {
             MonitorConfig _row = (MonitorConfig)(sender as Button).DataContext;
