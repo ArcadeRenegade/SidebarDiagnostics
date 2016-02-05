@@ -528,9 +528,9 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
-                        <Border Margin="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border Margin="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="20" Direction="-90" ShadowDepth="2" Opacity="0.5" Color="#333333" />
+                                <DropShadowEffect BlurRadius="15" Direction="-90" ShadowDepth="2" Opacity="0.5" Color="#333333" />
                             </Border.Effect>
                             <DockPanel LastChildFill="True">
                                 <Border x:Name="PART_TITLEBAR" DockPanel.Dock="Top" Margin="0" Height="30" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
