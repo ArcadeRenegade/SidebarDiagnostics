@@ -67,8 +67,7 @@
     <StartupObject>SidebarDiagnostics.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>04836BFB55DC45C7D1C31B8EBC2AC038779EDF93</ManifestCertificateThumbprint>
