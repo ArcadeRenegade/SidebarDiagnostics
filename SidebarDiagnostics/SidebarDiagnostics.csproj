@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SidebarDiagnostics</RootNamespace>
-    <AssemblyName>SidebarDiagnostics</AssemblyName>
+    <AssemblyName>Sidebar Diagnostics</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -67,7 +67,8 @@
     <StartupObject>SidebarDiagnostics.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Dark.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>04836BFB55DC45C7D1C31B8EBC2AC038779EDF93</ManifestCertificateThumbprint>
@@ -214,9 +215,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Dark.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

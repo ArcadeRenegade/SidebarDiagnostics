@@ -22,6 +22,11 @@ namespace SidebarDiagnostics
 
         public void Reload()
         {
+            if (!Ready)
+            {
+                return;
+            }
+
             App._reloading = true;
 
             Close();

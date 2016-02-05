@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.ComponentModel;
 using System.Windows.Threading;
 using SidebarDiagnostics.Monitor;
@@ -41,8 +40,8 @@ namespace SidebarDiagnostics.Models
 
         public void Start()
         {
-            StartClockTimer();
-            StartMonitorTimer();
+            StartClock();
+            StartMonitors();
         }
 
         public void Reload()
@@ -81,7 +80,7 @@ namespace SidebarDiagnostics.Models
             MonitorManager.Update();
         }
 
-        private void StartClockTimer()
+        private void StartClock()
         {
             if (!Properties.Settings.Default.ShowClock)
             {
@@ -94,7 +93,7 @@ namespace SidebarDiagnostics.Models
             _clockTimer.Start();
         }
 
-        private void StartMonitorTimer()
+        private void StartMonitors()
         {
             _monitorTimer = new DispatcherTimer();
             _monitorTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
