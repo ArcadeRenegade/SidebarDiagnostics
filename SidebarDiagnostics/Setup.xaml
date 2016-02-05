@@ -31,9 +31,9 @@
                 <Button Content="No" Click="No_Click" Style="{StaticResource ErrorButton}" />
                 <Button Content="Skip" Click="Close_Click" />
             </StackPanel>
-            <Grid Style="{StaticResource SetupContent}">
+            <StackPanel Style="{StaticResource SetupContent}">
                 <TextBlock Style="{StaticResource SetupText}">Is the sidebar <TextBlock FontWeight="Bold">visible</TextBlock> and docked to the <TextBlock FontWeight="Bold">right edge</TextBlock> of your <TextBlock FontWeight="Bold">primary</TextBlock> monitor?</TextBlock>
-            </Grid>
+            </StackPanel>
         </DockPanel>
         <DockPanel x:Name="BeginHighDPI" Style="{StaticResource SetupPage}">
             <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
@@ -49,9 +49,10 @@
                 <Button Content="No" Click="No_Click" Style="{StaticResource ErrorButton}" />
                 <Button Content="Skip" Click="Close_Click" />
             </StackPanel>
-            <Grid Style="{StaticResource SetupContent}">
-                <TextBlock Style="{StaticResource SetupText}">Is this a <TextBlock FontWeight="Bold">high DPI</TextBlock> monitor?</TextBlock>
-            </Grid>
+            <StackPanel Style="{StaticResource SetupContent}">
+                <TextBlock Grid.Row="0" Style="{StaticResource SetupText}">Is this a <TextBlock FontWeight="Bold">high DPI</TextBlock> monitor?</TextBlock>
+                <TextBlock Grid.Row="1" Style="{StaticResource SetupText}">High DPI monitors include:<LineBreak /><LineBreak />• 4K Monitors<LineBreak />• Microsoft Surface<LineBreak />•  Any with a DPI higher than 96</TextBlock>
+            </StackPanel>
         </DockPanel>
         <DockPanel x:Name="EndHighDPI" Style="{StaticResource SetupPage}">
             <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
@@ -67,9 +68,9 @@
                 <Button Content="No" Click="No_Click" Style="{StaticResource ErrorButton}" />
                 <Button Content="Skip" Click="Close_Click" />
             </StackPanel>
-            <Grid Style="{StaticResource SetupContent}">
+            <StackPanel Style="{StaticResource SetupContent}">
                 <TextBlock Style="{StaticResource SetupText}">Is the sidebar in the correct position now?</TextBlock>
-            </Grid>
+            </StackPanel>
         </DockPanel>
         <DockPanel x:Name="BeginCustom" Style="{StaticResource SetupPage}">
             <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
@@ -122,9 +123,9 @@
                 <Button Content="Settings" Click="Settings_Click" />
                 <Button Content="Close" Click="Close_Click" Style="{StaticResource NeutralButton}" />
             </StackPanel>
-            <Grid Style="{StaticResource SetupContent}">
+            <StackPanel Style="{StaticResource SetupContent}">
                 <TextBlock Style="{StaticResource SetupText}">You can also access the settings via the <TextBlock FontWeight="Bold">gear icon</TextBlock> at the top-right of the sidebar or via the <TextBlock FontWeight="Bold">tray icon</TextBlock> in the taskbar.</TextBlock>
-            </Grid>
+            </StackPanel>
         </DockPanel>
     </Grid>
 </win:DPIAwareWindow>

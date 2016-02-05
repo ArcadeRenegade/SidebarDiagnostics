@@ -27,17 +27,21 @@
         <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity, Mode=OneTime}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor, Mode=OneTime}" />
     </Window.Background>
     <Grid>
-        <StackPanel Style="{StaticResource SidebarLabel}">
-            <StackPanel.LayoutTransform>
-                <RotateTransform Angle="90" />
-            </StackPanel.LayoutTransform>            
-            <Label Content="S" />
-            <Label Content="I" />
-            <Label Content="D" />
-            <Label Content="E" />
-            <Label Content="B" />
-            <Label Content="A" />
-            <Label Content="R" />
+        <StackPanel Style="{StaticResource LoadingPanel}">
+            <Ellipse Style="{StaticResource Loading}">
+                <Ellipse.RenderTransform>
+                    <RotateTransform CenterX="20" CenterY="20" />
+                </Ellipse.RenderTransform>
+                <Ellipse.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Ellipse.RenderTransform).(RotateTransform.Angle)" To="360" Duration="0:0:1" RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Ellipse.Triggers>
+            </Ellipse>
         </StackPanel>
         
         <Grid Style="{StaticResource ContentGrid}">            

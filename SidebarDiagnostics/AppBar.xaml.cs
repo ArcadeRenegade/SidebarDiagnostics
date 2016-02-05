@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -29,24 +27,15 @@ namespace SidebarDiagnostics
             Close();
         }
 
-        private async Task InitAll()
+        private void InitAll()
         {
             InitWindow();
+            InitAppBar();
 
-            await InitAppBar();
-
-            await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-            {
-                InitContent();
-
-                Ready = true;
-
-                if (_openSettings)
-                {
-                    new Settings(this);
-                }
-            }));
+            new InitHandler(InitContent).BeginInvoke(null, null);
         }
+
+        private delegate void InitHandler();
 
         private void InitWindow()
         {
@@ -69,7 +58,7 @@ namespace SidebarDiagnostics
             Devices.Initialize(this);
         }
 
-        private async Task InitAppBar()
+        private void InitAppBar()
         {
             WorkArea _windowWA;
             WorkArea _appbarWA;
@@ -83,13 +72,27 @@ namespace SidebarDiagnostics
 
             if (Properties.Settings.Default.UseAppBar)
             {
-                await SetAppBar(Properties.Settings.Default.DockEdge, _windowWA, _appbarWA);
+                SetAppBar(Properties.Settings.Default.DockEdge, _windowWA, _appbarWA);
             }
         }
 
         private void InitContent()
         {
-            DataContext = Model = new AppBarModel();
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new InitCompleteHandler(InitComplete), new AppBarModel());
+        }
+
+        private delegate void InitCompleteHandler(AppBarModel model);
+
+        private void InitComplete(AppBarModel model)
+        {
+            DataContext = Model = model;
+
+            Ready = true;
+
+            if (_openSettings)
+            {
+                new Settings(this);
+            }
         }
 
         private void VirtualDesktop_CurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
@@ -124,11 +127,6 @@ namespace SidebarDiagnostics
             (sender as ScrollViewer).VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            await InitAll();
-        }
-
         private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             WindowControls.Visibility = Visibility.Visible;
@@ -137,6 +135,11 @@ namespace SidebarDiagnostics
         private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             WindowControls.Visibility = Properties.Settings.Default.CollapseMenuBar ? Visibility.Collapsed : Visibility.Hidden;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitAll();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

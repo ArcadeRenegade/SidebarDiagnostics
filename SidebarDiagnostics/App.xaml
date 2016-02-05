@@ -27,6 +27,25 @@
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
 
+        <Style x:Key="LoadingPanel" TargetType="{x:Type StackPanel}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Ready, Mode=OneWay}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="Loading" TargetType="{x:Type Ellipse}">
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Stroke" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
+            <Setter Property="StrokeThickness" Value="5" />
+            <Setter Property="StrokeDashArray" Value="18" />
+            <Setter Property="Opacity" Value="0.85" />
+        </Style>
+
         <Style x:Key="ContentGrid" TargetType="{x:Type Grid}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
@@ -376,14 +395,6 @@
             </Style.Resources>
         </Style>
 
-        <Style x:Key="SidebarLabel" TargetType="{x:Type StackPanel}" BasedOn="{StaticResource DummyLabel}">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=Ready, Mode=OneWay}" Value="True">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
         <Style x:Key="SetupPage" TargetType="{x:Type DockPanel}">
             <Setter Property="IsEnabled" Value="False" />
             <Setter Property="LastChildFill" Value="True" />
@@ -436,7 +447,8 @@
             <Setter Property="Margin" Value="0,10" />
         </Style>
 
-        <Style x:Key="SetupContent" TargetType="{x:Type Grid}">
+        <Style x:Key="SetupContent" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Vertical" />
             <Setter Property="Margin" Value="0,10" />
         </Style>
 
@@ -505,9 +517,9 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border Margin="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="20" Direction="0" ShadowDepth="0" Opacity="0.5" Color="#333333" />
+                                <DropShadowEffect BlurRadius="20" Direction="-90" ShadowDepth="2" Opacity="0.5" Color="#333333" />
                             </Border.Effect>
                             <DockPanel LastChildFill="True">
                                 <Border x:Name="PART_TITLEBAR" DockPanel.Dock="Top" Margin="0" Height="30" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">

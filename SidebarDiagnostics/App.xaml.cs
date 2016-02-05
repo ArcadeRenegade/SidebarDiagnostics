@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using OpenHardwareMonitor.Hardware;
 using Hardcodet.Wpf.TaskbarNotification;
 using SidebarDiagnostics.Updates;
 using SidebarDiagnostics.Monitor;
@@ -144,7 +143,7 @@ namespace SidebarDiagnostics
             (_this.Items.GetItemAt(1) as MenuItem).IsChecked = _appBar.Visibility == Visibility.Hidden;
         }
         
-        private async void Show_Click(object sender, EventArgs e)
+        private void Show_Click(object sender, EventArgs e)
         {
             AppBar _appBar = GetAppBar;
 
@@ -153,7 +152,7 @@ namespace SidebarDiagnostics
                 return;
             }
 
-            await _appBar.AppBarShow();
+            _appBar.AppBarShow();
         }
 
         private void Hide_Click(object sender, EventArgs e)
