@@ -51,7 +51,7 @@
             </StackPanel>
             <StackPanel Style="{StaticResource SetupContent}">
                 <TextBlock Grid.Row="0" Style="{StaticResource SetupText}">Is this a <TextBlock FontWeight="Bold">high DPI</TextBlock> monitor?</TextBlock>
-                <TextBlock Grid.Row="1" Style="{StaticResource SetupText}">High DPI monitors include:<LineBreak /><LineBreak />• 4K Monitors<LineBreak />• Microsoft Surface<LineBreak />•  Any with a DPI higher than 96</TextBlock>
+                <TextBlock Grid.Row="1" Style="{StaticResource SetupText}">High DPI monitors include:<LineBreak />• 4K Monitors<LineBreak />• Microsoft Surface<LineBreak />•  Any with a DPI higher than 96</TextBlock>
             </StackPanel>
         </DockPanel>
         <DockPanel x:Name="EndHighDPI" Style="{StaticResource SetupPage}">

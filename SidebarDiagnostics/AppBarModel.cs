@@ -39,7 +39,13 @@ namespace SidebarDiagnostics.Models
             Dispose(false);
         }
 
-        public void Restart()
+        public void Start()
+        {
+            StartClockTimer();
+            StartMonitorTimer();
+        }
+
+        public void Reload()
         {
             DisposeMonitors();
             InitMonitors();
@@ -67,6 +73,20 @@ namespace SidebarDiagnostics.Models
             ShowDate = !Properties.Settings.Default.DateSetting.Equals(Properties.DateSetting.Disabled);
 
             UpdateClock();
+        }
+
+        private void InitMonitors()
+        {
+            MonitorManager = new MonitorManager(Properties.Settings.Default.MonitorConfig);
+            MonitorManager.Update();
+        }
+
+        private void StartClockTimer()
+        {
+            if (!Properties.Settings.Default.ShowClock)
+            {
+                return;
+            }
 
             _clockTimer = new DispatcherTimer();
             _clockTimer.Interval = TimeSpan.FromSeconds(1);
@@ -74,11 +94,8 @@ namespace SidebarDiagnostics.Models
             _clockTimer.Start();
         }
 
-        private void InitMonitors()
+        private void StartMonitorTimer()
         {
-            MonitorManager = new MonitorManager(Properties.Settings.Default.MonitorConfig);
-            MonitorManager.Update();
-
             _monitorTimer = new DispatcherTimer();
             _monitorTimer.Interval = TimeSpan.FromMilliseconds(Properties.Settings.Default.PollingInterval);
             _monitorTimer.Tick += new EventHandler(MonitorTimer_Tick);

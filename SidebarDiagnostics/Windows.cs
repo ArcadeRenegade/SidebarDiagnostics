@@ -209,7 +209,7 @@ namespace SidebarDiagnostics.Windows
 
                                 if (_appBar != null && _appBar.Ready)
                                 {
-                                    _appBar.Model.Restart();
+                                    _appBar.Model.Reload();
                                 }
                             }));
 

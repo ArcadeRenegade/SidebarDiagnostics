@@ -37,17 +37,10 @@ namespace SidebarDiagnostics
         {
             foreach (DockPanel _panel in SetupGrid.Children)
             {
-                if (_panel.Name == page.ToString())
-                {
-                    CurrentPage = page;
-
-                    _panel.IsEnabled = true;
-                }
-                else
-                {
-                    _panel.IsEnabled = false;
-                }
+                _panel.IsEnabled = _panel.Name == page.ToString();
             }
+
+            CurrentPage = page;
         }
 
         private void Yes_Click(object sender, RoutedEventArgs e)

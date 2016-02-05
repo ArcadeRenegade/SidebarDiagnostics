@@ -86,6 +86,7 @@ namespace SidebarDiagnostics
         private void InitComplete(AppBarModel model)
         {
             DataContext = Model = model;
+            model.Start();
 
             Ready = true;
 
