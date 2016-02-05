@@ -79,29 +79,15 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
-            bool _save = false;
-
             if (SidebarDiagnostics.Properties.Settings.Default.UpgradeRequired)
             {
                 SidebarDiagnostics.Properties.Settings.Default.Upgrade();
                 SidebarDiagnostics.Properties.Settings.Default.UpgradeRequired = false;
-
-                _save = true;
             }
 
-            MonitorConfig[] _new = null;
+            SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = MonitorConfig.CheckConfig(SidebarDiagnostics.Properties.Settings.Default.MonitorConfig);
 
-            if (!MonitorConfig.CheckConfig(SidebarDiagnostics.Properties.Settings.Default.MonitorConfig, ref _new))
-            {
-                SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = _new;
-
-                _save = true;
-            }
-
-            if (_save)
-            {
-                SidebarDiagnostics.Properties.Settings.Default.Save();
-            }
+            SidebarDiagnostics.Properties.Settings.Default.Save();
         }
 
         private void Settings_Click(object sender, EventArgs e)

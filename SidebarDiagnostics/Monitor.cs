@@ -1519,41 +1519,47 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
-        public static bool CheckConfig(MonitorConfig[] config, ref MonitorConfig[] output)
+        public static MonitorConfig[] CheckConfig(MonitorConfig[] config)
         {
             MonitorConfig[] _default = Default;
 
-            if (config == null || config.Length != _default.Length)
+            if (config == null)
             {
-                output = _default;
-                return false;
+                return _default;
             }
 
-            for (int i = 0; i < config.Length; i++)
-            {
-                MonitorConfig _record = config[i];
-                MonitorConfig _defaultRecord = _default[i];
+            config = (
+                from def in _default
+                join rec in config on def.Type equals rec.Type into merged
+                from newrec in merged.DefaultIfEmpty(def)
+                select newrec
+                ).ToArray();
 
-                if (_record == null || _record.Type != _defaultRecord.Type || _record.Hardware == null || _record.Params == null || _record.Params.Length != _defaultRecord.Params.Length)
+            foreach (MonitorConfig _record in config)
+            {
+                MonitorConfig _defaultRecord = _default.Single(d => d.Type == _record.Type);
+
+                if (_record.Hardware == null)
                 {
-                    output = _default;
-                    return false;
+                    _record.Hardware = _defaultRecord.Hardware;
                 }
 
-                for (int v = 0; v < _record.Params.Length; v++)
+                if (_record.Params == null)
                 {
-                    ConfigParam _param = _record.Params[v];
-                    ConfigParam _defaultParam = _defaultRecord.Params[v];
-
-                    if (_param == null || _param.Key != _defaultParam.Key)
-                    {
-                        output = _default;
-                        return false;
-                    }
+                    _record.Params = _defaultRecord.Params;
+                }
+                else
+                {
+                    _record.Params = (
+                        from def in _defaultRecord.Params
+                        join param in _record.Params on def.Key equals param.Key into merged
+                        from newparam in merged.DefaultIfEmpty(def)
+                        select newparam
+                        ).ToArray();
                 }
             }
 
-            return true;
+            return config;
         }
 
         public static MonitorConfig[] Default
