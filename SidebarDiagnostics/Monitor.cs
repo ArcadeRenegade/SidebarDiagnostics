@@ -322,6 +322,7 @@ namespace SidebarDiagnostics.Monitor
                 case MonitorType.CPU:
                     InitCPU(
                         board,
+                        parameters.GetValue<bool>(ParamKey.RoundAll),
                         parameters.GetValue<bool>(ParamKey.AllCoreClocks),
                         parameters.GetValue<bool>(ParamKey.CoreLoads),
                         parameters.GetValue<bool>(ParamKey.UseFahrenheit),
@@ -331,12 +332,14 @@ namespace SidebarDiagnostics.Monitor
 
                 case MonitorType.RAM:
                     InitRAM(
-                        board
+                        board,
+                        parameters.GetValue<bool>(ParamKey.RoundAll)
                         );
                     break;
 
                 case MonitorType.GPU:
                     InitGPU(
+                        parameters.GetValue<bool>(ParamKey.RoundAll),
                         parameters.GetValue<bool>(ParamKey.UseFahrenheit),
                         parameters.GetValue<int>(ParamKey.TempAlert)
                         );
@@ -406,7 +409,7 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
-        private void InitCPU(IHardware board, bool allCoreClocks, bool coreLoads, bool useFahrenheit, double tempAlert)
+        private void InitCPU(IHardware board, bool roundAll, bool allCoreClocks, bool coreLoads, bool useFahrenheit, double tempAlert)
         {
             List<OHMSensor> _sensorList = new List<OHMSensor>();
 
@@ -467,17 +470,17 @@ namespace SidebarDiagnostics.Monitor
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage"));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage", roundAll));
             }
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, "Temp", false, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
+                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, "Temp", roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             if (_fanSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_fanSensor, DataType.RPM, "Fan"));
+                _sensorList.Add(new OHMSensor(_fanSensor, DataType.RPM, "Fan", roundAll));
             }
 
             ISensor[] _loadSensors = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load).ToArray();
@@ -488,7 +491,7 @@ namespace SidebarDiagnostics.Monitor
 
                 if (_totalCPU != null)
                 {
-                    _sensorList.Add(new OHMSensor(_totalCPU, DataType.Percent, "Load"));
+                    _sensorList.Add(new OHMSensor(_totalCPU, DataType.Percent, "Load", roundAll));
                 }
 
                 if (coreLoads)
@@ -499,7 +502,7 @@ namespace SidebarDiagnostics.Monitor
 
                         if (_coreLoad != null)
                         {
-                            _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, string.Format("Core {0}", i - 1)));
+                            _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, string.Format("Core {0}", i - 1), roundAll));
                         }
                     }
                 }
@@ -508,7 +511,7 @@ namespace SidebarDiagnostics.Monitor
             Sensors = _sensorList.ToArray();
         }
 
-        public void InitRAM(IHardware board)
+        public void InitRAM(IHardware board, bool roundAll)
         {
             List<OHMSensor> _sensorList = new List<OHMSensor>();
 
@@ -533,34 +536,34 @@ namespace SidebarDiagnostics.Monitor
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage"));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage", roundAll));
             }
 
             ISensor _loadSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_loadSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_loadSensor, DataType.Percent, "Load"));
+                _sensorList.Add(new OHMSensor(_loadSensor, DataType.Percent, "Load", roundAll));
             }
 
             ISensor _usedSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 0).FirstOrDefault();
 
             if (_usedSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_usedSensor, DataType.Gigabyte, "Used"));
+                _sensorList.Add(new OHMSensor(_usedSensor, DataType.Gigabyte, "Used", roundAll));
             }
 
             ISensor _availSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 1).FirstOrDefault();
 
             if (_availSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_availSensor, DataType.Gigabyte, "Free"));
+                _sensorList.Add(new OHMSensor(_availSensor, DataType.Gigabyte, "Free", roundAll));
             }
 
             Sensors = _sensorList.ToArray();
         }
 
-        public void InitGPU(bool useFahrenheit, double tempAlert)
+        public void InitGPU(bool roundAll, bool useFahrenheit, double tempAlert)
         {
             List<OHMSensor> _sensorList = new List<OHMSensor>();
 
@@ -582,28 +585,28 @@ namespace SidebarDiagnostics.Monitor
 
             if (_coreLoad != null)
             {
-                _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, "Core"));
+                _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, "Core", roundAll));
             }
 
             ISensor _memoryLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 3).FirstOrDefault();
 
             if (_memoryLoad != null)
             {
-                _sensorList.Add(new OHMSensor(_memoryLoad, DataType.Percent, "VRAM"));
+                _sensorList.Add(new OHMSensor(_memoryLoad, DataType.Percent, "VRAM", roundAll));
             }
 
             ISensor _voltage = _hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Index == 0).FirstOrDefault();
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage"));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage", roundAll));
             }
 
             ISensor _tempSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, "Temp", false, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
+                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, "Temp", roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             ISensor _fanSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
@@ -798,9 +801,10 @@ namespace SidebarDiagnostics.Monitor
         public DriveMonitor(string[] disabledHardware, ConfigParam[] parameters)
         {            
             bool _showDetails = parameters.GetValue<bool>(ParamKey.DriveDetails);
+            bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
             int _usedSpaceAlert = parameters.GetValue<int>(ParamKey.UsedSpaceAlert);
 
-            Drives = GetHardware().Where(h => !disabledHardware.Contains(h.ID)).Select(d => new DriveInfo(d.ID, d.Name, _showDetails, _usedSpaceAlert)).ToArray();
+            Drives = GetHardware().Where(h => !disabledHardware.Contains(h.ID)).Select(d => new DriveInfo(d.ID, d.Name, _showDetails, _roundAll, _usedSpaceAlert)).ToArray();
         }
 
         public void Dispose()
@@ -898,11 +902,12 @@ namespace SidebarDiagnostics.Monitor
         private const string BYTESREADPERSECOND = "Disk Read Bytes/sec";
         private const string BYTESWRITEPERSECOND = "Disk Write Bytes/sec";
 
-        public DriveInfo(string instance, string name, bool showDetails = false, double usedSpaceAlert = 0)
+        public DriveInfo(string instance, string name, bool showDetails = false, bool roundAll = false, double usedSpaceAlert = 0)
         {
             Instance = instance;
             Label = name;
             ShowDetails = showDetails;
+            RoundAll = roundAll;
             UsedSpaceAlert = usedSpaceAlert;
 
             _counterFreeMB = new PerformanceCounter(DriveMonitor.CATEGORYNAME, FREEMB, name);
@@ -980,23 +985,23 @@ namespace SidebarDiagnostics.Monitor
 
             if (ShowDetails)
             {
-                Load = string.Format("Load: {0:#,##0.##}%", _usedPercent);
-                UsedGB = string.Format("Used: {0:#,##0.##} GB", _usedGB);
-                FreeGB = string.Format("Free: {0:#,##0.##} GB", _freeGB);
+                Load = string.Format("Load: {0:#,##0.##}%", _usedPercent.Round(RoundAll));
+                UsedGB = string.Format("Used: {0:#,##0.##} GB", _usedGB.Round(RoundAll));
+                FreeGB = string.Format("Free: {0:#,##0.##} GB", _freeGB.Round(RoundAll));
 
                 double _readRate = _counterReadRate.NextValue() / 1024d;
 
                 string _readFormat;
                 Data.MinifyKiloBytesPerSecond(ref _readRate, out _readFormat);
 
-                ReadRate = string.Format("Read: {0:#,##0.##} {1}", _readRate, _readFormat);
+                ReadRate = string.Format("Read: {0:#,##0.##} {1}", _readRate.Round(RoundAll), _readFormat);
 
                 double _writeRate = _counterWriteRate.NextValue() / 1024d;
 
                 string _writeFormat;
                 Data.MinifyKiloBytesPerSecond(ref _writeRate, out _writeFormat);
 
-                WriteRate = string.Format("Write: {0:#,##0.##} {1}", _writeRate, _writeFormat);
+                WriteRate = string.Format("Write: {0:#,##0.##} {1}", _writeRate.Round(RoundAll), _writeFormat);
             }
 
             if (UsedSpaceAlert > 0 && UsedSpaceAlert <= _usedPercent)
@@ -1142,6 +1147,8 @@ namespace SidebarDiagnostics.Monitor
 
         public bool ShowDetails { get; private set; }
 
+        public bool RoundAll { get; private set; }
+
         public double UsedSpaceAlert { get; private set; }
 
         private PerformanceCounter _counterFreeMB { get; set; }
@@ -1162,11 +1169,12 @@ namespace SidebarDiagnostics.Monitor
         public NetworkMonitor(string[] disabledHardware, ConfigParam[] parameters)
         {
             bool _showName = parameters.GetValue<bool>(ParamKey.HardwareNames);
+            bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
             bool _useBytes = parameters.GetValue<bool>(ParamKey.UseBytes);
             int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
             int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
 
-            Nics = GetHardware().Where(h => !disabledHardware.Contains(h.ID)).Select(n => new NicInfo(n.ID, n.Name, _showName, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)).ToArray();
+            Nics = GetHardware().Where(h => !disabledHardware.Contains(h.ID)).Select(n => new NicInfo(n.ID, n.Name, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)).ToArray();
         }
 
         public void Dispose()
@@ -1260,7 +1268,7 @@ namespace SidebarDiagnostics.Monitor
         private const string BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
         private const string BYTESSENTPERSECOND = "Bytes Sent/sec";
 
-        public NicInfo(string instance, string name, bool showName = true, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
+        public NicInfo(string instance, string name, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
         {
             Instance = instance;
             Name = name;
@@ -1269,6 +1277,7 @@ namespace SidebarDiagnostics.Monitor
             InBandwidth = new Bandwidth(
                 new PerformanceCounter(NetworkMonitor.CATEGORYNAME, BYTESRECEIVEDPERSECOND, instance),
                 "In",
+                roundAll,
                 useBytes,
                 bandwidthInAlert
                 );
@@ -1276,6 +1285,7 @@ namespace SidebarDiagnostics.Monitor
             OutBandwidth = new Bandwidth(
                 new PerformanceCounter(NetworkMonitor.CATEGORYNAME, BYTESSENTPERSECOND, instance),
                 "Out",
+                roundAll,
                 useBytes,
                 bandwidthOutAlert
                 );
@@ -1335,11 +1345,12 @@ namespace SidebarDiagnostics.Monitor
 
     public class Bandwidth : INotifyPropertyChanged, IDisposable
     {
-        public Bandwidth(PerformanceCounter counter, string label, bool useBytes = false, double alertValue = 0)
+        public Bandwidth(PerformanceCounter counter, string label, bool round = false, bool useBytes = false, double alertValue = 0)
         {
             _counter = counter;
 
             Label = label;
+            Round = round;
             UseBytes = useBytes;
             AlertValue = alertValue;
         }
@@ -1404,7 +1415,7 @@ namespace SidebarDiagnostics.Monitor
                 Data.MinifyKiloBitsPerSecond(ref _value, out _format);
             }
 
-            Text = string.Format("{0}: {1:#,##0.##} {2}", Label, _value, _format);
+            Text = string.Format("{0}: {1:#,##0.##} {2}", Label, _value.Round(Round), _format);
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -1453,7 +1464,9 @@ namespace SidebarDiagnostics.Monitor
             }
         }
 
-        public bool UseBytes { get; set; }
+        public bool Round { get; private set; }
+
+        public bool UseBytes { get; private set; }
 
         public double AlertValue { get; private set; }
 
@@ -1555,9 +1568,10 @@ namespace SidebarDiagnostics.Monitor
                         Enabled = true,
                         Order = 1,
                         Hardware = new HardwareConfig[0],
-                        Params = new ConfigParam[5]
+                        Params = new ConfigParam[6]
                         {
                             ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.RoundAll,
                             ConfigParam.Defaults.AllCoreClocks,
                             ConfigParam.Defaults.CoreLoads,
                             ConfigParam.Defaults.UseFahrenheit,
@@ -1570,9 +1584,10 @@ namespace SidebarDiagnostics.Monitor
                         Enabled = true,
                         Order = 2,
                         Hardware = new HardwareConfig[0],
-                        Params = new ConfigParam[1]
+                        Params = new ConfigParam[2]
                         {
-                            ConfigParam.Defaults.NoHardwareNames
+                            ConfigParam.Defaults.NoHardwareNames,
+                            ConfigParam.Defaults.RoundAll
                         }
                     },
                     new MonitorConfig()
@@ -1581,9 +1596,10 @@ namespace SidebarDiagnostics.Monitor
                         Enabled = true,
                         Order = 3,
                         Hardware = new HardwareConfig[0],
-                        Params = new ConfigParam[3]
+                        Params = new ConfigParam[4]
                         {
                             ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.RoundAll,
                             ConfigParam.Defaults.UseFahrenheit,
                             ConfigParam.Defaults.TempAlert
                         }
@@ -1594,9 +1610,10 @@ namespace SidebarDiagnostics.Monitor
                         Enabled = true,
                         Order = 4,
                         Hardware = new HardwareConfig[0],
-                        Params = new ConfigParam[2]
+                        Params = new ConfigParam[3]
                         {
                             ConfigParam.Defaults.DriveDetails,
+                            ConfigParam.Defaults.RoundAll,
                             ConfigParam.Defaults.UsedSpaceAlert
                         }
                     },
@@ -1606,9 +1623,10 @@ namespace SidebarDiagnostics.Monitor
                         Enabled = true,
                         Order = 5,
                         Hardware = new HardwareConfig[0],
-                        Params = new ConfigParam[4]
+                        Params = new ConfigParam[5]
                         {
                             ConfigParam.Defaults.HardwareNames,
+                            ConfigParam.Defaults.RoundAll,
                             ConfigParam.Defaults.UseBytes,
                             ConfigParam.Defaults.BandwidthInAlert,
                             ConfigParam.Defaults.BandwidthOutAlert
@@ -1688,6 +1706,9 @@ namespace SidebarDiagnostics.Monitor
                     case ParamKey.UseBytes:
                         return "Use Bytes Per Second";
 
+                    case ParamKey.RoundAll:
+                        return "Round All Decimals";
+
                     default:
                         return "Unknown";
                 }
@@ -1729,6 +1750,9 @@ namespace SidebarDiagnostics.Monitor
 
                     case ParamKey.UseBytes:
                         return "Shows bandwidth in bytes instead of bits per second.";
+
+                    case ParamKey.RoundAll:
+                        return "Round all decimal values to the nearest integer.";
 
                     default:
                         return "Unknown";
@@ -1825,6 +1849,14 @@ namespace SidebarDiagnostics.Monitor
                     return new ConfigParam() { Key = ParamKey.UseBytes, Value = false };
                 }
             }
+
+            public static ConfigParam RoundAll
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.RoundAll, Value = false };
+                }
+            }
         }
     }
 
@@ -1840,7 +1872,8 @@ namespace SidebarDiagnostics.Monitor
         UsedSpaceAlert,
         BandwidthInAlert,
         BandwidthOutAlert,
-        UseBytes
+        UseBytes,
+        RoundAll
     }
 
     public enum DataType : byte
@@ -2016,6 +2049,16 @@ namespace SidebarDiagnostics.Monitor
                 default:
                     return "";
             }
+        }
+
+        public static double Round(this double value, bool doRound)
+        {
+            if (!doRound)
+            {
+                return value;
+            }
+
+            return Math.Round(value);
         }
     }
 }
