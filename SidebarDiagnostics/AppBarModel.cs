@@ -48,6 +48,7 @@ namespace SidebarDiagnostics.Models
         {
             DisposeMonitors();
             InitMonitors();
+            StartMonitors();
         }
 
         public void NotifyPropertyChanged(string propertyName)
