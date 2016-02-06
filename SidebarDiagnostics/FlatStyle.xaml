@@ -204,7 +204,7 @@
     </Style>
     
     <Style x:Key="WindowButtons_SM" TargetType="{x:Type StackPanel}" BasedOn="{StaticResource WindowButtons}">
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="Margin" Value="15,12" />
         <Style.Resources>
             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource WindowButton_SM}" />
         </Style.Resources>
