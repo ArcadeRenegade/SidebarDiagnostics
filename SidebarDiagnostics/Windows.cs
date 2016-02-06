@@ -857,29 +857,40 @@ namespace SidebarDiagnostics.Windows
 
         public void SetTop()
         {
-            SetZ(HWND_FLAG.HWND_TOPMOST);
-        }
-
-        public void ClearTop()
-        {
-            SetZ(HWND_FLAG.HWND_NOTOPMOST);
-        }
-
-        public void SetBottom()
-        {
-            SetZ(HWND_FLAG.HWND_BOTTOM);
-        }
-
-        private void SetZ(IntPtr hwnd_after)
-        {
             NativeMethods.SetWindowPos(
                 new WindowInteropHelper(this).Handle,
-                hwnd_after,
+                HWND_FLAG.HWND_TOPMOST,
                 0,
                 0,
                 0,
                 0,
                 HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE
+                );
+        }
+
+        public void ClearTop()
+        {
+            NativeMethods.SetWindowPos(
+                new WindowInteropHelper(this).Handle,
+                HWND_FLAG.HWND_NOTOPMOST,
+                0,
+                0,
+                0,
+                0,
+                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE | HWND_FLAG.SWP_NOACTIVATE
+                );
+        }
+
+        public void SetBottom()
+        {
+            NativeMethods.SetWindowPos(
+                new WindowInteropHelper(this).Handle,
+                HWND_FLAG.HWND_BOTTOM,
+                0,
+                0,
+                0,
+                0,
+                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE | HWND_FLAG.SWP_NOACTIVATE
                 );
         }
 
