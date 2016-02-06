@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
-using SidebarDiagnostics.Helpers;
+using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitor;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Properties;

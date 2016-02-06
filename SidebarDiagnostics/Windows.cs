@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Windows.Media;
+using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics.Windows
 {
@@ -695,7 +696,7 @@ namespace SidebarDiagnostics.Windows
         }
     }
 
-    public partial class DPIAwareWindow : Window
+    public partial class DPIAwareWindow : FlatWindow
     {
         private static class WM_MESSAGES
         {

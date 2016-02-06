@@ -16,14 +16,20 @@
         Icon="Settings.ico"
         Width="400"
         SizeToContent="Height"
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        ShowMaximize="False"
+        WindowStartupLocation="CenterScreen"
+        Style="{StaticResource FlatWindowStyle}">
     <Window.Resources>
         <convert:IntToStringConverter x:Key="IntConverter" />
         <convert:HotkeyToStringConverter x:Key="HotkeyConverter" />
     </Window.Resources>
-    <StackPanel Style="{StaticResource VerticalPanel}">
-        <TabControl Margin="10" Padding="15">
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons_SM}">
+            <Button Content="Save" Click="SaveButton_Click" />
+            <Button Content="Apply" Click="SaveButton_Click" />
+            <Button Content="Cancel" Click="CancelButton_Click" Style="{StaticResource NeutralButton_SM}" />
+        </StackPanel>
+        <TabControl Style="{StaticResource SettingTab}">
             <TabItem Header="General">
                 <Grid Style="{StaticResource SettingGrid}">
                     <Grid.ColumnDefinitions>
@@ -300,9 +306,5 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <StackPanel Style="{StaticResource SettingButtons}">
-            <Button Content="Save" Click="SaveButton_Click"></Button>
-            <Button Content="Cancel" Click="CancelButton_Click"></Button>
-        </StackPanel>
-    </StackPanel>
+    </DockPanel>
 </win:DPIAwareWindow>

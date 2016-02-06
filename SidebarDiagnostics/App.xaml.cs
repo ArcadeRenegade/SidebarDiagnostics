@@ -77,6 +77,27 @@ namespace SidebarDiagnostics
             }
         }
 
+        public void OpenSettings()
+        {
+            Settings _settings = Windows.OfType<Settings>().FirstOrDefault();
+
+            if (_settings != null)
+            {
+                _settings.WindowState = WindowState.Normal;
+                _settings.Activate();
+                return;
+            }
+
+            AppBar _appBar = GetAppBar;
+
+            if (_appBar == null)
+            {
+                return;
+            }
+
+            new Settings(_appBar);
+        }
+
         private void CheckSettings()
         {
             if (SidebarDiagnostics.Properties.Settings.Default.UpgradeRequired)
@@ -92,14 +113,7 @@ namespace SidebarDiagnostics
 
         private void Settings_Click(object sender, EventArgs e)
         {
-            AppBar _appBar = GetAppBar;
-
-            if (_appBar == null)
-            {
-                return;
-            }
-
-            new Settings(_appBar);
+            OpenSettings();
         }
 
         private void Reload_Click(object sender, EventArgs e)
@@ -166,21 +180,6 @@ namespace SidebarDiagnostics
         private void Close_Click(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
-        }
-
-        private void PART_CLOSE_Click(object sender, RoutedEventArgs e)
-        {
-            Button _button = (Button)sender;
-
-            if (_button != null)
-            {
-                Window _window = Window.GetWindow(_button);
-
-                if (_window != null && _window.IsInitialized)
-                {
-                    _window.Close();
-                }
-            }
         }
 
         #if !DEBUG

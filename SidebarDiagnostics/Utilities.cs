@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Win32.TaskScheduler;
 
-namespace SidebarDiagnostics.Helpers
+namespace SidebarDiagnostics.Utilities
 {
     public static class Startup
     {        

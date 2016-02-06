@@ -24,7 +24,7 @@ namespace SidebarDiagnostics
             DataContext = Model = new SettingsModel(appbar);
 
             Owner = appbar;
-            ShowDialog();
+            Show();
         }
 
         private void Save()

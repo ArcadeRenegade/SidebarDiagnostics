@@ -12,9 +12,13 @@
         Icon="App.ico"
         Height="400"
         Width="400"
+        ShowIcon="False"
+        ShowTitle="False"
+        ShowMinimize="False"
+        ShowMaximize="False"
         Topmost="True"
         WindowStartupLocation="CenterScreen"
-        Style="{StaticResource MinimalWindow}">
+        Style="{StaticResource FlatWindowStyle}">
     <Grid x:Name="SetupGrid">
         <DockPanel x:Name="Initial" IsEnabled="True" Style="{StaticResource SetupPage}">
             <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
