@@ -29,7 +29,7 @@ namespace SidebarDiagnostics
 
             // TRAY ICON
             _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            _trayIcon.ToolTipText = Assembly.GetExecutingAssembly().GetName().Name;
+            _trayIcon.ToolTipText = Constants.Generic.PROGRAMNAME;
 
             // CHECK FOR UPDATES
             if (SidebarDiagnostics.Properties.Settings.Default.CheckForUpdates)
@@ -88,14 +88,14 @@ namespace SidebarDiagnostics
                 return;
             }
 
-            AppBar _appBar = GetAppBar;
+            AppBar _appbar = GetAppBar;
 
-            if (_appBar == null)
+            if (_appbar == null)
             {
                 return;
             }
 
-            new Settings(_appBar);
+            new Settings(_appbar);
         }
 
         private void CheckSettings()
@@ -118,53 +118,53 @@ namespace SidebarDiagnostics
 
         private void Reload_Click(object sender, EventArgs e)
         {
-            AppBar _appBar = GetAppBar;
+            AppBar _appbar = GetAppBar;
 
-            if (_appBar == null)
+            if (_appbar == null)
             {
                 return;
             }
 
-            _appBar.Reload();
+            _appbar.Reload();
         }
 
         private void Visibility_SubmenuOpened(object sender, EventArgs e)
         {
-            AppBar _appBar = GetAppBar;
+            AppBar _appbar = GetAppBar;
 
-            if (_appBar == null)
+            if (_appbar == null)
             {
                 return;
             }
 
             MenuItem _this = (MenuItem)sender;
 
-            (_this.Items.GetItemAt(0) as MenuItem).IsChecked = _appBar.Visibility == Visibility.Visible;
-            (_this.Items.GetItemAt(1) as MenuItem).IsChecked = _appBar.Visibility == Visibility.Hidden;
+            (_this.Items.GetItemAt(0) as MenuItem).IsChecked = _appbar.Visibility == Visibility.Visible;
+            (_this.Items.GetItemAt(1) as MenuItem).IsChecked = _appbar.Visibility == Visibility.Hidden;
         }
         
         private void Show_Click(object sender, EventArgs e)
         {
-            AppBar _appBar = GetAppBar;
+            AppBar _appbar = GetAppBar;
 
-            if (_appBar == null || _appBar.Visibility == Visibility.Visible)
+            if (_appbar == null || _appbar.Visibility == Visibility.Visible)
             {
                 return;
             }
 
-            _appBar.AppBarShow();
+            _appbar.AppBarShow();
         }
 
         private void Hide_Click(object sender, EventArgs e)
         {
-            AppBar _appBar = GetAppBar;
+            AppBar _appbar = GetAppBar;
 
-            if (_appBar == null || _appBar.Visibility == Visibility.Hidden)
+            if (_appbar == null || _appbar.Visibility == Visibility.Hidden)
             {
                 return;
             }
 
-            _appBar.AppBarHide();
+            _appbar.AppBarHide();
         }
 
         private void Donate_Click(object sender, RoutedEventArgs e)

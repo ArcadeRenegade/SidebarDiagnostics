@@ -97,7 +97,7 @@ namespace SidebarDiagnostics
 
             if (_openSettings)
             {
-                (App.Current as App).OpenSettings();
+                (Application.Current as App).OpenSettings();
             }
         }
 
@@ -115,7 +115,7 @@ namespace SidebarDiagnostics
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            (App.Current as App).OpenSettings();
+            (Application.Current as App).OpenSettings();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

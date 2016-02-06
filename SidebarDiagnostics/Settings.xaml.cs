@@ -22,8 +22,7 @@ namespace SidebarDiagnostics
             InitializeComponent();
 
             DataContext = Model = new SettingsModel(appbar);
-
-            Owner = appbar;
+            
             Show();
         }
 
@@ -33,7 +32,14 @@ namespace SidebarDiagnostics
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
             {
-                (Owner as AppBar).Reload();
+                AppBar _appbar = (Application.Current as App).GetAppBar;
+
+                if (_appbar == null)
+                {
+                    return;
+                }
+
+                _appbar.Reload();
             }));
         }
 
@@ -264,7 +270,12 @@ namespace SidebarDiagnostics
             Close();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            Save();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

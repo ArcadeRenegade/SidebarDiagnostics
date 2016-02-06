@@ -26,8 +26,8 @@
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons_SM}">
             <Button Content="Save" Click="SaveButton_Click" />
-            <Button Content="Apply" Click="SaveButton_Click" />
-            <Button Content="Cancel" Click="CancelButton_Click" Style="{StaticResource NeutralButton_SM}" />
+            <Button Content="Apply" Click="ApplyButton_Click" />
+            <Button Content="Close" Click="CloseButton_Click" Style="{StaticResource NeutralButton_SM}" />
         </StackPanel>
         <TabControl Style="{StaticResource SettingTab}">
             <TabItem Header="General">
@@ -211,7 +211,7 @@
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>
-                                                    <GridViewColumn Header="Hardware" HeaderContainerStyle="{StaticResource MonitorHardwareHeader}" Width="230">
+                                                    <GridViewColumn Header="Hardware" HeaderContainerStyle="{StaticResource MonitorHardwareHeader}" Width="210">
                                                         <GridViewColumn.CellTemplate>
                                                             <DataTemplate>
                                                                 <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Style="{StaticResource MonitorHardwareText}" />

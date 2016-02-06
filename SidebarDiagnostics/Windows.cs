@@ -206,11 +206,11 @@ namespace SidebarDiagnostics.Windows
 
                             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
                             {
-                                AppBar _appBar = (Application.Current as App).GetAppBar;
+                                AppBar _appbar = (Application.Current as App).GetAppBar;
 
-                                if (_appBar != null && _appBar.Ready)
+                                if (_appbar != null && _appbar.Ready)
                                 {
-                                    _appBar.Model.Reload();
+                                    _appbar.Model.Reload();
                                 }
                             }));
 

@@ -74,12 +74,12 @@ namespace SidebarDiagnostics.Updates
 
         private static void ShowNoUpdateDialog()
         {
-            MessageBox.Show("You have the latest version.", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBox.Show("You have the latest version.", Constants.Generic.PROGRAMNAME, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
 
         private static void ShowUpdateDialog(string newVersionNo, string downloadURL)
         {
-            MessageBoxResult _result = MessageBox.Show(string.Format("A new version v{0} is available. Download it?", newVersionNo), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBoxResult _result = MessageBox.Show(string.Format("A new version v{0} is available. Download it?", newVersionNo), Constants.Generic.PROGRAMNAME, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly);
 
             if (_result == MessageBoxResult.Yes)
             {
@@ -89,7 +89,7 @@ namespace SidebarDiagnostics.Updates
 
         private static void ShowErrorDialog()
         {
-            MessageBox.Show("Could not check for updates. Check your internet connection.", Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBox.Show("Could not check for updates. Check your internet connection.", Constants.Generic.PROGRAMNAME, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
 
         private class CheckResult
