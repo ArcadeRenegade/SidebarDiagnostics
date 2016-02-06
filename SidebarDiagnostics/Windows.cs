@@ -78,10 +78,10 @@ namespace SidebarDiagnostics.Windows
     internal static class NativeMethods
     {
         [DllImport("user32.dll")]
-        internal static extern int GetWindowLong(IntPtr hwnd, int index);
+        internal static extern int GetWindowLongPtr(IntPtr hwnd, int index);
 
         [DllImport("user32.dll")]
-        internal static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
+        internal static extern int SetWindowLongPtr(IntPtr hwnd, int index, int newStyle);
 
         [DllImport("user32.dll")]
         internal static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwnd_after, int x, int y, int cx, int cy, uint uflags);
@@ -297,10 +297,17 @@ namespace SidebarDiagnostics.Windows
                 return;
             }
 
+            Disable();
+
             _window = window;
             _index = 0;
 
-            RegisteredKeys = settings.Select(h => Register(h, true)).ToArray();
+            RegisteredKeys = settings.Select(h =>
+            {
+                h.Index = _index;
+                _index++;
+                return h;
+            }).ToArray();
 
             (PresentationSource.FromVisual(window) as HwndSource).AddHook(KeyHook);
         }
@@ -314,7 +321,7 @@ namespace SidebarDiagnostics.Windows
 
             foreach (Hotkey _hotkey in RegisteredKeys)
             {
-                Register(_hotkey, false);
+                Register(_hotkey);
             }
         }
 
@@ -331,12 +338,7 @@ namespace SidebarDiagnostics.Windows
             }
         }
 
-        public static void Add(Hotkey hotkey)
-        {
-            Register(hotkey, true);
-        }
-
-        private static Hotkey Register(Hotkey hotkey, bool add)
+        private static void Register(Hotkey hotkey)
         {
             uint _mods = MODIFIERS.MOD_NOREPEAT;
 
@@ -360,20 +362,12 @@ namespace SidebarDiagnostics.Windows
                 _mods |= MODIFIERS.MOD_WIN;
             }
 
-            if (add)
-            {
-                hotkey.Index = _index;
-                _index++;
-            }
-
             NativeMethods.RegisterHotKey(
                 new WindowInteropHelper(_window).Handle,
                 hotkey.Index,
                 _mods,
                 hotkey.VirtualKey
                 );
-
-            return hotkey;
         }
 
         private static void Unregister(Hotkey hotkey)
@@ -438,20 +432,6 @@ namespace SidebarDiagnostics.Windows
         private static int _index { get; set; }
     }
 
-    public static class ClickThrough
-    {
-        private const int WS_EX_TRANSPARENT = 32;
-        private const int GWL_EXSTYLE = -20;
-
-        public static void SetClickThrough(Window window)
-        {
-            IntPtr _hwnd = new WindowInteropHelper(window).Handle;
-            int _style = NativeMethods.GetWindowLong(_hwnd, GWL_EXSTYLE);
-
-            NativeMethods.SetWindowLong(_hwnd, GWL_EXSTYLE, _style | WS_EX_TRANSPARENT);
-        }
-    }
-
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT
     {
@@ -460,10 +440,54 @@ namespace SidebarDiagnostics.Windows
         public int Right;
         public int Bottom;
     }
-
-    public class MonitorInfo
+    
+    public class WorkArea
     {
-        internal const uint DPICONST = 96u;
+        public double Left { get; set; }
+
+        public double Top { get; set; }
+
+        public double Right { get; set; }
+
+        public double Bottom { get; set; }
+
+        public double Width
+        {
+            get
+            {
+                return Right - Left;
+            }
+        }
+
+        public double Height
+        {
+            get
+            {
+                return Bottom - Top;
+            }
+        }
+    }
+
+    public class Monitor
+    {
+        private const uint DPICONST = 96u;
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct MONITORINFO
+        {
+            public int cbSize;
+            public RECT Size;
+            public RECT WorkArea;
+            public bool IsPrimary;
+        }
+
+        internal enum MONITOR_DPI_TYPE : int
+        {
+            MDT_EFFECTIVE_DPI = 0,
+            MDT_ANGULAR_DPI = 1,
+            MDT_RAW_DPI = 2,
+            MDT_DEFAULT = MDT_EFFECTIVE_DPI
+        }
 
         public RECT Size { get; set; }
 
@@ -506,72 +530,25 @@ namespace SidebarDiagnostics.Windows
         }
 
         public bool IsPrimary { get; set; }
-    }
-
-    public class WorkArea
-    {
-        public double Left { get; set; }
-
-        public double Top { get; set; }
-
-        public double Right { get; set; }
-
-        public double Bottom { get; set; }
-
-        public double Width
-        {
-            get
-            {
-                return Right - Left;
-            }
-        }
-
-        public double Height
-        {
-            get
-            {
-                return Bottom - Top;
-            }
-        }
-    }
-
-    public static class Monitor
-    {
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct MONITORINFO
-        {
-            public int cbSize;
-            public RECT Size;
-            public RECT WorkArea;
-            public bool IsPrimary;
-        }
-
-        internal enum MONITOR_DPI_TYPE : int
-        {
-            MDT_EFFECTIVE_DPI = 0,
-            MDT_ANGULAR_DPI = 1,
-            MDT_RAW_DPI = 2,
-            MDT_DEFAULT = MDT_EFFECTIVE_DPI
-        }
 
         internal delegate bool EnumCallback(IntPtr hDesktop, IntPtr hdc, ref RECT pRect, int dwData);
 
-        public static MonitorInfo GetMonitor(IntPtr hMonitor)
+        public static Monitor GetMonitor(IntPtr hMonitor)
         {
             MONITORINFO _info = new MONITORINFO();
             _info.cbSize = Marshal.SizeOf(_info);
 
             NativeMethods.GetMonitorInfo(hMonitor, ref _info);
 
-            uint _dpiX = MonitorInfo.DPICONST;
-            uint _dpiY = MonitorInfo.DPICONST;
+            uint _dpiX = Monitor.DPICONST;
+            uint _dpiY = Monitor.DPICONST;
 
             if (OS.SupportDPI)
             {
                 NativeMethods.GetDpiForMonitor(hMonitor, MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out _dpiX, out _dpiY);
             }
 
-            return new MonitorInfo()
+            return new Monitor()
             {
                 Size = _info.Size,
                 WorkArea = _info.WorkArea,
@@ -581,9 +558,9 @@ namespace SidebarDiagnostics.Windows
             };
         }
 
-        public static MonitorInfo[] GetMonitors()
+        public static Monitor[] GetMonitors()
         {
-            List<MonitorInfo> _monitors = new List<MonitorInfo>();
+            List<Monitor> _monitors = new List<Monitor>();
 
             EnumCallback _callback = (IntPtr hMonitor, IntPtr hdc, ref RECT pRect, int dwData) =>
             {
@@ -597,9 +574,9 @@ namespace SidebarDiagnostics.Windows
             return _monitors.OrderByDescending(m => m.IsPrimary).ToArray();
         }
 
-        public static MonitorInfo GetMonitorFromIndex(int index)
+        public static Monitor GetMonitorFromIndex(int index)
         {
-            MonitorInfo[] _monitors = GetMonitors();
+            Monitor[] _monitors = GetMonitors();
 
             if (index < _monitors.Length)
                 return _monitors[index];
@@ -607,9 +584,12 @@ namespace SidebarDiagnostics.Windows
                 return _monitors.Where(s => s.IsPrimary).Single();
         }
         
-        public static void GetWorkArea(AppBarWindow window, out WorkArea windowWA, out WorkArea appbarWA)
+        public static void GetWorkArea(AppBarWindow window, out int screen, out DockEdge edge, out WorkArea windowWA, out WorkArea appbarWA)
         {
-            MonitorInfo _screen = GetMonitorFromIndex(Properties.Settings.Default.ScreenIndex);
+            screen = Properties.Settings.Default.ScreenIndex;
+            edge = Properties.Settings.Default.DockEdge;
+
+            Monitor _screen = GetMonitorFromIndex(screen);
 
             double _screenX = _screen.ScaleX;
             double _screenY = _screen.ScaleY;
@@ -642,12 +622,12 @@ namespace SidebarDiagnostics.Windows
 
             double _modifyX = 0d;
 
-            if (window.IsAppBar)
+            if (window.IsAppBar && window.Screen == screen && window.DockEdge == edge)
             {
                 _modifyX = window.AppBarWidth;
             }
 
-            switch (Properties.Settings.Default.DockEdge)
+            switch (edge)
             {
                 case DockEdge.Left:
                     windowWA.Right = windowWA.Left + _windowWidth - _modifyX;
@@ -682,7 +662,7 @@ namespace SidebarDiagnostics.Windows
                 double _newWidth = _oldWidth * _screenX;
                 double _delta = _newWidth - _oldWidth;
 
-                switch (Properties.Settings.Default.DockEdge)
+                switch (edge)
                 {
                     case DockEdge.Left:
                         appbarWA.Right += _delta;
@@ -726,7 +706,7 @@ namespace SidebarDiagnostics.Windows
 
             IntPtr _hmonitor = NativeMethods.MonitorFromWindow(_hwnd, 0);
 
-            MonitorInfo _monitorInfo = Monitor.GetMonitor(_hmonitor);
+            Monitor _monitorInfo = Monitor.GetMonitor(_hmonitor);
 
             UpdateScale(_monitorInfo.ScaleX, _monitorInfo.ScaleY, true);
         }
@@ -862,17 +842,39 @@ namespace SidebarDiagnostics.Windows
         {
             public static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
             public static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+            public static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
 
             public const uint SWP_NOSIZE = 0x0001;
             public const uint SWP_NOMOVE = 0x0002;
             public const uint SWP_NOACTIVATE = 0x0010;
         }
 
+        private static class WND_STYLE
+        {
+            public const int GWL_EXSTYLE = -20;
+            public const int WS_EX_TRANSPARENT = 32;
+        }
+
         public void SetTop()
+        {
+            SetZ(HWND_FLAG.HWND_TOPMOST);
+        }
+
+        public void ClearTop()
+        {
+            SetZ(HWND_FLAG.HWND_NOTOPMOST);
+        }
+
+        public void SetBottom()
+        {
+            SetZ(HWND_FLAG.HWND_BOTTOM);
+        }
+
+        private void SetZ(IntPtr hwnd_after)
         {
             NativeMethods.SetWindowPos(
                 new WindowInteropHelper(this).Handle,
-                HWND_FLAG.HWND_TOPMOST,
+                hwnd_after,
                 0,
                 0,
                 0,
@@ -881,20 +883,23 @@ namespace SidebarDiagnostics.Windows
                 );
         }
 
-        public void SetBottom()
+        public void SetClickThrough()
         {
-            NativeMethods.SetWindowPos(
-                new WindowInteropHelper(this).Handle,
-                HWND_FLAG.HWND_BOTTOM,
-                0,
-                0,
-                0,
-                0,
-                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE | HWND_FLAG.SWP_NOACTIVATE
-                );
+            IntPtr _hwnd = new WindowInteropHelper(this).Handle;
+            int _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
+
+            NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style | WND_STYLE.WS_EX_TRANSPARENT);
         }
 
-        public void SetAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
+        public void ClearClickThrough()
+        {
+            IntPtr _hwnd = new WindowInteropHelper(this).Handle;
+            int _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
+
+            NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style & ~WND_STYLE.WS_EX_TRANSPARENT);
+        }
+
+        public void SetAppBar(int screen, DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
         {
             if (edge == DockEdge.None)
             {
@@ -904,7 +909,6 @@ namespace SidebarDiagnostics.Windows
             if (!IsAppBar)
             {
                 IsAppBar = true;
-                DockEdge = edge;
 
                 APPBARDATA _data = NewData();
 
@@ -912,7 +916,10 @@ namespace SidebarDiagnostics.Windows
 
                 NativeMethods.SHAppBarMessage(APPBARMSG.ABM_NEW, ref _data);
             }
-            
+
+            Screen = screen;
+            DockEdge = edge;
+
             DockAppBar(edge, windowWA, appbarWA);
         }
 
@@ -920,7 +927,7 @@ namespace SidebarDiagnostics.Windows
         {
             if (!IsAppBar)
             {
-                throw new InvalidOperationException("This window is not a registered AppBar.");
+                return;
             }
 
             _source.RemoveHook(AppBarHook);
@@ -937,12 +944,14 @@ namespace SidebarDiagnostics.Windows
         {
             if (Properties.Settings.Default.UseAppBar)
             {
+                int _screen;
+                DockEdge _edge;
                 WorkArea _windowWA;
                 WorkArea _appbarWA;
 
-                Monitor.GetWorkArea(this, out _windowWA, out _appbarWA);
+                Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
 
-                SetAppBar(DockEdge, _windowWA, _appbarWA);
+                SetAppBar(_screen, _edge, _windowWA, _appbarWA);
             }
 
             Show();
@@ -1027,12 +1036,14 @@ namespace SidebarDiagnostics.Windows
 
                             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
                             {
+                                int _screen;
+                                DockEdge _edge;
                                 WorkArea _windowWA;
                                 WorkArea _appbarWA;
 
-                                Monitor.GetWorkArea(this, out _windowWA, out _appbarWA);
+                                Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
 
-                                DockAppBar(DockEdge, _windowWA, _appbarWA);
+                                SetAppBar(_screen, _edge, _windowWA, _appbarWA);
                             }));
 
                             _cancelReposition = null;
@@ -1061,6 +1072,8 @@ namespace SidebarDiagnostics.Windows
         }
 
         public bool IsAppBar { get; private set; } = false;
+
+        public int Screen { get; private set; } = 0;
 
         public DockEdge DockEdge { get; private set; } = DockEdge.None;
 

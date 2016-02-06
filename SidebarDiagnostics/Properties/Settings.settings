@@ -71,7 +71,7 @@
     <Setting Name="Clock24HR" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MonitorConfig" Type="SidebarDiagnostics.Monitor.MonitorConfig[]" Scope="User">
+    <Setting Name="MonitorConfig" Type="SidebarDiagnostics.Monitoring.MonitorConfig[]" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Hotkeys" Type="SidebarDiagnostics.Windows.Hotkey[]" Scope="User">

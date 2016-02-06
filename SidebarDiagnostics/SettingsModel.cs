@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using SidebarDiagnostics.Utilities;
-using SidebarDiagnostics.Monitor;
+using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Properties;
 
@@ -15,7 +15,7 @@ namespace SidebarDiagnostics.Models
             DockEdgeItems = new DockEdge[2] { DockEdge.Left, DockEdge.Right };
             DockEdge = Properties.Settings.Default.DockEdge;
 
-            MonitorInfo[] _monitors = Windows.Monitor.GetMonitors();
+            Monitor[] _monitors = Monitor.GetMonitors();
 
             ScreenItems = _monitors.Select((s, i) => new ScreenItem() { Index = i, Text = string.Format("#{0}", i + 1) }).ToArray();
 
@@ -110,6 +110,8 @@ namespace SidebarDiagnostics.Models
 
                 CloseKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Close);
             }
+
+            IsChanged = false;
         }
 
         public void Save()
@@ -178,19 +180,44 @@ namespace SidebarDiagnostics.Models
             {
                 Startup.DisableStartupTask();
             }
+
+            IsChanged = false;
         }
 
         public void NotifyPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler _handler = PropertyChanged;
 
-            if (_handler != null)
+            if (_handler == null)
             {
-                _handler(this, new PropertyChangedEventArgs(propertyName));
+                return;
+            }
+
+            _handler(this, new PropertyChangedEventArgs(propertyName));
+
+            if (propertyName != "IsChanged")
+            {
+                IsChanged = true;
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private bool _isChanged { get; set; } = false;
+
+        public bool IsChanged
+        {
+            get
+            {
+                return _isChanged;
+            }
+            set
+            {
+                _isChanged = value;
+
+                NotifyPropertyChanged("IsChanged");
+            }
+        }
 
         private DockEdge _dockEdge { get; set; }
 

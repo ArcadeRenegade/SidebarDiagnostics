@@ -46,7 +46,7 @@
             <Style x:Key="Loading" TargetType="{x:Type Ellipse}">
                 <Setter Property="Width" Value="40" />
                 <Setter Property="Height" Value="40" />
-                <Setter Property="Stroke" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
+                <Setter Property="Stroke" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="StrokeThickness" Value="5" />
                 <Setter Property="StrokeDashArray" Value="18" />
                 <Setter Property="Opacity" Value="0.85" />
@@ -75,7 +75,7 @@
             </Style>
 
             <Style x:Key="IconButton" TargetType="{x:Type Button}">
-                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                 <Setter Property="Template">
@@ -109,11 +109,11 @@
             </Style>
 
             <Style x:Key="AppIcon" TargetType="{x:Type Path}">
-                <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize, Mode=OneTime}" />
-                <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize, Mode=OneTime}" />
+                <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize, Mode=OneWay}" />
+                <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.IconSize, Mode=OneWay}" />
                 <Setter Property="Margin" Value="0,0,10,0" />
                 <Setter Property="Stretch" Value="Uniform" />
-                <Setter Property="Fill" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
+                <Setter Property="Fill" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
 
@@ -121,16 +121,16 @@
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
-                <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.TitleFontSize, Mode=OneTime}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneWay}" />
+                <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.TitleFontSize, Mode=OneWay}" />
             </Style>
 
             <Style x:Key="AppText" TargetType="{x:Type TextBlock}">
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
-                <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.SmallFontSize, Mode=OneTime}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneWay}" />
+                <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.SmallFontSize, Mode=OneWay}" />
                 <Setter Property="TextWrapping" Value="WrapWithOverflow" />
             </Style>
 
@@ -170,10 +170,10 @@
             </Style>
 
             <Style x:Key="DataText" TargetType="{x:Type TextBlock}">
-                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
-                <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize, Mode=OneTime}" />
+                <Setter Property="FontSize" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.FontSize, Mode=OneWay}" />
                 <Setter Property="TextWrapping" Value="WrapWithOverflow" />
             </Style>
 
@@ -184,7 +184,7 @@
             <Style x:Key="SensorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataText}">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
-                        <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor, Mode=OneTime}" />
+                        <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor, Mode=OneWay}" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -193,10 +193,10 @@
                 <Setter Property="Minimum" Value="0" />
                 <Setter Property="Maximum" Value="100" />
                 <Setter Property="Margin" Value="8,2,0,0" />
-                <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarWidth, Mode=OneTime}" />
-                <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarHeight, Mode=OneTime}" />
+                <Setter Property="Width" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarWidth, Mode=OneWay}" />
+                <Setter Property="Height" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarHeight, Mode=OneWay}" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Template">
                     <Setter.Value>
@@ -206,7 +206,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
-                                    <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor, Mode=OneTime}" />
+                                    <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=AlertFontColor, Mode=OneWay}" />
                                 </DataTrigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -501,7 +501,7 @@
 
             <Style TargetType="{x:Type ScrollBar}">
                 <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneTime}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static prop:Settings.Default}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Width" Value="7" />
                 <Setter Property="Template">

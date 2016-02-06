@@ -301,9 +301,9 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public SidebarDiagnostics.Monitor.MonitorConfig[] MonitorConfig {
+        public SidebarDiagnostics.Monitoring.MonitorConfig[] MonitorConfig {
             get {
-                return ((SidebarDiagnostics.Monitor.MonitorConfig[])(this["MonitorConfig"]));
+                return ((SidebarDiagnostics.Monitoring.MonitorConfig[])(this["MonitorConfig"]));
             }
             set {
                 this["MonitorConfig"] = value;

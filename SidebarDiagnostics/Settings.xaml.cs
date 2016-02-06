@@ -7,7 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Models;
-using SidebarDiagnostics.Monitor;
+using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
@@ -22,11 +22,12 @@ namespace SidebarDiagnostics
             InitializeComponent();
 
             DataContext = Model = new SettingsModel(appbar);
-            
-            Show();
+
+            Owner = appbar;
+            ShowDialog();
         }
 
-        private void Save()
+        private void Save(bool finalize)
         {
             Model.Save();
 
@@ -39,7 +40,7 @@ namespace SidebarDiagnostics
                     return;
                 }
 
-                _appbar.Reload();
+                _appbar.Reset(finalize);
             }));
         }
 
@@ -266,13 +267,13 @@ namespace SidebarDiagnostics
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Save();
+            Save(true);
             Close();
         }
 
         private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
-            Save();
+            Save(false);
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

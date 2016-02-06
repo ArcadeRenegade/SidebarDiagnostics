@@ -32,44 +32,43 @@ namespace SidebarDiagnostics
             Close();
         }
 
-        private void InitAll()
+        public void Reset(bool enableHotkeys)
         {
-            InitWindow();
-            InitAppBar();
+            if (!Ready)
+            {
+                return;
+            }
 
-            new InitHandler(InitContent).BeginInvoke(null, null);
+            Ready = false;
+
+            BindSettings(enableHotkeys);
+
+            new BindModelHandler(BindModel).BeginInvoke(null, null);
         }
 
-        private delegate void InitHandler();
-
-        private void InitWindow()
+        private void Initialize()
         {
-            if (Properties.Settings.Default.AlwaysTop)
-            {
-                SetTop();
-            }
-
-            if (Properties.Settings.Default.ClickThrough)
-            {
-                ClickThrough.SetClickThrough(this);
-            }
+            Devices.Initialize(this);
 
             if (OS.SupportVirtualDesktop)
             {
                 VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
             }
 
-            Hotkey.Initialize(this, Properties.Settings.Default.Hotkeys);
-            Devices.Initialize(this);
+            BindSettings(true);
+
+            new BindModelHandler(BindModel).BeginInvoke(null, null);
         }
 
-        private void InitAppBar()
+        private void BindSettings(bool enableHotkeys)
         {
+            int _screen;
+            DockEdge _edge;
             WorkArea _windowWA;
             WorkArea _appbarWA;
 
-            Windows.Monitor.GetWorkArea(this, out _windowWA, out _appbarWA);
-            
+            Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
+
             Left = _windowWA.Left;
             Top = _windowWA.Top;
             Width = _windowWA.Width;
@@ -77,18 +76,55 @@ namespace SidebarDiagnostics
 
             if (Properties.Settings.Default.UseAppBar)
             {
-                SetAppBar(Properties.Settings.Default.DockEdge, _windowWA, _appbarWA);
+                SetAppBar(_screen, _edge, _windowWA, _appbarWA);
+            }
+            else
+            {
+                ClearAppBar();
+            }
+
+            if (Properties.Settings.Default.AlwaysTop)
+            {
+                SetTop();
+            }
+            else
+            {
+                ClearTop();
+            }
+
+            if (Properties.Settings.Default.ClickThrough)
+            {
+                SetClickThrough();
+            }
+            else
+            {
+                ClearClickThrough();
+            }
+
+            Hotkey.Initialize(this, Properties.Settings.Default.Hotkeys);
+
+            if (enableHotkeys)
+            {
+                Hotkey.Enable();
             }
         }
 
-        private void InitContent()
+        private delegate void BindModelHandler();
+
+        private void BindModel()
         {
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new InitCompleteHandler(InitComplete), new AppBarModel());
+            if (Model != null)
+            {
+                Model.Dispose();
+                Model = null;
+            }
+
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ModelReadyHandler(ModelReady), new AppBarModel());
         }
 
-        private delegate void InitCompleteHandler(AppBarModel model);
+        private delegate void ModelReadyHandler(AppBarModel model);
 
-        private void InitComplete(AppBarModel model)
+        private void ModelReady(AppBarModel model)
         {
             DataContext = Model = model;
             model.Start();
@@ -97,6 +133,8 @@ namespace SidebarDiagnostics
 
             if (_openSettings)
             {
+                _openSettings = false;
+
                 (Application.Current as App).OpenSettings();
             }
         }
@@ -145,7 +183,7 @@ namespace SidebarDiagnostics
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            InitAll();
+            Initialize();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

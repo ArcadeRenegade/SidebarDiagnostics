@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Hardcodet.Wpf.TaskbarNotification;
 using SidebarDiagnostics.Updates;
-using SidebarDiagnostics.Monitor;
+using SidebarDiagnostics.Monitoring;
 
 namespace SidebarDiagnostics
 {

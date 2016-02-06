@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using OpenHardwareMonitor.Hardware;
 
-namespace SidebarDiagnostics.Monitor
+namespace SidebarDiagnostics.Monitoring
 {
     public class MonitorManager : INotifyPropertyChanged, IDisposable
     {

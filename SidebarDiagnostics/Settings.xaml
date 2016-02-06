@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
-        xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitor"
+        xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitoring"
         xmlns:convert="clr-namespace:SidebarDiagnostics.Converters"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
@@ -26,8 +26,19 @@
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons_SM}">
             <Button Content="Save" Click="SaveButton_Click" />
-            <Button Content="Apply" Click="ApplyButton_Click" />
-            <Button Content="Close" Click="CloseButton_Click" Style="{StaticResource NeutralButton_SM}" />
+            <Button Content="Apply" IsEnabled="{Binding Path=IsChanged, Mode=OneWay}" Click="ApplyButton_Click" />
+            <Button Click="CloseButton_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NeutralButton_SM}">
+                        <Setter Property="Content" Value="Close" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsChanged, Mode=OneWay}" Value="True">
+                                <Setter Property="Content" Value="Cancel" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
         <TabControl Style="{StaticResource SettingTab}">
             <TabItem Header="General">

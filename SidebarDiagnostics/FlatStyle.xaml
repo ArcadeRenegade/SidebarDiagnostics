@@ -134,17 +134,24 @@
         <Setter Property="Foreground" Value="#FFFFFF" />
         <Setter Property="Background" Value="#3498DB" />
         <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Padding="{TemplateBinding Padding}" CornerRadius="4">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" CornerRadius="4">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#666666" />
+                <Setter Property="Background" Value="#FFFFFF" />
+                <Setter Property="BorderBrush" Value="#666666" />
+                <Setter Property="BorderThickness" Value="1" />
+            </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#2980B9" />
             </Trigger>
@@ -152,6 +159,7 @@
     </Style>
 
     <Style x:Key="WindowButton_SM" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowButton}">
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Padding" Value="14,8" />
     </Style>
 
@@ -165,6 +173,7 @@
     </Style>
 
     <Style x:Key="SuccessButton_SM" TargetType="{x:Type Button}" BasedOn="{StaticResource SuccessButton}">
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Padding" Value="14,8" />
     </Style>
 
@@ -178,6 +187,7 @@
     </Style>
 
     <Style x:Key="ErrorButton_SM" TargetType="{x:Type Button}" BasedOn="{StaticResource ErrorButton}">
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Padding" Value="14,8" />
     </Style>
 
@@ -191,6 +201,7 @@
     </Style>
 
     <Style x:Key="NeutralButton_SM" TargetType="{x:Type Button}" BasedOn="{StaticResource NeutralButton}">
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Padding" Value="14,8" />
     </Style>
 

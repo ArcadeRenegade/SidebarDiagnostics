@@ -134,7 +134,7 @@
     <Compile Include="Dummy.xaml.cs">
       <DependentUpon>Dummy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Monitor.cs" />
+    <Compile Include="Monitoring.cs" />
     <Compile Include="SettingsModel.cs" />
     <Compile Include="Setup.xaml.cs">
       <DependentUpon>Setup.xaml</DependentUpon>

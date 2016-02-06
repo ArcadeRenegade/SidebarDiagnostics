@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Threading;
-using SidebarDiagnostics.Monitor;
+using SidebarDiagnostics.Monitoring;
 
 namespace SidebarDiagnostics.Models
 {

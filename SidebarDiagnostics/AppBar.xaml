@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:prop="clr-namespace:SidebarDiagnostics.Properties"
-        xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitor"
+        xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitoring"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
@@ -16,7 +16,7 @@
         MouseLeave="Window_MouseLeave"
         Title="Sidebar"
         Icon="Icon.ico"
-        Width="{Binding Source={x:Static prop:Settings.Default}, Path=SidebarWidth, Mode=OneTime}"
+        Width="{Binding Source={x:Static prop:Settings.Default}, Path=SidebarWidth, Mode=OneWay}"
         Height="800"
         AutoDPI="False"
         AllowsTransparency="True"
@@ -24,7 +24,7 @@
         ResizeMode="NoResize"
         WindowStyle="None">
     <Window.Background>
-        <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity, Mode=OneTime}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor, Mode=OneTime}" />
+        <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity, Mode=OneWay}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor, Mode=OneWay}" />
     </Window.Background>
     <Grid>
         <StackPanel Style="{StaticResource LoadingPanel}">
@@ -70,7 +70,7 @@
                         <ContentControl.Style>
                             <Style TargetType="{x:Type ContentControl}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Source={x:Static prop:Settings.Default}, Path=ShowClock, Mode=OneTime}" Value="True">
+                                    <DataTrigger Binding="{Binding Source={x:Static prop:Settings.Default}, Path=ShowClock, Mode=OneWay}" Value="True">
                                         <Setter Property="Content">
                                             <Setter.Value>
                                                 <StackPanel Style="{StaticResource GroupPanel}">
@@ -84,7 +84,7 @@
                                                             <ContentControl.Style>
                                                                 <Style TargetType="{x:Type ContentControl}">
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding Path=ShowDate, Mode=OneTime}" Value="True">
+                                                                        <DataTrigger Binding="{Binding Path=ShowDate, Mode=OneWay}" Value="True">
                                                                             <Setter Property="Content">
                                                                                 <Setter.Value>
                                                                                     <TextBlock Text="{Binding Path=Date, Mode=OneWay}" Margin="0,4,0,0" Style="{StaticResource AppText}" />
