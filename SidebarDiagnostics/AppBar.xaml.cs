@@ -27,6 +27,8 @@ namespace SidebarDiagnostics
                 return;
             }
 
+            Ready = false;
+
             App._reloading = true;
 
             Close();

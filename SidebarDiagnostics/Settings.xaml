@@ -182,7 +182,7 @@
                             <DataGridTemplateColumn Header="Enabled" HeaderStyle="{StaticResource MonitorGridHeaderCenter}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
-                                        <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enables this monitor." />
+                                        <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="Control_ValueChanged" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enables this monitor." />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -218,7 +218,7 @@
                                                     <GridViewColumn Header="Enabled" HeaderContainerStyle="{StaticResource MonitorHardwareHeaderCenter}">
                                                         <GridViewColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables this hardware." Style="{StaticResource MonitorHardwareCheckbox}" />
+                                                                <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="Control_ValueChanged" ToolTip="Enables this hardware." Style="{StaticResource MonitorHardwareCheckbox}" />
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>
@@ -236,34 +236,55 @@
                                         <ItemsControl ItemsSource="{Binding Path=Params}" Margin="10">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate DataType="{x:Type monitor:ConfigParam}">
-                                                    <ContentControl Content="{Binding}">
+                                                    <ContentControl>
                                                         <ContentControl.Style>
                                                             <Style TargetType="{x:Type ContentControl}">
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding TypeString}" Value="System.Boolean">
-                                                                        <Setter Property="ContentTemplate">
+                                                                        <Setter Property="Content">
                                                                             <Setter.Value>
-                                                                                <DataTemplate>
-                                                                                    <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" Style="{StaticResource MonitorParamBool}" />
-                                                                                </DataTemplate>
+                                                                                <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" />
                                                                             </Setter.Value>
                                                                         </Setter>
                                                                     </DataTrigger>
                                                                     <DataTrigger Binding="{Binding TypeString}" Value="System.Int32">
-                                                                        <Setter Property="ContentTemplate">
+                                                                        <Setter Property="Content">
                                                                             <Setter.Value>
-                                                                                <DataTemplate>
-                                                                                    <StackPanel Style="{StaticResource MonitorParamInt}">
-                                                                                        <Label Content="{Binding Path=Name, Mode=OneTime}" />
-                                                                                        <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" />
-                                                                                    </StackPanel>
-                                                                                </DataTemplate>
+                                                                                <StackPanel>
+                                                                                    <Label Content="{Binding Path=Name, Mode=OneTime}" />
+                                                                                    <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" ToolTip="{Binding Path=Tooltip, Mode=OneTime}" />
+                                                                                </StackPanel>
                                                                             </Setter.Value>
                                                                         </Setter>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </ContentControl.Style>
+                                                        <ContentControl.Resources>
+                                                            <Style TargetType="{x:Type CheckBox}">
+                                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                                <Setter Property="Margin" Value="0,5" />
+                                                                <EventSetter Event="Click" Handler="Control_ValueChanged" />
+                                                            </Style>
+                                                            
+                                                            <Style TargetType="{x:Type StackPanel}">
+                                                                <Setter Property="Orientation" Value="Horizontal" />
+                                                                <Setter Property="Margin" Value="0,5" />
+                                                                <EventSetter Event="GotFocus" Handler="Control_ValueChanged" />
+                                                                <Style.Resources>
+                                                                    <Style TargetType="{x:Type Label}">
+                                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                                        <Setter Property="Margin" Value="0,0,10,0" />
+                                                                        <Setter Property="Padding" Value="0" />
+                                                                    </Style>
+                                                                    <Style TargetType="{x:Type TextBox}">
+                                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                                        <Setter Property="Width" Value="40" />
+                                                                        <Setter Property="MaxLines" Value="1" />
+                                                                    </Style>
+                                                                </Style.Resources>
+                                                            </Style>
+                                                        </ContentControl.Resources>
                                                     </ContentControl>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>

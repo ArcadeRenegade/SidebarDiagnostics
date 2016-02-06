@@ -44,6 +44,14 @@ namespace SidebarDiagnostics
             }));
         }
 
+        private void Control_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            if (Model != null)
+            {
+                Model.IsChanged = true;
+            }
+        }
+
         private void NumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (new Regex("[^0-9.-]+").IsMatch(e.Text))

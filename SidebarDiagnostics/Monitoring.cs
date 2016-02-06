@@ -800,10 +800,12 @@ namespace SidebarDiagnostics.Monitoring
         public DriveMonitor(string[] disabledHardware, ConfigParam[] parameters)
         {            
             bool _showDetails = parameters.GetValue<bool>(ParamKey.DriveDetails);
+            bool _driveSpace = parameters.GetValue<bool>(ParamKey.DriveSpace);
+            bool _driveIO = parameters.GetValue<bool>(ParamKey.DriveIO);
             bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
             int _usedSpaceAlert = parameters.GetValue<int>(ParamKey.UsedSpaceAlert);
 
-            Drives = GetHardware().Where(h => !disabledHardware.Contains(h.ID)).Select(d => new DriveInfo(d.ID, d.Name, _showDetails, _roundAll, _usedSpaceAlert)).ToArray();
+            Drives = GetHardware().Where(h => !disabledHardware.Contains(h.ID)).Select(d => new DriveInfo(d.ID, d.Name, _showDetails, _driveSpace, _driveIO, _roundAll, _usedSpaceAlert)).ToArray();
         }
 
         public void Dispose()
@@ -901,18 +903,20 @@ namespace SidebarDiagnostics.Monitoring
         private const string BYTESREADPERSECOND = "Disk Read Bytes/sec";
         private const string BYTESWRITEPERSECOND = "Disk Write Bytes/sec";
 
-        public DriveInfo(string instance, string name, bool showDetails = false, bool roundAll = false, double usedSpaceAlert = 0)
+        public DriveInfo(string instance, string name, bool showDetails = false, bool driveSpace = true, bool driveIO = true, bool roundAll = false, double usedSpaceAlert = 0)
         {
             Instance = instance;
             Label = name;
             ShowDetails = showDetails;
+            DriveSpace = driveSpace;
+            DriveIO = driveIO;
             RoundAll = roundAll;
             UsedSpaceAlert = usedSpaceAlert;
 
             _counterFreeMB = new PerformanceCounter(DriveMonitor.CATEGORYNAME, FREEMB, name);
             _counterFreePercent = new PerformanceCounter(DriveMonitor.CATEGORYNAME, PERCENTFREE, name);
 
-            if (showDetails)
+            if (showDetails && driveIO)
             {
                 _counterReadRate = new PerformanceCounter(DriveMonitor.CATEGORYNAME, BYTESREADPERSECOND, name);
                 _counterWriteRate = new PerformanceCounter(DriveMonitor.CATEGORYNAME, BYTESWRITEPERSECOND, name);
@@ -984,23 +988,29 @@ namespace SidebarDiagnostics.Monitoring
 
             if (ShowDetails)
             {
-                Load = string.Format("Load: {0:#,##0.##}%", _usedPercent.Round(RoundAll));
-                UsedGB = string.Format("Used: {0:#,##0.##} GB", _usedGB.Round(RoundAll));
-                FreeGB = string.Format("Free: {0:#,##0.##} GB", _freeGB.Round(RoundAll));
+                if (DriveSpace)
+                {
+                    Load = string.Format("Load: {0:#,##0.##}%", _usedPercent.Round(RoundAll));
+                    UsedGB = string.Format("Used: {0:#,##0.##} GB", _usedGB.Round(RoundAll));
+                    FreeGB = string.Format("Free: {0:#,##0.##} GB", _freeGB.Round(RoundAll));
+                }
 
-                double _readRate = _counterReadRate.NextValue() / 1024d;
+                if (DriveIO)
+                {
+                    double _readRate = _counterReadRate.NextValue() / 1024d;
 
-                string _readFormat;
-                Data.MinifyKiloBytesPerSecond(ref _readRate, out _readFormat);
+                    string _readFormat;
+                    Data.MinifyKiloBytesPerSecond(ref _readRate, out _readFormat);
 
-                ReadRate = string.Format("Read: {0:#,##0.##} {1}", _readRate.Round(RoundAll), _readFormat);
+                    ReadRate = string.Format("Read: {0:#,##0.##} {1}", _readRate.Round(RoundAll), _readFormat);
 
-                double _writeRate = _counterWriteRate.NextValue() / 1024d;
+                    double _writeRate = _counterWriteRate.NextValue() / 1024d;
 
-                string _writeFormat;
-                Data.MinifyKiloBytesPerSecond(ref _writeRate, out _writeFormat);
+                    string _writeFormat;
+                    Data.MinifyKiloBytesPerSecond(ref _writeRate, out _writeFormat);
 
-                WriteRate = string.Format("Write: {0:#,##0.##} {1}", _writeRate.Round(RoundAll), _writeFormat);
+                    WriteRate = string.Format("Write: {0:#,##0.##} {1}", _writeRate.Round(RoundAll), _writeFormat);
+                }
             }
 
             if (UsedSpaceAlert > 0 && UsedSpaceAlert <= _usedPercent)
@@ -1145,6 +1155,10 @@ namespace SidebarDiagnostics.Monitoring
         }
 
         public bool ShowDetails { get; private set; }
+
+        public bool DriveSpace { get; private set; }
+
+        public bool DriveIO { get; private set; }
 
         public bool RoundAll { get; private set; }
 
@@ -1615,9 +1629,11 @@ namespace SidebarDiagnostics.Monitoring
                         Enabled = true,
                         Order = 4,
                         Hardware = new HardwareConfig[0],
-                        Params = new ConfigParam[3]
+                        Params = new ConfigParam[5]
                         {
                             ConfigParam.Defaults.DriveDetails,
+                            ConfigParam.Defaults.ShowDriveSpace,
+                            ConfigParam.Defaults.ShowDriveIO,
                             ConfigParam.Defaults.RoundAll,
                             ConfigParam.Defaults.UsedSpaceAlert
                         }
@@ -1714,6 +1730,12 @@ namespace SidebarDiagnostics.Monitoring
                     case ParamKey.RoundAll:
                         return "Round All Decimals";
 
+                    case ParamKey.DriveSpace:
+                        return "Show Drive Space";
+
+                    case ParamKey.DriveIO:
+                        return "Show Drive IO";
+
                     default:
                         return "Unknown";
                 }
@@ -1758,6 +1780,12 @@ namespace SidebarDiagnostics.Monitoring
 
                     case ParamKey.RoundAll:
                         return "Round all decimal values to the nearest integer.";
+
+                    case ParamKey.DriveSpace:
+                        return "Shows load percent, used space, and free space if drive details is enabled.";
+
+                    case ParamKey.DriveIO:
+                        return "Shows drive read and write speeds if drive details is enabled.";
 
                     default:
                         return "Unknown";
@@ -1862,6 +1890,22 @@ namespace SidebarDiagnostics.Monitoring
                     return new ConfigParam() { Key = ParamKey.RoundAll, Value = false };
                 }
             }
+
+            public static ConfigParam ShowDriveSpace
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.DriveSpace, Value = true };
+                }
+            }
+
+            public static ConfigParam ShowDriveIO
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.DriveIO, Value = true };
+                }
+            }
         }
     }
 
@@ -1878,7 +1922,9 @@ namespace SidebarDiagnostics.Monitoring
         BandwidthInAlert,
         BandwidthOutAlert,
         UseBytes,
-        RoundAll
+        RoundAll,
+        DriveSpace,
+        DriveIO
     }
 
     public enum DataType : byte
