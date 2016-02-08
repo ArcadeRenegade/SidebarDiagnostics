@@ -701,12 +701,7 @@ namespace SidebarDiagnostics.Monitoring
                 {
                     _converter.Convert(ref _value);
                 }
-
-                if (Round)
-                {
-                    _value = Math.Round(_value);
-                }
-
+                
                 if (AlertValue > 0 && AlertValue <= _value)
                 {
                     if (!IsAlert)
@@ -722,7 +717,7 @@ namespace SidebarDiagnostics.Monitoring
                 Text = string.Format(
                     "{0}: {1:#,##0.##}{2}",
                     Label,
-                    _value,
+                    _value.Round(Round),
                     Append
                     );
             }
