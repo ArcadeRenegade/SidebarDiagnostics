@@ -278,6 +278,17 @@ namespace SidebarDiagnostics
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Model.IsChanged)
+            {
+                AppBar _appbar = (Application.Current as App).GetAppBar;
+
+                if (_appbar != null)
+                {
+                    DataContext = Model = new SettingsModel(_appbar);
+                    return;
+                }
+            }
+
             Close();
         }
 
