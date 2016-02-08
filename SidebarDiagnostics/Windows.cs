@@ -600,6 +600,9 @@ namespace SidebarDiagnostics.Windows
 
             double _uiScale = Properties.Settings.Default.UIScale;
 
+            double _scaleX = _screenX * _uiScale;
+            double _scaleY = _screenY * _uiScale;
+
             if (OS.SupportDPI)
             {
                 window.UpdateScale(_uiScale, _uiScale, false);
@@ -621,7 +624,7 @@ namespace SidebarDiagnostics.Windows
                 windowWA.Bottom *= _inverseY;
             }
 
-            double _windowWidth = Properties.Settings.Default.SidebarWidth * _uiScale;
+            double _windowWidth = Properties.Settings.Default.SidebarWidth * _scaleX;
 
             double _modifyX = 0d;
 
@@ -664,11 +667,11 @@ namespace SidebarDiagnostics.Windows
                 switch (edge)
                 {
                     case DockEdge.Left:
-                        appbarWA.Right = appbarWA.Left + (appbarWA.Width * _uiScale);
+                        appbarWA.Right = appbarWA.Left + (appbarWA.Width * _scaleX);
                         break;
 
                     case DockEdge.Right:
-                        appbarWA.Left = appbarWA.Right - (appbarWA.Width * _uiScale);
+                        appbarWA.Left = appbarWA.Right - (appbarWA.Width * _scaleX);
                         break;
                 }
             }
