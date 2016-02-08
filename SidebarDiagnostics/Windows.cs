@@ -599,6 +599,9 @@ namespace SidebarDiagnostics.Windows
             double _inverseY = _screen.InverseScaleY;
 
             double _uiScale = Properties.Settings.Default.UIScale;
+
+            double _abScaleX = _screenX * _uiScale;
+            double _abScaleY = _screenY * _uiScale;
             
             if (OS.SupportDPI)
             {
@@ -661,14 +664,16 @@ namespace SidebarDiagnostics.Windows
 
             if (Properties.Settings.Default.HighDPISupport)
             {
+                double _abWidth = appbarWA.Width * _abScaleX;
+
                 switch (edge)
                 {
                     case DockEdge.Left:
-                        appbarWA.Right = appbarWA.Left + (appbarWA.Width * _uiScale);
+                        appbarWA.Right = appbarWA.Left + _abWidth;
                         break;
 
                     case DockEdge.Right:
-                        appbarWA.Left = appbarWA.Right - (appbarWA.Width * _uiScale);
+                        appbarWA.Left = appbarWA.Right - _abWidth;
                         break;
                 }
             }
