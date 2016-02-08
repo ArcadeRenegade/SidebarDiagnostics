@@ -43,15 +43,7 @@ namespace SidebarDiagnostics
                 _appbar.Reset(finalize);
             }));
         }
-
-        private void Control_ValueChanged(object sender, RoutedEventArgs e)
-        {
-            if (Model != null)
-            {
-                Model.IsChanged = true;
-            }
-        }
-
+        
         private void NumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (new Regex("[^0-9.-]+").IsMatch(e.Text))
@@ -93,7 +85,7 @@ namespace SidebarDiagnostics
             _config.Where(c => c.Order == _row.Order - 1).Single().Order += 1;
             _row.Order -= 1;
 
-            Model.NotifyPropertyChanged("MonitorConfig");
+            Model.NotifyPropertyChanged("MonitorConfigSorted");
         }
 
         private void MonitorDown_Click(object sender, RoutedEventArgs e)
@@ -108,7 +100,7 @@ namespace SidebarDiagnostics
             _config.Where(c => c.Order == _row.Order + 1).Single().Order -= 1;
             _row.Order += 1;
 
-            Model.NotifyPropertyChanged("MonitorConfig");
+            Model.NotifyPropertyChanged("MonitorConfigSorted");
         }
 
         private void BindButton_LostFocus(object sender, RoutedEventArgs e)

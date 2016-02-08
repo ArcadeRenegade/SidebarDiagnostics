@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -597,9 +598,11 @@ namespace SidebarDiagnostics.Windows
             double _inverseX = _screen.InverseScaleX;
             double _inverseY = _screen.InverseScaleY;
 
+            double _uiScale = Properties.Settings.Default.UIScale;
+
             if (OS.SupportDPI)
             {
-                window.UpdateScale(_screen.ScaleX, _screen.ScaleY, false);
+                window.UpdateScale(_uiScale, _uiScale, false);
             }
 
             windowWA = new WorkArea()
@@ -618,7 +621,7 @@ namespace SidebarDiagnostics.Windows
                 windowWA.Bottom *= _inverseY;
             }
 
-            double _windowWidth = Properties.Settings.Default.SidebarWidth * _screenX;
+            double _windowWidth = Properties.Settings.Default.SidebarWidth * _uiScale;
 
             double _modifyX = 0d;
 
@@ -658,18 +661,14 @@ namespace SidebarDiagnostics.Windows
 
             if (Properties.Settings.Default.HighDPISupport)
             {
-                double _oldWidth = appbarWA.Width;
-                double _newWidth = _oldWidth * _screenX;
-                double _delta = _newWidth - _oldWidth;
-
                 switch (edge)
                 {
                     case DockEdge.Left:
-                        appbarWA.Right += _delta;
+                        appbarWA.Right = appbarWA.Left + (appbarWA.Width * _uiScale);
                         break;
 
                     case DockEdge.Right:
-                        appbarWA.Left -= _delta;
+                        appbarWA.Left = appbarWA.Right - (appbarWA.Width * _uiScale);
                         break;
                 }
             }
@@ -702,13 +701,23 @@ namespace SidebarDiagnostics.Windows
 
         public void HandleDPI()
         {
-            IntPtr _hwnd = new WindowInteropHelper(this).Handle;
+            //IntPtr _hwnd = new WindowInteropHelper(this).Handle;
 
-            IntPtr _hmonitor = NativeMethods.MonitorFromWindow(_hwnd, 0);
+            //IntPtr _hmonitor = NativeMethods.MonitorFromWindow(_hwnd, 0);
 
-            Monitor _monitorInfo = Monitor.GetMonitor(_hmonitor);
+            //Monitor _monitorInfo = Monitor.GetMonitor(_hmonitor);
 
-            UpdateScale(_monitorInfo.ScaleX, _monitorInfo.ScaleY, true);
+            double _uiScale = Properties.Settings.Default.UIScale;
+
+            UpdateScale(_uiScale, _uiScale, true);
+        }
+
+        private void UIScale_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "UIScale")
+            {
+                HandleDPI();
+            }
         }
 
         public void UpdateScale(double scaleX, double scaleY, bool resize)
@@ -732,6 +741,8 @@ namespace SidebarDiagnostics.Windows
 
         private void DPIAwareWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.PropertyChanged += UIScale_PropertyChanged;
+
             HandleDPI();
 
             (PresentationSource.FromVisual(this) as HwndSource).AddHook(WindowHook);

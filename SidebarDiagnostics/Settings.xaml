@@ -89,37 +89,44 @@
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0" Content="Horizontal Offset" />
+                    <Label Grid.Column="0" Grid.Row="0" Content="UI Scale" />
                     <DockPanel Grid.Column="1" Grid.Row="0">
+                        <TextBox Text="{Binding ElementName=UIScaleSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" />
+                        <Slider x:Name="UIScaleSlider" Value="{Binding Path=UIScale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0.5" Maximum="3.0" TickFrequency="0.1" LargeChange="0.5" ToolTip="Scale of all windows and UI components." />
+                    </DockPanel>
+
+                    <Label Grid.Column="0" Grid.Row="1" Content="Horizontal Offset" />
+                    <DockPanel Grid.Column="1" Grid.Row="1">
                         <TextBox Text="{Binding ElementName=XOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" />
                         <Slider x:Name="XOffsetSlider" Value="{Binding Path=XOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="Horizontal offset of the sidebar." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="1" Content="Vertical Offset" />
-                    <DockPanel Grid.Column="1" Grid.Row="1">
+                    <Label Grid.Column="0" Grid.Row="2" Content="Vertical Offset" />
+                    <DockPanel Grid.Column="1" Grid.Row="2">
                         <TextBox Text="{Binding ElementName=YOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" />
                         <Slider x:Name="YOffsetSlider" Value="{Binding Path=YOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="Vertical offset of the sidebar." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Polling Interval" />
-                    <DockPanel Grid.Column="1" Grid.Row="2">
+                    <Label Grid.Column="0" Grid.Row="3" Content="Polling Interval" />
+                    <DockPanel Grid.Column="1" Grid.Row="3">
                         <TextBox Text="{Binding ElementName=PollingIntervalSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" />
                         <Slider x:Name="PollingIntervalSlider" Value="{Binding Path=PollingInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="5000" TickFrequency="100" LargeChange="1000" ToolTip="Time between polling for data in milliseconds." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Allow Click Through" />
-                    <CheckBox Grid.Column="1" Grid.Row="3" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="4" Content="Allow Click Through" />
+                    <CheckBox Grid.Column="1" Grid.Row="4" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Show Tray Icon" />
-                    <CheckBox Grid.Column="1" Grid.Row="4" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;This is sometimes required." />
+                    <Label Grid.Column="0" Grid.Row="5" Content="Show Tray Icon" />
+                    <CheckBox Grid.Column="1" Grid.Row="5" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;This is sometimes required." />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="Collapse Menu Bar" />
-                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Collapse Menu Bar" />
+                    <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
                 </Grid>
             </TabItem>
             <TabItem Header="Customize">
@@ -177,12 +184,12 @@
             <TabItem Header="Monitors">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Margin="0,0,0,15" Text="Click a row to edit its settings." />
-                    <DataGrid ItemsSource="{Binding Path=MonitorConfig, Mode=OneWay}" Style="{StaticResource MonitorGrid}">
+                    <DataGrid ItemsSource="{Binding Path=MonitorConfigSorted, Mode=OneWay}" Style="{StaticResource MonitorGrid}">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Enabled" HeaderStyle="{StaticResource MonitorGridHeaderCenter}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
-                                        <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="Control_ValueChanged" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enables this monitor." />
+                                        <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enables this monitor." />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -218,7 +225,7 @@
                                                     <GridViewColumn Header="Enabled" HeaderContainerStyle="{StaticResource MonitorHardwareHeaderCenter}">
                                                         <GridViewColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="Control_ValueChanged" ToolTip="Enables this hardware." Style="{StaticResource MonitorHardwareCheckbox}" />
+                                                                <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables this hardware." Style="{StaticResource MonitorHardwareCheckbox}" />
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>
@@ -264,13 +271,11 @@
                                                             <Style TargetType="{x:Type CheckBox}">
                                                                 <Setter Property="VerticalAlignment" Value="Center" />
                                                                 <Setter Property="Margin" Value="0,5" />
-                                                                <EventSetter Event="Click" Handler="Control_ValueChanged" />
                                                             </Style>
                                                             
                                                             <Style TargetType="{x:Type StackPanel}">
                                                                 <Setter Property="Orientation" Value="Horizontal" />
                                                                 <Setter Property="Margin" Value="0,5" />
-                                                                <EventSetter Event="GotFocus" Handler="Control_ValueChanged" />
                                                                 <Style.Resources>
                                                                     <Style TargetType="{x:Type Label}">
                                                                         <Setter Property="VerticalAlignment" Value="Center" />

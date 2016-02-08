@@ -20,6 +20,9 @@
     <Setting Name="YOffset" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="UIScale" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
     <Setting Name="PollingInterval" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>

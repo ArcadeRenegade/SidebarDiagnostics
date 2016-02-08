@@ -1499,17 +1499,115 @@ namespace SidebarDiagnostics.Monitoring
     }
     
     [Serializable]
-    public class MonitorConfig
+    public class MonitorConfig : INotifyPropertyChanged, ICloneable
     {
-        public MonitorType Type { get; set; }
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler _handler = PropertyChanged;
 
-        public bool Enabled { get; set; }
+            if (_handler == null)
+            {
+                return;
+            }
 
-        public byte Order { get; set; }
+            _handler(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-        public HardwareConfig[] Hardware { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public ConfigParam[] Params { get; set; }
+        public MonitorConfig Clone()
+        {
+            MonitorConfig _clone = (MonitorConfig)MemberwiseClone();
+            _clone.Hardware = _clone.Hardware.Select(h => h.Clone()).ToArray();
+            _clone.Params = _clone.Params.Select(p => p.Clone()).ToArray();
+
+            return _clone;
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
+        private MonitorType _type { get; set; }
+
+        public MonitorType Type
+        {
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+
+                NotifyPropertyChanged("Type");
+            }
+        }
+
+        private bool _enabled { get; set; }
+
+        public bool Enabled
+        {
+            get
+            {
+                return _enabled;
+            }
+            set
+            {
+                _enabled = value;
+
+                NotifyPropertyChanged("Enabled");
+            }
+        }
+
+        private byte _order { get; set; }
+
+        public byte Order
+        {
+            get
+            {
+                return _order;
+            }
+            set
+            {
+                _order = value;
+
+                NotifyPropertyChanged("Order");
+            }
+        }
+
+        private HardwareConfig[] _hardware { get; set; }
+
+        public HardwareConfig[] Hardware
+        {
+            get
+            {
+                return _hardware;
+            }
+            set
+            {
+                _hardware = value;
+
+                NotifyPropertyChanged("Hardware");
+            }
+        }
+
+        private ConfigParam[] _params { get; set; }
+
+        public ConfigParam[] Params
+        {
+            get
+            {
+                return _params;
+            }
+            set
+            {
+                _params = value;
+
+                NotifyPropertyChanged("Params");
+            }
+        }
 
         public string Name
         {
@@ -1659,21 +1757,139 @@ namespace SidebarDiagnostics.Monitoring
     }
 
     [Serializable]
-    public class HardwareConfig
+    public class HardwareConfig : INotifyPropertyChanged, ICloneable
     {
-        public string ID { get; set; }
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler _handler = PropertyChanged;
 
-        public string Name { get; set; }
+            if (_handler == null)
+            {
+                return;
+            }
 
-        public bool Enabled { get; set; }
+            _handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public HardwareConfig Clone()
+        {
+            return (HardwareConfig)MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
+        private string _id { get; set; }
+
+        public string ID
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+
+                NotifyPropertyChanged("ID");
+            }
+        }
+
+        private string _name { get; set; }
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+
+                NotifyPropertyChanged("Name");
+            }
+        }
+
+        private bool _enabled { get; set; }
+
+        public bool Enabled
+        {
+            get
+            {
+                return _enabled;
+            }
+            set
+            {
+                _enabled = value;
+
+                NotifyPropertyChanged("Enabled");
+            }
+        }
     }
 
     [Serializable]
-    public class ConfigParam
+    public class ConfigParam : INotifyPropertyChanged, ICloneable
     {
-        public ParamKey Key { get; set; }
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler _handler = PropertyChanged;
 
-        public object Value { get; set; }
+            if (_handler == null)
+            {
+                return;
+            }
+
+            _handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ConfigParam Clone()
+        {
+            return (ConfigParam)MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
+        private ParamKey _key { get; set; }
+
+        public ParamKey Key
+        {
+            get
+            {
+                return _key;
+            }
+            set
+            {
+                _key = value;
+
+                NotifyPropertyChanged("Key");
+            }
+        }
+
+        private object _value { get; set; }
+
+        public object Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+
+                NotifyPropertyChanged("Value");
+            }
+        }
 
         public Type Type
         {

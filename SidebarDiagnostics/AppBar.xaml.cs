@@ -50,6 +50,8 @@ namespace SidebarDiagnostics
 
         private void Initialize()
         {
+            Ready = false;
+
             Devices.Initialize(this);
 
             if (OS.SupportVirtualDesktop)

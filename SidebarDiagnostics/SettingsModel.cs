@@ -28,6 +28,8 @@ namespace SidebarDiagnostics.Models
                 ScreenIndex = _monitors.Where(s => s.IsPrimary).Select((s, i) => i).Single();
             }
 
+            UIScale = Properties.Settings.Default.UIScale;
+
             XOffset = Properties.Settings.Default.XOffset;
 
             YOffset = Properties.Settings.Default.YOffset;
@@ -96,7 +98,7 @@ namespace SidebarDiagnostics.Models
                 }
             }
 
-            MonitorConfig = Properties.Settings.Default.MonitorConfig;
+            MonitorConfig = Properties.Settings.Default.MonitorConfig.Select(c => c.Clone()).ToArray();
 
             if (Properties.Settings.Default.Hotkeys != null)
             {
@@ -118,6 +120,7 @@ namespace SidebarDiagnostics.Models
         {
             Properties.Settings.Default.DockEdge = DockEdge;
             Properties.Settings.Default.ScreenIndex = ScreenIndex;
+            Properties.Settings.Default.UIScale = UIScale;
             Properties.Settings.Default.XOffset = XOffset;
             Properties.Settings.Default.YOffset = YOffset;
             Properties.Settings.Default.PollingInterval = PollingInterval;
@@ -137,7 +140,7 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.CollapseMenuBar = CollapseMenuBar;
             Properties.Settings.Default.ShowClock = ShowClock;
             Properties.Settings.Default.Clock24HR = Clock24HR;
-            Properties.Settings.Default.MonitorConfig = _monitorConfig;
+            Properties.Settings.Default.MonitorConfig = MonitorConfig;
 
             List<Hotkey> _hotkeys = new List<Hotkey>();
 
@@ -202,6 +205,11 @@ namespace SidebarDiagnostics.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Child_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            IsChanged = true;
+        }
 
         private bool _isChanged { get; set; } = false;
 
@@ -280,6 +288,22 @@ namespace SidebarDiagnostics.Models
                 _screenItems = value;
 
                 NotifyPropertyChanged("ScreenItems");
+            }
+        }
+
+        private double _uiScale { get; set; }
+
+        public double UIScale
+        {
+            get
+            {
+                return _uiScale;
+            }
+            set
+            {
+                _uiScale = value;
+
+                NotifyPropertyChanged("UIScale");
             }
         }
 
@@ -641,13 +665,36 @@ namespace SidebarDiagnostics.Models
         {
             get
             {
-                return _monitorConfig.OrderBy(c => c.Order).ToArray();
+                return _monitorConfig;
             }
             set
             {
                 _monitorConfig = value;
 
+                foreach (MonitorConfig _config in _monitorConfig)
+                {
+                    _config.PropertyChanged += Child_PropertyChanged;
+
+                    foreach (HardwareConfig _hardware in _config.Hardware)
+                    {
+                        _hardware.PropertyChanged += Child_PropertyChanged;
+                    }
+
+                    foreach (ConfigParam _param in _config.Params)
+                    {
+                        _param.PropertyChanged += Child_PropertyChanged;
+                    }
+                }
+
                 NotifyPropertyChanged("MonitorConfig");
+            }
+        }
+
+        public MonitorConfig[] MonitorConfigSorted
+        {
+            get
+            {
+                return _monitorConfig.OrderBy(c => c.Order).ToArray();
             }
         }
 
