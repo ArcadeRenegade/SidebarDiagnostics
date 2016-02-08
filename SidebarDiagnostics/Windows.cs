@@ -79,10 +79,10 @@ namespace SidebarDiagnostics.Windows
     internal static class NativeMethods
     {
         [DllImport("user32.dll")]
-        internal static extern int GetWindowLongPtr(IntPtr hwnd, int index);
+        internal static extern long GetWindowLongPtr(IntPtr hwnd, int index);
 
         [DllImport("user32.dll")]
-        internal static extern int SetWindowLongPtr(IntPtr hwnd, int index, int newStyle);
+        internal static extern long SetWindowLongPtr(IntPtr hwnd, int index, long newStyle);
 
         [DllImport("user32.dll")]
         internal static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwnd_after, int x, int y, int cx, int cy, uint uflags);
@@ -913,7 +913,7 @@ namespace SidebarDiagnostics.Windows
         public void SetClickThrough()
         {
             IntPtr _hwnd = new WindowInteropHelper(this).Handle;
-            int _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
+            int _style = (int)NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
 
             NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style | WND_STYLE.WS_EX_TRANSPARENT);
         }
@@ -921,7 +921,7 @@ namespace SidebarDiagnostics.Windows
         public void ClearClickThrough()
         {
             IntPtr _hwnd = new WindowInteropHelper(this).Handle;
-            int _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
+            int _style = (int)NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
 
             NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style & ~WND_STYLE.WS_EX_TRANSPARENT);
         }
