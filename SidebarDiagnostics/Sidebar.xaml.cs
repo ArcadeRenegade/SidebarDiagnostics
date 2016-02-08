@@ -9,11 +9,11 @@ using WindowsDesktop;
 namespace SidebarDiagnostics
 {
     /// <summary>
-    /// Interaction logic for AppBar.xaml
+    /// Interaction logic for Sidebar.xaml
     /// </summary>
-    public partial class AppBar : AppBarWindow
+    public partial class Sidebar : AppBarWindow
     {
-        public AppBar(bool openSettings)
+        public Sidebar(bool openSettings)
         {
             InitializeComponent();
 
@@ -123,12 +123,12 @@ namespace SidebarDiagnostics
                 Model = null;
             }
 
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ModelReadyHandler(ModelReady), new AppBarModel());
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ModelReadyHandler(ModelReady), new SidebarModel());
         }
 
-        private delegate void ModelReadyHandler(AppBarModel model);
+        private delegate void ModelReadyHandler(SidebarModel model);
 
-        private void ModelReady(AppBarModel model)
+        private void ModelReady(SidebarModel model)
         {
             DataContext = Model = model;
             model.Start();
@@ -211,7 +211,7 @@ namespace SidebarDiagnostics
             {
                 App._reloading = false;
 
-                new AppBar(false).Show();
+                new Sidebar(false).Show();
             }
             else
             {
@@ -238,7 +238,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        public AppBarModel Model { get; private set; }
+        public SidebarModel Model { get; private set; }
 
         private bool _openSettings { get; set; } = false;
     }

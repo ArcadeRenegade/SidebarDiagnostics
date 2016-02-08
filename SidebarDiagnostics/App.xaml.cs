@@ -57,7 +57,7 @@ namespace SidebarDiagnostics
 
         public static void StartApp(bool openSettings)
         {
-            new AppBar(openSettings).Show();
+            new Sidebar(openSettings).Show();
 
             RefreshIcon();
         }
@@ -88,14 +88,14 @@ namespace SidebarDiagnostics
                 return;
             }
 
-            AppBar _appbar = GetAppBar;
+            Sidebar _sidebar = GetSidebar;
 
-            if (_appbar == null)
+            if (_sidebar == null)
             {
                 return;
             }
 
-            new Settings(_appbar);
+            new Settings(_sidebar);
         }
 
         private void CheckSettings()
@@ -118,53 +118,53 @@ namespace SidebarDiagnostics
 
         private void Reload_Click(object sender, EventArgs e)
         {
-            AppBar _appbar = GetAppBar;
+            Sidebar _sidebar = GetSidebar;
 
-            if (_appbar == null)
+            if (_sidebar == null)
             {
                 return;
             }
 
-            _appbar.Reload();
+            _sidebar.Reload();
         }
 
         private void Visibility_SubmenuOpened(object sender, EventArgs e)
         {
-            AppBar _appbar = GetAppBar;
+            Sidebar _sidebar = GetSidebar;
 
-            if (_appbar == null)
+            if (_sidebar == null)
             {
                 return;
             }
 
             MenuItem _this = (MenuItem)sender;
 
-            (_this.Items.GetItemAt(0) as MenuItem).IsChecked = _appbar.Visibility == Visibility.Visible;
-            (_this.Items.GetItemAt(1) as MenuItem).IsChecked = _appbar.Visibility == Visibility.Hidden;
+            (_this.Items.GetItemAt(0) as MenuItem).IsChecked = _sidebar.Visibility == Visibility.Visible;
+            (_this.Items.GetItemAt(1) as MenuItem).IsChecked = _sidebar.Visibility == Visibility.Hidden;
         }
         
         private void Show_Click(object sender, EventArgs e)
         {
-            AppBar _appbar = GetAppBar;
+            Sidebar _sidebar = GetSidebar;
 
-            if (_appbar == null || _appbar.Visibility == Visibility.Visible)
+            if (_sidebar == null || _sidebar.Visibility == Visibility.Visible)
             {
                 return;
             }
 
-            _appbar.AppBarShow();
+            _sidebar.AppBarShow();
         }
 
         private void Hide_Click(object sender, EventArgs e)
         {
-            AppBar _appbar = GetAppBar;
+            Sidebar _sidebar = GetSidebar;
 
-            if (_appbar == null || _appbar.Visibility == Visibility.Hidden)
+            if (_sidebar == null || _sidebar.Visibility == Visibility.Hidden)
             {
                 return;
             }
 
-            _appbar.AppBarHide();
+            _sidebar.AppBarHide();
         }
 
         private void Donate_Click(object sender, RoutedEventArgs e)
@@ -191,11 +191,11 @@ namespace SidebarDiagnostics
         }
         #endif
         
-        public AppBar GetAppBar
+        public Sidebar GetSidebar
         {
             get
             {
-                return Windows.OfType<AppBar>().FirstOrDefault();
+                return Windows.OfType<Sidebar>().FirstOrDefault();
             }
         }
 

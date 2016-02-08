@@ -127,7 +127,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AppBarModel.cs" />
+    <Compile Include="SidebarModel.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters.cs" />
@@ -149,7 +149,7 @@
     <Compile Include="FlatStyle.xaml.cs">
       <DependentUpon>FlatStyle.xaml</DependentUpon>
     </Compile>
-    <Page Include="AppBar.xaml">
+    <Page Include="Sidebar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -157,8 +157,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppBar.xaml.cs">
-      <DependentUpon>AppBar.xaml</DependentUpon>
+    <Compile Include="Sidebar.xaml.cs">
+      <DependentUpon>Sidebar.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Dummy.xaml">

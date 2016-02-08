@@ -5,9 +5,9 @@ using SidebarDiagnostics.Monitoring;
 
 namespace SidebarDiagnostics.Models
 {
-    public class AppBarModel : INotifyPropertyChanged, IDisposable
+    public class SidebarModel : INotifyPropertyChanged, IDisposable
     {
-        public AppBarModel()
+        public SidebarModel()
         {
             InitClock();
             InitMonitors();
@@ -33,7 +33,7 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        ~AppBarModel()
+        ~SidebarModel()
         {
             Dispose(false);
         }

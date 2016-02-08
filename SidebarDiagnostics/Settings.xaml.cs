@@ -17,13 +17,13 @@ namespace SidebarDiagnostics
     /// </summary>
     public partial class Settings : DPIAwareWindow
     {
-        public Settings(AppBar appbar)
+        public Settings(Sidebar sidebar)
         {
             InitializeComponent();
 
-            DataContext = Model = new SettingsModel(appbar);
+            DataContext = Model = new SettingsModel(sidebar);
 
-            Owner = appbar;
+            Owner = sidebar;
             ShowDialog();
         }
 
@@ -33,14 +33,14 @@ namespace SidebarDiagnostics
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
             {
-                AppBar _appbar = (Application.Current as App).GetAppBar;
+                Sidebar _sidebar = (Application.Current as App).GetSidebar;
 
-                if (_appbar == null)
+                if (_sidebar == null)
                 {
                     return;
                 }
 
-                _appbar.Reset(finalize);
+                _sidebar.Reset(finalize);
             }));
         }
         
@@ -280,11 +280,11 @@ namespace SidebarDiagnostics
         {
             if (Model.IsChanged)
             {
-                AppBar _appbar = (Application.Current as App).GetAppBar;
+                Sidebar _sidebar = (Application.Current as App).GetSidebar;
 
-                if (_appbar != null)
+                if (_sidebar != null)
                 {
-                    DataContext = Model = new SettingsModel(_appbar);
+                    DataContext = Model = new SettingsModel(_sidebar);
                     return;
                 }
             }

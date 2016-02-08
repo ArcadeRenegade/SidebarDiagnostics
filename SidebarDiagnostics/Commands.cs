@@ -5,22 +5,18 @@ using System.Windows.Input;
 
 namespace SidebarDiagnostics.Commands
 {
-    internal static class Utilities
-    {
-        public static AppBar GetAppBar
-        {
-            get
-            {
-                return Application.Current.Windows.OfType<AppBar>().FirstOrDefault();
-            }
-        }
-    }
-
     public class ActivateCommand : ICommand
     {
         public void Execute(object parameter)
         {
-            Utilities.GetAppBar.Activate();
+            Sidebar _sidebar = (Application.Current as App).GetSidebar;
+
+            if (_sidebar == null)
+            {
+                return;
+            }
+            
+            _sidebar.Activate();
         }
 
         public bool CanExecute(object parameter)

@@ -207,11 +207,11 @@ namespace SidebarDiagnostics.Windows
 
                             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
                             {
-                                AppBar _appbar = (Application.Current as App).GetAppBar;
+                                Sidebar _sidebar = (Application.Current as App).GetSidebar;
 
-                                if (_appbar != null && _appbar.Ready)
+                                if (_sidebar != null && _sidebar.Ready)
                                 {
-                                    _appbar.Model.Reload();
+                                    _sidebar.Model.Reload();
                                 }
                             }));
 
@@ -291,7 +291,7 @@ namespace SidebarDiagnostics.Windows
 
         private int Index { get; set; }
 
-        public static void Initialize(AppBar window, Hotkey[] settings)
+        public static void Initialize(Sidebar window, Hotkey[] settings)
         {
             if (settings == null)
             {
@@ -428,7 +428,7 @@ namespace SidebarDiagnostics.Windows
             return IntPtr.Zero;
         }
 
-        private static AppBar _window { get; set; }
+        private static Sidebar _window { get; set; }
 
         private static int _index { get; set; }
     }

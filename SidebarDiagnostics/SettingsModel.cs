@@ -10,7 +10,7 @@ namespace SidebarDiagnostics.Models
 {
     public class SettingsModel : INotifyPropertyChanged
     {
-        public SettingsModel(AppBar appbar)
+        public SettingsModel(Sidebar sidebar)
         {
             DockEdgeItems = new DockEdge[2] { DockEdge.Left, DockEdge.Right };
             DockEdge = Properties.Settings.Default.DockEdge;
@@ -85,12 +85,12 @@ namespace SidebarDiagnostics.Models
 
             Clock24HR = Properties.Settings.Default.Clock24HR;
             
-            if (appbar.Ready)
+            if (sidebar.Ready)
             {
                 foreach (MonitorConfig _record in Properties.Settings.Default.MonitorConfig)
                 {
                     _record.Hardware = (
-                        from hw in appbar.Model.MonitorManager.GetHardware(_record.Type)
+                        from hw in sidebar.Model.MonitorManager.GetHardware(_record.Type)
                         join config in _record.Hardware on hw.ID equals config.ID into c
                         from config in c.DefaultIfEmpty(hw)
                         select config
