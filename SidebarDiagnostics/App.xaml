@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:SidebarDiagnostics"
              xmlns:prop="clr-namespace:SidebarDiagnostics.Properties"
              xmlns:command="clr-namespace:SidebarDiagnostics.Commands"
+             xmlns:conv="clr-namespace:SidebarDiagnostics.Converters"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
         <ResourceDictionary>
@@ -32,6 +33,8 @@
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
+
+            <conv:DriveNameLengthConverter x:Key="DriveNameConverter" />
 
             <Style x:Key="LoadingPanel" TargetType="{x:Type StackPanel}">
                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -354,14 +357,19 @@
             </Style>
 
             <Style x:Key="MonitorHardwareCheckbox" TargetType="{x:Type CheckBox}">
-                <Setter Property="Margin" Value="0,2" />
+                <Setter Property="Margin" Value="0,2,0,0" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
 
-            <Style x:Key="MonitorHardwareText" TargetType="{x:Type TextBlock}">
+            <Style x:Key="MonitorHardwareText" TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="0,2,0,0" />
+                <Setter Property="Padding" Value="0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Foreground" Value="#000000" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
             </Style>
 
             <Style x:Key="MonitorParams" TargetType="{x:Type ItemsControl}">

@@ -56,4 +56,24 @@ namespace SidebarDiagnostics.Converters
             return null;
         }
     }
+
+    public class DriveNameLengthConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string _name = (string)value;
+
+            if (_name == null)
+            {
+                return true;
+            }
+
+            return _name.Length <= 2;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 }

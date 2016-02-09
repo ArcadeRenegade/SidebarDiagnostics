@@ -163,7 +163,7 @@
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Font Size" />
-                    <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Size of text and icons in the sidebar." />
+                    <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Size of text and icons." />
 
                     <Label Grid.Column="0" Grid.Row="4" Content="Font Color" />
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="4" SelectedColor="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Color of text and icons."/>
@@ -232,7 +232,7 @@
                                                     <GridViewColumn Header="Hardware" HeaderContainerStyle="{StaticResource MonitorHardwareHeader}" Width="210">
                                                         <GridViewColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Style="{StaticResource MonitorHardwareText}" />
+                                                                <TextBox Text="{Binding Path=Name, Mode=TwoWay}" Style="{StaticResource MonitorHardwareText}" ToolTip="Edit the name of this hardware." />
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>

@@ -156,7 +156,11 @@
                                                                     <ContentControl.Style>
                                                                         <Style TargetType="{x:Type ContentControl}">
                                                                             <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding ShowDetails, Mode=OneWay}" Value="False">
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding ShowDetails, Mode=OneWay}" Value="False" />
+                                                                                        <Condition Binding="{Binding Path=Label, Mode=OneWay, Converter={StaticResource DriveNameConverter}}" Value="True" />
+                                                                                    </MultiDataTrigger.Conditions>
                                                                                     <Setter Property="Content">
                                                                                         <Setter.Value>
                                                                                             <Grid>
@@ -172,7 +176,23 @@
                                                                                             </Grid>
                                                                                         </Setter.Value>
                                                                                     </Setter>
-                                                                                </DataTrigger>
+                                                                                </MultiDataTrigger>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding ShowDetails, Mode=OneWay}" Value="False" />
+                                                                                        <Condition Binding="{Binding Path=Label, Mode=OneWay, Converter={StaticResource DriveNameConverter}}" Value="False" />
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Content">
+                                                                                        <Setter.Value>
+                                                                                            <Grid>
+                                                                                                <StackPanel Style="{StaticResource VerticalPanel}">
+                                                                                                    <TextBlock Text="{Binding Path=Label, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                                                                    <ProgressBar Value="{Binding Path=Value, Mode=OneWay}" Margin="0,4" Width="{Binding Source={x:Static prop:Settings.Default}, Path=FontSetting.BarWidthWide, Mode=OneWay}" Style="{StaticResource DriveProgress}" />
+                                                                                                </StackPanel>
+                                                                                            </Grid>
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
+                                                                                </MultiDataTrigger>
                                                                                 <DataTrigger Binding="{Binding ShowDetails, Mode=OneWay}" Value="True">
                                                                                     <Setter Property="Content">
                                                                                         <Setter.Value>
