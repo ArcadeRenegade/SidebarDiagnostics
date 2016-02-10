@@ -18,8 +18,7 @@ namespace SidebarDiagnostics
 
         public static class GITHUB
         {
-            public const string GITHUBAPI = "https://api.github.com/repos/ArcadeRenegade/SidebarDiagnostics/releases/latest";
-            public const string USERAGENT = "ArcadeRenegade-SidebarDiagnostics";
+            public const string REPO = "https://github.com/ArcadeRenegade/SidebarDiagnostics";
         }
     }
 }

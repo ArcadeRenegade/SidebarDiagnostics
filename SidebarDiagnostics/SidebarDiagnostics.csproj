@@ -67,8 +67,7 @@
     <StartupObject>SidebarDiagnostics.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Sidebar.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>04836BFB55DC45C7D1C31B8EBC2AC038779EDF93</ManifestCertificateThumbprint>
@@ -188,7 +187,6 @@
     <Compile Include="Setup.xaml.cs">
       <DependentUpon>Setup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Updates.cs" />
     <Compile Include="Windows.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.xaml.cs">
@@ -272,7 +270,7 @@
     <Resource Include="Settings.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SidebarMini.ico" />
+    <Resource Include="Sidebar.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -32,13 +32,18 @@ namespace SidebarDiagnostics
             _trayIcon.ToolTipText = Constants.Generic.PROGRAMNAME;
 
             // CHECK FOR UPDATES
-            await Task.Run(async () =>
+            #if !DEBUG
+            if (SidebarDiagnostics.Properties.Settings.Default.CheckForUpdates)
             {
-                using (UpdateManager _manager = new UpdateManager(@"C:\Users\Ryan\Documents\Releases"))
+                await Task.Run(async () =>
                 {
-                    await _manager.UpdateApp();
-                }
-            });
+                    using (Task<UpdateManager> _manager = UpdateManager.GitHubUpdateManager(Constants.GITHUB.REPO))
+                    {
+                        await _manager.Result.UpdateApp();
+                    }
+                });
+            }
+            #endif
 
             // START APP
             if (SidebarDiagnostics.Properties.Settings.Default.InitialSetup)
@@ -185,14 +190,14 @@ namespace SidebarDiagnostics
             Application.Current.Shutdown();
         }
 
-        #if !DEBUG
+#if !DEBUG
         private static void AppDomain_Error(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = (Exception)e.ExceptionObject;
 
             MessageBox.Show(ex.ToString(), Constants.Generic.ERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
-        #endif
+#endif
         
         public Sidebar GetSidebar
         {

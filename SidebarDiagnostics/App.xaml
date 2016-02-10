@@ -16,7 +16,7 @@
 
             <command:ActivateCommand x:Key="ShowCommand" />
 
-            <tb:TaskbarIcon x:Key="TrayIcon" IconSource="SidebarMini.ico" LeftClickCommand="{StaticResource ShowCommand}">
+            <tb:TaskbarIcon x:Key="TrayIcon" IconSource="Sidebar.ico" LeftClickCommand="{StaticResource ShowCommand}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Settings" Click="Settings_Click" />

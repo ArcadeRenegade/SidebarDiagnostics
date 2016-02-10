@@ -15,7 +15,7 @@
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
         Title="Sidebar"
-        Icon="SidebarMini.ico"
+        Icon="Sidebar.ico"
         Width="{Binding Source={x:Static prop:Settings.Default}, Path=SidebarWidth, Mode=OneWay}"
         Height="800"
         AutoDPI="False"
