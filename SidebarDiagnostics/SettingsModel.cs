@@ -48,7 +48,7 @@ namespace SidebarDiagnostics.Models
 
             AutoUpdate = Properties.Settings.Default.AutoUpdate;
 
-            RunAtStartup = Startup.StartupTaskExists();
+            RunAtStartup = Properties.Settings.Default.RunAtStartup;
 
             SidebarWidth = Properties.Settings.Default.SidebarWidth;
 
@@ -130,6 +130,7 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.ClickThrough = ClickThrough;
             Properties.Settings.Default.ShowTrayIcon = ShowTrayIcon;
             Properties.Settings.Default.AutoUpdate = AutoUpdate;
+            Properties.Settings.Default.RunAtStartup = RunAtStartup;
             Properties.Settings.Default.SidebarWidth = SidebarWidth;
             Properties.Settings.Default.BGColor = BGColor;
             Properties.Settings.Default.BGOpacity = BGOpacity;

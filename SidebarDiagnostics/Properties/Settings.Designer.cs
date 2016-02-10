@@ -336,5 +336,17 @@ namespace SidebarDiagnostics.Properties {
                 this["DateSetting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RunAtStartup {
+            get {
+                return ((bool)(this["RunAtStartup"]));
+            }
+            set {
+                this["RunAtStartup"] = value;
+            }
+        }
     }
 }

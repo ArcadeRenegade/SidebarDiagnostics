@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Hardcodet.Wpf.TaskbarNotification;
 using Squirrel;
+using Hardcodet.Wpf.TaskbarNotification;
 using SidebarDiagnostics.Monitoring;
 
 namespace SidebarDiagnostics
@@ -23,6 +23,14 @@ namespace SidebarDiagnostics
             #if !DEBUG
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(AppDomain_Error);
             #endif
+
+            // UPDATE
+            #if !DEBUG
+            if (SidebarDiagnostics.Properties.Settings.Default.AutoUpdate)
+            {
+                await SquirrelUpdate();
+            }
+            #endif
             
             // SETTINGS
             CheckSettings();
@@ -30,14 +38,6 @@ namespace SidebarDiagnostics
             // TRAY ICON
             _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
             _trayIcon.ToolTipText = Constants.Generic.PROGRAMNAME;
-
-            // CHECK FOR UPDATES
-            #if !DEBUG
-            if (SidebarDiagnostics.Properties.Settings.Default.AutoUpdate)
-            {
-                await SquirrelUpdate();
-            }
-            #endif
 
             // START APP
             if (SidebarDiagnostics.Properties.Settings.Default.InitialSetup)
@@ -117,9 +117,49 @@ namespace SidebarDiagnostics
         {
             await Task.Run(async () =>
             {
-                using (Task<UpdateManager> _manager = UpdateManager.GitHubUpdateManager(Constants.GITHUB.REPO))
+                using (Task<UpdateManager> _task = UpdateManager.GitHubUpdateManager(Constants.GITHUB.REPO, prerelease: true))
                 {
-                    await _manager.Result.UpdateApp();
+                    SquirrelAwareApp.HandleEvents(
+                        onInitialInstall: async (v) =>
+                        {
+                            UpdateManager _manager = await _task;
+                            _manager.CreateShortcutForThisExe();
+                            await _manager.CreateUninstallerRegistryEntry();
+
+                            if (SidebarDiagnostics.Properties.Settings.Default.RunAtStartup)
+                            {
+                                Utilities.Startup.EnableStartupTask();
+                            }
+
+                            MessageBox.Show(System.Reflection.Assembly.GetEntryAssembly().Location);
+                        },
+                        onAppUpdate: async (v) =>
+                        {
+                            UpdateManager _manager = await _task;
+                            _manager.CreateShortcutForThisExe();
+                            await _manager.CreateUninstallerRegistryEntry();
+
+                            if (SidebarDiagnostics.Properties.Settings.Default.RunAtStartup)
+                            {
+                                Utilities.Startup.EnableStartupTask();
+                            }
+
+                            MessageBox.Show(System.Reflection.Assembly.GetEntryAssembly().Location);
+                        },
+                        onAppObsoleted: async (v) =>
+                        {
+                            UpdateManager _manager = await _task;
+                            _manager.RemoveShortcutForThisExe();
+                            _manager.RemoveUninstallerRegistryEntry();
+                        },
+                        onAppUninstall: async (v) =>
+                        {
+                            UpdateManager _manager = await _task;
+                            _manager.RemoveShortcutForThisExe();
+                            _manager.RemoveUninstallerRegistryEntry();
+                        });
+
+                    await _task.Result.UpdateApp();
                 }
             });
         }
