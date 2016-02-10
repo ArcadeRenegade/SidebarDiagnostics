@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Hardcodet.Wpf.TaskbarNotification;
-using SidebarDiagnostics.Updates;
+using Squirrel;
 using SidebarDiagnostics.Monitoring;
 
 namespace SidebarDiagnostics
@@ -32,10 +32,13 @@ namespace SidebarDiagnostics
             _trayIcon.ToolTipText = Constants.Generic.PROGRAMNAME;
 
             // CHECK FOR UPDATES
-            if (SidebarDiagnostics.Properties.Settings.Default.CheckForUpdates)
+            await Task.Run(async () =>
             {
-                await UpdateManager.Check(false);
-            }
+                using (UpdateManager _manager = new UpdateManager(@"C:\Users\Ryan\Documents\Releases"))
+                {
+                    await _manager.UpdateApp();
+                }
+            });
 
             // START APP
             if (SidebarDiagnostics.Properties.Settings.Default.InitialSetup)
@@ -174,7 +177,7 @@ namespace SidebarDiagnostics
 
         private async void Update_Click(object sender, EventArgs e)
         {
-            await UpdateManager.Check(true);
+            //await UpdateManager.Check(true);
         }
 
         private void Close_Click(object sender, EventArgs e)
