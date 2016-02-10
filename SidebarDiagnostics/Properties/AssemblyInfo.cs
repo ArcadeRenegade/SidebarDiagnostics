@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Sidebar Diagnostics")]
 [assembly: AssemblyDescription("Sidebar Diagnostics")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ryan Knittel")]
+[assembly: AssemblyCompany("Happa Media LLC")]
 [assembly: AssemblyProduct("Sidebar Diagnostics")]
 [assembly: AssemblyCopyright("Copyright © 2016")]
 [assembly: AssemblyTrademark("")]

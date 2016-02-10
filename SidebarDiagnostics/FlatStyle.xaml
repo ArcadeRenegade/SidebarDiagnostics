@@ -73,7 +73,7 @@
                         <DockPanel LastChildFill="True">
                             <Border x:Name="PART_TITLEBAR" DockPanel.Dock="Top" Margin="0" Height="30" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" MouseLeftButtonDown="PART_TITLEBAR_MouseLeftButtonDown">
                                 <DockPanel LastChildFill="False">
-                                    <Image x:Name="PART_ICON" DockPanel.Dock="Left" Source="{TemplateBinding Icon}" Width="14" Height="14" Margin="10,0,0,0" VerticalAlignment="Center" />
+                                    <Image x:Name="PART_ICON" DockPanel.Dock="Left" Source="{TemplateBinding Icon}" Width="16" Height="16" Margin="10,0,0,0" VerticalAlignment="Center" />
                                     
                                     <TextBlock x:Name="PART_TITLE" DockPanel.Dock="Left" Text="{TemplateBinding Title}" Margin="8,0,0,1" Padding="0" VerticalAlignment="Center" Foreground="#333333" FontSize="12" />
 

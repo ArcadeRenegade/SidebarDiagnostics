@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Closed="Window_Closed"
         Title="Sidebar Diagnostics"
-        Icon="App.ico"
+        Icon="SidebarMini.ico"
         Height="400"
         Width="400"
         ShowIcon="False"
