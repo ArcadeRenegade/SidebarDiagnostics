@@ -72,11 +72,11 @@
                     <Label Grid.Column="0" Grid.Row="4" Content="Always On Top" />
                     <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes the sidebar always on top of other windows." />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="Check For Updates" />
-                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=CheckForUpdates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Check for updates on program start up." />
+                    <Label Grid.Column="0" Grid.Row="5" Content="Auto Update" />
+                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=AutoUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Updates the app in the background." />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Run at startup" />
-                    <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the program when you first log in." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Run at Startup" />
+                    <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the app when you first log in." />
                 </Grid>
             </TabItem>
             <TabItem Header="Advanced">
@@ -119,7 +119,7 @@
                         <Slider x:Name="PollingIntervalSlider" Value="{Binding Path=PollingInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="5000" TickFrequency="100" LargeChange="1000" ToolTip="Time between polling for data in milliseconds." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Allow Click Through" />
+                    <Label Grid.Column="0" Grid.Row="4" Content="Click Through" />
                     <CheckBox Grid.Column="1" Grid.Row="4" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Show Tray Icon" />

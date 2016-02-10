@@ -46,7 +46,7 @@ namespace SidebarDiagnostics.Models
 
             ShowTrayIcon = Properties.Settings.Default.ShowTrayIcon;
 
-            CheckForUpdates = Properties.Settings.Default.CheckForUpdates;
+            AutoUpdate = Properties.Settings.Default.AutoUpdate;
 
             RunAtStartup = Startup.StartupTaskExists();
 
@@ -129,7 +129,7 @@ namespace SidebarDiagnostics.Models
             Properties.Settings.Default.HighDPISupport = HighDPISupport;
             Properties.Settings.Default.ClickThrough = ClickThrough;
             Properties.Settings.Default.ShowTrayIcon = ShowTrayIcon;
-            Properties.Settings.Default.CheckForUpdates = CheckForUpdates;
+            Properties.Settings.Default.AutoUpdate = AutoUpdate;
             Properties.Settings.Default.SidebarWidth = SidebarWidth;
             Properties.Settings.Default.BGColor = BGColor;
             Properties.Settings.Default.BGOpacity = BGOpacity;
@@ -435,19 +435,19 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _checkForUpdates { get; set; }
+        private bool _autoUpdate { get; set; }
 
-        public bool CheckForUpdates
+        public bool AutoUpdate
         {
             get
             {
-                return _checkForUpdates;
+                return _autoUpdate;
             }
             set
             {
-                _checkForUpdates = value;
+                _autoUpdate = value;
 
-                NotifyPropertyChanged("CheckForUpdates");
+                NotifyPropertyChanged("AutoUpdate");
             }
         }
 

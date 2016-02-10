@@ -33,15 +33,9 @@ namespace SidebarDiagnostics
 
             // CHECK FOR UPDATES
             #if !DEBUG
-            if (SidebarDiagnostics.Properties.Settings.Default.CheckForUpdates)
+            if (SidebarDiagnostics.Properties.Settings.Default.AutoUpdate)
             {
-                await Task.Run(async () =>
-                {
-                    using (Task<UpdateManager> _manager = UpdateManager.GitHubUpdateManager(Constants.GITHUB.REPO))
-                    {
-                        await _manager.Result.UpdateApp();
-                    }
-                });
+                await SquirrelUpdate();
             }
             #endif
 
@@ -119,6 +113,17 @@ namespace SidebarDiagnostics
             SidebarDiagnostics.Properties.Settings.Default.Save();
         }
 
+        private async Task SquirrelUpdate()
+        {
+            await Task.Run(async () =>
+            {
+                using (Task<UpdateManager> _manager = UpdateManager.GitHubUpdateManager(Constants.GITHUB.REPO))
+                {
+                    await _manager.Result.UpdateApp();
+                }
+            });
+        }
+
         private void Settings_Click(object sender, EventArgs e)
         {
             OpenSettings();
@@ -180,24 +185,19 @@ namespace SidebarDiagnostics
             Process.Start(Constants.URL.DONATE);
         }
 
-        private async void Update_Click(object sender, EventArgs e)
-        {
-            //await UpdateManager.Check(true);
-        }
-
         private void Close_Click(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
         }
 
-#if !DEBUG
+        #if !DEBUG
         private static void AppDomain_Error(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = (Exception)e.ExceptionObject;
 
             MessageBox.Show(ex.ToString(), Constants.Generic.ERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
-#endif
+        #endif
         
         public Sidebar GetSidebar
         {

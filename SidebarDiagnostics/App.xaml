@@ -28,7 +28,6 @@
                         </MenuItem>
                         <Separator />
                         <MenuItem Header="Donate" Click="Donate_Click" />
-                        <MenuItem Header="Update" Click="Update_Click" />
                         <MenuItem Header="Close" Click="Close_Click" />
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>

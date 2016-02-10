@@ -41,7 +41,7 @@
     <Setting Name="ShowTrayIcon" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="CheckForUpdates" Type="System.Boolean" Scope="User">
+    <Setting Name="AutoUpdate" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SidebarWidth" Type="System.Int32" Scope="User">
@@ -53,17 +53,11 @@
     <Setting Name="BGOpacity" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.85</Value>
     </Setting>
-    <Setting Name="FontSetting" Type="SidebarDiagnostics.Properties.FontSetting" Scope="User">
-      <Value Profile="(Default)">&lt;FontSetting&gt;&lt;FontSize&gt;14&lt;/FontSize&gt;&lt;/FontSetting&gt;</Value>
-    </Setting>
     <Setting Name="FontColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#FFFFFF</Value>
     </Setting>
     <Setting Name="AlertFontColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#FF4136</Value>
-    </Setting>
-    <Setting Name="DateSetting" Type="SidebarDiagnostics.Properties.DateSetting" Scope="User">
-      <Value Profile="(Default)">&lt;DateSetting&gt;&lt;Format&gt;M&lt;/Format&gt;&lt;/DateSetting&gt;</Value>
     </Setting>
     <Setting Name="CollapseMenuBar" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -79,6 +73,18 @@
     </Setting>
     <Setting Name="Hotkeys" Type="SidebarDiagnostics.Windows.Hotkey[]" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FontSetting" Type="SidebarDiagnostics.Properties.FontSetting" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;FontSetting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;FontSize&gt;14&lt;/FontSize&gt;
+&lt;/FontSetting&gt;</Value>
+    </Setting>
+    <Setting Name="DateSetting" Type="SidebarDiagnostics.Properties.DateSetting" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;DateSetting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Format&gt;M&lt;/Format&gt;
+&lt;/DateSetting&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

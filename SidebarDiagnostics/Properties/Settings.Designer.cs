@@ -182,12 +182,12 @@ namespace SidebarDiagnostics.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CheckForUpdates {
+        public bool AutoUpdate {
             get {
-                return ((bool)(this["CheckForUpdates"]));
+                return ((bool)(this["AutoUpdate"]));
             }
             set {
-                this["CheckForUpdates"] = value;
+                this["AutoUpdate"] = value;
             }
         }
         
@@ -229,18 +229,6 @@ namespace SidebarDiagnostics.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<FontSetting><FontSize>14</FontSize></FontSetting>")]
-        public global::SidebarDiagnostics.Properties.FontSetting FontSetting {
-            get {
-                return ((global::SidebarDiagnostics.Properties.FontSetting)(this["FontSetting"]));
-            }
-            set {
-                this["FontSetting"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#FFFFFF")]
         public string FontColor {
             get {
@@ -260,18 +248,6 @@ namespace SidebarDiagnostics.Properties {
             }
             set {
                 this["AlertFontColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<DateSetting><Format>M</Format></DateSetting>")]
-        public global::SidebarDiagnostics.Properties.DateSetting DateSetting {
-            get {
-                return ((global::SidebarDiagnostics.Properties.DateSetting)(this["DateSetting"]));
-            }
-            set {
-                this["DateSetting"] = value;
             }
         }
         
@@ -330,6 +306,34 @@ namespace SidebarDiagnostics.Properties {
             }
             set {
                 this["Hotkeys"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<FontSetting xmlns:xsi=\"http://www.w3.or" +
+            "g/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <Fon" +
+            "tSize>14</FontSize>\r\n</FontSetting>")]
+        public global::SidebarDiagnostics.Properties.FontSetting FontSetting {
+            get {
+                return ((global::SidebarDiagnostics.Properties.FontSetting)(this["FontSetting"]));
+            }
+            set {
+                this["FontSetting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<DateSetting xmlns:xsi=\"http://www.w3.or" +
+            "g/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <For" +
+            "mat>M</Format>\r\n</DateSetting>")]
+        public global::SidebarDiagnostics.Properties.DateSetting DateSetting {
+            get {
+                return ((global::SidebarDiagnostics.Properties.DateSetting)(this["DateSetting"]));
+            }
+            set {
+                this["DateSetting"] = value;
             }
         }
     }
