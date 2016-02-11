@@ -4,7 +4,7 @@ using System.ComponentModel;
 using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
-using SidebarDiagnostics.Properties;
+using SidebarDiagnostics.Framework;
 
 namespace SidebarDiagnostics.Models
 {
@@ -13,48 +13,48 @@ namespace SidebarDiagnostics.Models
         public SettingsModel(Sidebar sidebar)
         {
             DockEdgeItems = new DockEdge[2] { DockEdge.Left, DockEdge.Right };
-            DockEdge = Properties.Settings.Default.DockEdge;
+            DockEdge = Framework.Settings.Default.DockEdge;
 
             Monitor[] _monitors = Monitor.GetMonitors();
 
             ScreenItems = _monitors.Select((s, i) => new ScreenItem() { Index = i, Text = string.Format("#{0}", i + 1) }).ToArray();
 
-            if (Properties.Settings.Default.ScreenIndex < _monitors.Length)
+            if (Framework.Settings.Default.ScreenIndex < _monitors.Length)
             {
-                ScreenIndex = Properties.Settings.Default.ScreenIndex;
+                ScreenIndex = Framework.Settings.Default.ScreenIndex;
             }
             else
             {
                 ScreenIndex = _monitors.Where(s => s.IsPrimary).Select((s, i) => i).Single();
             }
 
-            UIScale = Properties.Settings.Default.UIScale;
+            UIScale = Framework.Settings.Default.UIScale;
 
-            XOffset = Properties.Settings.Default.XOffset;
+            XOffset = Framework.Settings.Default.XOffset;
 
-            YOffset = Properties.Settings.Default.YOffset;
+            YOffset = Framework.Settings.Default.YOffset;
 
-            PollingInterval = Properties.Settings.Default.PollingInterval;
+            PollingInterval = Framework.Settings.Default.PollingInterval;
 
-            UseAppBar = Properties.Settings.Default.UseAppBar;
+            UseAppBar = Framework.Settings.Default.UseAppBar;
 
-            AlwaysTop = Properties.Settings.Default.AlwaysTop;
+            AlwaysTop = Framework.Settings.Default.AlwaysTop;
 
-            HighDPISupport = Properties.Settings.Default.HighDPISupport;
+            HighDPISupport = Framework.Settings.Default.HighDPISupport;
 
-            ClickThrough = Properties.Settings.Default.ClickThrough;
+            ClickThrough = Framework.Settings.Default.ClickThrough;
 
-            ShowTrayIcon = Properties.Settings.Default.ShowTrayIcon;
+            ShowTrayIcon = Framework.Settings.Default.ShowTrayIcon;
 
-            AutoUpdate = Properties.Settings.Default.AutoUpdate;
+            AutoUpdate = Framework.Settings.Default.AutoUpdate;
 
-            RunAtStartup = Properties.Settings.Default.RunAtStartup;
+            RunAtStartup = Framework.Settings.Default.RunAtStartup;
 
-            SidebarWidth = Properties.Settings.Default.SidebarWidth;
+            SidebarWidth = Framework.Settings.Default.SidebarWidth;
 
-            BGColor = Properties.Settings.Default.BGColor;
+            BGColor = Framework.Settings.Default.BGColor;
 
-            BGOpacity = Properties.Settings.Default.BGOpacity;
+            BGOpacity = Framework.Settings.Default.BGOpacity;
 
             FontSettingItems = new FontSetting[5]
             {
@@ -64,11 +64,11 @@ namespace SidebarDiagnostics.Models
                 FontSetting.x16,
                 FontSetting.x18
             };
-            FontSetting = Properties.Settings.Default.FontSetting;
+            FontSetting = Framework.Settings.Default.FontSetting;
 
-            FontColor = Properties.Settings.Default.FontColor;
+            FontColor = Framework.Settings.Default.FontColor;
 
-            AlertFontColor = Properties.Settings.Default.AlertFontColor;
+            AlertFontColor = Framework.Settings.Default.AlertFontColor;
 
             DateSettingItems = new DateSetting[4]
             {
@@ -77,17 +77,17 @@ namespace SidebarDiagnostics.Models
                 DateSetting.Normal,
                 DateSetting.Long
             };
-            DateSetting = Properties.Settings.Default.DateSetting;
+            DateSetting = Framework.Settings.Default.DateSetting;
 
-            CollapseMenuBar = Properties.Settings.Default.CollapseMenuBar;
+            CollapseMenuBar = Framework.Settings.Default.CollapseMenuBar;
 
-            ShowClock = Properties.Settings.Default.ShowClock;
+            ShowClock = Framework.Settings.Default.ShowClock;
 
-            Clock24HR = Properties.Settings.Default.Clock24HR;
+            Clock24HR = Framework.Settings.Default.Clock24HR;
             
             if (sidebar.Ready)
             {
-                foreach (MonitorConfig _record in Properties.Settings.Default.MonitorConfig)
+                foreach (MonitorConfig _record in Framework.Settings.Default.MonitorConfig)
                 {
                     _record.Hardware = (
                         from hw in sidebar.Model.MonitorManager.GetHardware(_record.Type)
@@ -98,19 +98,19 @@ namespace SidebarDiagnostics.Models
                 }
             }
 
-            MonitorConfig = Properties.Settings.Default.MonitorConfig.Select(c => c.Clone()).ToArray();
+            MonitorConfig = Framework.Settings.Default.MonitorConfig.Select(c => c.Clone()).ToArray();
 
-            if (Properties.Settings.Default.Hotkeys != null)
+            if (Framework.Settings.Default.Hotkeys != null)
             {
-                ToggleKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Toggle);
+                ToggleKey = Framework.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Toggle);
 
-                ShowKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Show);
+                ShowKey = Framework.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Show);
 
-                HideKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Hide);
+                HideKey = Framework.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Hide);
 
-                ReloadKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Reload);
+                ReloadKey = Framework.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Reload);
 
-                CloseKey = Properties.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Close);
+                CloseKey = Framework.Settings.Default.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Close);
             }
 
             IsChanged = false;
@@ -118,30 +118,30 @@ namespace SidebarDiagnostics.Models
 
         public void Save()
         {
-            Properties.Settings.Default.DockEdge = DockEdge;
-            Properties.Settings.Default.ScreenIndex = ScreenIndex;
-            Properties.Settings.Default.UIScale = UIScale;
-            Properties.Settings.Default.XOffset = XOffset;
-            Properties.Settings.Default.YOffset = YOffset;
-            Properties.Settings.Default.PollingInterval = PollingInterval;
-            Properties.Settings.Default.UseAppBar = UseAppBar;
-            Properties.Settings.Default.AlwaysTop = AlwaysTop;
-            Properties.Settings.Default.HighDPISupport = HighDPISupport;
-            Properties.Settings.Default.ClickThrough = ClickThrough;
-            Properties.Settings.Default.ShowTrayIcon = ShowTrayIcon;
-            Properties.Settings.Default.AutoUpdate = AutoUpdate;
-            Properties.Settings.Default.RunAtStartup = RunAtStartup;
-            Properties.Settings.Default.SidebarWidth = SidebarWidth;
-            Properties.Settings.Default.BGColor = BGColor;
-            Properties.Settings.Default.BGOpacity = BGOpacity;
-            Properties.Settings.Default.FontSetting = FontSetting;
-            Properties.Settings.Default.FontColor = FontColor;
-            Properties.Settings.Default.AlertFontColor = AlertFontColor;
-            Properties.Settings.Default.DateSetting = DateSetting;
-            Properties.Settings.Default.CollapseMenuBar = CollapseMenuBar;
-            Properties.Settings.Default.ShowClock = ShowClock;
-            Properties.Settings.Default.Clock24HR = Clock24HR;
-            Properties.Settings.Default.MonitorConfig = MonitorConfig;
+            Framework.Settings.Default.DockEdge = DockEdge;
+            Framework.Settings.Default.ScreenIndex = ScreenIndex;
+            Framework.Settings.Default.UIScale = UIScale;
+            Framework.Settings.Default.XOffset = XOffset;
+            Framework.Settings.Default.YOffset = YOffset;
+            Framework.Settings.Default.PollingInterval = PollingInterval;
+            Framework.Settings.Default.UseAppBar = UseAppBar;
+            Framework.Settings.Default.AlwaysTop = AlwaysTop;
+            Framework.Settings.Default.HighDPISupport = HighDPISupport;
+            Framework.Settings.Default.ClickThrough = ClickThrough;
+            Framework.Settings.Default.ShowTrayIcon = ShowTrayIcon;
+            Framework.Settings.Default.AutoUpdate = AutoUpdate;
+            Framework.Settings.Default.RunAtStartup = RunAtStartup;
+            Framework.Settings.Default.SidebarWidth = SidebarWidth;
+            Framework.Settings.Default.BGColor = BGColor;
+            Framework.Settings.Default.BGOpacity = BGOpacity;
+            Framework.Settings.Default.FontSetting = FontSetting;
+            Framework.Settings.Default.FontColor = FontColor;
+            Framework.Settings.Default.AlertFontColor = AlertFontColor;
+            Framework.Settings.Default.DateSetting = DateSetting;
+            Framework.Settings.Default.CollapseMenuBar = CollapseMenuBar;
+            Framework.Settings.Default.ShowClock = ShowClock;
+            Framework.Settings.Default.Clock24HR = Clock24HR;
+            Framework.Settings.Default.MonitorConfig = MonitorConfig;
 
             List<Hotkey> _hotkeys = new List<Hotkey>();
 
@@ -170,9 +170,9 @@ namespace SidebarDiagnostics.Models
                 _hotkeys.Add(CloseKey);
             }
 
-            Properties.Settings.Default.Hotkeys = _hotkeys.ToArray();
+            Framework.Settings.Default.Hotkeys = _hotkeys.ToArray();
 
-            Properties.Settings.Default.Save();
+            Framework.Settings.Default.Save();
 
             App.RefreshIcon();
 

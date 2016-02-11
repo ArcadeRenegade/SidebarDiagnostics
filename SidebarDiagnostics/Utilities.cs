@@ -1,8 +1,21 @@
-﻿using System.Reflection;
+﻿using System;
+using System.IO;
+using System.Reflection;
 using Microsoft.Win32.TaskScheduler;
 
 namespace SidebarDiagnostics.Utilities
 {
+    public static class Paths
+    {
+        public static string Local
+        {
+            get
+            {
+                return Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), Assembly.GetExecutingAssembly().GetName().Name);
+            }
+        }
+    }
+
     public static class Startup
     {        
         public static bool StartupTaskExists()

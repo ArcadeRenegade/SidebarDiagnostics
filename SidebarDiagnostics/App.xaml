@@ -4,7 +4,7 @@
              xmlns:tb="http://www.hardcodet.net/taskbar"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:SidebarDiagnostics"
-             xmlns:prop="clr-namespace:SidebarDiagnostics.Properties"
+             xmlns:prop="clr-namespace:SidebarDiagnostics.Framework"
              xmlns:command="clr-namespace:SidebarDiagnostics.Commands"
              xmlns:conv="clr-namespace:SidebarDiagnostics.Converters"
              ShutdownMode="OnExplicitShutdown">

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Squirrel;
@@ -19,10 +20,21 @@ namespace SidebarDiagnostics
         {
             base.OnStartup(e);
 
+            #if !DEBUG
             using (UpdateManager _manager = new UpdateManager(@"C:\Users\Ryan\Documents\Visual Studio 2015\Projects\SidebarDiagnostics\Releases"))
             {
-                await _manager.UpdateApp();
+                UpdateInfo _update = await _manager.CheckForUpdate();
+                
+                if (_update.ReleasesToApply.Any())
+                {
+                    Version _newVersion = _update.ReleasesToApply.OrderByDescending(r => r.Version).First().Version.Version;
+
+                    MessageBox.Show(_newVersion.ToString(), "New Version", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+
+                    await _manager.UpdateApp();
+                }
             }
+            #endif
 
             // ERROR HANDLING
             #if !DEBUG
@@ -34,10 +46,10 @@ namespace SidebarDiagnostics
 
             // TRAY ICON
             _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            _trayIcon.ToolTipText = Constants.Generic.PROGRAMNAME;
+            _trayIcon.ToolTipText = string.Format("{0} v{1}", Constants.Generic.PROGRAMNAME, Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
 
             // START APP
-            if (SidebarDiagnostics.Properties.Settings.Default.InitialSetup)
+            if (SidebarDiagnostics.Framework.Settings.Default.InitialSetup)
             {
                 new Setup();
             }
@@ -63,7 +75,7 @@ namespace SidebarDiagnostics
 
         public static void RefreshIcon()
         {
-            _trayIcon.Visibility = SidebarDiagnostics.Properties.Settings.Default.ShowTrayIcon ? Visibility.Visible : Visibility.Collapsed;
+            _trayIcon.Visibility = SidebarDiagnostics.Framework.Settings.Default.ShowTrayIcon ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public static void ShowPerformanceCounterError()
@@ -99,15 +111,15 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
-            if (SidebarDiagnostics.Properties.Settings.Default.UpgradeRequired)
+            if (SidebarDiagnostics.Framework.Settings.Default.UpgradeRequired)
             {
-                SidebarDiagnostics.Properties.Settings.Default.Upgrade();
-                SidebarDiagnostics.Properties.Settings.Default.UpgradeRequired = false;
+                SidebarDiagnostics.Framework.Settings.Default.Upgrade();
+                SidebarDiagnostics.Framework.Settings.Default.UpgradeRequired = false;
             }
 
-            SidebarDiagnostics.Properties.Settings.Default.MonitorConfig = MonitorConfig.CheckConfig(SidebarDiagnostics.Properties.Settings.Default.MonitorConfig);
+            SidebarDiagnostics.Framework.Settings.Default.MonitorConfig = MonitorConfig.CheckConfig(SidebarDiagnostics.Framework.Settings.Default.MonitorConfig);
 
-            SidebarDiagnostics.Properties.Settings.Default.Save();
+            SidebarDiagnostics.Framework.Settings.Default.Save();
         }
 
         //private async Task SquirrelUpdate()

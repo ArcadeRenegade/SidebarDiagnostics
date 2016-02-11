@@ -78,7 +78,7 @@ namespace SidebarDiagnostics
             Width = _windowWA.Width;
             Height = _windowWA.Height;
 
-            if (Properties.Settings.Default.UseAppBar)
+            if (Framework.Settings.Default.UseAppBar)
             {
                 SetAppBar(_screen, _edge, _windowWA, _appbarWA);
             }
@@ -87,7 +87,7 @@ namespace SidebarDiagnostics
                 ClearAppBar();
             }
 
-            if (Properties.Settings.Default.AlwaysTop)
+            if (Framework.Settings.Default.AlwaysTop)
             {
                 SetTop();
             }
@@ -96,7 +96,7 @@ namespace SidebarDiagnostics
                 ClearTop();
             }
 
-            if (Properties.Settings.Default.ClickThrough)
+            if (Framework.Settings.Default.ClickThrough)
             {
                 SetClickThrough();
             }
@@ -105,7 +105,7 @@ namespace SidebarDiagnostics
                 ClearClickThrough();
             }
 
-            Hotkey.Initialize(this, Properties.Settings.Default.Hotkeys);
+            Hotkey.Initialize(this, Framework.Settings.Default.Hotkeys);
 
             if (enableHotkeys)
             {
@@ -182,7 +182,7 @@ namespace SidebarDiagnostics
 
         private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            WindowControls.Visibility = Properties.Settings.Default.CollapseMenuBar ? Visibility.Collapsed : Visibility.Hidden;
+            WindowControls.Visibility = Framework.Settings.Default.CollapseMenuBar ? Visibility.Collapsed : Visibility.Hidden;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

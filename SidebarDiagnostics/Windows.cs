@@ -587,8 +587,8 @@ namespace SidebarDiagnostics.Windows
         
         public static void GetWorkArea(AppBarWindow window, out int screen, out DockEdge edge, out WorkArea windowWA, out WorkArea appbarWA)
         {
-            screen = Properties.Settings.Default.ScreenIndex;
-            edge = Properties.Settings.Default.DockEdge;
+            screen = Framework.Settings.Default.ScreenIndex;
+            edge = Framework.Settings.Default.DockEdge;
 
             Monitor _screen = GetMonitorFromIndex(screen);
 
@@ -598,7 +598,7 @@ namespace SidebarDiagnostics.Windows
             double _inverseX = _screen.InverseScaleX;
             double _inverseY = _screen.InverseScaleY;
 
-            double _uiScale = Properties.Settings.Default.UIScale;
+            double _uiScale = Framework.Settings.Default.UIScale;
 
             double _abScaleX = _screenX * _uiScale;
             double _abScaleY = _screenY * _uiScale;
@@ -616,7 +616,7 @@ namespace SidebarDiagnostics.Windows
                 Bottom = _screen.WorkArea.Bottom
             };
 
-            if (Properties.Settings.Default.HighDPISupport)
+            if (Framework.Settings.Default.HighDPISupport)
             {
                 windowWA.Left *= _inverseX;
                 windowWA.Top *= _inverseY;
@@ -624,7 +624,7 @@ namespace SidebarDiagnostics.Windows
                 windowWA.Bottom *= _inverseY;
             }
 
-            double _windowWidth = Properties.Settings.Default.SidebarWidth * _uiScale;
+            double _windowWidth = Framework.Settings.Default.SidebarWidth * _uiScale;
 
             double _modifyX = 0d;
 
@@ -646,8 +646,8 @@ namespace SidebarDiagnostics.Windows
                     break;
             }
 
-            int _offsetX = Properties.Settings.Default.XOffset;
-            int _offsetY = Properties.Settings.Default.YOffset;
+            int _offsetX = Framework.Settings.Default.XOffset;
+            int _offsetY = Framework.Settings.Default.YOffset;
 
             windowWA.Left += _offsetX;
             windowWA.Top += _offsetY;
@@ -662,7 +662,7 @@ namespace SidebarDiagnostics.Windows
                 Bottom = windowWA.Bottom
             };
 
-            if (Properties.Settings.Default.HighDPISupport)
+            if (Framework.Settings.Default.HighDPISupport)
             {
                 double _abWidth = appbarWA.Width * _abScaleX;
 
@@ -712,7 +712,7 @@ namespace SidebarDiagnostics.Windows
 
             //Monitor _monitorInfo = Monitor.GetMonitor(_hmonitor);
 
-            double _uiScale = Properties.Settings.Default.UIScale;
+            double _uiScale = Framework.Settings.Default.UIScale;
 
             UpdateScale(_uiScale, _uiScale, true);
         }
@@ -746,7 +746,7 @@ namespace SidebarDiagnostics.Windows
 
         private void DPIAwareWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.PropertyChanged += UIScale_PropertyChanged;
+            Framework.Settings.Default.PropertyChanged += UIScale_PropertyChanged;
 
             HandleDPI();
 
@@ -969,7 +969,7 @@ namespace SidebarDiagnostics.Windows
 
         public void AppBarShow()
         {
-            if (Properties.Settings.Default.UseAppBar)
+            if (Framework.Settings.Default.UseAppBar)
             {
                 int _screen;
                 DockEdge _edge;
@@ -1084,7 +1084,7 @@ namespace SidebarDiagnostics.Windows
                         }
                         else
                         {
-                            if (Properties.Settings.Default.AlwaysTop)
+                            if (Framework.Settings.Default.AlwaysTop)
                             {
                                 SetTop();
                             }
