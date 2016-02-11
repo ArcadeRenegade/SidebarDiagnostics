@@ -19,17 +19,14 @@ namespace SidebarDiagnostics
         {
             base.OnStartup(e);
 
+            using (UpdateManager _manager = new UpdateManager(@"C:\Users\Ryan\Documents\Visual Studio 2015\Projects\SidebarDiagnostics\Releases"))
+            {
+                await _manager.UpdateApp();
+            }
+
             // ERROR HANDLING
             #if !DEBUG
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(AppDomain_Error);
-            #endif
-
-            // UPDATE
-            #if !DEBUG
-            if (SidebarDiagnostics.Properties.Settings.Default.AutoUpdate)
-            {
-                await SquirrelUpdate();
-            }
             #endif
             
             // SETTINGS
@@ -113,56 +110,56 @@ namespace SidebarDiagnostics
             SidebarDiagnostics.Properties.Settings.Default.Save();
         }
 
-        private async Task SquirrelUpdate()
-        {
-            await Task.Run(async () =>
-            {
-                using (Task<UpdateManager> _task = UpdateManager.GitHubUpdateManager(Constants.GITHUB.REPO, prerelease: true))
-                {
-                    SquirrelAwareApp.HandleEvents(
-                        onInitialInstall: async (v) =>
-                        {
-                            UpdateManager _manager = await _task;
-                            _manager.CreateShortcutForThisExe();
-                            await _manager.CreateUninstallerRegistryEntry();
+        //private async Task SquirrelUpdate()
+        //{
+        //    await Task.Run(async () =>
+        //    {
+        //        using (Task<UpdateManager> _task = UpdateManager.GitHubUpdateManager(Constants.GITHUB.REPO, prerelease: true))
+        //        {
+        //            SquirrelAwareApp.HandleEvents(
+        //                onInitialInstall: async (v) =>
+        //                {
+        //                    UpdateManager _manager = await _task;
+        //                    _manager.CreateShortcutForThisExe();
+        //                    await _manager.CreateUninstallerRegistryEntry();
 
-                            if (SidebarDiagnostics.Properties.Settings.Default.RunAtStartup)
-                            {
-                                Utilities.Startup.EnableStartupTask();
-                            }
+        //                    if (SidebarDiagnostics.Properties.Settings.Default.RunAtStartup)
+        //                    {
+        //                        Utilities.Startup.EnableStartupTask();
+        //                    }
 
-                            MessageBox.Show(System.Reflection.Assembly.GetEntryAssembly().Location);
-                        },
-                        onAppUpdate: async (v) =>
-                        {
-                            UpdateManager _manager = await _task;
-                            _manager.CreateShortcutForThisExe();
-                            await _manager.CreateUninstallerRegistryEntry();
+        //                    MessageBox.Show(System.Reflection.Assembly.GetEntryAssembly().Location);
+        //                },
+        //                onAppUpdate: async (v) =>
+        //                {
+        //                    UpdateManager _manager = await _task;
+        //                    _manager.CreateShortcutForThisExe();
+        //                    await _manager.CreateUninstallerRegistryEntry();
 
-                            if (SidebarDiagnostics.Properties.Settings.Default.RunAtStartup)
-                            {
-                                Utilities.Startup.EnableStartupTask();
-                            }
+        //                    if (SidebarDiagnostics.Properties.Settings.Default.RunAtStartup)
+        //                    {
+        //                        Utilities.Startup.EnableStartupTask();
+        //                    }
 
-                            MessageBox.Show(System.Reflection.Assembly.GetEntryAssembly().Location);
-                        },
-                        onAppObsoleted: async (v) =>
-                        {
-                            UpdateManager _manager = await _task;
-                            _manager.RemoveShortcutForThisExe();
-                            _manager.RemoveUninstallerRegistryEntry();
-                        },
-                        onAppUninstall: async (v) =>
-                        {
-                            UpdateManager _manager = await _task;
-                            _manager.RemoveShortcutForThisExe();
-                            _manager.RemoveUninstallerRegistryEntry();
-                        });
+        //                    MessageBox.Show(System.Reflection.Assembly.GetEntryAssembly().Location);
+        //                },
+        //                onAppObsoleted: async (v) =>
+        //                {
+        //                    UpdateManager _manager = await _task;
+        //                    _manager.RemoveShortcutForThisExe();
+        //                    _manager.RemoveUninstallerRegistryEntry();
+        //                },
+        //                onAppUninstall: async (v) =>
+        //                {
+        //                    UpdateManager _manager = await _task;
+        //                    _manager.RemoveShortcutForThisExe();
+        //                    _manager.RemoveUninstallerRegistryEntry();
+        //                });
 
-                    await _task.Result.UpdateApp();
-                }
-            });
-        }
+        //            await _task.Result.UpdateApp();
+        //        }
+        //    });
+        //}
 
         private void Settings_Click(object sender, EventArgs e)
         {
