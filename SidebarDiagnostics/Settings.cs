@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.ComponentModel;
 using Newtonsoft.Json;
 using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
@@ -8,7 +9,7 @@ using SidebarDiagnostics.Windows;
 namespace SidebarDiagnostics.Framework
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed class Settings
+    public sealed class Settings : INotifyPropertyChanged
     {
         private Settings() { }
 
@@ -43,83 +44,457 @@ namespace SidebarDiagnostics.Framework
             return new Settings();
         }
 
-        [JsonProperty]
-        public bool InitialSetup { get; set; } = true;
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private bool _initialSetup { get; set; } = true;
 
         [JsonProperty]
-        public DockEdge DockEdge { get; set; } = DockEdge.Right;
+        public bool InitialSetup
+        {
+            get
+            {
+                return _initialSetup;
+            }
+            set
+            {
+                _initialSetup = value;
+
+                NotifyPropertyChanged("InitialSetup");
+            }
+        }
+
+        private DockEdge _dockEdge { get; set; } = DockEdge.Right;
 
         [JsonProperty]
-        public int ScreenIndex { get; set; } = 0;
+        public DockEdge DockEdge
+        {
+            get
+            {
+                return _dockEdge;
+            }
+            set
+            {
+                _dockEdge = value;
+
+                NotifyPropertyChanged("DockEdge");
+            }
+        }
+
+        private int _screenIndex { get; set; } = 0;
 
         [JsonProperty]
-        public bool HighDPISupport { get; set; } = false;
+        public int ScreenIndex
+        {
+            get
+            {
+                return _screenIndex;
+            }
+            set
+            {
+                _screenIndex = value;
+
+                NotifyPropertyChanged("ScreenIndex");
+            }
+        }
+
+        private bool _highDPISupport { get; set; } = false;
+
+        [JsonProperty]
+        public bool HighDPISupport
+        {
+            get
+            {
+                return _highDPISupport;
+            }
+            set
+            {
+                _highDPISupport = value;
+
+                NotifyPropertyChanged("HighDPISupport");
+            }
+        }
+
+        private bool _useAppBar { get; set; } = true;
         
         [JsonProperty]
-        public bool UseAppBar { get; set; } = true;
+        public bool UseAppBar
+        {
+            get
+            {
+                return _useAppBar;
+            }
+            set
+            {
+                _useAppBar = value;
+
+                NotifyPropertyChanged("UseAppBar");
+            }
+        }
+
+        private bool _alwaysTop { get; set; } = true;
 
         [JsonProperty]
-        public bool AlwaysTop { get; set; } = true;
+        public bool AlwaysTop
+        {
+            get
+            {
+                return _alwaysTop;
+            }
+            set
+            {
+                _alwaysTop = value;
+
+                NotifyPropertyChanged("AlwaysTop");
+            }
+        }
+
+        private bool _autoUpdate { get; set; } = true;
 
         [JsonProperty]
-        public bool AutoUpdate { get; set; } = true;
+        public bool AutoUpdate
+        {
+            get
+            {
+                return _autoUpdate;
+            }
+            set
+            {
+                _autoUpdate = value;
+
+                NotifyPropertyChanged("AutoUpdate");
+            }
+        }
+
+        private bool _runAtStartup { get; set; } = true;
 
         [JsonProperty]
-        public bool RunAtStartup { get; set; } = true;
+        public bool RunAtStartup
+        {
+            get
+            {
+                return _runAtStartup;
+            }
+            set
+            {
+                _runAtStartup = value;
+
+                NotifyPropertyChanged("RunAtStartup");
+            }
+        }
+
+        private double _uiScale { get; set; } = 1d;
 
         [JsonProperty]
-        public double UIScale { get; set; } = 1d;
+        public double UIScale
+        {
+            get
+            {
+                return _uiScale;
+            }
+            set
+            {
+                _uiScale = value;
+
+                NotifyPropertyChanged("UIScale");
+            }
+        }
+
+        private int _xOffset { get; set; } = 0;
 
         [JsonProperty]
-        public int XOffset { get; set; } = 0;
+        public int XOffset
+        {
+            get
+            {
+                return _xOffset;
+            }
+            set
+            {
+                _xOffset = value;
+
+                NotifyPropertyChanged("XOffset");
+            }
+        }
+
+        private int _yOffset { get; set; } = 0;
 
         [JsonProperty]
-        public int YOffset { get; set; } = 0;
+        public int YOffset
+        {
+            get
+            {
+                return _yOffset;
+            }
+            set
+            {
+                _yOffset = value;
+
+                NotifyPropertyChanged("YOffset");
+            }
+        }
+
+        private int _pollingInterval { get; set; } = 1000;
 
         [JsonProperty]
-        public int PollingInterval { get; set; } = 1000;
+        public int PollingInterval
+        {
+            get
+            {
+                return _pollingInterval;
+            }
+            set
+            {
+                _pollingInterval = value;
+
+                NotifyPropertyChanged("PollingInterval");
+            }
+        }
+
+        private bool _clickThrough { get; set; } = false;
 
         [JsonProperty]
-        public bool ClickThrough { get; set; } = false;
+        public bool ClickThrough
+        {
+            get
+            {
+                return _clickThrough;
+            }
+            set
+            {
+                _clickThrough = value;
+
+                NotifyPropertyChanged("ClickThrough");
+            }
+        }
+
+        private bool _showTrayIcon { get; set; } = true;
 
         [JsonProperty]
-        public bool ShowTrayIcon { get; set; } = true;
+        public bool ShowTrayIcon
+        {
+            get
+            {
+                return _showTrayIcon;
+            }
+            set
+            {
+                _showTrayIcon = value;
+
+                NotifyPropertyChanged("ShowTrayIcon");
+            }
+        }
+
+        private bool _collapseMenuBar { get; set; } = false;
 
         [JsonProperty]
-        public bool CollapseMenuBar { get; set; } = false;
+        public bool CollapseMenuBar
+        {
+            get
+            {
+                return _collapseMenuBar;
+            }
+            set
+            {
+                _collapseMenuBar = value;
+
+                NotifyPropertyChanged("CollapseMenuBar");
+            }
+        }
+
+        private int _sidebarWidth { get; set; } = 180;
 
         [JsonProperty]
-        public int SidebarWidth { get; set; } = 180;
+        public int SidebarWidth
+        {
+            get
+            {
+                return _sidebarWidth;
+            }
+            set
+            {
+                _sidebarWidth = value;
+
+                NotifyPropertyChanged("SidebarWidth");
+            }
+        }
+
+        private string _bgColor { get; set; } = "#000000";
 
         [JsonProperty]
-        public string BGColor { get; set; } = "#000000";
+        public string BGColor
+        {
+            get
+            {
+                return _bgColor;
+            }
+            set
+            {
+                _bgColor = value;
+
+                NotifyPropertyChanged("BGColor");
+            }
+        }
+
+        private double _bgOpacity { get; set; } = 0.85d;
 
         [JsonProperty]
-        public double BGOpacity { get; set; } = 0.85d;
+        public double BGOpacity
+        {
+            get
+            {
+                return _bgOpacity;
+            }
+            set
+            {
+                _bgOpacity = value;
+
+                NotifyPropertyChanged("BGOpacity");
+            }
+        }
+
+        private FontSetting _fontSetting { get; set; } = FontSetting.x14;
 
         [JsonProperty]
-        public FontSetting FontSetting { get; set; } = FontSetting.x14;
+        public FontSetting FontSetting
+        {
+            get
+            {
+                return _fontSetting;
+            }
+            set
+            {
+                _fontSetting = value;
+
+                NotifyPropertyChanged("FontSetting");
+            }
+        }
+
+        private string _fontColor { get; set; } = "#FFFFFF";
         
         [JsonProperty]
-        public string FontColor { get; set; } = "#FFFFFF";
+        public string FontColor
+        {
+            get
+            {
+                return _fontColor;
+            }
+            set
+            {
+                _fontColor = value;
+
+                NotifyPropertyChanged("FontColor");
+            }
+        }
+
+        private string _alertFontColor { get; set; } = "#FF4136";
 
         [JsonProperty]
-        public string AlertFontColor { get; set; } = "#FF4136";
+        public string AlertFontColor
+        {
+            get
+            {
+                return _alertFontColor;
+            }
+            set
+            {
+                _alertFontColor = value;
+
+                NotifyPropertyChanged("AlertFontColor");
+            }
+        }
+
+        private bool _showClock { get; set; } = true;
 
         [JsonProperty]
-        public bool ShowClock { get; set; } = true;
+        public bool ShowClock
+        {
+            get
+            {
+                return _showClock;
+            }
+            set
+            {
+                _showClock = value;
+
+                NotifyPropertyChanged("ShowClock");
+            }
+        }
+
+        private bool _clock24HR { get; set; } = false;
 
         [JsonProperty]
-        public bool Clock24HR { get; set; } = false;
+        public bool Clock24HR
+        {
+            get
+            {
+                return _clock24HR;
+            }
+            set
+            {
+                _clock24HR = value;
+
+                NotifyPropertyChanged("Clock24HR");
+            }
+        }
+
+        private DateSetting _dateSetting { get; set; } = DateSetting.Short;
 
         [JsonProperty]
-        public DateSetting DateSetting { get; set; } = DateSetting.Short;
+        public DateSetting DateSetting
+        {
+            get
+            {
+                return _dateSetting;
+            }
+            set
+            {
+                _dateSetting = value;
+
+                NotifyPropertyChanged("DateSetting");
+            }
+        }
+
+        private MonitorConfig[] _monitorConfig { get; set; } = null;
 
         [JsonProperty]
-        public MonitorConfig[] MonitorConfig { get; set; } = null;
+        public MonitorConfig[] MonitorConfig
+        {
+            get
+            {
+                return _monitorConfig;
+            }
+            set
+            {
+                _monitorConfig = value;
+
+                NotifyPropertyChanged("MonitorConfig");
+            }
+        }
+
+        private Hotkey[] _hotkeys { get; set; } = new Hotkey[0];
 
         [JsonProperty]
-        public Hotkey[] Hotkeys { get; set; } = new Hotkey[0];
+        public Hotkey[] Hotkeys
+        {
+            get
+            {
+                return _hotkeys;
+            }
+            set
+            {
+                _hotkeys = value;
+
+                NotifyPropertyChanged("Hotkeys");
+            }
+        }
 
         private static Settings _instance { get; set; } = null;
 

@@ -102,11 +102,9 @@ namespace SidebarDiagnostics.Monitoring
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler != null)
+            if (PropertyChanged != null)
             {
-                _handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -274,11 +272,9 @@ namespace SidebarDiagnostics.Monitoring
         
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler != null)
+            if (PropertyChanged != null)
             {
-                _handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -395,11 +391,9 @@ namespace SidebarDiagnostics.Monitoring
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler != null)
+            if (PropertyChanged != null)
             {
-                _handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -736,11 +730,9 @@ namespace SidebarDiagnostics.Monitoring
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler != null)
+            if (PropertyChanged != null)
             {
-                _handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -875,11 +867,9 @@ namespace SidebarDiagnostics.Monitoring
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler != null)
+            if (PropertyChanged != null)
             {
-                _handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -1036,11 +1026,9 @@ namespace SidebarDiagnostics.Monitoring
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler != null)
+            if (PropertyChanged != null)
             {
-                _handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -1261,11 +1249,9 @@ namespace SidebarDiagnostics.Monitoring
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler != null)
+            if (PropertyChanged != null)
             {
-                _handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -1447,11 +1433,9 @@ namespace SidebarDiagnostics.Monitoring
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler != null)
+            if (PropertyChanged != null)
             {
-                _handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -1517,14 +1501,10 @@ namespace SidebarDiagnostics.Monitoring
     {
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler == null)
+            if (PropertyChanged != null)
             {
-                return;
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-
-            _handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -1767,14 +1747,10 @@ namespace SidebarDiagnostics.Monitoring
     {
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler == null)
+            if (PropertyChanged != null)
             {
-                return;
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-
-            _handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -1846,14 +1822,10 @@ namespace SidebarDiagnostics.Monitoring
     {
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler == null)
+            if (PropertyChanged != null)
             {
-                return;
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-
-            _handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

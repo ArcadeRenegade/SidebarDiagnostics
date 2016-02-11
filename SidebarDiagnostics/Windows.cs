@@ -753,7 +753,7 @@ namespace SidebarDiagnostics.Windows
 
         private void DPIAwareWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //Framework.Settings.Instance.PropertyChanged += UIScale_PropertyChanged;
+            Framework.Settings.Instance.PropertyChanged += UIScale_PropertyChanged;
 
             HandleDPI();
 

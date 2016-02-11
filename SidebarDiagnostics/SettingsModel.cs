@@ -190,14 +190,10 @@ namespace SidebarDiagnostics.Models
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler _handler = PropertyChanged;
-
-            if (_handler == null)
+            if (PropertyChanged != null)
             {
-                return;
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-
-            _handler(this, new PropertyChangedEventArgs(propertyName));
 
             if (propertyName != "IsChanged")
             {

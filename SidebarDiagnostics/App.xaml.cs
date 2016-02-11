@@ -32,6 +32,11 @@ namespace SidebarDiagnostics
                     MessageBox.Show(_newVersion.ToString(), "New Version", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
 
                     await _manager.UpdateApp();
+
+                    if (Framework.Settings.Instance.RunAtStartup)
+                    {
+                        Utilities.Startup.EnableStartupTask(Utilities.Paths.Exe(_newVersion));
+                    }
                 }
             }
             #endif
@@ -111,6 +116,11 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
+            if (Framework.Settings.Instance.RunAtStartup && !Utilities.Startup.StartupTaskExists())
+            {
+                Utilities.Startup.EnableStartupTask();
+            }
+
             Framework.Settings.Instance.MonitorConfig = MonitorConfig.CheckConfig(Framework.Settings.Instance.MonitorConfig);
         }
 

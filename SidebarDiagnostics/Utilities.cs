@@ -10,18 +10,43 @@ namespace SidebarDiagnostics.Utilities
         private const string LOCALAPPDATA = "LocalAppData";
         private const string SETTINGS = "settings.json";
 
-        private static string _local { get; set; } = null;
+        public static string Install(Version version)
+        {
+            return Path.Combine(Local, string.Format("app-{0}", version.ToString(3)));
+        }
 
-        public static string Local
+        public static string Exe(Version version)
+        {
+            return Path.Combine(Install(version), ExeName);
+        }
+
+        private static string _assemblyName { get; set; } = null;
+
+        public static string AssemblyName
         {
             get
             {
-                if (_local == null)
+                if (_assemblyName == null)
                 {
-                    _local = Path.Combine(Environment.GetEnvironmentVariable(LOCALAPPDATA), Assembly.GetExecutingAssembly().GetName().Name);
+                    _assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
                 }
 
-                return _local;
+                return _assemblyName;
+            }
+        }
+
+        private static string _exeName { get; set; } = null;
+
+        public static string ExeName
+        {
+            get
+            {
+                if (_exeName == null)
+                {
+                    _exeName = string.Format("{0}.exe", AssemblyName);
+                }
+
+                return _exeName;
             }
         }
 
@@ -39,6 +64,21 @@ namespace SidebarDiagnostics.Utilities
                 return _settingsFile;
             }
         }
+
+        private static string _local { get; set; } = null;
+
+        public static string Local
+        {
+            get
+            {
+                if (_local == null)
+                {
+                    _local = Path.Combine(Environment.GetEnvironmentVariable(LOCALAPPDATA), AssemblyName);
+                }
+
+                return _local;
+            }
+        }
     }
 
     public static class Startup
@@ -51,13 +91,13 @@ namespace SidebarDiagnostics.Utilities
             }
         }
 
-        public static void EnableStartupTask()
+        public static void EnableStartupTask(string exePath = null)
         {
             using (TaskService _taskService = new TaskService())
             {
                 TaskDefinition _def = _taskService.NewTask();
                 _def.Triggers.Add(new LogonTrigger() { Enabled = true });
-                _def.Actions.Add(new ExecAction(Assembly.GetEntryAssembly().Location));
+                _def.Actions.Add(new ExecAction(exePath ?? Assembly.GetExecutingAssembly().Location));
                 _def.Principal.RunLevel = TaskRunLevel.Highest;
 
                 _taskService.RootFolder.RegisterTaskDefinition(_taskName, _def);
