@@ -5,13 +5,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SidebarDiagnostics"
-        xmlns:prop="clr-namespace:SidebarDiagnostics.Framework"
+        xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Title="Sidebar"
         Icon="Sidebar.ico"
-        Width="{Binding Source={x:Static prop:Settings.Default}, Path=SidebarWidth, Mode=OneTime}"
+        Width="{Binding Source={x:Static frame:Settings.Instance}, Path=SidebarWidth, Mode=OneTime}"
         Height="800"
         AutoDPI="False"
         Topmost="True"
@@ -20,7 +20,7 @@
         ResizeMode="NoResize"
         WindowStyle="None">
     <Window.Background>
-        <SolidColorBrush Opacity="{Binding Source={x:Static prop:Settings.Default}, Path=BGOpacity, Mode=OneTime}" Color="{Binding Source={x:Static prop:Settings.Default}, Path=BGColor, Mode=OneTime}" />
+        <SolidColorBrush Opacity="{Binding Source={x:Static frame:Settings.Instance}, Path=BGOpacity, Mode=OneTime}" Color="{Binding Source={x:Static frame:Settings.Instance}, Path=BGColor, Mode=OneTime}" />
     </Window.Background>
     <Grid>
         <StackPanel Style="{StaticResource DummyLabel}">

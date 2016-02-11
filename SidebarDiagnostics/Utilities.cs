@@ -7,11 +7,36 @@ namespace SidebarDiagnostics.Utilities
 {
     public static class Paths
     {
+        private const string LOCALAPPDATA = "LocalAppData";
+        private const string SETTINGS = "settings.json";
+
+        private static string _local { get; set; } = null;
+
         public static string Local
         {
             get
             {
-                return Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), Assembly.GetExecutingAssembly().GetName().Name);
+                if (_local == null)
+                {
+                    _local = Path.Combine(Environment.GetEnvironmentVariable(LOCALAPPDATA), Assembly.GetExecutingAssembly().GetName().Name);
+                }
+
+                return _local;
+            }
+        }
+
+        private static string _settingsFile { get; set; } = null;
+
+        public static string SettingsFile
+        {
+            get
+            {
+                if (_settingsFile == null)
+                {
+                    _settingsFile = Path.Combine(Local, SETTINGS);
+                }
+
+                return _settingsFile;
             }
         }
     }

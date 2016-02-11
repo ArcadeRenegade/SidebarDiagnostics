@@ -65,25 +65,25 @@ namespace SidebarDiagnostics.Models
 
         private void InitClock()
         {
-            if (!Framework.Settings.Default.ShowClock)
+            if (!Framework.Settings.Instance.ShowClock)
             {
                 return;
             }
 
-            ShowDate = !Framework.Settings.Default.DateSetting.Equals(Framework.DateSetting.Disabled);
+            ShowDate = !Framework.Settings.Instance.DateSetting.Equals(Framework.DateSetting.Disabled);
 
             UpdateClock();
         }
 
         private void InitMonitors()
         {
-            MonitorManager = new MonitorManager(Framework.Settings.Default.MonitorConfig);
+            MonitorManager = new MonitorManager(Framework.Settings.Instance.MonitorConfig);
             MonitorManager.Update();
         }
 
         private void StartClock()
         {
-            if (!Framework.Settings.Default.ShowClock)
+            if (!Framework.Settings.Instance.ShowClock)
             {
                 return;
             }
@@ -97,7 +97,7 @@ namespace SidebarDiagnostics.Models
         private void StartMonitors()
         {
             _monitorTimer = new DispatcherTimer();
-            _monitorTimer.Interval = TimeSpan.FromMilliseconds(Framework.Settings.Default.PollingInterval);
+            _monitorTimer.Interval = TimeSpan.FromMilliseconds(Framework.Settings.Instance.PollingInterval);
             _monitorTimer.Tick += new EventHandler(MonitorTimer_Tick);
             _monitorTimer.Start();
         }
@@ -106,11 +106,11 @@ namespace SidebarDiagnostics.Models
         {
             DateTime _now = DateTime.Now;
 
-            Time = _now.ToString(Framework.Settings.Default.Clock24HR ? "H:mm:ss" : "h:mm:ss tt");
+            Time = _now.ToString(Framework.Settings.Instance.Clock24HR ? "H:mm:ss" : "h:mm:ss tt");
 
             if (ShowDate)
             {
-                Date = _now.ToString(Framework.Settings.Default.DateSetting.Format);
+                Date = _now.ToString(Framework.Settings.Instance.DateSetting.Format);
             }
         }
 

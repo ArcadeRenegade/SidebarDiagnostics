@@ -10,18 +10,16 @@ namespace SidebarDiagnostics.Framework
     [JsonObject(MemberSerialization.OptIn)]
     public sealed class Settings
     {
-        private const string FILENAME = "settings.json";
-
         private Settings() { }
 
         public void Save()
         {
-            if (!Directory.Exists(LocalDir))
+            if (!Directory.Exists(Paths.Local))
             {
-                Directory.CreateDirectory(LocalDir);
+                Directory.CreateDirectory(Paths.Local);
             }
 
-            using (StreamWriter _stream = File.CreateText(SettingsFile))
+            using (StreamWriter _stream = File.CreateText(Paths.SettingsFile))
             {
                 new JsonSerializer().Serialize(_stream, this);
             }
@@ -30,6 +28,19 @@ namespace SidebarDiagnostics.Framework
         public void Reload()
         {
             _instance = Load();
+        }
+
+        private static Settings Load()
+        {
+            if (File.Exists(Paths.SettingsFile))
+            {
+                using (StreamReader _stream = File.OpenText(Paths.SettingsFile))
+                {
+                    return (new JsonSerializer().Deserialize(_stream, typeof(Settings)) as Settings) ?? new Settings();
+                }
+            }
+
+            return new Settings();
         }
 
         [JsonProperty]
@@ -66,7 +77,7 @@ namespace SidebarDiagnostics.Framework
         public int YOffset { get; set; } = 0;
 
         [JsonProperty]
-        public int PollingInterval { get; set; } = 0;
+        public int PollingInterval { get; set; } = 1000;
 
         [JsonProperty]
         public bool ClickThrough { get; set; } = false;
@@ -105,53 +116,10 @@ namespace SidebarDiagnostics.Framework
         public DateSetting DateSetting { get; set; } = DateSetting.Short;
 
         [JsonProperty]
-        public MonitorConfig MonitorConfig { get; set; } = null;
+        public MonitorConfig[] MonitorConfig { get; set; } = null;
 
         [JsonProperty]
         public Hotkey[] Hotkeys { get; set; } = new Hotkey[0];
-
-        private static Settings Load()
-        {
-            if (File.Exists(SettingsFile))
-            {
-                using (StreamReader _stream = File.OpenText(SettingsFile))
-                {
-                    return (Settings)new JsonSerializer().Deserialize(_stream, typeof(Settings));
-                }
-            }
-
-            return new Settings();
-        }
-
-        private static string _localDir { get; set; } = null;
-
-        private static string LocalDir
-        {
-            get
-            {
-                if (_localDir == null)
-                {
-                    _localDir = Paths.Local;
-                }
-
-                return _localDir;
-            }
-        }
-
-        private static string _settingsFile { get; set; } = null;
-
-        private static string SettingsFile
-        {
-            get
-            {
-                if (_settingsFile == null)
-                {
-                    _settingsFile = Path.Combine(LocalDir, FILENAME);
-                }
-
-                return _settingsFile;
-            }
-        }
 
         private static Settings _instance { get; set; } = null;
 
@@ -169,7 +137,7 @@ namespace SidebarDiagnostics.Framework
         }
     }
 
-    [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public sealed class FontSetting
     {
         internal FontSetting() { }
@@ -202,6 +170,7 @@ namespace SidebarDiagnostics.Framework
         public static readonly FontSetting x16 = new FontSetting(16);
         public static readonly FontSetting x18 = new FontSetting(18);
 
+        [JsonProperty]
         public int FontSize { get; set; }
 
         public int TitleFontSize
@@ -270,7 +239,7 @@ namespace SidebarDiagnostics.Framework
         }
     }
 
-    [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public sealed class DateSetting
     {
         internal DateSetting() { }
@@ -280,6 +249,7 @@ namespace SidebarDiagnostics.Framework
             Format = format;
         }
 
+        [JsonProperty]
         public string Format { get; set; }
 
         public string Display

@@ -49,7 +49,7 @@ namespace SidebarDiagnostics
             _trayIcon.ToolTipText = string.Format("{0} v{1}", Constants.Generic.PROGRAMNAME, Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
 
             // START APP
-            if (SidebarDiagnostics.Framework.Settings.Default.InitialSetup)
+            if (Framework.Settings.Instance.InitialSetup)
             {
                 new Setup();
             }
@@ -75,7 +75,7 @@ namespace SidebarDiagnostics
 
         public static void RefreshIcon()
         {
-            _trayIcon.Visibility = SidebarDiagnostics.Framework.Settings.Default.ShowTrayIcon ? Visibility.Visible : Visibility.Collapsed;
+            _trayIcon.Visibility = Framework.Settings.Instance.ShowTrayIcon ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public static void ShowPerformanceCounterError()
@@ -111,15 +111,7 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
-            if (SidebarDiagnostics.Framework.Settings.Default.UpgradeRequired)
-            {
-                SidebarDiagnostics.Framework.Settings.Default.Upgrade();
-                SidebarDiagnostics.Framework.Settings.Default.UpgradeRequired = false;
-            }
-
-            SidebarDiagnostics.Framework.Settings.Default.MonitorConfig = MonitorConfig.CheckConfig(SidebarDiagnostics.Framework.Settings.Default.MonitorConfig);
-
-            SidebarDiagnostics.Framework.Settings.Default.Save();
+            Framework.Settings.Instance.MonitorConfig = MonitorConfig.CheckConfig(Framework.Settings.Instance.MonitorConfig);
         }
 
         //private async Task SquirrelUpdate()

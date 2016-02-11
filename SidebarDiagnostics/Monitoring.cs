@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using OpenHardwareMonitor.Hardware;
+using Newtonsoft.Json;
 
 namespace SidebarDiagnostics.Monitoring
 {
@@ -1510,8 +1511,8 @@ namespace SidebarDiagnostics.Monitoring
         HD,
         Network
     }
-    
-    [Serializable]
+
+    [JsonObject(MemberSerialization.OptIn)]
     public class MonitorConfig : INotifyPropertyChanged, ICloneable
     {
         public void NotifyPropertyChanged(string propertyName)
@@ -1544,6 +1545,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private MonitorType _type { get; set; }
 
+        [JsonProperty]
         public MonitorType Type
         {
             get
@@ -1560,6 +1562,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private bool _enabled { get; set; }
 
+        [JsonProperty]
         public bool Enabled
         {
             get
@@ -1576,6 +1579,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private byte _order { get; set; }
 
+        [JsonProperty]
         public byte Order
         {
             get
@@ -1592,6 +1596,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private HardwareConfig[] _hardware { get; set; }
 
+        [JsonProperty]
         public HardwareConfig[] Hardware
         {
             get
@@ -1608,6 +1613,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private ConfigParam[] _params { get; set; }
 
+        [JsonProperty]
         public ConfigParam[] Params
         {
             get
@@ -1756,7 +1762,7 @@ namespace SidebarDiagnostics.Monitoring
         }
     }
 
-    [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public class HardwareConfig : INotifyPropertyChanged, ICloneable
     {
         public void NotifyPropertyChanged(string propertyName)
@@ -1785,6 +1791,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private string _id { get; set; }
 
+        [JsonProperty]
         public string ID
         {
             get
@@ -1801,6 +1808,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private string _name { get; set; }
 
+        [JsonProperty]
         public string Name
         {
             get
@@ -1817,6 +1825,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private bool _enabled { get; set; }
 
+        [JsonProperty]
         public bool Enabled
         {
             get
@@ -1832,7 +1841,7 @@ namespace SidebarDiagnostics.Monitoring
         }
     }
 
-    [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public class ConfigParam : INotifyPropertyChanged, ICloneable
     {
         public void NotifyPropertyChanged(string propertyName)
@@ -1861,6 +1870,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private ParamKey _key { get; set; }
 
+        [JsonProperty]
         public ParamKey Key
         {
             get
@@ -1877,6 +1887,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private object _value { get; set; }
 
+        [JsonProperty]
         public object Value
         {
             get
@@ -1885,7 +1896,14 @@ namespace SidebarDiagnostics.Monitoring
             }
             set
             {
-                _value = value;
+                if (value.GetType() == typeof(long))
+                {
+                    _value = Convert.ToInt32(value);
+                }
+                else
+                {
+                    _value = value;
+                }
 
                 NotifyPropertyChanged("Value");
             }

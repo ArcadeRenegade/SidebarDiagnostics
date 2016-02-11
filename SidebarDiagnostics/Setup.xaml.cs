@@ -18,11 +18,11 @@ namespace SidebarDiagnostics
     {
         public Setup()
         {
-            Framework.Settings.Default.ScreenIndex = 0;
-            Framework.Settings.Default.DockEdge = DockEdge.Right;
-            Framework.Settings.Default.HighDPISupport = false;
-            Framework.Settings.Default.XOffset = 0;
-            Framework.Settings.Default.YOffset = 0;
+            Framework.Settings.Instance.ScreenIndex = 0;
+            Framework.Settings.Instance.DockEdge = DockEdge.Right;
+            Framework.Settings.Instance.HighDPISupport = false;
+            Framework.Settings.Instance.XOffset = 0;
+            Framework.Settings.Instance.YOffset = 0;
 
             Sidebar = new Dummy();
             Sidebar.Show();
@@ -54,7 +54,7 @@ namespace SidebarDiagnostics
                     return;
 
                 case Page.BeginHighDPI:
-                    Framework.Settings.Default.HighDPISupport = true;
+                    Framework.Settings.Instance.HighDPISupport = true;
                     Sidebar.Position();
                     ShowPage(Page.EndHighDPI);
                     return;
@@ -94,8 +94,8 @@ namespace SidebarDiagnostics
 
                 Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
                 {
-                    Framework.Settings.Default.XOffset = (int)XOffsetSlider.Value;
-                    Framework.Settings.Default.YOffset = (int)YOffsetSlider.Value;
+                    Framework.Settings.Instance.XOffset = (int)XOffsetSlider.Value;
+                    Framework.Settings.Instance.YOffset = (int)YOffsetSlider.Value;
 
                     Sidebar.Position();
                 }));
@@ -131,8 +131,8 @@ namespace SidebarDiagnostics
                 Sidebar.Close();
             }
 
-            Framework.Settings.Default.InitialSetup = false;
-            Framework.Settings.Default.Save();
+            Framework.Settings.Instance.InitialSetup = false;
+            Framework.Settings.Instance.Save();
 
             App.StartApp(_openSettings);
         }
