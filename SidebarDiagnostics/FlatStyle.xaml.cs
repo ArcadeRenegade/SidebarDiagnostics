@@ -82,6 +82,20 @@ namespace SidebarDiagnostics.Style
 
     public partial class FlatWindow : Window
     {
+        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(FlatWindow), new UIPropertyMetadata(true));
+
+        public bool ShowTitleBar
+        {
+            get
+            {
+                return (bool)GetValue(ShowTitleBarProperty);
+            }
+            set
+            {
+                SetValue(ShowTitleBarProperty, value);
+            }
+        }
+
         public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register("ShowIcon", typeof(bool), typeof(FlatWindow), new UIPropertyMetadata(true));
 
         public bool ShowIcon

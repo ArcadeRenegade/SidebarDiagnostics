@@ -76,4 +76,19 @@ namespace SidebarDiagnostics.Converters
             return null;
         }
     }
+
+    public class PercentConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double _value = (double)value;
+
+            return string.Format("{0:0}%", _value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 }

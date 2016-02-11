@@ -101,6 +101,10 @@
                             <Setter TargetName="PART_BORDER" Property="Margin" Value="0" />
                         </DataTrigger>
                         
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ShowTitleBar}" Value="False">
+                            <Setter TargetName="PART_TITLEBAR" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ShowIcon}" Value="False">
                             <Setter TargetName="PART_ICON" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>

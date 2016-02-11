@@ -29,14 +29,23 @@ namespace SidebarDiagnostics
                 {
                     Version _newVersion = _update.ReleasesToApply.OrderByDescending(r => r.Version).First().Version.Version;
 
-                    MessageBox.Show(_newVersion.ToString(), "New Version", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    Update _updateWindow = new Update();
+                    _updateWindow.Show();
 
-                    await _manager.UpdateApp();
+                    await _manager.UpdateApp((p) => _updateWindow.SetProgress(p));
+
+                    _updateWindow.Close();
+
+                    string _newExePath = Utilities.Paths.Exe(_newVersion);
 
                     if (Framework.Settings.Instance.RunAtStartup)
                     {
-                        Utilities.Startup.EnableStartupTask(Utilities.Paths.Exe(_newVersion));
+                        Utilities.Startup.EnableStartupTask(_newExePath);
                     }
+
+                    Process.Start(_newExePath);
+
+                    Shutdown();
                 }
             }
             #endif
@@ -238,7 +247,7 @@ namespace SidebarDiagnostics
 
         private void Close_Click(object sender, EventArgs e)
         {
-            Application.Current.Shutdown();
+            Shutdown();
         }
 
         #if !DEBUG

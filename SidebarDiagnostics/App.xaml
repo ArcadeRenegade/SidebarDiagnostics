@@ -34,6 +34,7 @@
             </tb:TaskbarIcon>
 
             <conv:DriveNameLengthConverter x:Key="DriveNameConverter" />
+            <conv:PercentConverter x:Key="PercentConverter" />
 
             <Style x:Key="LoadingPanel" TargetType="{x:Type StackPanel}">
                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -462,13 +463,44 @@
                 <Setter Property="Margin" Value="40,20" />
             </Style>
 
+            <Style x:Key="UpdateTitle" TargetType="{x:Type Label}">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Foreground" Value="#333" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="UpdateProgress" TargetType="{x:Type ProgressBar}">
+                <Setter Property="Minimum" Value="0" />
+                <Setter Property="Maximum" Value="100" />
+                <Setter Property="Margin" Value="20,0,20,20" />
+                <Setter Property="Height" Value="20" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Foreground" Value="#2ecc71" />
+                <Setter Property="BorderBrush" Value="#27ae60" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ProgressBar}">
+                            <Border Name="PART_Track" CornerRadius="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
+                                <Grid>
+                                    <Border Name="PART_Indicator" CornerRadius="2,0,0,2" Background="{TemplateBinding Foreground}" BorderBrush="{TemplateBinding Background}" BorderThickness="1" Panel.ZIndex="0" HorizontalAlignment="Left" />
+                                    <Label Content="{TemplateBinding Value, Converter={StaticResource PercentConverter}}" Margin="0" Padding="0,0,0,1" FontSize="10" Foreground="#333333" Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <Style x:Key="ScrollBarTrackThumb" TargetType="{x:Type Thumb}">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Thumb}">
                             <Grid x:Name="Grid">
                                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent" />
-                                <Border x:Name="CornerScrollBarRectangle" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Margin="0,1,0,1" Background="{TemplateBinding Background}" Opacity="0.6" />
+                                <Border x:Name="CornerScrollBarRectangle" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Margin="0,1" Background="{TemplateBinding Background}" Opacity="0.6" />
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Tag" Value="Horizontal">

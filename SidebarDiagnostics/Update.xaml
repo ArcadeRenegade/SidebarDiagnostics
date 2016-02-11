@@ -1,0 +1,28 @@
+﻿<win:DPIAwareWindow
+        x:Class="SidebarDiagnostics.Update"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SidebarDiagnostics"
+        xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
+        mc:Ignorable="d"
+        Title="Sidebar Diagnostics"
+        Icon="Sidebar.ico"
+        Width="300"
+        SizeToContent="Height"
+        ShowTitleBar="False"
+        ShowIcon="False"
+        ShowTitle="False"
+        ShowMinimize="False"
+        ShowMaximize="False"
+        ShowClose="False"
+        Topmost="True"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        Style="{StaticResource FlatWindowStyle}">
+    <DockPanel LastChildFill="True">
+        <Label DockPanel.Dock="Top" Content="Updating" Style="{StaticResource UpdateTitle}" />
+        <ProgressBar x:Name="UpdateProgress" Value="0" Style="{StaticResource UpdateProgress}" />
+    </DockPanel>
+</win:DPIAwareWindow>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 using System.Reflection;
 using Microsoft.Win32.TaskScheduler;
@@ -87,7 +88,21 @@ namespace SidebarDiagnostics.Utilities
         {
             using (TaskService _taskService = new TaskService())
             {
-                return _taskService.FindTask(_taskName) != null;
+                Task _task = _taskService.FindTask(Constants.Generic.TASKNAME);
+
+                if (_task == null)
+                {
+                    return false;
+                }
+
+                ExecAction _action = _task.Definition.Actions.OfType<ExecAction>().FirstOrDefault();
+
+                if (_action == null || _action.Path != Assembly.GetExecutingAssembly().Location)
+                {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -100,7 +115,7 @@ namespace SidebarDiagnostics.Utilities
                 _def.Actions.Add(new ExecAction(exePath ?? Assembly.GetExecutingAssembly().Location));
                 _def.Principal.RunLevel = TaskRunLevel.Highest;
 
-                _taskService.RootFolder.RegisterTaskDefinition(_taskName, _def);
+                _taskService.RootFolder.RegisterTaskDefinition(Constants.Generic.TASKNAME, _def);
             }
         }
 
@@ -108,10 +123,8 @@ namespace SidebarDiagnostics.Utilities
         {
             using (TaskService _taskService = new TaskService())
             {
-                _taskService.RootFolder.DeleteTask(_taskName, false);
+                _taskService.RootFolder.DeleteTask(Constants.Generic.TASKNAME, false);
             }
         }
-
-        private const string _taskName = "SidebarStartup";
     }
 }
