@@ -22,14 +22,17 @@ namespace SidebarDiagnostics
         {
             base.OnStartup(e);
 
-            // UPDATE
-            #if !DEBUG
-            await SquirrelUpdate(false);
-            #endif
-
             // ERROR HANDLING
             #if !DEBUG
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(AppDomain_Error);
+            #endif
+
+            // UPDATE
+            #if !DEBUG
+            if (Framework.Settings.Instance.AutoUpdate)
+            {
+                await SquirrelUpdate(false);
+            }
             #endif
             
             // SETTINGS
