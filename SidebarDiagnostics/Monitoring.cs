@@ -327,6 +327,7 @@ namespace SidebarDiagnostics.Monitoring
                         parameters.GetValue<bool>(ParamKey.RoundAll),
                         parameters.GetValue<bool>(ParamKey.AllCoreClocks),
                         parameters.GetValue<bool>(ParamKey.CoreLoads),
+                        parameters.GetValue<bool>(ParamKey.UseGHz),
                         parameters.GetValue<bool>(ParamKey.UseFahrenheit),
                         parameters.GetValue<int>(ParamKey.TempAlert)
                         );
@@ -342,6 +343,7 @@ namespace SidebarDiagnostics.Monitoring
                 case MonitorType.GPU:
                     InitGPU(
                         parameters.GetValue<bool>(ParamKey.RoundAll),
+                        parameters.GetValue<bool>(ParamKey.UseGHz),
                         parameters.GetValue<bool>(ParamKey.UseFahrenheit),
                         parameters.GetValue<int>(ParamKey.TempAlert)
                         );
@@ -409,7 +411,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private void InitCPU(IHardware board, bool roundAll, bool allCoreClocks, bool coreLoads, bool useFahrenheit, double tempAlert)
+        private void InitCPU(IHardware board, bool roundAll, bool allCoreClocks, bool coreLoads, bool useGHz, bool useFahrenheit, double tempAlert)
         {
             List<OHMSensor> _sensorList = new List<OHMSensor>();
 
@@ -425,7 +427,7 @@ namespace SidebarDiagnostics.Monitoring
 
                         if (_coreClock != null)
                         {
-                            _sensorList.Add(new OHMSensor(_coreClock, DataType.Clock, string.Format("Core {0}", i - 1), true));
+                            _sensorList.Add(new OHMSensor(_coreClock, DataType.MHz, string.Format("Core {0}", i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                         }
                     }
                 }
@@ -435,7 +437,7 @@ namespace SidebarDiagnostics.Monitoring
 
                     if (_firstClock != null)
                     {
-                        _sensorList.Add(new OHMSensor(_firstClock, DataType.Clock, "Clock", true));
+                        _sensorList.Add(new OHMSensor(_firstClock, DataType.MHz, "Clock", (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                     }
                 }
             }
@@ -519,7 +521,7 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_ramClock != null)
             {
-                _sensorList.Add(new OHMSensor(_ramClock, DataType.Clock, "Clock", true));
+                _sensorList.Add(new OHMSensor(_ramClock, DataType.MHz, "Clock", true));
             }
 
             ISensor _voltage = null;
@@ -563,7 +565,7 @@ namespace SidebarDiagnostics.Monitoring
             Sensors = _sensorList.ToArray();
         }
 
-        public void InitGPU(bool roundAll, bool useFahrenheit, double tempAlert)
+        public void InitGPU(bool roundAll, bool useGHz, bool useFahrenheit, double tempAlert)
         {
             List<OHMSensor> _sensorList = new List<OHMSensor>();
 
@@ -571,14 +573,14 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_coreClock != null)
             {
-                _sensorList.Add(new OHMSensor(_coreClock, DataType.Clock, "Core", true));
+                _sensorList.Add(new OHMSensor(_coreClock, DataType.MHz, "Core", (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
             }
 
             ISensor _memoryClock = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 1).FirstOrDefault();
 
             if (_memoryClock != null)
             {
-                _sensorList.Add(new OHMSensor(_memoryClock, DataType.Clock, "VRAM", true));
+                _sensorList.Add(new OHMSensor(_memoryClock, DataType.MHz, "VRAM", (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
             }
 
             ISensor _coreLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
@@ -1671,12 +1673,13 @@ namespace SidebarDiagnostics.Monitoring
                         Enabled = true,
                         Order = 1,
                         Hardware = new HardwareConfig[0],
-                        Params = new ConfigParam[6]
+                        Params = new ConfigParam[7]
                         {
                             ConfigParam.Defaults.HardwareNames,
                             ConfigParam.Defaults.RoundAll,
                             ConfigParam.Defaults.AllCoreClocks,
                             ConfigParam.Defaults.CoreLoads,
+                            ConfigParam.Defaults.UseGHz,
                             ConfigParam.Defaults.UseFahrenheit,
                             ConfigParam.Defaults.TempAlert
                         }
@@ -1699,10 +1702,11 @@ namespace SidebarDiagnostics.Monitoring
                         Enabled = true,
                         Order = 3,
                         Hardware = new HardwareConfig[0],
-                        Params = new ConfigParam[4]
+                        Params = new ConfigParam[5]
                         {
                             ConfigParam.Defaults.HardwareNames,
                             ConfigParam.Defaults.RoundAll,
+                            ConfigParam.Defaults.UseGHz,
                             ConfigParam.Defaults.UseFahrenheit,
                             ConfigParam.Defaults.TempAlert
                         }
@@ -1942,6 +1946,9 @@ namespace SidebarDiagnostics.Monitoring
                     case ParamKey.DriveIO:
                         return "Show Drive IO";
 
+                    case ParamKey.UseGHz:
+                        return "Use GHz";
+
                     default:
                         return "Unknown";
                 }
@@ -1992,6 +1999,9 @@ namespace SidebarDiagnostics.Monitoring
 
                     case ParamKey.DriveIO:
                         return "Shows drive read and write speeds if drive details is enabled.";
+
+                    case ParamKey.UseGHz:
+                        return "Clock speeds will be in GHz instead of MHz.";
 
                     default:
                         return "Unknown";
@@ -2112,6 +2122,14 @@ namespace SidebarDiagnostics.Monitoring
                     return new ConfigParam() { Key = ParamKey.DriveIO, Value = true };
                 }
             }
+
+            public static ConfigParam UseGHz
+            {
+                get
+                {
+                    return new ConfigParam() { Key = ParamKey.UseGHz, Value = false };
+                }
+            }
         }
     }
 
@@ -2130,12 +2148,14 @@ namespace SidebarDiagnostics.Monitoring
         UseBytes,
         RoundAll,
         DriveSpace,
-        DriveIO
+        DriveIO,
+        UseGHz
     }
 
     public enum DataType : byte
     {
-        Clock,
+        MHz,
+        GHz,
         Voltage,
         Percent,
         RPM,
@@ -2157,7 +2177,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public void Convert(ref double value)
         {
-            value = value * 1.8 + 32;
+            value = value * 1.8d + 32d;
         }
 
         public DataType TargetType
@@ -2168,7 +2188,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private static CelciusToFahrenheit _instance { get; set; }
+        private static CelciusToFahrenheit _instance { get; set; } = null;
 
         public static CelciusToFahrenheit Instance
         {
@@ -2177,6 +2197,39 @@ namespace SidebarDiagnostics.Monitoring
                 if (_instance == null)
                 {
                     _instance = new CelciusToFahrenheit();
+                }
+
+                return _instance;
+            }
+        }
+    }
+
+    public class MHzToGHz : iConverter
+    {
+        private MHzToGHz() { }
+
+        public void Convert(ref double value)
+        {
+            value = value / 1000d;
+        }
+
+        public DataType TargetType
+        {
+            get
+            {
+                return DataType.GHz;
+            }
+        }
+
+        private static MHzToGHz _instance { get; set; } = null;
+
+        public static MHzToGHz Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new MHzToGHz();
                 }
 
                 return _instance;
@@ -2282,8 +2335,11 @@ namespace SidebarDiagnostics.Monitoring
         {
             switch (type)
             {
-                case DataType.Clock:
+                case DataType.MHz:
                     return " MHz";
+
+                case DataType.GHz:
+                    return " GHz";
 
                 case DataType.Voltage:
                     return " V";

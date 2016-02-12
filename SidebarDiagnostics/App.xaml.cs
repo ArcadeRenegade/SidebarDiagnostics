@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows;
@@ -101,35 +102,45 @@ namespace SidebarDiagnostics
 
         private async Task SquirrelUpdate(bool showInfo)
         {
-            using (UpdateManager _manager = new UpdateManager(ConfigurationManager.AppSettings["CurrentReleaseURL"]))
+            try
             {
-                UpdateInfo _update = await _manager.CheckForUpdate();
-
-                if (_update.ReleasesToApply.Any())
+                using (UpdateManager _manager = new UpdateManager(ConfigurationManager.AppSettings["CurrentReleaseURL"]))
                 {
-                    Version _newVersion = _update.ReleasesToApply.OrderByDescending(r => r.Version).First().Version.Version;
+                    UpdateInfo _update = await _manager.CheckForUpdate();
 
-                    Update _updateWindow = new Update();
-                    _updateWindow.Show();
-
-                    await _manager.UpdateApp((p) => _updateWindow.SetProgress(p));
-
-                    _updateWindow.Close();
-
-                    string _newExePath = Utilities.Paths.Exe(_newVersion);
-
-                    if (Framework.Settings.Instance.RunAtStartup)
+                    if (_update.ReleasesToApply.Any())
                     {
-                        Utilities.Startup.EnableStartupTask(_newExePath);
+                        Version _newVersion = _update.ReleasesToApply.OrderByDescending(r => r.Version).First().Version.Version;
+
+                        Update _updateWindow = new Update();
+                        _updateWindow.Show();
+
+                        await _manager.UpdateApp((p) => _updateWindow.SetProgress(p));
+
+                        _updateWindow.Close();
+
+                        string _newExePath = Utilities.Paths.Exe(_newVersion);
+
+                        if (Framework.Settings.Instance.RunAtStartup)
+                        {
+                            Utilities.Startup.EnableStartupTask(_newExePath);
+                        }
+
+                        Process.Start(_newExePath);
+
+                        Shutdown();
                     }
-
-                    Process.Start(_newExePath);
-
-                    Shutdown();
+                    else if (showInfo)
+                    {
+                        MessageBox.Show(Constants.Generic.UPDATEMSG, Constants.Generic.PROGRAMNAME, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    }
                 }
-                else if (showInfo)
+            }
+            catch (WebException)
+            {
+                if (showInfo)
                 {
-                    MessageBox.Show(Constants.Generic.UPDATEMSG, Constants.Generic.PROGRAMNAME, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    MessageBox.Show(Constants.Generic.UPDATEERROR, Constants.Generic.UPDATEERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                 }
             }
         }

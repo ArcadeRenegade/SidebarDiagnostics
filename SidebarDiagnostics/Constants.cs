@@ -13,6 +13,9 @@ namespace SidebarDiagnostics
 
             public const string ERRORTITLE = "Sidebar Error";
             public const string PERFORMANCECOUNTERERROR = "Your Performance Counter cache is corrupted.\r\nClick OK to visit the wiki and fix this error.";
+
+            public const string UPDATEERRORTITLE = "Update Error";
+            public const string UPDATEERROR = "Unable to update. Check your internet connection.";
         }
     }
 }

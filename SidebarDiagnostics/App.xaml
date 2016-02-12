@@ -479,15 +479,14 @@
                 <Setter Property="Height" Value="25" />
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
                 <Setter Property="Foreground" Value="#2ecc71" />
-                <Setter Property="BorderBrush" Value="#27ae60" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ProgressBar}">
-                            <Border Name="PART_Track" CornerRadius="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
+                            <Border Name="PART_Track" CornerRadius="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1">
                                 <Grid>
-                                    <Border Name="PART_Indicator" CornerRadius="2,0,0,2" Background="{TemplateBinding Foreground}" BorderBrush="{TemplateBinding Background}" BorderThickness="1" Panel.ZIndex="0" HorizontalAlignment="Left" />
-                                    <Label Content="{TemplateBinding Value, Converter={StaticResource PercentConverter}}" Margin="0" Padding="0" FontSize="12" Foreground="#333333" Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Border Name="PART_Indicator" CornerRadius="2,0,0,2" Background="{TemplateBinding Foreground}" BorderBrush="{TemplateBinding Background}" BorderThickness="0" Panel.ZIndex="0" HorizontalAlignment="Left" />
+                                    <Label Content="{TemplateBinding Value, Converter={StaticResource PercentConverter}}" Margin="0" Padding="0,0,0,1" FontSize="12" Foreground="#333333" Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Grid>
                             </Border>
                         </ControlTemplate>
