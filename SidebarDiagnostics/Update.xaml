@@ -18,11 +18,13 @@
         ShowMaximize="False"
         ShowClose="False"
         Topmost="True"
-        ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource FlatWindowStyle}">
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo ProgressState="Normal" ProgressValue="{Binding Path=ProgressNormalized, Mode=OneWay}" />
+    </Window.TaskbarItemInfo>
     <DockPanel LastChildFill="True">
         <Label DockPanel.Dock="Top" Content="Updating" Style="{StaticResource UpdateTitle}" />
-        <ProgressBar x:Name="UpdateProgress" Value="0" Style="{StaticResource UpdateProgress}" />
+        <ProgressBar Value="{Binding Path=Progress, Mode=OneWay}" Style="{StaticResource UpdateProgress}" />
     </DockPanel>
 </win:DPIAwareWindow>

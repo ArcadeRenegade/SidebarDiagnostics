@@ -1,4 +1,7 @@
-﻿using SidebarDiagnostics.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Threading;
+using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
 {
@@ -10,11 +13,39 @@ namespace SidebarDiagnostics
         public Update()
         {
             InitializeComponent();
+
+            DataContext = Model = new UpdateModel();
         }
 
         public void SetProgress(double percent)
         {
-            UpdateProgress.Value = percent;
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
+            {
+                Model.Progress = percent;
+            }));
         }
+
+        public new void Close()
+        {
+            _close = true;
+
+            base.Close();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (_close)
+            {
+                base.OnClosing(e);
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
+        public UpdateModel Model { get; private set; }
+
+        private bool _close { get; set; } = false;
     }
 }

@@ -15,9 +15,9 @@ namespace SidebarDiagnostics.Framework
 
         public void Save()
         {
-            if (!Directory.Exists(Paths.Local))
+            if (!Directory.Exists(Paths.LocalApp))
             {
-                Directory.CreateDirectory(Paths.Local);
+                Directory.CreateDirectory(Paths.LocalApp);
             }
 
             using (StreamWriter _stream = File.CreateText(Paths.SettingsFile))

@@ -3,22 +3,30 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 using Microsoft.Win32.TaskScheduler;
+using Shell32;
 
 namespace SidebarDiagnostics.Utilities
 {
     public static class Paths
     {
-        private const string LOCALAPPDATA = "LocalAppData";
         private const string SETTINGS = "settings.json";
 
         public static string Install(Version version)
         {
-            return Path.Combine(Local, string.Format("app-{0}", version.ToString(3)));
+            return Path.Combine(LocalApp, string.Format("app-{0}", version.ToString(3)));
         }
 
         public static string Exe(Version version)
         {
             return Path.Combine(Install(version), ExeName);
+        }
+
+        public static string TaskBar
+        {
+            get
+            {
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar");
+            }
         }
 
         private static string _assemblyName { get; set; } = null;
@@ -59,25 +67,25 @@ namespace SidebarDiagnostics.Utilities
             {
                 if (_settingsFile == null)
                 {
-                    _settingsFile = Path.Combine(Local, SETTINGS);
+                    _settingsFile = Path.Combine(LocalApp, SETTINGS);
                 }
 
                 return _settingsFile;
             }
         }
 
-        private static string _local { get; set; } = null;
+        private static string _localApp { get; set; } = null;
 
-        public static string Local
+        public static string LocalApp
         {
             get
             {
-                if (_local == null)
+                if (_localApp == null)
                 {
-                    _local = Path.Combine(Environment.GetEnvironmentVariable(LOCALAPPDATA), AssemblyName);
+                    _localApp = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyName);
                 }
 
-                return _local;
+                return _localApp;
             }
         }
     }

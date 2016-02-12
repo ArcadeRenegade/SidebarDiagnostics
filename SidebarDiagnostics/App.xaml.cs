@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,34 +21,9 @@ namespace SidebarDiagnostics
         {
             base.OnStartup(e);
 
+            // UPDATE
             #if !DEBUG
-            using (UpdateManager _manager = new UpdateManager(@"C:\Users\Ryan\Documents\Visual Studio 2015\Projects\SidebarDiagnostics\Releases"))
-            {
-                UpdateInfo _update = await _manager.CheckForUpdate();
-                
-                if (_update.ReleasesToApply.Any())
-                {
-                    Version _newVersion = _update.ReleasesToApply.OrderByDescending(r => r.Version).First().Version.Version;
-
-                    Update _updateWindow = new Update();
-                    _updateWindow.Show();
-
-                    await _manager.UpdateApp((p) => _updateWindow.SetProgress(p));
-
-                    _updateWindow.Close();
-
-                    string _newExePath = Utilities.Paths.Exe(_newVersion);
-
-                    if (Framework.Settings.Instance.RunAtStartup)
-                    {
-                        Utilities.Startup.EnableStartupTask(_newExePath);
-                    }
-
-                    Process.Start(_newExePath);
-
-                    Shutdown();
-                }
-            }
+            await SquirrelUpdate(false);
             #endif
 
             // ERROR HANDLING
@@ -98,7 +74,7 @@ namespace SidebarDiagnostics
 
             if (_result == MessageBoxResult.OK)
             {
-                Process.Start(Constants.URL.WIKI);
+                Process.Start(ConfigurationManager.AppSettings["WikiURL"]);
             }
         }
 
@@ -123,6 +99,41 @@ namespace SidebarDiagnostics
             new Settings(_sidebar);
         }
 
+        private async Task SquirrelUpdate(bool showInfo)
+        {
+            using (UpdateManager _manager = new UpdateManager(ConfigurationManager.AppSettings["CurrentReleaseURL"]))
+            {
+                UpdateInfo _update = await _manager.CheckForUpdate();
+
+                if (_update.ReleasesToApply.Any())
+                {
+                    Version _newVersion = _update.ReleasesToApply.OrderByDescending(r => r.Version).First().Version.Version;
+
+                    Update _updateWindow = new Update();
+                    _updateWindow.Show();
+
+                    await _manager.UpdateApp((p) => _updateWindow.SetProgress(p));
+
+                    _updateWindow.Close();
+
+                    string _newExePath = Utilities.Paths.Exe(_newVersion);
+
+                    if (Framework.Settings.Instance.RunAtStartup)
+                    {
+                        Utilities.Startup.EnableStartupTask(_newExePath);
+                    }
+
+                    Process.Start(_newExePath);
+
+                    Shutdown();
+                }
+                else if (showInfo)
+                {
+                    MessageBox.Show(Constants.Generic.UPDATEMSG, Constants.Generic.PROGRAMNAME, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                }
+            }
+        }
+
         private void CheckSettings()
         {
             if (Framework.Settings.Instance.RunAtStartup && !Utilities.Startup.StartupTaskExists())
@@ -132,58 +143,7 @@ namespace SidebarDiagnostics
 
             Framework.Settings.Instance.MonitorConfig = MonitorConfig.CheckConfig(Framework.Settings.Instance.MonitorConfig);
         }
-
-        //private async Task SquirrelUpdate()
-        //{
-        //    await Task.Run(async () =>
-        //    {
-        //        using (Task<UpdateManager> _task = UpdateManager.GitHubUpdateManager(Constants.GITHUB.REPO, prerelease: true))
-        //        {
-        //            SquirrelAwareApp.HandleEvents(
-        //                onInitialInstall: async (v) =>
-        //                {
-        //                    UpdateManager _manager = await _task;
-        //                    _manager.CreateShortcutForThisExe();
-        //                    await _manager.CreateUninstallerRegistryEntry();
-
-        //                    if (SidebarDiagnostics.Properties.Settings.Default.RunAtStartup)
-        //                    {
-        //                        Utilities.Startup.EnableStartupTask();
-        //                    }
-
-        //                    MessageBox.Show(System.Reflection.Assembly.GetEntryAssembly().Location);
-        //                },
-        //                onAppUpdate: async (v) =>
-        //                {
-        //                    UpdateManager _manager = await _task;
-        //                    _manager.CreateShortcutForThisExe();
-        //                    await _manager.CreateUninstallerRegistryEntry();
-
-        //                    if (SidebarDiagnostics.Properties.Settings.Default.RunAtStartup)
-        //                    {
-        //                        Utilities.Startup.EnableStartupTask();
-        //                    }
-
-        //                    MessageBox.Show(System.Reflection.Assembly.GetEntryAssembly().Location);
-        //                },
-        //                onAppObsoleted: async (v) =>
-        //                {
-        //                    UpdateManager _manager = await _task;
-        //                    _manager.RemoveShortcutForThisExe();
-        //                    _manager.RemoveUninstallerRegistryEntry();
-        //                },
-        //                onAppUninstall: async (v) =>
-        //                {
-        //                    UpdateManager _manager = await _task;
-        //                    _manager.RemoveShortcutForThisExe();
-        //                    _manager.RemoveUninstallerRegistryEntry();
-        //                });
-
-        //            await _task.Result.UpdateApp();
-        //        }
-        //    });
-        //}
-
+        
         private void Settings_Click(object sender, EventArgs e)
         {
             OpenSettings();
@@ -242,7 +202,12 @@ namespace SidebarDiagnostics
 
         private void Donate_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(Constants.URL.DONATE);
+            Process.Start(ConfigurationManager.AppSettings["DonateURL"]);
+        }
+
+        private async void Update_Click(object sender, RoutedEventArgs e)
+        {
+            await SquirrelUpdate(true);
         }
 
         private void Close_Click(object sender, EventArgs e)
