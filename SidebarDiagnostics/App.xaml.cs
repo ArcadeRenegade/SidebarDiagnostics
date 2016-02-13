@@ -228,15 +228,13 @@ namespace SidebarDiagnostics
         {
             Shutdown();
         }
-
-        #if !DEBUG
+        
         private static void AppDomain_Error(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = (Exception)e.ExceptionObject;
 
             MessageBox.Show(ex.ToString(), Constants.Generic.ERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
-        #endif
         
         public Sidebar GetSidebar
         {

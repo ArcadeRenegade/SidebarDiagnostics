@@ -120,10 +120,7 @@ namespace SidebarDiagnostics
 
             Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
 
-            Left = _windowWA.Left;
-            Top = _windowWA.Top;
-            Width = _windowWA.Width;
-            Height = _windowWA.Height;
+            Move(_windowWA);
 
             if (Framework.Settings.Instance.UseAppBar)
             {
