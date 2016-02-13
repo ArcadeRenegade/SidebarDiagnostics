@@ -18,6 +18,8 @@ namespace SidebarDiagnostics
     {
         public Setup()
         {
+            InitializeComponent();
+
             Framework.Settings.Instance.ScreenIndex = 0;
             Framework.Settings.Instance.DockEdge = DockEdge.Right;
             Framework.Settings.Instance.HighDPISupport = false;
@@ -27,10 +29,11 @@ namespace SidebarDiagnostics
             Sidebar = new Dummy();
             Sidebar.Show();
 
-            InitializeComponent();
-
-            Owner = Sidebar;
-            ShowDialog();
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
+            {
+                Owner = Sidebar;
+                ShowDialog();
+            }));
         }
 
         private void ShowPage(Page page)
