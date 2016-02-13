@@ -48,6 +48,18 @@ namespace SidebarDiagnostics
             new BindModelHandler(BindModel).BeginInvoke(null, null);
         }
 
+        public void Reposition()
+        {
+            if (!Ready)
+            {
+                return;
+            }
+
+            Ready = false;
+
+            BindPosition(() => Ready = true);
+        }
+
         private void Initialize()
         {
             Ready = false;
@@ -66,26 +78,7 @@ namespace SidebarDiagnostics
 
         private void BindSettings(bool enableHotkeys)
         {
-            int _screen;
-            DockEdge _edge;
-            WorkArea _windowWA;
-            WorkArea _appbarWA;
-
-            Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
-
-            Left = _windowWA.Left;
-            Top = _windowWA.Top;
-            Width = _windowWA.Width;
-            Height = _windowWA.Height;
-
-            if (Framework.Settings.Instance.UseAppBar)
-            {
-                SetAppBar(_screen, _edge, _windowWA, _appbarWA);
-            }
-            else
-            {
-                ClearAppBar();
-            }
+            BindPosition(null);
 
             if (Framework.Settings.Instance.AlwaysTop)
             {
@@ -110,6 +103,31 @@ namespace SidebarDiagnostics
             if (enableHotkeys)
             {
                 Hotkey.Enable();
+            }
+        }
+
+        private void BindPosition(Action callback)
+        {
+            if (IsAppBar)
+            {
+                ClearAppBar();
+            }
+
+            int _screen;
+            DockEdge _edge;
+            WorkArea _windowWA;
+            WorkArea _appbarWA;
+
+            Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
+
+            Left = _windowWA.Left;
+            Top = _windowWA.Top;
+            Width = _windowWA.Width;
+            Height = _windowWA.Height;
+
+            if (Framework.Settings.Instance.UseAppBar)
+            {
+                SetAppBar(_screen, _edge, _windowWA, _appbarWA, callback);
             }
         }
 

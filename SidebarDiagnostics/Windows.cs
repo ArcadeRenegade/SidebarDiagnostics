@@ -250,7 +250,9 @@ namespace SidebarDiagnostics.Windows
             Show,
             Hide,
             Reload,
-            Close
+            Close,
+            CycleEdge,
+            CycleScreen
         }
 
         public Hotkey() { }
@@ -317,7 +319,7 @@ namespace SidebarDiagnostics.Windows
                 return h;
             }).ToArray();
 
-            (PresentationSource.FromVisual(window) as HwndSource).AddHook(KeyHook);
+            window.HwndSource.AddHook(KeyHook);
         }
 
         public static void Enable()
@@ -426,10 +428,43 @@ namespace SidebarDiagnostics.Windows
                         case KeyAction.Close:
                             Application.Current.Shutdown();
                             break;
+
+                        case KeyAction.CycleEdge:
+                            switch (Framework.Settings.Instance.DockEdge)
+                            {
+                                case DockEdge.Right:
+                                    Framework.Settings.Instance.DockEdge = DockEdge.Left;
+                                    break;
+
+                                default:
+                                case DockEdge.Left:
+                                    Framework.Settings.Instance.DockEdge = DockEdge.Right;
+                                    break;
+                            }
+
+                            Framework.Settings.Instance.Save();
+
+                            _window.Reposition();
+                            break;
+
+                        case KeyAction.CycleScreen:
+                            Monitor[] _monitors = Monitor.GetMonitors();
+
+                            if (Framework.Settings.Instance.ScreenIndex < (_monitors.Length - 1))
+                            {
+                                Framework.Settings.Instance.ScreenIndex++;
+                            }
+                            else
+                            {
+                                Framework.Settings.Instance.ScreenIndex = 0;
+                            }
+
+                            Framework.Settings.Instance.Save();
+
+                            _window.Reposition();
+                            break;
                     }
                 }
-
-                handled = true;
             }
 
             return IntPtr.Zero;
@@ -724,14 +759,6 @@ namespace SidebarDiagnostics.Windows
             UpdateScale(_uiScale, _uiScale, true);
         }
 
-        private void UIScale_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "UIScale")
-            {
-                HandleDPI();
-            }
-        }
-
         public void UpdateScale(double scaleX, double scaleY, bool resize)
         {
             if (VisualChildrenCount > 0)
@@ -753,23 +780,39 @@ namespace SidebarDiagnostics.Windows
 
         private void DPIAwareWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Framework.Settings.Instance.PropertyChanged += UIScale_PropertyChanged;
-
             HandleDPI();
 
-            (PresentationSource.FromVisual(this) as HwndSource).AddHook(WindowHook);
+            Framework.Settings.Instance.PropertyChanged += UIScale_PropertyChanged;
+
+            //HwndSource.AddHook(WindowHook);
         }
 
-        private IntPtr WindowHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private void UIScale_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (msg == WM_MESSAGES.WM_DPICHANGED)
+            if (e.PropertyName == "UIScale")
             {
                 HandleDPI();
-
-                handled = true;
             }
+        }
 
-            return IntPtr.Zero;
+        //private IntPtr WindowHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        //{
+        //    if (msg == WM_MESSAGES.WM_DPICHANGED)
+        //    {
+        //        HandleDPI();
+
+        //        handled = true;
+        //    }
+
+        //    return IntPtr.Zero;
+        //}
+
+        public HwndSource HwndSource
+        {
+            get
+            {
+                return (HwndSource)PresentationSource.FromVisual(this);
+            }
         }
 
         public static readonly DependencyProperty AutoDPIProperty = DependencyProperty.Register("AutoDPI", typeof(bool), typeof(DPIAwareWindow), new UIPropertyMetadata(true));
@@ -878,6 +921,24 @@ namespace SidebarDiagnostics.Windows
             public const int WS_EX_TRANSPARENT = 32;
         }
 
+        private static class WM_WINDOWPOSCHANGING
+        {
+            public const int MSG = 0x0046;
+            public const int SWP_NOMOVE = 0x0002;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct WINDOWPOS
+        {
+            public IntPtr hWnd;
+            public IntPtr hWndInsertAfter;
+            public int x;
+            public int y;
+            public int cx;
+            public int cy;
+            public uint flags;
+        }
+
         public void SetTop()
         {
             NativeMethods.SetWindowPos(
@@ -933,7 +994,33 @@ namespace SidebarDiagnostics.Windows
             NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style & ~WND_STYLE.WS_EX_TRANSPARENT);
         }
 
-        public void SetAppBar(int screen, DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
+        public void PreventMove()
+        {
+            HwndSource.AddHook(MoveHook);
+        }
+
+        public void AllowMove()
+        {
+            HwndSource.RemoveHook(MoveHook);
+        }
+
+        private IntPtr MoveHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_WINDOWPOSCHANGING.MSG)
+            {
+                WINDOWPOS _pos = (WINDOWPOS)Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
+
+                _pos.flags |= WM_WINDOWPOSCHANGING.SWP_NOMOVE;
+
+                Marshal.StructureToPtr(_pos, lParam, true);
+
+                handled = true;
+            }
+
+            return IntPtr.Zero;
+        }
+
+        public void SetAppBar(int screen, DockEdge edge, WorkArea windowWA, WorkArea appbarWA, Action callback)
         {
             if (edge == DockEdge.None)
             {
@@ -954,7 +1041,7 @@ namespace SidebarDiagnostics.Windows
             Screen = screen;
             DockEdge = edge;
 
-            DockAppBar(edge, windowWA, appbarWA);
+            DockAppBar(edge, windowWA, appbarWA, callback);
         }
 
         public void ClearAppBar()
@@ -964,8 +1051,7 @@ namespace SidebarDiagnostics.Windows
                 return;
             }
 
-            _source.RemoveHook(AppBarHook);
-            _source = null;
+            HwndSource.RemoveHook(AppBarHook);
 
             APPBARDATA _data = NewData();
 
@@ -985,7 +1071,7 @@ namespace SidebarDiagnostics.Windows
 
                 Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
 
-                SetAppBar(_screen, _edge, _windowWA, _appbarWA);
+                SetAppBar(_screen, _edge, _windowWA, _appbarWA, null);
             }
 
             Show();
@@ -1011,8 +1097,10 @@ namespace SidebarDiagnostics.Windows
             return _data;
         }
 
-        private void DockAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA)
+        private void DockAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA, Action callback)
         {
+            PreventMove();
+
             APPBARDATA _data = NewData();
             _data.uEdge = (int)edge;
             _data.rc = new RECT()
@@ -1034,16 +1122,16 @@ namespace SidebarDiagnostics.Windows
 
             AppBarWidth = appbarWA.Width;
 
-            _source = HwndSource.FromHwnd(_data.hWnd);
-
             Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
             {
-                Top = windowWA.Top;
-                Left = windowWA.Left;
-                Width = windowWA.Width;
-                Height = windowWA.Height;
+                AllowMove();
 
-                _source.AddHook(AppBarHook);
+                HwndSource.AddHook(AppBarHook);
+
+                if (callback != null)
+                {
+                    callback();
+                }
             }));
         }
 
@@ -1077,7 +1165,7 @@ namespace SidebarDiagnostics.Windows
 
                                 Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
 
-                                SetAppBar(_screen, _edge, _windowWA, _appbarWA);
+                                SetAppBar(_screen, _edge, _windowWA, _appbarWA, null);
                             }));
 
                             _cancelReposition = null;
@@ -1116,8 +1204,6 @@ namespace SidebarDiagnostics.Windows
         private int _callbackID { get; set; }
 
         private int _prevZOrder { get; set; }
-
-        private HwndSource _source { get; set; }
 
         private CancellationTokenSource _cancelReposition { get; set; }
     }

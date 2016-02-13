@@ -183,6 +183,34 @@ namespace SidebarDiagnostics
             }
         }
 
+        private void BindCycleEdge_Click(object sender, RoutedEventArgs e)
+        {
+            _keybinder = (ToggleButton)sender;
+
+            if (_keybinder.IsChecked == true)
+            {
+                BeginBind(Hotkey.KeyAction.CycleEdge);
+            }
+            else
+            {
+                EndBind();
+            }
+        }
+
+        private void BindCycleScreen_Click(object sender, RoutedEventArgs e)
+        {
+            _keybinder = (ToggleButton)sender;
+
+            if (_keybinder.IsChecked == true)
+            {
+                BeginBind(Hotkey.KeyAction.CycleScreen);
+            }
+            else
+            {
+                EndBind();
+            }
+        }
+
         private void BeginBind(Hotkey.KeyAction action)
         {
             _hotkey = new Hotkey();
@@ -223,6 +251,14 @@ namespace SidebarDiagnostics
 
                 case Hotkey.KeyAction.Close:
                     Model.CloseKey = _hotkey;
+                    break;
+
+                case Hotkey.KeyAction.CycleEdge:
+                    Model.CycleEdgeKey = _hotkey;
+                    break;
+
+                case Hotkey.KeyAction.CycleScreen:
+                    Model.CycleScreenKey = _hotkey;
                     break;
             }
 

@@ -16,7 +16,7 @@ namespace SidebarDiagnostics
             InitializeComponent();
         }
 
-        public void Position()
+        public void Reposition()
         {
             int _screen;
             DockEdge _edge;
@@ -33,7 +33,7 @@ namespace SidebarDiagnostics
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Position();
+            Reposition();
         }
     }
 }

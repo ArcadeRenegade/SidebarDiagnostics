@@ -103,14 +103,12 @@ namespace SidebarDiagnostics.Models
             if (Framework.Settings.Instance.Hotkeys != null)
             {
                 ToggleKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Toggle);
-
                 ShowKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Show);
-
                 HideKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Hide);
-
                 ReloadKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Reload);
-
                 CloseKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Close);
+                CycleEdgeKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.CycleEdge);
+                CycleScreenKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.CycleScreen);
             }
 
             IsChanged = false;
@@ -168,6 +166,16 @@ namespace SidebarDiagnostics.Models
             if (CloseKey != null)
             {
                 _hotkeys.Add(CloseKey);
+            }
+
+            if (CycleEdgeKey != null)
+            {
+                _hotkeys.Add(CycleEdgeKey);
+            }
+
+            if (CycleScreenKey != null)
+            {
+                _hotkeys.Add(CycleScreenKey);
             }
 
             Framework.Settings.Instance.Hotkeys = _hotkeys.ToArray();
@@ -772,6 +780,38 @@ namespace SidebarDiagnostics.Models
                 _closeKey = value;
 
                 NotifyPropertyChanged("CloseKey");
+            }
+        }
+
+        private Hotkey _cycleEdgeKey { get; set; }
+
+        public Hotkey CycleEdgeKey
+        {
+            get
+            {
+                return _cycleEdgeKey;
+            }
+            set
+            {
+                _cycleEdgeKey = value;
+
+                NotifyPropertyChanged("CycleEdgeKey");
+            }
+        }
+
+        private Hotkey _cycleScreenKey { get; set; }
+
+        public Hotkey CycleScreenKey
+        {
+            get
+            {
+                return _cycleScreenKey;
+            }
+            set
+            {
+                _cycleScreenKey = value;
+
+                NotifyPropertyChanged("CycleScreenKey");
             }
         }
     }

@@ -55,7 +55,7 @@ namespace SidebarDiagnostics
 
                 case Page.BeginHighDPI:
                     Framework.Settings.Instance.HighDPISupport = true;
-                    Sidebar.Position();
+                    Sidebar.Reposition();
                     ShowPage(Page.EndHighDPI);
                     return;
             }
@@ -97,7 +97,7 @@ namespace SidebarDiagnostics
                     Framework.Settings.Instance.XOffset = (int)XOffsetSlider.Value;
                     Framework.Settings.Instance.YOffset = (int)YOffsetSlider.Value;
 
-                    Sidebar.Position();
+                    Sidebar.Reposition();
                 }));
 
                 _cancelReposition = null;
