@@ -60,6 +60,20 @@ namespace SidebarDiagnostics
             BindPosition(() => Ready = true);
         }
 
+        public void ContentReload()
+        {
+            if (!Ready)
+            {
+                return;
+            }
+
+            Ready = false;
+
+            Model.Reload();
+
+            Ready = true;
+        }
+
         private void Initialize()
         {
             Ready = false;

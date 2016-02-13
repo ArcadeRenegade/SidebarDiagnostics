@@ -210,9 +210,9 @@ namespace SidebarDiagnostics.Windows
                             {
                                 Sidebar _sidebar = (Application.Current as App).GetSidebar;
 
-                                if (_sidebar != null && _sidebar.Ready)
+                                if (_sidebar != null)
                                 {
-                                    _sidebar.Model.Reload();
+                                    _sidebar.ContentReload();
                                 }
                             }));
 
