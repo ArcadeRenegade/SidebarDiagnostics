@@ -126,6 +126,10 @@ namespace SidebarDiagnostics
             {
                 SetAppBar(_screen, _edge, _windowWA, _appbarWA, callback);
             }
+            else if (callback != null)
+            {
+                callback();
+            }
         }
 
         private delegate void BindModelHandler();
