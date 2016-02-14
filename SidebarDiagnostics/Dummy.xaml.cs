@@ -11,9 +11,11 @@ namespace SidebarDiagnostics
     /// </summary>
     public partial class Dummy : AppBarWindow
     {
-        public Dummy()
+        public Dummy(Setup setup)
         {
             InitializeComponent();
+
+            Setup = setup;
         }
 
         public void Reposition()
@@ -31,6 +33,11 @@ namespace SidebarDiagnostics
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Reposition();
+
+            Setup.Owner = this;
+            Setup.ShowDialog();
         }
+
+        public Setup Setup { get; private set; }
     }
 }

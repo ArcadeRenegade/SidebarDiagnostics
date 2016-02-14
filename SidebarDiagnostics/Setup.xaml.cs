@@ -26,21 +26,8 @@ namespace SidebarDiagnostics
             Framework.Settings.Instance.XOffset = 0;
             Framework.Settings.Instance.YOffset = 0;
 
-            Sidebar = new Dummy();
+            Sidebar = new Dummy(this);
             Sidebar.Show();
-
-            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-            {
-                if (Sidebar.IsInitialized && Sidebar.IsVisible)
-                {
-                    Owner = Sidebar;
-                    ShowDialog();
-                }
-                else
-                {
-                    Show();
-                }
-            }));
         }
 
         private void ShowPage(Page page)
