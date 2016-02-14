@@ -120,6 +120,8 @@ namespace SidebarDiagnostics
 
         private async Task SquirrelUpdate(bool showInfo)
         {
+            string _exe = null;
+
             try
             {
                 using (UpdateManager _manager = new UpdateManager(ConfigurationManager.AppSettings["CurrentReleaseURL"]))
@@ -137,16 +139,7 @@ namespace SidebarDiagnostics
 
                         _updateWindow.Close();
 
-                        string _newExePath = Utilities.Paths.Exe(_newVersion);
-
-                        if (Framework.Settings.Instance.RunAtStartup)
-                        {
-                            Utilities.Startup.EnableStartupTask(_newExePath);
-                        }
-
-                        Process.Start(_newExePath);
-
-                        Shutdown();
+                        _exe = Utilities.Paths.Exe(_newVersion);
                     }
                     else if (showInfo)
                     {
@@ -160,6 +153,18 @@ namespace SidebarDiagnostics
                 {
                     MessageBox.Show(Constants.Generic.UPDATEERROR, Constants.Generic.UPDATEERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                 }
+            }
+
+            if (_exe != null)
+            {
+                if (Framework.Settings.Instance.RunAtStartup)
+                {
+                    Utilities.Startup.EnableStartupTask(_exe);
+                }
+
+                Process.Start(_exe);
+
+                Shutdown();
             }
         }
 
