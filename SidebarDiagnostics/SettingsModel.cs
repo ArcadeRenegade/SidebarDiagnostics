@@ -29,31 +29,19 @@ namespace SidebarDiagnostics.Models
             }
 
             UIScale = Framework.Settings.Instance.UIScale;
-
             XOffset = Framework.Settings.Instance.XOffset;
-
             YOffset = Framework.Settings.Instance.YOffset;
-
             PollingInterval = Framework.Settings.Instance.PollingInterval;
-
             UseAppBar = Framework.Settings.Instance.UseAppBar;
-
             AlwaysTop = Framework.Settings.Instance.AlwaysTop;
-
             HighDPISupport = Framework.Settings.Instance.HighDPISupport;
-
             ClickThrough = Framework.Settings.Instance.ClickThrough;
-
             ShowTrayIcon = Framework.Settings.Instance.ShowTrayIcon;
-
             AutoUpdate = Framework.Settings.Instance.AutoUpdate;
-
             RunAtStartup = Framework.Settings.Instance.RunAtStartup;
-
             SidebarWidth = Framework.Settings.Instance.SidebarWidth;
-
+            AutoBGColor = Framework.Settings.Instance.AutoBGColor;
             BGColor = Framework.Settings.Instance.BGColor;
-
             BGOpacity = Framework.Settings.Instance.BGOpacity;
 
             FontSettingItems = new FontSetting[5]
@@ -64,10 +52,9 @@ namespace SidebarDiagnostics.Models
                 FontSetting.x16,
                 FontSetting.x18
             };
+
             FontSetting = Framework.Settings.Instance.FontSetting;
-
             FontColor = Framework.Settings.Instance.FontColor;
-
             AlertFontColor = Framework.Settings.Instance.AlertFontColor;
 
             DateSettingItems = new DateSetting[4]
@@ -77,12 +64,10 @@ namespace SidebarDiagnostics.Models
                 DateSetting.Normal,
                 DateSetting.Long
             };
+
             DateSetting = Framework.Settings.Instance.DateSetting;
-
             CollapseMenuBar = Framework.Settings.Instance.CollapseMenuBar;
-
             ShowClock = Framework.Settings.Instance.ShowClock;
-
             Clock24HR = Framework.Settings.Instance.Clock24HR;
             
             if (sidebar.Ready)
@@ -130,6 +115,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.AutoUpdate = AutoUpdate;
             Framework.Settings.Instance.RunAtStartup = RunAtStartup;
             Framework.Settings.Instance.SidebarWidth = SidebarWidth;
+            Framework.Settings.Instance.AutoBGColor = AutoBGColor;
             Framework.Settings.Instance.BGColor = BGColor;
             Framework.Settings.Instance.BGOpacity = BGOpacity;
             Framework.Settings.Instance.FontSetting = FontSetting;
@@ -485,6 +471,22 @@ namespace SidebarDiagnostics.Models
                 _sidebarWidth = value;
 
                 NotifyPropertyChanged("SidebarWidth");
+            }
+        }
+
+        private bool _autoBGColor { get; set; }
+
+        public bool AutoBGColor
+        {
+            get
+            {
+                return _autoBGColor;
+            }
+            set
+            {
+                _autoBGColor = value;
+
+                NotifyPropertyChanged("AutoBGColor");
             }
         }
 

@@ -19,13 +19,17 @@
         Width="{Binding Source={x:Static frame:Settings.Instance}, Path=SidebarWidth, Mode=OneWay}"
         Height="800"
         AutoDPI="False"
-        AllowsTransparency="True"
+        ShowTitleBar="False"
+        ShowIcon="False"
+        ShowTitle="False"
+        ShowMinimize="False"
+        ShowMaximize="False"
+        ShowClose="False"
         ShowInTaskbar="False"
+        AllowsTransparency="True"
         ResizeMode="NoResize"
-        WindowStyle="None">
-    <Window.Background>
-        <SolidColorBrush Opacity="{Binding Source={x:Static frame:Settings.Instance}, Path=BGOpacity, Mode=OneWay}" Color="{Binding Source={x:Static frame:Settings.Instance}, Path=BGColor, Mode=OneWay}" />
-    </Window.Background>
+        WindowStyle="None"
+        Style="{StaticResource SidebarWindow}">
     <Grid>
         <StackPanel Style="{StaticResource LoadingPanel}">
             <Ellipse Style="{StaticResource Loading}">

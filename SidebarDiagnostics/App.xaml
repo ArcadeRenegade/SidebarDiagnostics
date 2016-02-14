@@ -37,6 +37,23 @@
             <conv:DriveNameLengthConverter x:Key="DriveNameConverter" />
             <conv:PercentConverter x:Key="PercentConverter" />
 
+            <Style x:Key="SidebarWindow" TargetType="{x:Type Window}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Opacity="{Binding Source={x:Static frame:Settings.Instance}, Path=BGOpacity, Mode=OneWay}" Color="{Binding Source={x:Static frame:Settings.Instance}, Path=BGColor, Mode=OneWay}" />
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=AutoBGColor, Mode=OneWay}" Value="True">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <SolidColorBrush Opacity="{Binding Source={x:Static frame:Settings.Instance}, Path=BGOpacity, Mode=OneWay}" Color="{Binding Path=(SystemParameters.WindowGlassColor), Mode=OneWay}" />
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
             <Style x:Key="LoadingPanel" TargetType="{x:Type StackPanel}">
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="VerticalAlignment" Value="Center" />

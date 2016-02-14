@@ -14,12 +14,13 @@
         Closed="Window_Closed"
         Title="Sidebar Settings"
         Icon="Settings.ico"
-        Width="400"
+        Width="420"
         SizeToContent="Height"
         ShowMaximize="False"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource FlatWindowStyle}">
     <Window.Resources>
+        <convert:BoolInverseConverter x:Key="BoolInverseConverter" />
         <convert:IntToStringConverter x:Key="IntConverter" />
         <convert:HotkeyToStringConverter x:Key="HotkeyConverter" />
     </Window.Resources>
@@ -143,6 +144,7 @@
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -152,33 +154,36 @@
                         <TextBox Text="{Binding ElementName=SidebarWidthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" />
                         <Slider x:Name="SidebarWidthSlider" Value="{Binding Path=SidebarWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="300" TickFrequency="5" LargeChange="100" ToolTip="Width of the sidebar in pixels." />
                     </DockPanel>
+                    
+                    <Label Grid.Column="0" Grid.Row="1" Content="Auto Background Color" />
+                    <CheckBox Grid.Column="1" Grid.Row="1" IsChecked="{Binding Path=AutoBGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Sets the background color to your Windows color settings." />
 
-                    <Label Grid.Column="0" Grid.Row="1" Content="Background Color" />
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="1" SelectedColor="{Binding Path=BGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Color of the background." />
+                    <Label Grid.Column="0" Grid.Row="2" Content="Background Color" />
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="2" IsEnabled="{Binding Path=AutoBGColor, Mode=OneWay, Converter={StaticResource BoolInverseConverter}}" SelectedColor="{Binding Path=BGColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Color of the background." />
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Background Opacity" />
-                    <DockPanel Grid.Column="1" Grid.Row="2">
+                    <Label Grid.Column="0" Grid.Row="3" Content="Background Opacity" />
+                    <DockPanel Grid.Column="1" Grid.Row="3">
                         <TextBox Text="{Binding ElementName=BGOpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" />
                         <Slider x:Name="BGOpacitySlider" Value="{Binding Path=BGOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0.01" Maximum="1.0" LargeChange="0.1" TickFrequency="0.01" ToolTip="Opacity of the background." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Font Size" />
-                    <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Size of text and icons." />
+                    <Label Grid.Column="0" Grid.Row="4" Content="Font Size" />
+                    <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Size of text and icons." />
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Font Color" />
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="4" SelectedColor="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Color of text and icons."/>
+                    <Label Grid.Column="0" Grid.Row="5" Content="Font Color" />
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="5" SelectedColor="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Color of text and icons."/>
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="Alert Font Color" />
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="5" SelectedColor="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Color of alert text."/>
+                    <Label Grid.Column="0" Grid.Row="6" Content="Alert Font Color" />
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="6" SelectedColor="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Color of alert text."/>
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Date Format" />
-                    <ComboBox Grid.Column="1" Grid.Row="6" ItemsSource="{Binding Path=DateSettingItems}" DisplayMemberPath="Display" SelectedValue="{Binding Path=DateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Format of the date below the clock." />
+                    <Label Grid.Column="0" Grid.Row="7" Content="Date Format" />
+                    <ComboBox Grid.Column="1" Grid.Row="7" ItemsSource="{Binding Path=DateSettingItems}" DisplayMemberPath="Display" SelectedValue="{Binding Path=DateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Format of the date below the clock." />
 
-                    <Label Grid.Column="0" Grid.Row="7" Content="Show Clock" />
-                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the clock." />
+                    <Label Grid.Column="0" Grid.Row="8" Content="Show Clock" />
+                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the clock." />
 
-                    <Label Grid.Column="0" Grid.Row="8" Content="24 Hour Clock" />
-                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Changes the clock's time format to 24 hours." />
+                    <Label Grid.Column="0" Grid.Row="9" Content="24 Hour Clock" />
+                    <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Changes the clock's time format to 24 hours." />
                 </Grid>
             </TabItem>
             <TabItem Header="Monitors">
@@ -229,7 +234,7 @@
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>
-                                                    <GridViewColumn Header="Hardware" HeaderContainerStyle="{StaticResource MonitorHardwareHeader}" Width="210">
+                                                    <GridViewColumn Header="Hardware" HeaderContainerStyle="{StaticResource MonitorHardwareHeader}" Width="230">
                                                         <GridViewColumn.CellTemplate>
                                                             <DataTemplate>
                                                                 <TextBox Text="{Binding Path=Name, Mode=TwoWay}" Style="{StaticResource MonitorHardwareText}" ToolTip="Edit the name of this hardware." />

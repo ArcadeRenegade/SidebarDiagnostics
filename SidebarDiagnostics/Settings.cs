@@ -326,6 +326,23 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private bool _autoBGColor { get; set; } = false;
+
+        [JsonProperty]
+        public bool AutoBGColor
+        {
+            get
+            {
+                return _autoBGColor;
+            }
+            set
+            {
+                _autoBGColor = value;
+
+                NotifyPropertyChanged("AutoBGColor");
+            }
+        }
+
         private string _bgColor { get; set; } = "#000000";
 
         [JsonProperty]

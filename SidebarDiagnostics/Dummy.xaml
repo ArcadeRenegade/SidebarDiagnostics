@@ -11,17 +11,20 @@
         Loaded="Window_Loaded"
         Title="Sidebar"
         Icon="Sidebar.ico"
-        Width="{Binding Source={x:Static frame:Settings.Instance}, Path=SidebarWidth, Mode=OneTime}"
+        Width="{Binding Source={x:Static frame:Settings.Instance}, Path=SidebarWidth, Mode=OneWay}"
         Height="800"
         AutoDPI="False"
-        Topmost="True"
-        AllowsTransparency="True"
+        ShowTitleBar="False"
+        ShowIcon="False"
+        ShowTitle="False"
+        ShowMinimize="False"
+        ShowMaximize="False"
+        ShowClose="False"
         ShowInTaskbar="False"
+        AllowsTransparency="True"
         ResizeMode="NoResize"
-        WindowStyle="None">
-    <Window.Background>
-        <SolidColorBrush Opacity="{Binding Source={x:Static frame:Settings.Instance}, Path=BGOpacity, Mode=OneTime}" Color="{Binding Source={x:Static frame:Settings.Instance}, Path=BGColor, Mode=OneTime}" />
-    </Window.Background>
+        WindowStyle="None"
+        Style="{StaticResource SidebarWindow}">
     <Grid>
         <StackPanel Style="{StaticResource DummyLabel}">
             <StackPanel.LayoutTransform>

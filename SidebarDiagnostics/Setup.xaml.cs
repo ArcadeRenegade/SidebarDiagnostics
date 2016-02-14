@@ -29,10 +29,17 @@ namespace SidebarDiagnostics
             Sidebar = new Dummy();
             Sidebar.Show();
 
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
+            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
             {
-                Owner = Sidebar;
-                ShowDialog();
+                if (Sidebar.IsInitialized && Sidebar.IsVisible)
+                {
+                    Owner = Sidebar;
+                    ShowDialog();
+                }
+                else
+                {
+                    Show();
+                }
             }));
         }
 

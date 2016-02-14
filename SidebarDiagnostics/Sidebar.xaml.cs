@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -84,7 +85,7 @@ namespace SidebarDiagnostics
             {
                 VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
             }
-
+            
             BindSettings(true);
 
             new BindModelHandler(BindModel).BeginInvoke(null, null);
@@ -122,11 +123,6 @@ namespace SidebarDiagnostics
 
         private void BindPosition(Action callback)
         {
-            if (IsAppBar)
-            {
-                ClearAppBar();
-            }
-
             int _screen;
             DockEdge _edge;
             WorkArea _windowWA;
@@ -140,9 +136,17 @@ namespace SidebarDiagnostics
             {
                 SetAppBar(_screen, _edge, _windowWA, _appbarWA, callback);
             }
-            else if (callback != null)
+            else
             {
-                callback();
+                if (IsAppBar)
+                {
+                    ClearAppBar();
+                }
+
+                if (callback != null)
+                {
+                    callback();
+                }
             }
         }
 
@@ -223,7 +227,7 @@ namespace SidebarDiagnostics
             Initialize();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             Ready = false;
 
