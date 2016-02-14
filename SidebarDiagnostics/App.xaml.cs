@@ -31,7 +31,7 @@ namespace SidebarDiagnostics
             #if !DEBUG
             if (Framework.Settings.Instance.AutoUpdate)
             {
-                await SquirrelUpdate(false);
+                await AppUpdate(false);
             }
             #endif
             
@@ -118,10 +118,25 @@ namespace SidebarDiagnostics
             new Settings(_sidebar);
         }
 
-        private async Task SquirrelUpdate(bool showInfo)
+        private async Task AppUpdate(bool showInfo)
         {
-            string _exe = null;
+            string _exe = await SquirrelUpdate(showInfo);
 
+            if (_exe != null)
+            {
+                if (Framework.Settings.Instance.RunAtStartup)
+                {
+                    Utilities.Startup.EnableStartupTask(_exe);
+                }
+
+                Process.Start(_exe);
+
+                Shutdown();
+            }
+        }
+
+        private async Task<string> SquirrelUpdate(bool showInfo)
+        {
             try
             {
                 using (UpdateManager _manager = new UpdateManager(ConfigurationManager.AppSettings["CurrentReleaseURL"]))
@@ -139,7 +154,7 @@ namespace SidebarDiagnostics
 
                         _updateWindow.Close();
 
-                        _exe = Utilities.Paths.Exe(_newVersion);
+                        return Utilities.Paths.Exe(_newVersion);
                     }
                     else if (showInfo)
                     {
@@ -155,17 +170,7 @@ namespace SidebarDiagnostics
                 }
             }
 
-            if (_exe != null)
-            {
-                if (Framework.Settings.Instance.RunAtStartup)
-                {
-                    Utilities.Startup.EnableStartupTask(_exe);
-                }
-
-                Process.Start(_exe);
-
-                Shutdown();
-            }
+            return null;
         }
 
         private void CheckSettings()
@@ -241,7 +246,7 @@ namespace SidebarDiagnostics
 
         private async void Update_Click(object sender, RoutedEventArgs e)
         {
-            await SquirrelUpdate(true);
+            await AppUpdate(true);
         }
 
         private void Close_Click(object sender, EventArgs e)
