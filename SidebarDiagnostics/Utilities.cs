@@ -21,6 +21,14 @@ namespace SidebarDiagnostics.Utilities
             return Path.Combine(Install(version), ExeName);
         }
 
+        public static string CurrentDirectory
+        {
+            get
+            {
+                return Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            }
+        }
+
         public static string TaskBar
         {
             get

@@ -20,9 +20,9 @@ namespace SidebarDiagnostics.Framework
                 Directory.CreateDirectory(Paths.LocalApp);
             }
 
-            using (StreamWriter _stream = File.CreateText(Paths.SettingsFile))
+            using (StreamWriter _writer = File.CreateText(Paths.SettingsFile))
             {
-                new JsonSerializer().Serialize(_stream, this);
+                new JsonSerializer().Serialize(_writer, this);
             }
         }
 
@@ -37,9 +37,9 @@ namespace SidebarDiagnostics.Framework
 
             if (File.Exists(Paths.SettingsFile))
             {
-                using (StreamReader _stream = File.OpenText(Paths.SettingsFile))
+                using (StreamReader _reader = File.OpenText(Paths.SettingsFile))
                 {
-                    _return = (Settings)new JsonSerializer().Deserialize(_stream, typeof(Settings));
+                    _return = (Settings)new JsonSerializer().Deserialize(_reader, typeof(Settings));
                 }
             }
 

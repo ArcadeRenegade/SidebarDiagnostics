@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
+using SidebarDiagnostics.Utilities;
 
 namespace SidebarDiagnostics
 {
@@ -73,17 +74,23 @@ namespace SidebarDiagnostics
     [JsonObject(MemberSerialization.OptIn)]
     public class ChangeLogEntry
     {
-        private const string FILE = "SidebarDiagnostics.ChangeLog.json";
+        private const string FILE = "ChangeLog.json";
 
         public static ChangeLogEntry[] Load()
         {
-            using (Stream _stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(FILE))
+            ChangeLogEntry[] _return = null;
+
+            string _path = Path.Combine(Paths.CurrentDirectory, FILE);
+
+            if (File.Exists(_path))
             {
-                using (StreamReader _reader = new StreamReader(_stream))
+                using (StreamReader _reader = File.OpenText(_path))
                 {
-                    return (ChangeLogEntry[])new JsonSerializer().Deserialize(_reader, typeof(ChangeLogEntry[])) ?? new ChangeLogEntry[0];
+                    _return = (ChangeLogEntry[])new JsonSerializer().Deserialize(_reader, typeof(ChangeLogEntry[]));
                 }
             }
+
+            return _return ?? new ChangeLogEntry[0];
         }
 
         [JsonProperty]
