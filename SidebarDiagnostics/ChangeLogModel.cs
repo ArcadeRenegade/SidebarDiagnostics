@@ -74,17 +74,15 @@ namespace SidebarDiagnostics
     [JsonObject(MemberSerialization.OptIn)]
     public class ChangeLogEntry
     {
-        private const string FILE = "ChangeLog.json";
-
         public static ChangeLogEntry[] Load()
         {
             ChangeLogEntry[] _return = null;
 
-            string _path = Path.Combine(Paths.CurrentDirectory, FILE);
+            string _file = Paths.ChangeLog;
 
-            if (File.Exists(_path))
+            if (File.Exists(_file))
             {
-                using (StreamReader _reader = File.OpenText(_path))
+                using (StreamReader _reader = File.OpenText(_file))
                 {
                     _return = (ChangeLogEntry[])new JsonSerializer().Deserialize(_reader, typeof(ChangeLogEntry[]));
                 }
