@@ -38,9 +38,13 @@ namespace SidebarDiagnostics
             // SETTINGS
             CheckSettings();
 
+            // VERSION
+            Version _version = Assembly.GetExecutingAssembly().GetName().Version;
+            string _vstring = _version.ToString(3);
+
             // TRAY ICON
             _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            _trayIcon.ToolTipText = string.Format("{0} v{1}", Constants.Generic.PROGRAMNAME, Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
+            _trayIcon.ToolTipText = string.Format("{0} v{1}", Constants.Generic.PROGRAMNAME, _vstring);
 
             // START APP
             if (Framework.Settings.Instance.InitialSetup)
@@ -62,6 +66,17 @@ namespace SidebarDiagnostics
 
         public static void StartApp(bool openSettings)
         {
+            Version _version = Assembly.GetExecutingAssembly().GetName().Version;
+            string _vstring = _version.ToString(3);
+
+            if (!string.Equals(Framework.Settings.Instance.ChangeLog, _vstring, StringComparison.OrdinalIgnoreCase))
+            {
+                Framework.Settings.Instance.ChangeLog = _vstring;
+                Framework.Settings.Instance.Save();
+
+                new ChangeLog(_version).Show();
+            }
+
             new Sidebar(openSettings).Show();
 
             RefreshIcon();

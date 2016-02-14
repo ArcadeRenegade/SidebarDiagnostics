@@ -1,0 +1,41 @@
+﻿<win:DPIAwareWindow
+        x:Class="SidebarDiagnostics.ChangeLog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:SidebarDiagnostics"
+        xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
+        mc:Ignorable="d"
+        Title="Sidebar Diagnostics"
+        Icon="Sidebar.ico"
+        ShowMaximize="False"
+        Width="460"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        Style="{StaticResource FlatWindowStyle}">
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons_SM}">
+            <Button Content="Close" Click="Close_Click" Style="{StaticResource NeutralButton_SM}" />
+        </StackPanel>
+        <StackPanel Style="{StaticResource ChangeLogContent}">
+            <Label Content="{Binding Path=Title, Mode=OneWay}" Style="{StaticResource ChangeLogTitle}" />
+            <ItemsControl ItemsSource="{Binding Path=Changes, Mode=OneWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type system:String}">
+                        <DockPanel LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource ChangeLogBullet}" />
+                            <TextBlock Text="{Binding Mode=OneWay}" Style="{StaticResource ChangeLogLine}" />
+                        </DockPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Style="{StaticResource VerticalPanel}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </StackPanel>
+    </DockPanel>
+</win:DPIAwareWindow>

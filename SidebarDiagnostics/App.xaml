@@ -511,6 +511,27 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="ChangeLogContent" TargetType="{x:Type StackPanel}">
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="Margin" Value="30,0" />
+            </Style>
+
+            <Style x:Key="ChangeLogTitle" TargetType="{x:Type Label}" BasedOn="{StaticResource UpdateTitle}">
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style x:Key="ChangeLogBullet" TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="0,0,8,4" />
+                <Setter Property="Foreground" Value="#333" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Text" Value="•" />
+            </Style>
+
+            <Style x:Key="ChangeLogLine" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ChangeLogBullet}">
+                <Setter Property="Margin" Value="0,0,0,4" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+            </Style>
+            
             <Style x:Key="ScrollBarTrackThumb" TargetType="{x:Type Thumb}">
                 <Setter Property="Template">
                     <Setter.Value>

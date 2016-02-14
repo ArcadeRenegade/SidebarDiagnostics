@@ -179,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChangeLog.xaml.cs">
+      <DependentUpon>ChangeLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeLogModel.cs" />
     <Compile Include="SidebarModel.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Constants.cs" />
@@ -204,6 +208,10 @@
     <Compile Include="FlatStyle.xaml.cs">
       <DependentUpon>FlatStyle.xaml</DependentUpon>
     </Compile>
+    <Page Include="ChangeLog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Sidebar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -241,6 +249,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="ChangeLog.json" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>

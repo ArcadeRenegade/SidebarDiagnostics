@@ -33,15 +33,17 @@ namespace SidebarDiagnostics.Framework
 
         private static Settings Load()
         {
+            Settings _return = null;
+
             if (File.Exists(Paths.SettingsFile))
             {
                 using (StreamReader _stream = File.OpenText(Paths.SettingsFile))
                 {
-                    return (new JsonSerializer().Deserialize(_stream, typeof(Settings)) as Settings) ?? new Settings();
+                    _return = (Settings)new JsonSerializer().Deserialize(_stream, typeof(Settings));
                 }
             }
 
-            return new Settings();
+            return _return ?? new Settings();
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -53,6 +55,23 @@ namespace SidebarDiagnostics.Framework
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private string _changeLog { get; set; } = null;
+
+        [JsonProperty]
+        public string ChangeLog
+        {
+            get
+            {
+                return _changeLog;
+            }
+            set
+            {
+                _changeLog = value;
+
+                NotifyPropertyChanged("ChangeLog");
+            }
+        }
 
         private bool _initialSetup { get; set; } = true;
 

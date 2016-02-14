@@ -23,6 +23,7 @@
         ShowInTaskbar="False"
         AllowsTransparency="True"
         ResizeMode="NoResize"
+        Topmost="True"
         WindowStyle="None"
         Style="{StaticResource SidebarWindow}">
     <Grid>
