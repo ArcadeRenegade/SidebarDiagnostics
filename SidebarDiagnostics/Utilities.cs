@@ -3,7 +3,6 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 using Microsoft.Win32.TaskScheduler;
-using Shell32;
 
 namespace SidebarDiagnostics.Utilities
 {
