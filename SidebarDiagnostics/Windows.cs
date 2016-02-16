@@ -1225,7 +1225,7 @@ namespace SidebarDiagnostics.Windows
         public void SetClickThrough()
         {
             IntPtr _hwnd = new WindowInteropHelper(this).Handle;
-            int _style = (int)NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
+            long _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
 
             NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style | WND_STYLE.WS_EX_TRANSPARENT);
         }
@@ -1233,7 +1233,7 @@ namespace SidebarDiagnostics.Windows
         public void ClearClickThrough()
         {
             IntPtr _hwnd = new WindowInteropHelper(this).Handle;
-            int _style = (int)NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
+            long _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
 
             NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style & ~WND_STYLE.WS_EX_TRANSPARENT);
         }
