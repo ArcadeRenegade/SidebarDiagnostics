@@ -72,37 +72,7 @@ namespace SidebarDiagnostics
 
             ClickThroughCheckbox.IsChecked = false;
         }
-
-        private void MonitorUp_Click(object sender, RoutedEventArgs e)
-        {
-            MonitorConfig _row = (MonitorConfig)(sender as Button).DataContext;
-
-            if (_row.Order <= 1)
-                return;
-
-            MonitorConfig[] _config = Model.MonitorConfig;
-
-            _config.Where(c => c.Order == _row.Order - 1).Single().Order += 1;
-            _row.Order -= 1;
-
-            Model.NotifyPropertyChanged("MonitorConfigSorted");
-        }
-
-        private void MonitorDown_Click(object sender, RoutedEventArgs e)
-        {
-            MonitorConfig _row = (MonitorConfig)(sender as Button).DataContext;
-
-            MonitorConfig[] _config = Model.MonitorConfig;
-
-            if (_row.Order >= _config.Length)
-                return;
-
-            _config.Where(c => c.Order == _row.Order + 1).Single().Order -= 1;
-            _row.Order += 1;
-
-            Model.NotifyPropertyChanged("MonitorConfigSorted");
-        }
-
+        
         private void BindButton_LostFocus(object sender, RoutedEventArgs e)
         {
             if (_hotkey != null)

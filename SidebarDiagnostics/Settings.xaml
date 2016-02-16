@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
         xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitoring"
         xmlns:convert="clr-namespace:SidebarDiagnostics.Converters"
@@ -187,9 +188,12 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Monitors">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Margin="0,0,0,15" Text="Click a row to edit its settings." />
-                    <DataGrid ItemsSource="{Binding Path=MonitorConfigSorted, Mode=OneWay}" Style="{StaticResource MonitorGrid}">
+                <StackPanel Style="{StaticResource VerticalPanel}">
+                    <StackPanel Style="{StaticResource SettingTitle}">
+                        <TextBlock Text="Click a row to edit its settings." />
+                        <TextBlock Text="Drag a row to change its order." />
+                    </StackPanel>
+                    <DataGrid ItemsSource="{Binding Path=MonitorConfig, Mode=OneWay}" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" Style="{StaticResource MonitorGrid}">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Enabled" HeaderStyle="{StaticResource MonitorGridHeaderCenter}">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -205,38 +209,24 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Order" HeaderStyle="{StaticResource MonitorGridHeaderCenter}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate DataType="{x:Type monitor:MonitorConfig}">
-                                        <StackPanel Style="{StaticResource MonitorOrderPanel}">
-                                            <Button Click="MonitorUp_Click">
-                                                <Path Data="F1 M 37.8516,35.625L 34.6849,38.7917L 23.6016,50.2708L 23.6016,39.9792L 37.8516,24.9375L 52.1016,39.9792L 52.1016,50.2708L 41.0182,38.7917L 37.8516,35.625 Z" />
-                                            </Button>
-                                            <Button Click="MonitorDown_Click">
-                                                <Path Data="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z" />
-                                            </Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>
                                 <Border Style="{StaticResource MonitorDetailsBorder}">
                                     <StackPanel Style="{StaticResource VerticalPanel}">
-                                        <ListView ItemsSource="{Binding Path=Hardware, Mode=OneWay}" ItemContainerStyle="{StaticResource MonitorHardwareItem}">
+                                        <ListView ItemsSource="{Binding Path=HardwareOC, Mode=OneWay}" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" ItemContainerStyle="{StaticResource MonitorHardwareItem}">
                                             <ListView.View>
                                                 <GridView AllowsColumnReorder="False">
                                                     <GridViewColumn Header="Enabled" HeaderContainerStyle="{StaticResource MonitorHardwareHeaderCenter}">
                                                         <GridViewColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables this hardware." Style="{StaticResource MonitorHardwareCheckbox}" />
+                                                            <DataTemplate DataType="{x:Type monitor:HardwareConfig}">
+                                                                <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enables this hardware. (Double click to change. Known bug.)" Style="{StaticResource MonitorHardwareCheckbox}" />
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>
                                                     <GridViewColumn Header="Hardware" HeaderContainerStyle="{StaticResource MonitorHardwareHeader}" Width="230">
                                                         <GridViewColumn.CellTemplate>
-                                                            <DataTemplate>
+                                                            <DataTemplate DataType="{x:Type monitor:HardwareConfig}">
                                                                 <TextBox Text="{Binding Path=Name, Mode=TwoWay}" Style="{StaticResource MonitorHardwareText}" ToolTip="Edit the name of this hardware." />
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
@@ -244,7 +234,7 @@
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
-
+                                        
                                         <ItemsControl ItemsSource="{Binding Path=Params}" Margin="10">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate DataType="{x:Type monitor:ConfigParam}">

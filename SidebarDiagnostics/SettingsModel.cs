@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
@@ -69,21 +72,24 @@ namespace SidebarDiagnostics.Models
             CollapseMenuBar = Framework.Settings.Instance.CollapseMenuBar;
             ShowClock = Framework.Settings.Instance.ShowClock;
             Clock24HR = Framework.Settings.Instance.Clock24HR;
-            
+
+            ObservableCollection<MonitorConfig> _config = new ObservableCollection<MonitorConfig>(Framework.Settings.Instance.MonitorConfig.Select(c => c.Clone()).OrderByDescending(c => c.Order));
+
             if (sidebar.Ready)
             {
-                foreach (MonitorConfig _record in Framework.Settings.Instance.MonitorConfig)
+                foreach (MonitorConfig _record in _config)
                 {
-                    _record.Hardware = (
+                    _record.HardwareOC = new ObservableCollection<HardwareConfig>(
                         from hw in sidebar.Model.MonitorManager.GetHardware(_record.Type)
-                        join config in _record.Hardware on hw.ID equals config.ID into c
-                        from config in c.DefaultIfEmpty(hw)
-                        select config
-                        ).ToArray();
+                        join config in _record.Hardware on hw.ID equals config.ID into merged
+                        from newhw in merged.DefaultIfEmpty(hw)
+                        orderby newhw.Order descending, newhw.Name ascending
+                        select newhw
+                        );
                 }
             }
 
-            MonitorConfig = Framework.Settings.Instance.MonitorConfig.Select(c => c.Clone()).ToArray();
+            MonitorConfig = _config;
 
             if (Framework.Settings.Instance.Hotkeys != null)
             {
@@ -125,7 +131,25 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.CollapseMenuBar = CollapseMenuBar;
             Framework.Settings.Instance.ShowClock = ShowClock;
             Framework.Settings.Instance.Clock24HR = Clock24HR;
-            Framework.Settings.Instance.MonitorConfig = MonitorConfig;
+
+            MonitorConfig[] _config = MonitorConfig.Select(c => c.Clone()).ToArray();
+
+            for (int i = 0; i < _config.Length; i++)
+            {
+                HardwareConfig[] _hardware = _config[i].HardwareOC.ToArray();
+
+                for (int v = 0; v < _hardware.Length; v++)
+                {
+                    _hardware[v].Order = Convert.ToByte(_hardware.Length - v);
+                }
+
+                _config[i].Hardware = _hardware;
+                _config[i].HardwareOC = null;
+
+                _config[i].Order = Convert.ToByte(_config.Length - i);
+            }
+
+            Framework.Settings.Instance.MonitorConfig = _config;
 
             List<Hotkey> _hotkeys = new List<Hotkey>();
 
@@ -198,6 +222,11 @@ namespace SidebarDiagnostics.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void Child_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            IsChanged = true;
+        }
+
+        private void Child_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             IsChanged = true;
         }
@@ -666,9 +695,9 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private MonitorConfig[] _monitorConfig { get; set; }
+        private ObservableCollection<MonitorConfig> _monitorConfig { get; set; }
 
-        public MonitorConfig[] MonitorConfig
+        public ObservableCollection<MonitorConfig> MonitorConfig
         {
             get
             {
@@ -678,11 +707,15 @@ namespace SidebarDiagnostics.Models
             {
                 _monitorConfig = value;
 
+                _monitorConfig.CollectionChanged += Child_CollectionChanged;
+
                 foreach (MonitorConfig _config in _monitorConfig)
                 {
                     _config.PropertyChanged += Child_PropertyChanged;
 
-                    foreach (HardwareConfig _hardware in _config.Hardware)
+                    _config.HardwareOC.CollectionChanged += Child_CollectionChanged;
+
+                    foreach (HardwareConfig _hardware in _config.HardwareOC)
                     {
                         _hardware.PropertyChanged += Child_PropertyChanged;
                     }
@@ -694,14 +727,6 @@ namespace SidebarDiagnostics.Models
                 }
 
                 NotifyPropertyChanged("MonitorConfig");
-            }
-        }
-
-        public MonitorConfig[] MonitorConfigSorted
-        {
-            get
-            {
-                return _monitorConfig.OrderBy(c => c.Order).ToArray();
             }
         }
 

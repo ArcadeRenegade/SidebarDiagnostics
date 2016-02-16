@@ -294,6 +294,16 @@
                 </Style.Resources>
             </Style>
 
+            <Style x:Key="SettingTitle" TargetType="{x:Type StackPanel}">
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Style.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin" Value="0,0,0,4" />
+                    </Style>
+                </Style.Resources>
+            </Style>
+
             <Style x:Key="MonitorGrid" TargetType="{x:Type DataGrid}">
                 <Setter Property="AutoGenerateColumns" Value="False" />
                 <Setter Property="HeadersVisibility" Value="Column" />
@@ -314,36 +324,15 @@
                 </Style.Resources>
             </Style>
 
+            <Style x:Key="HardwareGrid" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource MonitorGrid}">
+            </Style>
+
             <Style x:Key="MonitorGridHeader" TargetType="{x:Type DataGridColumnHeader}">
                 <Setter Property="Padding" Value="12,4" />
             </Style>
 
             <Style x:Key="MonitorGridHeaderCenter" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MonitorGridHeader}">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
-            </Style>
-
-            <Style x:Key="MonitorOrderPanel" TargetType="{x:Type StackPanel}">
-                <Setter Property="Orientation" Value="Horizontal" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Style.Resources>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}">
-                        <Setter Property="Width" Value="14" />
-                        <Setter Property="Height" Value="14" />
-                        <Setter Property="Margin" Value="4,0" />
-                        <Setter Property="Foreground" Value="#666666" />
-                        <Style.Resources>
-                            <Style TargetType="{x:Type Path}">
-                                <Setter Property="Width" Value="8" />
-                                <Setter Property="Height" Value="8" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
-                                <Setter Property="Stretch" Value="Uniform" />
-                            </Style>
-                        </Style.Resources>
-                    </Style>
-                </Style.Resources>
             </Style>
 
             <Style x:Key="MonitorDetailsBorder" TargetType="{x:Type Border}">
@@ -383,7 +372,10 @@
             <Style x:Key="MonitorHardwareText" TargetType="{x:Type TextBox}">
                 <Setter Property="Margin" Value="0,2,0,0" />
                 <Setter Property="Padding" Value="0" />
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="MinWidth" Value="40" />
                 <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Foreground" Value="#000000" />
                 <Setter Property="BorderBrush" Value="Transparent" />

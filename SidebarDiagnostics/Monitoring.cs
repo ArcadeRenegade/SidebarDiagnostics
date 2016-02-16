@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace SidebarDiagnostics.Monitoring
 
             UpdateBoard();
 
-            MonitorPanels = config.Where(c => c.Enabled).OrderBy(c => c.Order).Select(c => NewPanel(c)).ToArray();
+            MonitorPanels = config.Where(c => c.Enabled).OrderByDescending(c => c.Order).Select(c => NewPanel(c)).ToArray();
         }
 
         public void Dispose()
@@ -71,13 +72,7 @@ namespace SidebarDiagnostics.Monitoring
                 case MonitorType.CPU:
                 case MonitorType.RAM:
                 case MonitorType.GPU:
-                    return GetHardware(type.GetHardwareTypes()).Select(h =>
-                        new HardwareConfig()
-                        {
-                            ID = h.Identifier.ToString(),
-                            Name = h.Name,
-                            Enabled = true
-                        }).ToArray();
+                    return GetHardware(type.GetHardwareTypes()).Select(h => new HardwareConfig() { ID = h.Identifier.ToString(), Name = h.Name }).ToArray();
 
                 case MonitorType.HD:
                     return DriveMonitor.GetHardware().ToArray();
@@ -173,8 +168,9 @@ namespace SidebarDiagnostics.Monitoring
                 (
                 from hw in GetHardware(hardwareTypes)
                 join c in hardwareConfig on hw.Identifier.ToString() equals c.ID into merged
-                from n in merged.DefaultIfEmpty(new HardwareConfig() { ID = hw.Identifier.ToString(), Name = hw.Name, Enabled = true })
+                from n in merged.DefaultIfEmpty(new HardwareConfig() { ID = hw.Identifier.ToString(), Name = hw.Name })
                 where n.Enabled
+                orderby n.Order descending, n.Name ascending
                 select new OHMMonitor(type, n.Name, hw, _board, parameters)
                 ).ToArray()
                 );
@@ -806,6 +802,7 @@ namespace SidebarDiagnostics.Monitoring
                 join c in hardwareConfig on hw.ID equals c.ID into merged
                 from n in merged.DefaultIfEmpty(hw)
                 where n.Enabled
+                orderby n.Order descending, n.Name ascending
                 select new DriveInfo(n.ID, n.Name, _showDetails, _driveSpace, _driveIO, _roundAll, _usedSpaceAlert)
                 ).ToArray();
         }
@@ -856,7 +853,7 @@ namespace SidebarDiagnostics.Monitoring
                 App.ShowPerformanceCounterError();
             }
 
-            return _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(h => new HardwareConfig() { ID = h, Name = h, Enabled = true });
+            return _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(h => new HardwareConfig() { ID = h, Name = h });
         }
 
         public void Update()
@@ -1190,6 +1187,7 @@ namespace SidebarDiagnostics.Monitoring
                 join c in hardwareConfig on hw.ID equals c.ID into merged
                 from n in merged.DefaultIfEmpty(hw)
                 where n.Enabled
+                orderby n.Order descending, n.Name ascending
                 select new NicInfo(n.ID, n.Name, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)
                 ).ToArray();
         }
@@ -1238,7 +1236,7 @@ namespace SidebarDiagnostics.Monitoring
                 App.ShowPerformanceCounterError();
             }
 
-            return _instances.OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h, Enabled = true });
+            return _instances.OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h });
         }
 
         public void Update()
@@ -1593,6 +1591,22 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
+        private ObservableCollection<HardwareConfig> _hardwareOC { get; set; }
+
+        public ObservableCollection<HardwareConfig> HardwareOC
+        {
+            get
+            {
+                return _hardwareOC;
+            }
+            set
+            {
+                _hardwareOC = value;
+
+                NotifyPropertyChanged("HardwareOC");
+            }
+        }
+
         private ConfigParam[] _params { get; set; }
 
         [JsonProperty]
@@ -1803,7 +1817,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private bool _enabled { get; set; }
+        private bool _enabled { get; set; } = true;
 
         [JsonProperty]
         public bool Enabled
@@ -1817,6 +1831,23 @@ namespace SidebarDiagnostics.Monitoring
                 _enabled = value;
 
                 NotifyPropertyChanged("Enabled");
+            }
+        }
+
+        private byte _order { get; set; } = 0;
+
+        [JsonProperty]
+        public byte Order
+        {
+            get
+            {
+                return _order;
+            }
+            set
+            {
+                _order = value;
+
+                NotifyPropertyChanged("Order");
             }
         }
     }

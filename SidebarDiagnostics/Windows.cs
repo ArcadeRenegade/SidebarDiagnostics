@@ -125,7 +125,7 @@ namespace SidebarDiagnostics.Windows
         [DllImport("user32.dll")]
         internal static extern bool UnhookWinEvent(IntPtr hWinEventHook);
 
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         internal static extern int GetClassName(IntPtr hwnd, StringBuilder name, int count);
     }
 
