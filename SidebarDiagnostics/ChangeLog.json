@@ -1,5 +1,16 @@
 ﻿[
   {
+    "Version": "3.0.4",
+    "Changes": [
+      "Fixed a bug where the sidebar would disappear when \"Show Desktop\" occurs.",
+      "This was a tricky one. So please let me know if it works for you or not.",
+      "Sorting monitors is now done via drag and drop.",
+      "Added the ability to sort hardware via drag and drop.",
+      "This created a bug where you have to double click the checkbox to enable or disable hardware.",
+      "Working on a fix for that."
+    ]
+  },
+  {
     "Version": "3.0.3",
     "Changes": [
       "Added a \"Auto Background Color\" option.",
