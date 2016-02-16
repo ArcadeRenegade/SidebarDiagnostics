@@ -197,11 +197,6 @@ namespace SidebarDiagnostics.Monitoring
         private void UpdateBoard()
         {
             _board.Update();
-
-            foreach (IHardware _subhardware in _board.SubHardware)
-            {
-                _subhardware.Update();
-            }
         }
 
         private MonitorPanel[] _monitorPanels { get; set; }
@@ -400,11 +395,6 @@ namespace SidebarDiagnostics.Monitoring
         private void UpdateHardware()
         {
             _hardware.Update();
-
-            foreach (IHardware _subHardware in _hardware.SubHardware)
-            {
-                _subHardware.Update();
-            }
         }
 
         private void InitCPU(IHardware board, bool roundAll, bool allCoreClocks, bool coreLoads, bool useGHz, bool useFahrenheit, double tempAlert)
