@@ -1685,7 +1685,7 @@ namespace SidebarDiagnostics.Monitoring
                     {
                         Type = MonitorType.CPU,
                         Enabled = true,
-                        Order = 1,
+                        Order = 5,
                         Hardware = new HardwareConfig[0],
                         Params = new ConfigParam[7]
                         {
@@ -1702,7 +1702,7 @@ namespace SidebarDiagnostics.Monitoring
                     {
                         Type = MonitorType.RAM,
                         Enabled = true,
-                        Order = 2,
+                        Order = 4,
                         Hardware = new HardwareConfig[0],
                         Params = new ConfigParam[2]
                         {
@@ -1729,7 +1729,7 @@ namespace SidebarDiagnostics.Monitoring
                     {
                         Type = MonitorType.HD,
                         Enabled = true,
-                        Order = 4,
+                        Order = 2,
                         Hardware = new HardwareConfig[0],
                         Params = new ConfigParam[5]
                         {
@@ -1744,7 +1744,7 @@ namespace SidebarDiagnostics.Monitoring
                     {
                         Type = MonitorType.Network,
                         Enabled = true,
-                        Order = 5,
+                        Order = 1,
                         Hardware = new HardwareConfig[0],
                         Params = new ConfigParam[5]
                         {
