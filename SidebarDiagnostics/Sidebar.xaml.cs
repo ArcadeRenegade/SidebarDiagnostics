@@ -142,10 +142,7 @@ namespace SidebarDiagnostics
             }
             else
             {
-                if (IsAppBar)
-                {
-                    ClearAppBar();
-                }
+                ClearAppBar();
 
                 if (callback != null)
                 {
@@ -240,15 +237,12 @@ namespace SidebarDiagnostics
                 Model.Dispose();
             }
 
-            if (IsAppBar)
-            {
-                ClearAppBar();
-            }
-
             if (OS.SupportVirtualDesktop)
             {
                 VirtualDesktop.CurrentChanged -= VirtualDesktop_CurrentChanged;
             }
+
+            ClearAppBar();
 
             Devices.RemoveHook(this);
             ShowDesktop.RemoveHook();

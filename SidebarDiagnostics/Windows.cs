@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -161,10 +160,10 @@ namespace SidebarDiagnostics.Windows
 
             IsHooked = false;
 
-            NativeMethods.UnhookWinEvent(_hookIntPtr);
-            Marshal.FreeHGlobal(_hookIntPtr);
+            NativeMethods.UnhookWinEvent(_hookIntPtr.Value);
 
             _delegate = null;
+            _hookIntPtr = null;
             _window = null;
         }
 
@@ -183,7 +182,7 @@ namespace SidebarDiagnostics.Windows
             {
                 string _class = GetWindowClass(hwnd);
 
-                if (string.Equals(_class, WORKERW, StringComparison.Ordinal) || string.Equals(_class, PROGMAN, StringComparison.Ordinal))
+                if (string.Equals(_class, WORKERW, StringComparison.Ordinal) /*|| string.Equals(_class, PROGMAN, StringComparison.Ordinal)*/ )
                 {
                     _window.Topmost = true;
                 }
@@ -196,7 +195,7 @@ namespace SidebarDiagnostics.Windows
 
         public static bool IsHooked { get; private set; } = false;
 
-        private static IntPtr _hookIntPtr { get; set; }
+        private static IntPtr? _hookIntPtr { get; set; }
 
         private static WinEventDelegate _delegate { get; set; }
 
@@ -1184,6 +1183,19 @@ namespace SidebarDiagnostics.Windows
                 );
         }
 
+        public void SetTop()
+        {
+            NativeMethods.SetWindowPos(
+                new WindowInteropHelper(this).Handle,
+                HWND_FLAG.HWND_NOTOPMOST,
+                0,
+                0,
+                0,
+                0,
+                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE
+                );
+        }
+
         public void SetBottom()
         {
             NativeMethods.SetWindowPos(
@@ -1194,6 +1206,19 @@ namespace SidebarDiagnostics.Windows
                 0,
                 0,
                 HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE | HWND_FLAG.SWP_NOACTIVATE
+                );
+        }
+
+        public void SetBottomActivate()
+        {
+            NativeMethods.SetWindowPos(
+                new WindowInteropHelper(this).Handle,
+                HWND_FLAG.HWND_BOTTOM,
+                0,
+                0,
+                0,
+                0,
+                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE
                 );
         }
 
