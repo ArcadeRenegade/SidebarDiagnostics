@@ -79,7 +79,7 @@ namespace SidebarDiagnostics
         {
             Ready = false;
 
-            Devices.Initialize(this);
+            Devices.AddHook(this);
 
             if (OS.SupportVirtualDesktop)
             {
@@ -97,11 +97,15 @@ namespace SidebarDiagnostics
 
             if (Framework.Settings.Instance.AlwaysTop)
             {
-                SetTop();
+                SetTopMost();
+
+                ShowDesktop.RemoveHook();
             }
             else
             {
-                ClearTop();
+                ClearTopMost();
+
+                ShowDesktop.AddHook(this);
             }
 
             if (Framework.Settings.Instance.ClickThrough)
@@ -240,6 +244,15 @@ namespace SidebarDiagnostics
             {
                 ClearAppBar();
             }
+
+            if (OS.SupportVirtualDesktop)
+            {
+                VirtualDesktop.CurrentChanged -= VirtualDesktop_CurrentChanged;
+            }
+
+            Devices.RemoveHook(this);
+            ShowDesktop.RemoveHook();
+            Hotkey.Dispose();
         }
 
         private void Window_Closed(object sender, EventArgs e)

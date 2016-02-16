@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -117,6 +119,88 @@ namespace SidebarDiagnostics.Windows
 
         [DllImport("user32.dll")]
         internal static extern bool UnregisterDeviceNotification(IntPtr handle);
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, ShowDesktop.WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+
+        [DllImport("user32.dll")]
+        internal static extern bool UnhookWinEvent(IntPtr hWinEventHook);
+
+        [DllImport("user32.dll")]
+        internal static extern int GetClassName(IntPtr hwnd, StringBuilder name, int count);
+    }
+
+    public static class ShowDesktop
+    {
+        private const uint WINEVENT_OUTOFCONTEXT = 0u;
+        private const uint EVENT_SYSTEM_FOREGROUND = 3u;
+
+        private const string WORKERW = "WorkerW";
+        private const string PROGMAN = "Progman";
+
+        public static void AddHook(Window window)
+        {
+            if (IsHooked)
+            {
+                return;
+            }
+
+            IsHooked = true;
+
+            _delegate = new WinEventDelegate(WinEventHook);
+            _hookIntPtr = NativeMethods.SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, _delegate, 0, 0, WINEVENT_OUTOFCONTEXT);
+            _window = window;
+        }
+
+        public static void RemoveHook()
+        {
+            if (!IsHooked)
+            {
+                return;
+            }
+
+            IsHooked = false;
+
+            NativeMethods.UnhookWinEvent(_hookIntPtr);
+            Marshal.FreeHGlobal(_hookIntPtr);
+
+            _delegate = null;
+            _window = null;
+        }
+
+        private static string GetWindowClass(IntPtr hwnd)
+        {
+            StringBuilder _sb = new StringBuilder(32);
+            NativeMethods.GetClassName(hwnd, _sb, _sb.Capacity);
+            return _sb.ToString();
+        }
+
+        internal delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+
+        private static void WinEventHook(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
+        {
+            if (eventType == EVENT_SYSTEM_FOREGROUND)
+            {
+                string _class = GetWindowClass(hwnd);
+
+                if (string.Equals(_class, WORKERW, StringComparison.Ordinal) || string.Equals(_class, PROGMAN, StringComparison.Ordinal))
+                {
+                    _window.Topmost = true;
+                }
+                else
+                {
+                    _window.Topmost = false;
+                }
+            }
+        }
+
+        public static bool IsHooked { get; private set; } = false;
+
+        private static IntPtr _hookIntPtr { get; set; }
+
+        private static WinEventDelegate _delegate { get; set; }
+
+        private static Window _window { get; set; }
     }
 
     public static class Devices
@@ -163,8 +247,15 @@ namespace SidebarDiagnostics.Windows
             public int dbch_reserved;
         }
 
-        public static void Initialize(Window window)
+        public static void AddHook(Sidebar window)
         {
+            if (IsHooked)
+            {
+                return;
+            }
+
+            IsHooked = true;
+
             DEV_BROADCAST_HDR _data = new DEV_BROADCAST_HDR();
             _data.dbch_size = Marshal.SizeOf(_data);
             _data.dbch_devicetype = DBCH_DEVICETYPE.DBT_DEVTYP_DEVICEINTERFACE;
@@ -180,7 +271,19 @@ namespace SidebarDiagnostics.Windows
                 FLAGS.DEVICE_NOTIFY_ALL_INTERFACE_CLASSES
                 );
 
-            HwndSource.FromHwnd(_hwnd).AddHook(DeviceHook);
+            window.HwndSource.AddHook(DeviceHook);
+        }
+
+        public static void RemoveHook(Sidebar window)
+        {
+            if (!IsHooked)
+            {
+                return;
+            }
+
+            IsHooked = false;
+
+            window.HwndSource.RemoveHook(DeviceHook);
         }
 
         private static IntPtr DeviceHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -226,6 +329,8 @@ namespace SidebarDiagnostics.Windows
 
             return IntPtr.Zero;
         }
+
+        public static bool IsHooked { get; private set; } = false;
 
         private static CancellationTokenSource _cancelRestart { get; set; }
     }
@@ -302,14 +407,16 @@ namespace SidebarDiagnostics.Windows
 
         public static void Initialize(Sidebar window, Hotkey[] settings)
         {
-            if (settings == null)
+            if (IsHooked || settings == null || settings.Length == 0)
             {
                 return;
             }
 
+            IsHooked = true;
+
             Disable();
 
-            _window = window;
+            _sidebar = window;
             _index = 0;
 
             RegisteredKeys = settings.Select(h =>
@@ -320,6 +427,23 @@ namespace SidebarDiagnostics.Windows
             }).ToArray();
 
             window.HwndSource.AddHook(KeyHook);
+        }
+
+        public static void Dispose()
+        {
+            if (!IsHooked)
+            {
+                return;
+            }
+
+            IsHooked = false;
+
+            Disable();
+
+            RegisteredKeys = null;
+
+            _sidebar.HwndSource.RemoveHook(KeyHook);
+            _sidebar = null;
         }
 
         public static void Enable()
@@ -373,7 +497,7 @@ namespace SidebarDiagnostics.Windows
             }
 
             NativeMethods.RegisterHotKey(
-                new WindowInteropHelper(_window).Handle,
+                new WindowInteropHelper(_sidebar).Handle,
                 hotkey.Index,
                 _mods,
                 hotkey.VirtualKey
@@ -383,7 +507,7 @@ namespace SidebarDiagnostics.Windows
         private static void Unregister(Hotkey hotkey)
         {
             NativeMethods.UnregisterHotKey(
-                new WindowInteropHelper(_window).Handle,
+                new WindowInteropHelper(_sidebar).Handle,
                 hotkey.Index
                 );
         }
@@ -398,31 +522,31 @@ namespace SidebarDiagnostics.Windows
 
                 Hotkey _hotkey = RegisteredKeys.FirstOrDefault(k => k.Index == _id);
 
-                if (_hotkey != null && _window != null && _window.Ready)
+                if (_hotkey != null && _sidebar != null && _sidebar.Ready)
                 {
                     switch (_hotkey.Action)
                     {
                         case KeyAction.Toggle:
-                            if (_window.Visibility == Visibility.Visible)
+                            if (_sidebar.Visibility == Visibility.Visible)
                             {
-                                _window.AppBarHide();
+                                _sidebar.AppBarHide();
                             }
                             else
                             {
-                                _window.AppBarShow();
+                                _sidebar.AppBarShow();
                             }
                             break;
 
                         case KeyAction.Show:
-                            _window.AppBarShow();
+                            _sidebar.AppBarShow();
                             break;
 
                         case KeyAction.Hide:
-                            _window.AppBarHide();
+                            _sidebar.AppBarHide();
                             break;
 
                         case KeyAction.Reload:
-                            _window.Reload();
+                            _sidebar.Reload();
                             break;
 
                         case KeyAction.Close:
@@ -430,7 +554,7 @@ namespace SidebarDiagnostics.Windows
                             break;
 
                         case KeyAction.CycleEdge:
-                            if (_window.Visibility == Visibility.Visible)
+                            if (_sidebar.Visibility == Visibility.Visible)
                             {
                                 switch (Framework.Settings.Instance.DockEdge)
                                 {
@@ -446,12 +570,12 @@ namespace SidebarDiagnostics.Windows
 
                                 Framework.Settings.Instance.Save();
 
-                                _window.Reposition();
+                                _sidebar.Reposition();
                             }
                             break;
 
                         case KeyAction.CycleScreen:
-                            if (_window.Visibility == Visibility.Visible)
+                            if (_sidebar.Visibility == Visibility.Visible)
                             {
                                 Monitor[] _monitors = Monitor.GetMonitors();
 
@@ -466,7 +590,7 @@ namespace SidebarDiagnostics.Windows
 
                                 Framework.Settings.Instance.Save();
 
-                                _window.Reposition();
+                                _sidebar.Reposition();
                             }
                             break;
                     }
@@ -478,7 +602,9 @@ namespace SidebarDiagnostics.Windows
             return IntPtr.Zero;
         }
 
-        private static Sidebar _window { get; set; }
+        public static bool IsHooked { get; private set; } = false;
+
+        private static Sidebar _sidebar { get; set; }
 
         private static int _index { get; set; }
     }
@@ -1032,7 +1158,7 @@ namespace SidebarDiagnostics.Windows
             return IntPtr.Zero;
         }
 
-        public void SetTop()
+        public void SetTopMost()
         {
             NativeMethods.SetWindowPos(
                 new WindowInteropHelper(this).Handle,
@@ -1045,7 +1171,7 @@ namespace SidebarDiagnostics.Windows
                 );
         }
 
-        public void ClearTop()
+        public void ClearTopMost()
         {
             NativeMethods.SetWindowPos(
                 new WindowInteropHelper(this).Handle,
@@ -1252,7 +1378,7 @@ namespace SidebarDiagnostics.Windows
                         {
                             if (Framework.Settings.Instance.AlwaysTop)
                             {
-                                SetTop();
+                                SetTopMost();
                             }
                         }
                         break;
