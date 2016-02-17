@@ -1263,11 +1263,11 @@ namespace SidebarDiagnostics.Windows
 
             bool _init = false;
 
+            APPBARDATA _data = NewData();
+
             if (!IsAppBar)
             {
                 IsAppBar = _init = true;
-
-                APPBARDATA _data = NewData();
 
                 _callbackID = _data.uCallbackMessage = NativeMethods.RegisterWindowMessage("AppBarMessage");
 
@@ -1276,8 +1276,45 @@ namespace SidebarDiagnostics.Windows
 
             Screen = screen;
             DockEdge = edge;
+            
+            _data.uEdge = (int)edge;
+            _data.rc = new RECT()
+            {
+                Left = (int)Math.Round(appbarWA.Left),
+                Top = (int)Math.Round(appbarWA.Top),
+                Right = (int)Math.Round(appbarWA.Right),
+                Bottom = (int)Math.Round(appbarWA.Bottom)
+            };
 
-            DockAppBar(edge, windowWA, appbarWA, _init, callback);
+            NativeMethods.SHAppBarMessage(APPBARMSG.ABM_QUERYPOS, ref _data);
+
+            NativeMethods.SHAppBarMessage(APPBARMSG.ABM_SETPOS, ref _data);
+
+            appbarWA.Left = _data.rc.Left;
+            appbarWA.Top = _data.rc.Top;
+            appbarWA.Right = _data.rc.Right;
+            appbarWA.Bottom = _data.rc.Bottom;
+
+            AppBarWidth = appbarWA.Width;
+
+            Move(windowWA);
+
+            if (_init)
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+                {
+                    HwndSource.AddHook(AppBarHook);
+
+                    if (callback != null)
+                    {
+                        callback();
+                    }
+                }));
+            }
+            else if (callback != null)
+            {
+                callback();
+            }
         }
 
         public void ClearAppBar()
@@ -1331,46 +1368,6 @@ namespace SidebarDiagnostics.Windows
             _data.hWnd = new WindowInteropHelper(this).Handle;
 
             return _data;
-        }
-
-        private void DockAppBar(DockEdge edge, WorkArea windowWA, WorkArea appbarWA, bool init, Action callback)
-        {
-
-            APPBARDATA _data = NewData();
-            _data.uEdge = (int)edge;
-            _data.rc = new RECT()
-            {
-                Left = (int)Math.Round(appbarWA.Left),
-                Top = (int)Math.Round(appbarWA.Top),
-                Right = (int)Math.Round(appbarWA.Right),
-                Bottom = (int)Math.Round(appbarWA.Bottom)
-            };
-
-            NativeMethods.SHAppBarMessage(APPBARMSG.ABM_QUERYPOS, ref _data);
-
-            NativeMethods.SHAppBarMessage(APPBARMSG.ABM_SETPOS, ref _data);
-
-            appbarWA.Left = _data.rc.Left;
-            appbarWA.Top = _data.rc.Top;
-            appbarWA.Right = _data.rc.Right;
-            appbarWA.Bottom = _data.rc.Bottom;
-
-            AppBarWidth = appbarWA.Width;
-
-            Move(windowWA);
-
-            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-            {
-                if (init)
-                {
-                    HwndSource.AddHook(AppBarHook);
-                }
-
-                if (callback != null)
-                {
-                    callback();
-                }
-            }));
         }
 
         private IntPtr AppBarHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
