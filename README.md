@@ -1,6 +1,4 @@
-<img src="http://happamedia.com/products/sidebardiagnostics/sidebar.ico" width="64" height="64" />
-
-# Sidebar Diagnostics
+<h1><img src="http://happamedia.com/products/sidebardiagnostics/sidebar.ico" width="64" height="64" /> Sidebar Diagnostics</h1>
 
 A simple sidebar for Windows desktop that displays hardware diagnostic information.
 
