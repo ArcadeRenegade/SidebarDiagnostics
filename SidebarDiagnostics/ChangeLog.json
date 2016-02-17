@@ -1,5 +1,13 @@
 ﻿[
   {
+    "Version": "3.0.5",
+    "Changes": [
+      "Fixed the default monitor settings being in the reverse order.",
+      "The sidebar will now reposition when the work area changes if \"Reserve Space\" is disabled.",
+      "New version of the install and update framework."
+    ]
+  },
+  {
     "Version": "3.0.4",
     "Changes": [
       "Fixed a bug where the sidebar would disappear when \"Show Desktop\" occurs.",
