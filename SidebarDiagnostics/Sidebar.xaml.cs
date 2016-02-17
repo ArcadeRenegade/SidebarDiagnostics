@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Models;
@@ -203,22 +204,22 @@ namespace SidebarDiagnostics
             Application.Current.Shutdown();
         }
 
-        private void ScrollViewer_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ScrollViewer_MouseEnter(object sender, MouseEventArgs e)
         {
             (sender as ScrollViewer).VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
         }
 
-        private void ScrollViewer_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ScrollViewer_MouseLeave(object sender, MouseEventArgs e)
         {
             (sender as ScrollViewer).VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
 
-        private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
             WindowControls.Visibility = Visibility.Visible;
         }
 
-        private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
             WindowControls.Visibility = Framework.Settings.Instance.CollapseMenuBar ? Visibility.Collapsed : Visibility.Hidden;
         }
