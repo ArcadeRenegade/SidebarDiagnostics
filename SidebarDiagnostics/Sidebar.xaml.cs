@@ -235,6 +235,7 @@ namespace SidebarDiagnostics
             if (Model != null)
             {
                 Model.Dispose();
+                Model = null;
             }
 
             if (OS.SupportVirtualDesktop)
