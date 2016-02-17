@@ -858,18 +858,34 @@ namespace SidebarDiagnostics.Windows
                 Bottom = windowWA.Bottom
             };
 
-            if (Framework.Settings.Instance.HighDPISupport)
+            if (Framework.Settings.Instance.UseAppBar)
             {
-                double _abWidth = appbarWA.Width * _abScaleX;
+                if (Framework.Settings.Instance.HighDPISupport)
+                {
+                    double _abWidth = appbarWA.Width * _abScaleX;
 
+                    switch (edge)
+                    {
+                        case DockEdge.Left:
+                            appbarWA.Right = appbarWA.Left + _abWidth;
+                            break;
+
+                        case DockEdge.Right:
+                            appbarWA.Left = appbarWA.Right - _abWidth;
+                            break;
+                    }
+                }
+            }
+            else
+            {
                 switch (edge)
                 {
                     case DockEdge.Left:
-                        appbarWA.Right = appbarWA.Left + _abWidth;
+                        appbarWA.Right = appbarWA.Left;
                         break;
 
                     case DockEdge.Right:
-                        appbarWA.Left = appbarWA.Right - _abWidth;
+                        appbarWA.Left = appbarWA.Right;
                         break;
                 }
             }

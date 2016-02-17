@@ -137,19 +137,7 @@ namespace SidebarDiagnostics
 
             Move(_windowWA);
 
-            if (Framework.Settings.Instance.UseAppBar)
-            {
-                SetAppBar(_screen, _edge, _windowWA, _appbarWA, callback);
-            }
-            else
-            {
-                ClearAppBar();
-
-                if (callback != null)
-                {
-                    callback();
-                }
-            }
+            SetAppBar(_screen, _edge, _windowWA, _appbarWA, callback);
         }
 
         private delegate void BindModelHandler();
