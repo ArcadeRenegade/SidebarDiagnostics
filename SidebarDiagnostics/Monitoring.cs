@@ -207,7 +207,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _monitorPanels;
             }
-            set
+            private set
             {
                 _monitorPanels = value;
 
@@ -271,9 +271,37 @@ namespace SidebarDiagnostics.Monitoring
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Geometry IconPath { get; private set; }
+        private Geometry _iconPath { get; set; }
 
-        public string Title { get; private set; }
+        public Geometry IconPath
+        {
+            get
+            {
+                return _iconPath;
+            }
+            private set
+            {
+                _iconPath = value;
+
+                NotifyPropertyChanged("IconPath");
+            }
+        }
+
+        private string _title { get; set; }
+
+        public string Title
+        {
+            get
+            {
+                return _title;
+            }
+            private set
+            {
+                _title = value;
+
+                NotifyPropertyChanged("Title");
+            }
+        }
 
         private iMonitor[] _monitors { get; set; }
 
@@ -283,7 +311,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _monitors;
             }
-            set
+            private set
             {
                 _monitors = value;
 
@@ -607,9 +635,37 @@ namespace SidebarDiagnostics.Monitoring
             Sensors = _sensorList.ToArray();
         }
 
-        public string Name { get; private set; }
+        private string _name { get; set; }
 
-        public bool ShowName { get; private set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+
+                NotifyPropertyChanged("Name");
+            }
+        }
+
+        private bool _showName { get; set; }
+
+        public bool ShowName
+        {
+            get
+            {
+                return _showName;
+            }
+            set
+            {
+                _showName = value;
+
+                NotifyPropertyChanged("ShowName");
+            }
+        }
 
         private OHMSensor[] _sensors { get; set; }
 
@@ -734,7 +790,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _text;
             }
-            set
+            private set
             {
                 _text = value;
 
@@ -760,7 +816,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _isAlert;
             }
-            set
+            private set
             {
                 _isAlert = value;
 
@@ -1025,7 +1081,21 @@ namespace SidebarDiagnostics.Monitoring
 
         public string Instance { get; private set; }
 
-        public string Label { get; private set; }
+        private string _label { get; set; }
+
+        public string Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+
+                NotifyPropertyChanged("Label");
+            }
+        }
 
         private double _value { get; set; }
 
@@ -1035,7 +1105,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _value;
             }
-            set
+            private set
             {
                 _value = value;
 
@@ -1051,7 +1121,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _load;
             }
-            set
+            private set
             {
                 _load = value;
 
@@ -1067,7 +1137,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _usedGB;
             }
-            set
+            private set
             {
                 _usedGB = value;
 
@@ -1083,7 +1153,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _freeGB;
             }
-            set
+            private set
             {
                 _freeGB = value;
 
@@ -1099,7 +1169,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _readRate;
             }
-            set
+            private set
             {
                 _readRate = value;
 
@@ -1115,7 +1185,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _writeRate;
             }
-            set
+            private set
             {
                 _writeRate = value;
 
@@ -1131,7 +1201,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _isAlert;
             }
-            set
+            private set
             {
                 _isAlert = value;
 
@@ -1139,13 +1209,55 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public bool ShowDetails { get; private set; }
+        private bool _showDetails { get; set; }
 
-        public bool DriveSpace { get; private set; }
+        public bool ShowDetails
+        {
+            get
+            {
+                return _showDetails;
+            }
+            private set
+            {
+                _showDetails = value;
 
-        public bool DriveIO { get; private set; }
+                NotifyPropertyChanged("ShowDetails");
+            }
+        }
 
-        public bool RoundAll { get; private set; }
+        private bool _driveSpace { get; set; }
+
+        public bool DriveSpace
+        {
+            get
+            {
+                return _driveSpace;
+            }
+            private set
+            {
+                _driveSpace = value;
+
+                NotifyPropertyChanged("DriveSpace");
+            }
+        }
+
+        private bool _driveIO { get; set; }
+
+        public bool DriveIO
+        {
+            get
+            {
+                return _driveIO;
+            }
+            private set
+            {
+                _driveIO = value;
+
+                NotifyPropertyChanged("DriveIO");
+            }
+        }
+
+        public bool RoundAll { get; set; }
 
         public double UsedSpaceAlert { get; private set; }
 
@@ -1266,7 +1378,7 @@ namespace SidebarDiagnostics.Monitoring
         private bool _disposed { get; set; } = false;
     }
 
-    public class NicInfo : IDisposable
+    public class NicInfo : INotifyPropertyChanged, IDisposable
     {
         private const string BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
         private const string BYTESSENTPERSECOND = "Bytes Sent/sec";
@@ -1333,15 +1445,81 @@ namespace SidebarDiagnostics.Monitoring
             OutBandwidth.Update();
         }
 
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string Instance { get; private set; }
 
-        public string Name { get; private set; }
+        private string _name { get; set; }
 
-        public bool ShowName { get; private set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+
+                NotifyPropertyChanged("Name");
+            }
+        }
+
+        private bool _showName { get; set; }
+
+        public bool ShowName
+        {
+            get
+            {
+                return _showName;
+            }
+            set
+            {
+                _showName = value;
+
+                NotifyPropertyChanged("ShowName");
+            }
+        }
+
+        private Bandwidth _inBandwidth { get; set; }
         
-        public Bandwidth InBandwidth { get; private set; }
+        public Bandwidth InBandwidth
+        {
+            get
+            {
+                return _inBandwidth;
+            }
+            set
+            {
+                _inBandwidth = value;
 
-        public Bandwidth OutBandwidth { get; private set; }
+                NotifyPropertyChanged("InBandwidth");
+            }
+        }
+
+        private Bandwidth _outBandwidth { get; set; }
+
+        public Bandwidth OutBandwidth
+        {
+            get
+            {
+                return _outBandwidth;
+            }
+            set
+            {
+                _outBandwidth = value;
+
+                NotifyPropertyChanged("OutBandwidth");
+            }
+        }
 
         private bool _disposed { get; set; } = false;
     }
@@ -1431,7 +1609,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Label { get; private set; }
+        public string Label { get; set; }
 
         private string _text { get; set; }
 
@@ -1441,7 +1619,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _text;
             }
-            set
+            private set
             {
                 _text = value;
 
@@ -1457,7 +1635,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _isAlert;
             }
-            set
+            private set
             {
                 _isAlert = value;
 
