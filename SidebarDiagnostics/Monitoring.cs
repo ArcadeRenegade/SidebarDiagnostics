@@ -1653,8 +1653,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private bool _disposed { get; set; } = false;
     }
-
-    [Serializable]
+    
     public enum MonitorType : byte
     {
         CPU,
@@ -2331,8 +2330,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
     }
-
-    [Serializable]
+    
     public enum ParamKey : byte
     {
         HardwareNames,

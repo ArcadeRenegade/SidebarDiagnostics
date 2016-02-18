@@ -104,4 +104,30 @@ namespace SidebarDiagnostics.Converters
             return !(bool)value;
         }
     }
+
+    public class DockEdgeOrientationConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DockEdge _edge = (DockEdge)value;
+
+            switch (_edge)
+            {
+                case DockEdge.Left:
+                case DockEdge.Right:
+                    return "Vertical";
+
+                case DockEdge.Top:
+                case DockEdge.Bottom:
+                    return "Horizontal";
+            }
+
+            return "Unknown";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 }

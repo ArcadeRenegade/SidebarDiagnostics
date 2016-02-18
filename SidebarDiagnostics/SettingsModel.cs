@@ -15,7 +15,7 @@ namespace SidebarDiagnostics.Models
     {
         public SettingsModel(Sidebar sidebar)
         {
-            DockEdgeItems = new DockEdge[2] { DockEdge.Left, DockEdge.Right };
+            DockEdgeItems = new DockEdge[4] { DockEdge.Left, DockEdge.Right, DockEdge.Top, DockEdge.Bottom };
             DockEdge = Framework.Settings.Instance.DockEdge;
 
             Monitor[] _monitors = Monitor.GetMonitors();
