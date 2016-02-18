@@ -33,8 +33,7 @@
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
-            
-            <conv:DockEdgeOrientationConverter x:Key="DockEdgeOrientationConverter" />
+
             <conv:DriveNameLengthConverter x:Key="DriveNameConverter" />
             <conv:PercentConverter x:Key="PercentConverter" />
 
@@ -74,8 +73,7 @@
                 <Setter Property="Opacity" Value="0.85" />
             </Style>
 
-            <Style x:Key="MainPanel" TargetType="{x:Type DockPanel}">
-                <Setter Property="LastChildFill" Value="True" />
+            <Style x:Key="ContentGrid" TargetType="{x:Type Grid}">
                 <Setter Property="Visibility" Value="Collapsed" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=Ready, Mode=OneWay}" Value="True">
@@ -90,49 +88,11 @@
                 <Setter Property="VerticalAlignment" Value="Top" />
                 <Setter Property="Orientation" Value="Horizontal" />
                 <Setter Property="Visibility" Value="Hidden" />
-                <Setter Property="DockPanel.Dock" Value="Top" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=CollapseMenuBar, Mode=OneWay}" Value="True">
                         <Setter Property="Visibility" Value="Collapsed" />
                     </DataTrigger>
                 </Style.Triggers>
-            </Style>
-            
-            <Style x:Key="ContentView" TargetType="ScrollViewer">
-                <Setter Property="Margin" Value="5,15" />
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=DockEdge, Mode=OneWay, Converter={StaticResource DockEdgeOrientationConverter}}" Value="Vertical">
-                        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
-                        <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
-                    </DataTrigger>
-
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
-                            <Condition Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=DockEdge, Mode=OneWay, Converter={StaticResource DockEdgeOrientationConverter}}" Value="Vertical" />
-                        </MultiDataTrigger.Conditions>
-                        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-                    </MultiDataTrigger>
-                    
-                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=DockEdge, Mode=OneWay, Converter={StaticResource DockEdgeOrientationConverter}}" Value="Horizontal">
-                        <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
-                        <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
-                    </DataTrigger>
-
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
-                            <Condition Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=DockEdge, Mode=OneWay, Converter={StaticResource DockEdgeOrientationConverter}}" Value="Horizontal" />
-                        </MultiDataTrigger.Conditions>
-                        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
-                    </MultiDataTrigger>
-                </Style.Triggers>
-            </Style>
-
-            <Style x:Key="ContentPanel" TargetType="{x:Type StackPanel}">
-                <Setter Property="Margin" Value="15,0" />
-                <Setter Property="Orientation" Value="Vertical" />
-                <Setter Property="VerticalAlignment" Value="Top" />
             </Style>
 
             <Style x:Key="IconButton" TargetType="{x:Type Button}">
@@ -193,6 +153,18 @@
                 <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="FontSize" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.SmallFontSize, Mode=OneWay}" />
                 <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+            </Style>
+
+            <Style x:Key="ContentView" TargetType="ScrollViewer">
+                <Setter Property="Margin" Value="5,15" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+            </Style>
+
+            <Style x:Key="ContentPanel" TargetType="{x:Type StackPanel}">
+                <Setter Property="Margin" Value="15,0" />
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="VerticalAlignment" Value="Top" />
             </Style>
 
             <Style x:Key="VerticalPanel" TargetType="{x:Type StackPanel}">

@@ -840,16 +840,6 @@ namespace SidebarDiagnostics.Windows
                     windowWA.Left = windowWA.Right - _windowWidth + _modifyX;
                     windowWA.Right += _modifyX;
                     break;
-
-                case DockEdge.Top:
-                    windowWA.Bottom = windowWA.Top + _windowWidth - _modifyX;
-                    windowWA.Top -= _modifyX;
-                    break;
-
-                case DockEdge.Bottom:
-                    windowWA.Top = windowWA.Bottom - _windowWidth + _modifyX;
-                    windowWA.Bottom -= _modifyX;
-                    break;
             }
 
             int _offsetX = Framework.Settings.Instance.XOffset;
@@ -896,14 +886,6 @@ namespace SidebarDiagnostics.Windows
 
                     case DockEdge.Right:
                         appbarWA.Left = appbarWA.Right;
-                        break;
-
-                    case DockEdge.Top:
-                        appbarWA.Bottom = appbarWA.Top;
-                        break;
-
-                    case DockEdge.Bottom:
-                        appbarWA.Top = appbarWA.Bottom;
                         break;
                 }
             }
@@ -1045,7 +1027,8 @@ namespace SidebarDiagnostics.Windows
 
         private double _originalHeight { get; set; }
     }
-    
+
+    [Serializable]
     public enum DockEdge : byte
     {
         Left,
