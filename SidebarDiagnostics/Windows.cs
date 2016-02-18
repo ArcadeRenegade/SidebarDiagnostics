@@ -22,6 +22,7 @@ namespace SidebarDiagnostics.Windows
         Other,
         Win7,
         Win8,
+        Win8_1,
         Win10
     }
 
@@ -44,7 +45,11 @@ namespace SidebarDiagnostics.Windows
                 {
                     _os = WinOS.Win10;
                 }
-                else if (_version.Major == 6 && new int[2] { 2, 3 }.Contains(_version.Minor))
+                else if (_version.Major == 6 && _version.Minor == 3)
+                {
+                    _os = WinOS.Win8_1;
+                }
+                else if (_version.Major == 6 && _version.Minor == 2)
                 {
                     _os = WinOS.Win8;
                 }
@@ -65,7 +70,7 @@ namespace SidebarDiagnostics.Windows
         {
             get
             {
-                return OS.Get >= WinOS.Win8;
+                return OS.Get >= WinOS.Win8_1;
             }
         }
 
