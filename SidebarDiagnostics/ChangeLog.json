@@ -1,5 +1,11 @@
 ﻿[
   {
+    "Version": "3.0.6",
+    "Changes": [
+      "Fixed a fatal error for Windows 8."
+    ]
+  },
+  {
     "Version": "3.0.5",
     "Changes": [
       "Fixed the default monitor settings being in the reverse order.",
