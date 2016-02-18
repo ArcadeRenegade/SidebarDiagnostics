@@ -191,17 +191,7 @@ namespace SidebarDiagnostics
         {
             Application.Current.Shutdown();
         }
-
-        private void ScrollViewer_MouseEnter(object sender, MouseEventArgs e)
-        {
-            (sender as ScrollViewer).VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-        }
-
-        private void ScrollViewer_MouseLeave(object sender, MouseEventArgs e)
-        {
-            (sender as ScrollViewer).VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
-        }
-
+        
         private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
             WindowControls.Visibility = Visibility.Visible;

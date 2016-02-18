@@ -89,7 +89,8 @@
                 <Setter Property="Opacity" Value="0.85" />
             </Style>
 
-            <Style x:Key="ContentGrid" TargetType="{x:Type Grid}">
+            <Style x:Key="MainPanel" TargetType="{x:Type DockPanel}">
+                <Setter Property="LastChildFill" Value="True" />
                 <Setter Property="Visibility" Value="Collapsed" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=Ready, Mode=OneWay}" Value="True">
@@ -104,6 +105,7 @@
                 <Setter Property="VerticalAlignment" Value="Top" />
                 <Setter Property="Orientation" Value="Horizontal" />
                 <Setter Property="Visibility" Value="Hidden" />
+                <Setter Property="DockPanel.Dock" Value="Top" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=CollapseMenuBar, Mode=OneWay}" Value="True">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -175,6 +177,11 @@
                 <Setter Property="Margin" Value="5,15" />
                 <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
                 <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <Style x:Key="ContentPanel" TargetType="{x:Type StackPanel}">
