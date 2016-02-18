@@ -9,22 +9,6 @@
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="Sidebar"
-        Icon="Sidebar.ico"
-        Width="{Binding Source={x:Static frame:Settings.Instance}, Path=SidebarWidth, Mode=OneWay}"
-        Height="800"
-        AutoDPI="False"
-        ShowTitleBar="False"
-        ShowIcon="False"
-        ShowTitle="False"
-        ShowMinimize="False"
-        ShowMaximize="False"
-        ShowClose="False"
-        ShowInTaskbar="False"
-        AllowsTransparency="True"
-        ResizeMode="NoResize"
-        Topmost="True"
-        WindowStyle="None"
         Style="{StaticResource SidebarWindow}">
     <Grid>
         <StackPanel Style="{StaticResource DummyLabel}">

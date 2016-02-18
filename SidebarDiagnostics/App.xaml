@@ -7,6 +7,7 @@
              xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
              xmlns:command="clr-namespace:SidebarDiagnostics.Commands"
              xmlns:conv="clr-namespace:SidebarDiagnostics.Converters"
+             xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
         <ResourceDictionary>
@@ -37,7 +38,22 @@
             <conv:DriveNameLengthConverter x:Key="DriveNameConverter" />
             <conv:PercentConverter x:Key="PercentConverter" />
 
-            <Style x:Key="SidebarWindow" TargetType="{x:Type Window}">
+            <Style x:Key="SidebarWindow" TargetType="{x:Type win:AppBarWindow}">
+                <Setter Property="Title" Value="Sidebar" />
+                <Setter Property="Icon" Value="Sidebar.ico" />
+                <Setter Property="Width" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=SidebarWidth, Mode=OneWay}" />
+                <Setter Property="Height" Value="800" />
+                <Setter Property="AutoDPI" Value="False" />
+                <Setter Property="ShowInTaskbar" Value="False" />
+                <Setter Property="AllowsTransparency" Value="True" />
+                <Setter Property="ResizeMode" Value="NoResize" />
+                <Setter Property="ShowTitleBar" Value="False" />
+                <Setter Property="ShowIcon" Value="False" />
+                <Setter Property="ShowTitle" Value="False" />
+                <Setter Property="ShowMinimize" Value="False" />
+                <Setter Property="ShowMaximize" Value="False" />
+                <Setter Property="ShowClose" Value="False" />
+                <Setter Property="WindowStyle" Value="None" />
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Opacity="{Binding Source={x:Static frame:Settings.Instance}, Path=BGOpacity, Mode=OneWay}" Color="{Binding Source={x:Static frame:Settings.Instance}, Path=BGColor, Mode=OneWay}" />

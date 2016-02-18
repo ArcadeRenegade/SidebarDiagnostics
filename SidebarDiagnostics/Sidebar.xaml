@@ -14,21 +14,6 @@
         Closed="Window_Closed"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
-        Title="Sidebar"
-        Icon="Sidebar.ico"
-        Width="{Binding Source={x:Static frame:Settings.Instance}, Path=SidebarWidth, Mode=OneWay}"
-        Height="800"
-        AutoDPI="False"
-        ShowTitleBar="False"
-        ShowIcon="False"
-        ShowTitle="False"
-        ShowMinimize="False"
-        ShowMaximize="False"
-        ShowClose="False"
-        ShowInTaskbar="False"
-        AllowsTransparency="True"
-        ResizeMode="NoResize"
-        WindowStyle="None"
         Style="{StaticResource SidebarWindow}">
     <Grid>
         <StackPanel Style="{StaticResource LoadingPanel}">
