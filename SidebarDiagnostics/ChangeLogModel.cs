@@ -6,7 +6,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using SidebarDiagnostics.Utilities;
 
-namespace SidebarDiagnostics
+namespace SidebarDiagnostics.Models
 {
     public class ChangeLogModel : INotifyPropertyChanged
     {

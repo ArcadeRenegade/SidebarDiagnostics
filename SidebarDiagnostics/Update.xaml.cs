@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Threading;
+using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics

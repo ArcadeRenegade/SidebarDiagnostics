@@ -211,6 +211,8 @@ namespace SidebarDiagnostics
         {
             Ready = false;
 
+            DataContext = null;
+
             if (Model != null)
             {
                 Model.Dispose();

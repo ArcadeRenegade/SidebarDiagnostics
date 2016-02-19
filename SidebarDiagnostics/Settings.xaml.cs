@@ -303,6 +303,12 @@ namespace SidebarDiagnostics
             Hotkey.Disable();
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            DataContext = null;
+            Model = null;
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
             Hotkey.Enable();

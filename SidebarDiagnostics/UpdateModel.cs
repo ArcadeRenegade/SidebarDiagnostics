@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace SidebarDiagnostics
+namespace SidebarDiagnostics.Models
 {
     public class UpdateModel : INotifyPropertyChanged
     {
