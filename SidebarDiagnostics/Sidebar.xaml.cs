@@ -47,10 +47,7 @@ namespace SidebarDiagnostics
 
             BindSettings(enableHotkeys);
 
-            await Task.Run(async () =>
-            {
-                await BindModel();
-            });
+            await BindModel();
         }
 
         public void Reposition()
@@ -92,10 +89,7 @@ namespace SidebarDiagnostics
             
             BindSettings(true);
 
-            await Task.Run(async () =>
-            {
-                await BindModel();
-            });
+            await BindModel();
         }
 
         private void BindSettings(bool enableHotkeys)
@@ -148,13 +142,16 @@ namespace SidebarDiagnostics
         
         private async Task BindModel()
         {
-            if (Model != null)
+            await Task.Run(async () =>
             {
-                Model.Dispose();
-                Model = null;
-            }
+                if (Model != null)
+                {
+                    Model.Dispose();
+                    Model = null;
+                }
 
-            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ModelReadyHandler(ModelReady), new SidebarModel());
+                await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ModelReadyHandler(ModelReady), new SidebarModel());
+            });
         }
 
         private delegate void ModelReadyHandler(SidebarModel model);

@@ -70,23 +70,30 @@
                 </Style.Triggers>
             </Style>
 
-            <Style x:Key="LoadingPanel" TargetType="{x:Type StackPanel}">
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Center" />
+            <Style x:Key="LoadingWidget" TargetType="{x:Type ContentControl}">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Ellipse Width="40" Height="40" Stroke="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" StrokeThickness="5" StrokeDashArray="18" Opacity="0.85">
+                            <Ellipse.RenderTransform>
+                                <RotateTransform CenterX="20" CenterY="20" />
+                            </Ellipse.RenderTransform>
+                            <Ellipse.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Ellipse.RenderTransform).(RotateTransform.Angle)" To="360" Duration="0:0:1" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+                    </Setter.Value>
+                </Setter>
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=Ready, Mode=OneWay}" Value="True">
-                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Setter Property="Content" Value="{x:Null}" />
                     </DataTrigger>
                 </Style.Triggers>
-            </Style>
-
-            <Style x:Key="Loading" TargetType="{x:Type Ellipse}">
-                <Setter Property="Width" Value="40" />
-                <Setter Property="Height" Value="40" />
-                <Setter Property="Stroke" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
-                <Setter Property="StrokeThickness" Value="5" />
-                <Setter Property="StrokeDashArray" Value="18" />
-                <Setter Property="Opacity" Value="0.85" />
             </Style>
 
             <Style x:Key="MainPanel" TargetType="{x:Type DockPanel}">
