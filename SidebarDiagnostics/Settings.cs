@@ -22,7 +22,7 @@ namespace SidebarDiagnostics.Framework
 
             using (StreamWriter _writer = File.CreateText(Paths.SettingsFile))
             {
-                new JsonSerializer().Serialize(_writer, this);
+                new JsonSerializer() { Formatting = Formatting.Indented }.Serialize(_writer, this);
             }
         }
 
