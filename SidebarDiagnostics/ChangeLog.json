@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.0.7",
+    "Changes": [
+      "Fixed two issues that caused higher CPU usage than necessary.",
+      "The settings.json file is now formatted and indented to make it easier to edit manually."
+    ]
+  },
+  {
     "Version": "3.0.6",
     "Changes": [
       "Fixed a fatal error for Windows 8."
