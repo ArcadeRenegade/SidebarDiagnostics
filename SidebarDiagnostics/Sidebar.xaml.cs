@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
@@ -36,7 +36,7 @@ namespace SidebarDiagnostics
             Close();
         }
 
-        public void Reset(bool enableHotkeys)
+        public async Task Reset(bool enableHotkeys)
         {
             if (!Ready)
             {
@@ -47,7 +47,10 @@ namespace SidebarDiagnostics
 
             BindSettings(enableHotkeys);
 
-            new BindModelHandler(BindModel).BeginInvoke(null, null);
+            await Task.Run(async () =>
+            {
+                await BindModel();
+            });
         }
 
         public void Reposition()
@@ -76,7 +79,7 @@ namespace SidebarDiagnostics
             Ready = true;
         }
 
-        private void Initialize()
+        private async Task Initialize()
         {
             Ready = false;
 
@@ -89,7 +92,10 @@ namespace SidebarDiagnostics
             
             BindSettings(true);
 
-            new BindModelHandler(BindModel).BeginInvoke(null, null);
+            await Task.Run(async () =>
+            {
+                await BindModel();
+            });
         }
 
         private void BindSettings(bool enableHotkeys)
@@ -139,10 +145,8 @@ namespace SidebarDiagnostics
 
             SetAppBar(_screen, _edge, _windowWA, _appbarWA, callback);
         }
-
-        private delegate void BindModelHandler();
-
-        private void BindModel()
+        
+        private async Task BindModel()
         {
             if (Model != null)
             {
@@ -150,7 +154,7 @@ namespace SidebarDiagnostics
                 Model = null;
             }
 
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ModelReadyHandler(ModelReady), new SidebarModel());
+            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ModelReadyHandler(ModelReady), new SidebarModel());
         }
 
         private delegate void ModelReadyHandler(SidebarModel model);
@@ -202,9 +206,9 @@ namespace SidebarDiagnostics
             WindowControls.Visibility = Framework.Settings.Instance.CollapseMenuBar ? Visibility.Collapsed : Visibility.Hidden;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Initialize();
+            await Initialize();
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Models;
-using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
@@ -27,11 +26,11 @@ namespace SidebarDiagnostics
             ShowDialog();
         }
 
-        private void Save(bool finalize)
+        private async Task Save(bool finalize)
         {
             Model.Save();
 
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+            await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(async () =>
             {
                 Sidebar _sidebar = (Application.Current as App).GetSidebar;
 
@@ -40,7 +39,7 @@ namespace SidebarDiagnostics
                     return;
                 }
 
-                _sidebar.Reset(finalize);
+                await _sidebar.Reset(finalize);
             }));
         }
         
@@ -271,15 +270,16 @@ namespace SidebarDiagnostics
             e.Handled = true;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Save(true);
+            await Save(true);
+
             Close();
         }
 
-        private void ApplyButton_Click(object sender, RoutedEventArgs e)
+        private async void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
-            Save(false);
+            await Save(false);
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
