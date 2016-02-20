@@ -63,7 +63,9 @@ namespace SidebarDiagnostics.Models
 
         private void InitClock()
         {
-            if (!Framework.Settings.Instance.ShowClock)
+            ShowClock = Framework.Settings.Instance.ShowClock;
+
+            if (!ShowClock)
             {
                 return;
             }
@@ -81,7 +83,7 @@ namespace SidebarDiagnostics.Models
 
         private void StartClock()
         {
-            if (!Framework.Settings.Instance.ShowClock)
+            if (!ShowClock)
             {
                 return;
             }
@@ -164,6 +166,22 @@ namespace SidebarDiagnostics.Models
                 _ready = value;
 
                 NotifyPropertyChanged("Ready");
+            }
+        }
+
+        private bool _showClock { get; set; }
+
+        public bool ShowClock
+        {
+            get
+            {
+                return _showClock;
+            }
+            set
+            {
+                _showClock = value;
+
+                NotifyPropertyChanged("ShowClock");
             }
         }
 

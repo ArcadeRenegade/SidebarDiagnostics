@@ -8,7 +8,7 @@
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         xmlns:local="clr-x:Namespace:SidebarDiagnostics"
         xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitoring"
-        xmlns:convert="clr-namespace:SidebarDiagnostics.Converters"
+        xmlns:conv="clr-namespace:SidebarDiagnostics.Converters"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
@@ -22,9 +22,8 @@
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource FlatWindowStyle}">
     <Window.Resources>
-        <convert:BoolInverseConverter x:Key="BoolInverseConverter" />
-        <convert:IntToStringConverter x:Key="IntConverter" />
-        <convert:HotkeyToStringConverter x:Key="HotkeyConverter" />
+        <conv:IntToStringConverter x:Key="IntConverter" />
+        <conv:HotkeyToStringConverter x:Key="HotkeyConverter" />
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons_SM}">

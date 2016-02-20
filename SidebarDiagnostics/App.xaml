@@ -35,9 +35,10 @@
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
 
+            <conv:BoolInverseConverter x:Key="BoolInverseConverter" />
             <conv:DriveNameLengthConverter x:Key="DriveNameConverter" />
             <conv:PercentConverter x:Key="PercentConverter" />
-
+            
             <Style x:Key="SidebarWindow" TargetType="{x:Type win:AppBarWindow}">
                 <Setter Property="Title" Value="Sidebar" />
                 <Setter Property="Icon" Value="Sidebar.ico" />
@@ -90,9 +91,9 @@
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=Ready, Mode=OneWay}" Value="True">
+                    <Trigger Property="IsEnabled" Value="False">
                         <Setter Property="Content" Value="{x:Null}" />
-                    </DataTrigger>
+                    </Trigger>
                 </Style.Triggers>
             </Style>
 

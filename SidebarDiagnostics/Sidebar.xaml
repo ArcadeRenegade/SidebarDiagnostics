@@ -16,7 +16,7 @@
         MouseLeave="Window_MouseLeave"
         Style="{StaticResource SidebarWindow}">
     <Grid>
-        <ContentControl Style="{StaticResource LoadingWidget}" />
+        <ContentControl IsEnabled="{Binding Path=Ready, Mode=OneWay, Converter={StaticResource BoolInverseConverter}}" Style="{StaticResource LoadingWidget}" />
         
         <DockPanel Style="{StaticResource MainPanel}">
             <StackPanel x:Name="WindowControls" Style="{StaticResource MenuBar}">
@@ -35,7 +35,7 @@
                         <ContentControl.Style>
                             <Style TargetType="{x:Type ContentControl}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=ShowClock, Mode=OneWay}" Value="True">
+                                    <DataTrigger Binding="{Binding Path=ShowClock, Mode=OneWay}" Value="True">
                                         <Setter Property="Content">
                                             <Setter.Value>
                                                 <StackPanel Style="{StaticResource GroupPanel}">
