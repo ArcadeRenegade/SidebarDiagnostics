@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Windows;
@@ -31,6 +32,13 @@ namespace SidebarDiagnostics
             _close = true;
 
             base.Close();
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            DragMove();
         }
 
         protected override void OnClosing(CancelEventArgs e)

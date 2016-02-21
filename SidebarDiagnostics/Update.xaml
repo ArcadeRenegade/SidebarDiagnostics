@@ -17,7 +17,7 @@
         ShowMinimize="False"
         ShowMaximize="False"
         ShowClose="False"
-        Topmost="True"
+        Topmost="False"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource FlatWindowStyle}">
     <Window.TaskbarItemInfo>

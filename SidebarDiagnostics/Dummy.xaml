@@ -9,6 +9,7 @@
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
+        StateChanged="Window_StateChanged"
         Style="{StaticResource SidebarWindow}">
     <Grid>
         <StackPanel Style="{StaticResource DummyLabel}">

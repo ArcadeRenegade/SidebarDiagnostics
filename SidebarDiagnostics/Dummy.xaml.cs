@@ -38,6 +38,14 @@ namespace SidebarDiagnostics
             Setup.ShowDialog();
         }
 
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState != WindowState.Normal)
+            {
+                WindowState = WindowState.Normal;
+            }
+        }
+
         public Setup Setup { get; private set; }
     }
 }

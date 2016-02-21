@@ -208,6 +208,14 @@ namespace SidebarDiagnostics
             await Initialize();
         }
 
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState != WindowState.Normal)
+            {
+                WindowState = WindowState.Normal;
+            }
+        }
+
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             Ready = false;
