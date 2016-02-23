@@ -95,6 +95,7 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="UI Scale" />
@@ -121,14 +122,17 @@
                         <Slider x:Name="PollingIntervalSlider" Value="{Binding Path=PollingInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="100" Maximum="5000" TickFrequency="100" LargeChange="1000" ToolTip="Time between polling for data in milliseconds." />
                     </DockPanel>
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Click Through" />
-                    <CheckBox Grid.Column="1" Grid.Row="4" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="4" Content="Show in Alt + Tab" />
+                    <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Path=ShowAltTab, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the sidebar in the Alt + Tab menu." />
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Show Tray Icon" />
                     <CheckBox Grid.Column="1" Grid.Row="5" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Shows the tray icon in the taskbar.&#x0a;This is sometimes required." />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Collapse Menu Bar" />
-                    <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="Click Through" />
+                    <CheckBox Grid.Column="1" Grid.Row="6" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes mouse events pass through the window.&#x0a;Note this will prevent any interaction with the sidebar." />
+
+                    <Label Grid.Column="0" Grid.Row="7" Content="Collapse Menu Bar" />
+                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
                 </Grid>
             </TabItem>
             <TabItem Header="Customize">

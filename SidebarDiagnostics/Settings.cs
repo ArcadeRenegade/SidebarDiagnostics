@@ -277,6 +277,23 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private bool _showAltTab { get; set; } = true;
+
+        [JsonProperty]
+        public bool ShowAltTab
+        {
+            get
+            {
+                return _showAltTab;
+            }
+            set
+            {
+                _showAltTab = value;
+
+                NotifyPropertyChanged("ShowAltTab");
+            }
+        }
+
         private bool _clickThrough { get; set; } = false;
 
         [JsonProperty]

@@ -142,7 +142,7 @@ namespace SidebarDiagnostics.Windows
         private const string WORKERW = "WorkerW";
         private const string PROGMAN = "Progman";
 
-        public static void AddHook(Window window)
+        public static void AddHook(Sidebar sidebar)
         {
             if (IsHooked)
             {
@@ -153,7 +153,7 @@ namespace SidebarDiagnostics.Windows
 
             _delegate = new WinEventDelegate(WinEventHook);
             _hookIntPtr = NativeMethods.SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, _delegate, 0, 0, WINEVENT_OUTOFCONTEXT);
-            _window = window;
+            _sidebar = sidebar;
         }
 
         public static void RemoveHook()
@@ -169,7 +169,7 @@ namespace SidebarDiagnostics.Windows
 
             _delegate = null;
             _hookIntPtr = null;
-            _window = null;
+            _sidebar = null;
         }
 
         private static string GetWindowClass(IntPtr hwnd)
@@ -189,11 +189,11 @@ namespace SidebarDiagnostics.Windows
 
                 if (string.Equals(_class, WORKERW, StringComparison.Ordinal) /*|| string.Equals(_class, PROGMAN, StringComparison.Ordinal)*/ )
                 {
-                    _window.Topmost = true;
+                    _sidebar.SetTopMost(false);
                 }
                 else
                 {
-                    _window.Topmost = false;
+                    _sidebar.ClearTopMost(false);
                 }
             }
         }
@@ -204,7 +204,7 @@ namespace SidebarDiagnostics.Windows
 
         private static WinEventDelegate _delegate { get; set; }
 
-        private static Window _window { get; set; }
+        private static Sidebar _sidebar { get; set; }
     }
 
     public static class Devices
@@ -1093,7 +1093,9 @@ namespace SidebarDiagnostics.Windows
         private static class WND_STYLE
         {
             public const int GWL_EXSTYLE = -20;
-            public const int WS_EX_TRANSPARENT = 32;
+
+            public const long WS_EX_TRANSPARENT = 32;
+            public const long WS_EX_TOOLWINDOW = 128;
         }
 
         private static class WM_WINDOWPOSCHANGING
@@ -1178,85 +1180,121 @@ namespace SidebarDiagnostics.Windows
             return IntPtr.Zero;
         }
 
-        public void SetTopMost()
+        public void SetTopMost(bool activate)
         {
-            NativeMethods.SetWindowPos(
-                new WindowInteropHelper(this).Handle,
-                HWND_FLAG.HWND_TOPMOST,
-                0,
-                0,
-                0,
-                0,
-                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE
-                );
+            if (IsTop)
+            {
+                return;
+            }
+
+            IsTop = true;
+
+            SetPos(HWND_FLAG.HWND_TOPMOST, activate);
         }
 
-        public void ClearTopMost()
+        public void ClearTopMost(bool activate)
         {
-            NativeMethods.SetWindowPos(
-                new WindowInteropHelper(this).Handle,
-                HWND_FLAG.HWND_NOTOPMOST,
-                0,
-                0,
-                0,
-                0,
-                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE | HWND_FLAG.SWP_NOACTIVATE
-                );
+            if (!IsTop)
+            {
+                return;
+            }
+
+            IsTop = false;
+
+            SetPos(HWND_FLAG.HWND_NOTOPMOST, activate);
         }
 
-        public void SetTop()
+        public void SetBottom(bool activate)
         {
-            NativeMethods.SetWindowPos(
-                new WindowInteropHelper(this).Handle,
-                HWND_FLAG.HWND_NOTOPMOST,
-                0,
-                0,
-                0,
-                0,
-                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE
-                );
+            IsTop = false;
+
+            SetPos(HWND_FLAG.HWND_BOTTOM, activate);
         }
 
-        public void SetBottom()
+        private void SetPos(IntPtr hwnd_after, bool activate)
         {
-            NativeMethods.SetWindowPos(
-                new WindowInteropHelper(this).Handle,
-                HWND_FLAG.HWND_BOTTOM,
-                0,
-                0,
-                0,
-                0,
-                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE | HWND_FLAG.SWP_NOACTIVATE
-                );
-        }
+            uint _uflags = HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE;
 
-        public void SetBottomActivate()
-        {
+            if (!activate)
+            {
+                _uflags |= HWND_FLAG.SWP_NOACTIVATE;
+            }
+
             NativeMethods.SetWindowPos(
                 new WindowInteropHelper(this).Handle,
-                HWND_FLAG.HWND_BOTTOM,
+                hwnd_after,
                 0,
                 0,
                 0,
                 0,
-                HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE
+                _uflags
                 );
         }
 
         public void SetClickThrough()
         {
-            IntPtr _hwnd = new WindowInteropHelper(this).Handle;
-            long _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
+            if (IsClickThrough)
+            {
+                return;
+            }
 
-            NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style | WND_STYLE.WS_EX_TRANSPARENT);
+            IsClickThrough = true;
+
+            SetWindowLong(WND_STYLE.WS_EX_TRANSPARENT, null);
         }
 
         public void ClearClickThrough()
         {
+            if (!IsClickThrough)
+            {
+                return;
+            }
+
+            IsClickThrough = false;
+
+            SetWindowLong(null, WND_STYLE.WS_EX_TRANSPARENT);
+        }
+
+        public void ShowInAltTab()
+        {
+            if (IsInAltTab)
+            {
+                return;
+            }
+
+            IsInAltTab = true;
+
+            SetWindowLong(null, WND_STYLE.WS_EX_TOOLWINDOW);
+        }
+
+        public void HideInAltTab()
+        {
+            if (!IsInAltTab)
+            {
+                return;
+            }
+
+            IsInAltTab = false;
+
+            SetWindowLong(WND_STYLE.WS_EX_TOOLWINDOW, null);
+        }
+
+        private void SetWindowLong(long? add, long? remove)
+        {
             IntPtr _hwnd = new WindowInteropHelper(this).Handle;
             long _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
 
-            NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style & ~WND_STYLE.WS_EX_TRANSPARENT);
+            if (add.HasValue)
+            {
+                _style |= add.Value;
+            }
+
+            if (remove.HasValue)
+            {
+                _style &= ~remove.Value;
+            }
+
+            NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style);
         }
 
         public void SetAppBar(int screen, DockEdge edge, WorkArea windowWA, WorkArea appbarWA, Action callback)
@@ -1415,13 +1453,13 @@ namespace SidebarDiagnostics.Windows
                     case APPBARNOTIFY.ABN_FULLSCREENAPP:
                         if (lParam.ToInt32() == 1)
                         {
-                            SetBottom();
+                            SetBottom(false);
                         }
                         else
                         {
                             if (Framework.Settings.Instance.AlwaysTop)
                             {
-                                SetTopMost();
+                                SetTopMost(false);
                             }
                         }
                         break;
@@ -1432,6 +1470,12 @@ namespace SidebarDiagnostics.Windows
 
             return IntPtr.Zero;
         }
+
+        public bool IsTop { get; private set; } = false;
+
+        public bool IsClickThrough { get; private set; } = false;
+
+        public bool IsInAltTab { get; private set; } = true;
 
         public bool IsAppBar { get; private set; } = false;
 

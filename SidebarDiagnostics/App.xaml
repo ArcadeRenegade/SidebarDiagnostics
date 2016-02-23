@@ -48,6 +48,7 @@
                 <Setter Property="ShowInTaskbar" Value="False" />
                 <Setter Property="AllowsTransparency" Value="True" />
                 <Setter Property="ResizeMode" Value="NoResize" />
+                <Setter Property="ShowActivated" Value="False" />
                 <Setter Property="ShowTitleBar" Value="False" />
                 <Setter Property="ShowIcon" Value="False" />
                 <Setter Property="ShowTitle" Value="False" />

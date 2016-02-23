@@ -98,13 +98,13 @@ namespace SidebarDiagnostics
 
             if (Framework.Settings.Instance.AlwaysTop)
             {
-                SetTopMost();
+                SetTopMost(false);
 
                 ShowDesktop.RemoveHook();
             }
             else
             {
-                ClearTopMost();
+                ClearTopMost(false);
 
                 ShowDesktop.AddHook(this);
             }
@@ -116,6 +116,15 @@ namespace SidebarDiagnostics
             else
             {
                 ClearClickThrough();
+            }
+
+            if (Framework.Settings.Instance.ShowAltTab)
+            {
+                ShowInAltTab();
+            }
+            else
+            {
+                HideInAltTab();
             }
 
             Hotkey.Initialize(this, Framework.Settings.Instance.Hotkeys);

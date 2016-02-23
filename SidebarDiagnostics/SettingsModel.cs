@@ -38,6 +38,7 @@ namespace SidebarDiagnostics.Models
             UseAppBar = Framework.Settings.Instance.UseAppBar;
             AlwaysTop = Framework.Settings.Instance.AlwaysTop;
             HighDPISupport = Framework.Settings.Instance.HighDPISupport;
+            ShowAltTab = Framework.Settings.Instance.ShowAltTab;
             ClickThrough = Framework.Settings.Instance.ClickThrough;
             ShowTrayIcon = Framework.Settings.Instance.ShowTrayIcon;
             AutoUpdate = Framework.Settings.Instance.AutoUpdate;
@@ -116,6 +117,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.UseAppBar = UseAppBar;
             Framework.Settings.Instance.AlwaysTop = AlwaysTop;
             Framework.Settings.Instance.HighDPISupport = HighDPISupport;
+            Framework.Settings.Instance.ShowAltTab = ShowAltTab;
             Framework.Settings.Instance.ClickThrough = ClickThrough;
             Framework.Settings.Instance.ShowTrayIcon = ShowTrayIcon;
             Framework.Settings.Instance.AutoUpdate = AutoUpdate;
@@ -420,6 +422,22 @@ namespace SidebarDiagnostics.Models
                 _highDPISupport = value;
 
                 NotifyPropertyChanged("HighDPISupport");
+            }
+        }
+
+        private bool _showAltTab { get; set; }
+        
+        public bool ShowAltTab
+        {
+            get
+            {
+                return _showAltTab;
+            }
+            set
+            {
+                _showAltTab = value;
+
+                NotifyPropertyChanged("ShowAltTab");
             }
         }
 
