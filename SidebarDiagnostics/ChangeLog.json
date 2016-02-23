@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.0.8",
+    "Changes": [
+      "Added the option to show or hide the sidebar in Alt + Tab.",
+      "Minor consistency changes."
+    ]
+  },
+  {
     "Version": "3.0.7",
     "Changes": [
       "Fixed two issues that caused higher CPU usage than necessary.",
@@ -38,7 +45,7 @@
       "This will set the sidebar's background color to your Windows color settings.",
       "Updated the icon for drives so it doesn't look like a speaker anymore.",
       "Added a change log window that pops up after updating.",
-      "Minor bug fixes"
+      "Minor bug fixes."
     ]
   }
 ]
