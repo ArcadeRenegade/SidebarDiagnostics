@@ -36,6 +36,8 @@ https://www.paypal.me/arcaderenegade
 
 GNU GENERAL PUBLIC LICENSE
 
+Please provide a link to this GitHub repository if reuploading. Thank you.
+
 ### Info
 
 Written in C# .NET WPF.
