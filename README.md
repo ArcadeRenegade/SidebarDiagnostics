@@ -48,4 +48,4 @@ You will need to run it as administrator.
 
 Data provided by <a href="http://openhardwaremonitor.org/">Open Hardware Monitor</a>.
 
-<img src="http://i.imgur.com/BgG7mFP.png" />
+<img src="http://i.imgur.com/70LkdwO.png" />
