@@ -169,6 +169,13 @@ namespace SidebarDiagnostics
                     MessageBox.Show(Constants.Generic.UPDATEERROR, Constants.Generic.UPDATEERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                 }
             }
+            catch (Exception)
+            {
+                Framework.Settings.Instance.AutoUpdate = false;
+                Framework.Settings.Instance.Save();
+
+                MessageBox.Show(Constants.Generic.UPDATEFATAL, Constants.Generic.ERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            }
 
             return null;
         }

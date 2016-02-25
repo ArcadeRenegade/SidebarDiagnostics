@@ -14,6 +14,7 @@ namespace SidebarDiagnostics
 
             public const string UPDATEERRORTITLE = "Update Error";
             public const string UPDATEERROR = "Unable to update. Check your internet connection.";
+            public const string UPDATEFATAL = "A fatal error occurred while trying to update.\r\nAuto update is now disabled.";
         }
     }
 }
