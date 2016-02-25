@@ -20,17 +20,17 @@
             <tb:TaskbarIcon x:Key="TrayIcon" IconSource="Sidebar.ico" LeftClickCommand="{StaticResource ShowCommand}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Settings" Click="Settings_Click" />
-                        <MenuItem Header="Reload" Click="Reload_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.Settings}" Click="Settings_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.Reload}" Click="Reload_Click" />
                         <Separator />
-                        <MenuItem Header="Visibility" SubmenuOpened="Visibility_SubmenuOpened">
-                            <MenuItem Header="Show" Click="Show_Click" />
-                            <MenuItem Header="Hide" Click="Hide_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.Visibility}" SubmenuOpened="Visibility_SubmenuOpened">
+                            <MenuItem Header="{x:Static frame:Resources.Show}" Click="Show_Click" />
+                            <MenuItem Header="{x:Static frame:Resources.Hide}" Click="Hide_Click" />
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="Donate" Click="Donate_Click" />
-                        <MenuItem Header="Update" Click="Update_Click" />
-                        <MenuItem Header="Close" Click="Close_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.Donate}" Click="Donate_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.Update}" Click="Update_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.Close}" Click="Close_Click" />
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
@@ -40,7 +40,7 @@
             <conv:PercentConverter x:Key="PercentConverter" />
             
             <Style x:Key="SidebarWindow" TargetType="{x:Type win:AppBarWindow}">
-                <Setter Property="Title" Value="Sidebar" />
+                <Setter Property="Title" Value="{x:Static frame:Resources.Sidebar}" />
                 <Setter Property="Icon" Value="Sidebar.ico" />
                 <Setter Property="Width" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=SidebarWidth, Mode=OneWay}" />
                 <Setter Property="Height" Value="800" />

@@ -22,7 +22,7 @@ namespace SidebarDiagnostics.Framework {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SidebarDiagnostics.Framework {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SidebarDiagnostics.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace SidebarDiagnostics.Framework {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Sidebar Diagnostics.
         /// </summary>
-        internal static string AppName {
+        public static string AppName {
             get {
                 return ResourceManager.GetString("AppName", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Clock.
         /// </summary>
-        internal static string Clock {
+        public static string Clock {
             get {
                 return ResourceManager.GetString("Clock", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
-        internal static string Close {
+        public static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Core.
         /// </summary>
-        internal static string Core {
+        public static string Core {
             get {
                 return ResourceManager.GetString("Core", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to CPU.
         /// </summary>
-        internal static string CPU {
+        public static string CPU {
             get {
                 return ResourceManager.GetString("CPU", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Donate.
         /// </summary>
-        internal static string Donate {
+        public static string Donate {
             get {
                 return ResourceManager.GetString("Donate", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Drives.
         /// </summary>
-        internal static string Drives {
+        public static string Drives {
             get {
                 return ResourceManager.GetString("Drives", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Fan.
         /// </summary>
-        internal static string Fan {
+        public static string Fan {
             get {
                 return ResourceManager.GetString("Fan", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Free.
         /// </summary>
-        internal static string Free {
+        public static string Free {
             get {
                 return ResourceManager.GetString("Free", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to GPU.
         /// </summary>
-        internal static string GPU {
+        public static string GPU {
             get {
                 return ResourceManager.GetString("GPU", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Hide.
         /// </summary>
-        internal static string Hide {
+        public static string Hide {
             get {
                 return ResourceManager.GetString("Hide", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to In.
         /// </summary>
-        internal static string In {
+        public static string In {
             get {
                 return ResourceManager.GetString("In", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Load.
         /// </summary>
-        internal static string Load {
+        public static string Load {
             get {
                 return ResourceManager.GetString("Load", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Network.
         /// </summary>
-        internal static string Network {
+        public static string Network {
             get {
                 return ResourceManager.GetString("Network", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Out.
         /// </summary>
-        internal static string Out {
+        public static string Out {
             get {
                 return ResourceManager.GetString("Out", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to RAM.
         /// </summary>
-        internal static string RAM {
+        public static string RAM {
             get {
                 return ResourceManager.GetString("RAM", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Read.
         /// </summary>
-        internal static string Read {
+        public static string Read {
             get {
                 return ResourceManager.GetString("Read", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Reload.
         /// </summary>
-        internal static string Reload {
+        public static string Reload {
             get {
                 return ResourceManager.GetString("Reload", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        internal static string Settings {
+        public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Show.
         /// </summary>
-        internal static string Show {
+        public static string Show {
             get {
                 return ResourceManager.GetString("Show", resourceCulture);
             }
@@ -243,16 +243,16 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Sidebar.
         /// </summary>
-        internal static string SidebarTitle {
+        public static string Sidebar {
             get {
-                return ResourceManager.GetString("SidebarTitle", resourceCulture);
+                return ResourceManager.GetString("Sidebar", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Temp.
         /// </summary>
-        internal static string Temp {
+        public static string Temp {
             get {
                 return ResourceManager.GetString("Temp", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Time.
         /// </summary>
-        internal static string Time {
+        public static string Time {
             get {
                 return ResourceManager.GetString("Time", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
-        internal static string Update {
+        public static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Used.
         /// </summary>
-        internal static string Used {
+        public static string Used {
             get {
                 return ResourceManager.GetString("Used", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Visibility.
         /// </summary>
-        internal static string Visibility {
+        public static string Visibility {
             get {
                 return ResourceManager.GetString("Visibility", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Voltage.
         /// </summary>
-        internal static string Voltage {
+        public static string Voltage {
             get {
                 return ResourceManager.GetString("Voltage", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to VRAM.
         /// </summary>
-        internal static string VRAM {
+        public static string VRAM {
             get {
                 return ResourceManager.GetString("VRAM", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace SidebarDiagnostics.Framework {
         /// <summary>
         ///   Looks up a localized string similar to Write.
         /// </summary>
-        internal static string Write {
+        public static string Write {
             get {
                 return ResourceManager.GetString("Write", resourceCulture);
             }

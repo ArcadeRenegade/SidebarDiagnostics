@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Media;
 using OpenHardwareMonitor.Hardware;
 using Newtonsoft.Json;
+using SidebarDiagnostics.Framework;
 
 namespace SidebarDiagnostics.Monitoring
 {
@@ -441,7 +442,7 @@ namespace SidebarDiagnostics.Monitoring
 
                         if (_coreClock != null)
                         {
-                            _sensorList.Add(new OHMSensor(_coreClock, DataType.MHz, string.Format("Core {0}", i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                            _sensorList.Add(new OHMSensor(_coreClock, DataType.MHz, string.Format("{0} {1}", Resources.Core, i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                         }
                     }
                 }
@@ -451,7 +452,7 @@ namespace SidebarDiagnostics.Monitoring
 
                     if (_firstClock != null)
                     {
-                        _sensorList.Add(new OHMSensor(_firstClock, DataType.MHz, "Clock", (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                        _sensorList.Add(new OHMSensor(_firstClock, DataType.MHz, Resources.Clock, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                     }
                 }
             }
@@ -486,17 +487,17 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage", roundAll));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
             }
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, "Temp", roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
+                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, Resources.Temp, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             if (_fanSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_fanSensor, DataType.RPM, "Fan", roundAll));
+                _sensorList.Add(new OHMSensor(_fanSensor, DataType.RPM, Resources.Fan, roundAll));
             }
 
             ISensor[] _loadSensors = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load).ToArray();
@@ -507,7 +508,7 @@ namespace SidebarDiagnostics.Monitoring
 
                 if (_totalCPU != null)
                 {
-                    _sensorList.Add(new OHMSensor(_totalCPU, DataType.Percent, "Load", roundAll));
+                    _sensorList.Add(new OHMSensor(_totalCPU, DataType.Percent, Resources.Load, roundAll));
                 }
 
                 if (coreLoads)
@@ -518,7 +519,7 @@ namespace SidebarDiagnostics.Monitoring
 
                         if (_coreLoad != null)
                         {
-                            _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, string.Format("Core {0}", i - 1), roundAll));
+                            _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, string.Format("{0} {1}", Resources.Core, i - 1), roundAll));
                         }
                     }
                 }
@@ -535,7 +536,7 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_ramClock != null)
             {
-                _sensorList.Add(new OHMSensor(_ramClock, DataType.MHz, "Clock", true));
+                _sensorList.Add(new OHMSensor(_ramClock, DataType.MHz, Resources.Clock, true));
             }
 
             ISensor _voltage = null;
@@ -552,28 +553,28 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage", roundAll));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
             }
 
             ISensor _loadSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_loadSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_loadSensor, DataType.Percent, "Load", roundAll));
+                _sensorList.Add(new OHMSensor(_loadSensor, DataType.Percent, Resources.Load, roundAll));
             }
 
             ISensor _usedSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 0).FirstOrDefault();
 
             if (_usedSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_usedSensor, DataType.Gigabyte, "Used", roundAll));
+                _sensorList.Add(new OHMSensor(_usedSensor, DataType.Gigabyte, Resources.Used, roundAll));
             }
 
             ISensor _availSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 1).FirstOrDefault();
 
             if (_availSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_availSensor, DataType.Gigabyte, "Free", roundAll));
+                _sensorList.Add(new OHMSensor(_availSensor, DataType.Gigabyte, Resources.Free, roundAll));
             }
 
             Sensors = _sensorList.ToArray();
@@ -587,49 +588,49 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_coreClock != null)
             {
-                _sensorList.Add(new OHMSensor(_coreClock, DataType.MHz, "Core", (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                _sensorList.Add(new OHMSensor(_coreClock, DataType.MHz, Resources.Core, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
             }
 
             ISensor _memoryClock = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 1).FirstOrDefault();
 
             if (_memoryClock != null)
             {
-                _sensorList.Add(new OHMSensor(_memoryClock, DataType.MHz, "VRAM", (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                _sensorList.Add(new OHMSensor(_memoryClock, DataType.MHz, Resources.VRAM, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
             }
 
             ISensor _coreLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_coreLoad != null)
             {
-                _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, "Core", roundAll));
+                _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, Resources.Core, roundAll));
             }
 
             ISensor _memoryLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 3).FirstOrDefault();
 
             if (_memoryLoad != null)
             {
-                _sensorList.Add(new OHMSensor(_memoryLoad, DataType.Percent, "VRAM", roundAll));
+                _sensorList.Add(new OHMSensor(_memoryLoad, DataType.Percent, Resources.VRAM, roundAll));
             }
 
             ISensor _voltage = _hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Index == 0).FirstOrDefault();
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, "Voltage", roundAll));
+                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
             }
 
             ISensor _tempSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, "Temp", roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
+                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, Resources.Temp, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             ISensor _fanSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
 
             if (_fanSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_fanSensor, DataType.Percent, "Fan"));
+                _sensorList.Add(new OHMSensor(_fanSensor, DataType.Percent, Resources.Fan));
             }
 
             Sensors = _sensorList.ToArray();
@@ -1033,9 +1034,9 @@ namespace SidebarDiagnostics.Monitoring
             {
                 if (DriveSpace)
                 {
-                    Load = string.Format("Load: {0:#,##0.##}%", _usedPercent.Round(RoundAll));
-                    UsedGB = string.Format("Used: {0:#,##0.##} GB", _usedGB.Round(RoundAll));
-                    FreeGB = string.Format("Free: {0:#,##0.##} GB", _freeGB.Round(RoundAll));
+                    Load = string.Format("{0}: {1:#,##0.##}%", Resources.Load, _usedPercent.Round(RoundAll));
+                    UsedGB = string.Format("{0}: {1:#,##0.##} GB", Resources.Used, _usedGB.Round(RoundAll));
+                    FreeGB = string.Format("{0}: {1:#,##0.##} GB", Resources.Free, _freeGB.Round(RoundAll));
                 }
 
                 if (DriveIO)
@@ -1045,14 +1046,14 @@ namespace SidebarDiagnostics.Monitoring
                     string _readFormat;
                     Data.MinifyKiloBytesPerSecond(ref _readRate, out _readFormat);
 
-                    ReadRate = string.Format("Read: {0:#,##0.##} {1}", _readRate.Round(RoundAll), _readFormat);
+                    ReadRate = string.Format("{0}: {1:#,##0.##} {2}", Resources.Read, _readRate.Round(RoundAll), _readFormat);
 
                     double _writeRate = _counterWriteRate.NextValue() / 1024d;
 
                     string _writeFormat;
                     Data.MinifyKiloBytesPerSecond(ref _writeRate, out _writeFormat);
 
-                    WriteRate = string.Format("Write: {0:#,##0.##} {1}", _writeRate.Round(RoundAll), _writeFormat);
+                    WriteRate = string.Format("{0}: {1:#,##0.##} {2}", Resources.Write, _writeRate.Round(RoundAll), _writeFormat);
                 }
             }
 
@@ -1391,7 +1392,7 @@ namespace SidebarDiagnostics.Monitoring
 
             InBandwidth = new Bandwidth(
                 new PerformanceCounter(NetworkMonitor.CATEGORYNAME, BYTESRECEIVEDPERSECOND, instance),
-                "In",
+                Resources.In,
                 roundAll,
                 useBytes,
                 bandwidthInAlert
@@ -1399,7 +1400,7 @@ namespace SidebarDiagnostics.Monitoring
 
             OutBandwidth = new Bandwidth(
                 new PerformanceCounter(NetworkMonitor.CATEGORYNAME, BYTESSENTPERSECOND, instance),
-                "Out",
+                Resources.Out,
                 roundAll,
                 useBytes,
                 bandwidthOutAlert
@@ -2506,22 +2507,22 @@ namespace SidebarDiagnostics.Monitoring
             switch (type)
             {
                 case MonitorType.CPU:
-                    return "CPU";
+                    return Resources.CPU;
 
                 case MonitorType.RAM:
-                    return "RAM";
+                    return Resources.RAM;
 
                 case MonitorType.GPU:
-                    return "GPU";
+                    return Resources.GPU;
 
                 case MonitorType.HD:
-                    return "Drives";
+                    return Resources.Drives;
 
                 case MonitorType.Network:
-                    return "Network";
+                    return Resources.Network;
 
                 default:
-                    return "Unknown";
+                    throw new ArgumentException("Invalid MonitorType.");
             }
         }
 
