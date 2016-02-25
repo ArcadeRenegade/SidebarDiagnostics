@@ -3,6 +3,7 @@
     "Version": "3.1.0",
     "Changes": [
       "Implemented initial French localization.",
+      "Want to help localize? Please visit the repo wiki!",
       "Added error handling for when the app updates",
       "Added a catch for an error involving virtual desktops."
     ]
