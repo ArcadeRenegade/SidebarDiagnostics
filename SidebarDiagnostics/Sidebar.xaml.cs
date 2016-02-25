@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -84,7 +85,11 @@ namespace SidebarDiagnostics
 
             if (OS.SupportVirtualDesktop)
             {
-                VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
+                try
+                {
+                    VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
+                }
+                catch (COMException) { }
             }
             
             BindSettings(true);
