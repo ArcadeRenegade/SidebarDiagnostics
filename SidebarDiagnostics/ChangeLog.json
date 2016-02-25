@@ -4,7 +4,7 @@
     "Changes": [
       "Implemented initial French localization.",
       "Want to help localize? Please visit the GitHub wiki!",
-      "Added error handling for when the app updates",
+      "Added error handling for when the app fails to update.",
       "Added a catch for an error involving virtual desktops."
     ]
   },
