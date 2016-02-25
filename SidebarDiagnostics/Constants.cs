@@ -5,8 +5,6 @@ namespace SidebarDiagnostics
     {
         public static class Generic
         {
-            public const string PROGRAMNAME = "Sidebar Diagnostics";
-
             public const string TASKNAME = "SidebarStartup";
 
             public const string UPDATEMSG = "You have the latest version.";

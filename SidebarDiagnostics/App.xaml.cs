@@ -44,7 +44,7 @@ namespace SidebarDiagnostics
 
             // TRAY ICON
             _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            _trayIcon.ToolTipText = string.Format("{0} v{1}", Constants.Generic.PROGRAMNAME, _vstring);
+            _trayIcon.ToolTipText = string.Format("{0} v{1}", Framework.Resources.AppName, _vstring);
 
             // START APP
             if (Framework.Settings.Instance.InitialSetup)
@@ -158,7 +158,7 @@ namespace SidebarDiagnostics
                     }
                     else if (showInfo)
                     {
-                        MessageBox.Show(Constants.Generic.UPDATEMSG, Constants.Generic.PROGRAMNAME, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                        MessageBox.Show(Constants.Generic.UPDATEMSG, Framework.Resources.AppName, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                 }
             }
