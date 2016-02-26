@@ -39,7 +39,7 @@
             <conv:BoolInverseConverter x:Key="BoolInverseConverter" />
             <conv:DriveNameLengthConverter x:Key="DriveNameConverter" />
             <conv:PercentConverter x:Key="PercentConverter" />
-            
+
             <Style x:Key="SidebarWindow" TargetType="{x:Type win:AppBarWindow}">
                 <Setter Property="Title" Value="{x:Static frame:Resources.Sidebar}" />
                 <Setter Property="Icon" Value="Sidebar.ico" />
@@ -70,32 +70,6 @@
                             </Setter.Value>
                         </Setter>
                     </DataTrigger>
-                </Style.Triggers>
-            </Style>
-
-            <Style x:Key="LoadingWidget" TargetType="{x:Type ContentControl}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <Ellipse Width="40" Height="40" Stroke="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" StrokeThickness="5" StrokeDashArray="18" Opacity="0.85">
-                            <Ellipse.RenderTransform>
-                                <RotateTransform CenterX="20" CenterY="20" />
-                            </Ellipse.RenderTransform>
-                            <Ellipse.Triggers>
-                                <EventTrigger RoutedEvent="Loaded">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="(Ellipse.RenderTransform).(RotateTransform.Angle)" To="360" Duration="0:0:1" RepeatBehavior="Forever" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Ellipse.Triggers>
-                        </Ellipse>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsEnabled" Value="False">
-                        <Setter Property="Content" Value="{x:Null}" />
-                    </Trigger>
                 </Style.Triggers>
             </Style>
 
