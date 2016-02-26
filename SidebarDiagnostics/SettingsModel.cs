@@ -37,7 +37,6 @@ namespace SidebarDiagnostics.Models
             PollingInterval = Framework.Settings.Instance.PollingInterval;
             UseAppBar = Framework.Settings.Instance.UseAppBar;
             AlwaysTop = Framework.Settings.Instance.AlwaysTop;
-            HighDPISupport = Framework.Settings.Instance.HighDPISupport;
             ShowAltTab = Framework.Settings.Instance.ShowAltTab;
             ClickThrough = Framework.Settings.Instance.ClickThrough;
             ShowTrayIcon = Framework.Settings.Instance.ShowTrayIcon;
@@ -116,7 +115,6 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.PollingInterval = PollingInterval;
             Framework.Settings.Instance.UseAppBar = UseAppBar;
             Framework.Settings.Instance.AlwaysTop = AlwaysTop;
-            Framework.Settings.Instance.HighDPISupport = HighDPISupport;
             Framework.Settings.Instance.ShowAltTab = ShowAltTab;
             Framework.Settings.Instance.ClickThrough = ClickThrough;
             Framework.Settings.Instance.ShowTrayIcon = ShowTrayIcon;
@@ -406,22 +404,6 @@ namespace SidebarDiagnostics.Models
                 _alwaysTop = value;
 
                 NotifyPropertyChanged("AlwaysTop");
-            }
-        }
-
-        private bool _highDPISupport { get; set; }
-
-        public bool HighDPISupport
-        {
-            get
-            {
-                return _highDPISupport;
-            }
-            set
-            {
-                _highDPISupport = value;
-
-                NotifyPropertyChanged("HighDPISupport");
             }
         }
 

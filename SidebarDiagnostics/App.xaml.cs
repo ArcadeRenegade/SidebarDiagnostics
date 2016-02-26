@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using Squirrel;
 using Hardcodet.Wpf.TaskbarNotification;
 using SidebarDiagnostics.Monitoring;
+using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
 {
@@ -43,8 +44,9 @@ namespace SidebarDiagnostics
             string _vstring = _version.ToString(3);
 
             // TRAY ICON
-            _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            _trayIcon.ToolTipText = string.Format("{0} v{1}", Framework.Resources.AppName, _vstring);
+            TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            TrayIcon.ToolTipText = string.Format("{0} v{1}", Framework.Resources.AppName, _vstring);
+            TrayIcon.TrayContextMenuOpen += TrayIcon_TrayContextMenuOpen;
 
             // START APP
             if (Framework.Settings.Instance.InitialSetup)
@@ -59,7 +61,7 @@ namespace SidebarDiagnostics
 
         protected override void OnExit(ExitEventArgs e)
         {
-            _trayIcon.Dispose();
+            TrayIcon.Dispose();
 
             base.OnExit(e);
         }
@@ -84,7 +86,7 @@ namespace SidebarDiagnostics
 
         public static void RefreshIcon()
         {
-            _trayIcon.Visibility = Framework.Settings.Instance.ShowTrayIcon ? Visibility.Visible : Visibility.Collapsed;
+            TrayIcon.Visibility = Framework.Settings.Instance.ShowTrayIcon ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public static void ShowPerformanceCounterError()
@@ -189,7 +191,15 @@ namespace SidebarDiagnostics
 
             Framework.Settings.Instance.MonitorConfig = MonitorConfig.CheckConfig(Framework.Settings.Instance.MonitorConfig);
         }
-        
+
+        private void TrayIcon_TrayContextMenuOpen(object sender, RoutedEventArgs e)
+        {
+            Monitor _primary = Monitor.GetMonitors().GetPrimary();
+
+            TrayIcon.ContextMenu.HorizontalOffset *= _primary.InverseScaleX;
+            TrayIcon.ContextMenu.VerticalOffset *= _primary.InverseScaleY;
+        }
+
         private void Settings_Click(object sender, EventArgs e)
         {
             OpenSettings();
@@ -276,8 +286,8 @@ namespace SidebarDiagnostics
             }
         }
 
-        internal static bool _reloading { get; set; } = false;
+        public static TaskbarIcon TrayIcon { get; set; }
 
-        private static TaskbarIcon _trayIcon { get; set; }
+        internal static bool _reloading { get; set; } = false;
     }
 }

@@ -39,43 +39,6 @@
                 <TextBlock Style="{StaticResource SetupText}">Is the sidebar <TextBlock FontWeight="Bold">visible</TextBlock> and docked to the <TextBlock FontWeight="Bold">right edge</TextBlock> of your <TextBlock FontWeight="Bold">primary</TextBlock> monitor?</TextBlock>
             </StackPanel>
         </DockPanel>
-        <DockPanel x:Name="BeginHighDPI" Style="{StaticResource SetupPage}">
-            <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
-                <StackPanel Style="{StaticResource SetupProgress}">
-                    <Ellipse IsEnabled="False" />
-                    <Ellipse  />
-                    <Ellipse IsEnabled="False" />
-                </StackPanel>
-                <Label Content="DPI" Style="{StaticResource SetupTitle}" />
-                <TextBlock Style="{StaticResource SetupSubtitle}">Is this a <TextBlock FontWeight="Bold">high DPI</TextBlock> monitor?</TextBlock>
-            </StackPanel>
-            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
-                <Button Content="Yes" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
-                <Button Content="No" Click="No_Click" Style="{StaticResource ErrorButton}" />
-                <Button Content="Skip" Click="Close_Click" />
-            </StackPanel>
-            <StackPanel Style="{StaticResource SetupContent}">
-                <TextBlock Grid.Row="1" Style="{StaticResource SetupText}">High DPI monitors include:<LineBreak />• 4K Monitors<LineBreak />• Microsoft Surface<LineBreak />•  Any with a DPI higher than 96</TextBlock>
-            </StackPanel>
-        </DockPanel>
-        <DockPanel x:Name="EndHighDPI" Style="{StaticResource SetupPage}">
-            <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
-                <StackPanel Style="{StaticResource SetupProgress}">
-                    <Ellipse IsEnabled="False" />
-                    <Ellipse  />
-                    <Ellipse IsEnabled="False" />
-                </StackPanel>
-                <Label Content="High DPI Support" Style="{StaticResource SetupTitle}" />
-            </StackPanel>
-            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
-                <Button Content="Yes" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
-                <Button Content="No" Click="No_Click" Style="{StaticResource ErrorButton}" />
-                <Button Content="Skip" Click="Close_Click" />
-            </StackPanel>
-            <StackPanel Style="{StaticResource SetupContent}">
-                <TextBlock Style="{StaticResource SetupText}">Is the sidebar in the correct position now?</TextBlock>
-            </StackPanel>
-        </DockPanel>
         <DockPanel x:Name="BeginCustom" Style="{StaticResource SetupPage}">
             <StackPanel DockPanel.Dock="Top" Style="{StaticResource VerticalPanel}">
                 <StackPanel Style="{StaticResource SetupProgress}">

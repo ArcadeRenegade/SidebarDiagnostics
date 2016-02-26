@@ -124,23 +124,6 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _highDPISupport { get; set; } = false;
-
-        [JsonProperty]
-        public bool HighDPISupport
-        {
-            get
-            {
-                return _highDPISupport;
-            }
-            set
-            {
-                _highDPISupport = value;
-
-                NotifyPropertyChanged("HighDPISupport");
-            }
-        }
-
         private bool _useAppBar { get; set; } = true;
         
         [JsonProperty]

@@ -22,7 +22,6 @@ namespace SidebarDiagnostics
 
             Framework.Settings.Instance.ScreenIndex = 0;
             Framework.Settings.Instance.DockEdge = DockEdge.Right;
-            Framework.Settings.Instance.HighDPISupport = false;
             Framework.Settings.Instance.XOffset = 0;
             Framework.Settings.Instance.YOffset = 0;
 
@@ -45,15 +44,8 @@ namespace SidebarDiagnostics
             switch (CurrentPage)
             {
                 case Page.Initial:
-                case Page.EndHighDPI:
                 case Page.BeginCustom:
                     ShowPage(Page.Final);
-                    return;
-
-                case Page.BeginHighDPI:
-                    Framework.Settings.Instance.HighDPISupport = true;
-                    Sidebar.Reposition();
-                    ShowPage(Page.EndHighDPI);
                     return;
             }
         }
@@ -63,11 +55,6 @@ namespace SidebarDiagnostics
             switch (CurrentPage)
             {
                 case Page.Initial:
-                    ShowPage(Page.BeginHighDPI);
-                    return;
-
-                case Page.BeginHighDPI:
-                case Page.EndHighDPI:
                     ShowPage(Page.BeginCustom);
                     return;
             }
@@ -145,8 +132,6 @@ namespace SidebarDiagnostics
         public enum Page : byte
         {
             Initial,
-            BeginHighDPI,
-            EndHighDPI,
             BeginCustom,
             Final
         }

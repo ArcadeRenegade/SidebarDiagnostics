@@ -773,12 +773,15 @@ namespace SidebarDiagnostics.Windows
 
         public static Monitor GetMonitorFromIndex(int index)
         {
-            Monitor[] _monitors = GetMonitors();
+            return GetMonitorFromIndex(index, GetMonitors());
+        }
 
-            if (index < _monitors.Length)
-                return _monitors[index];
+        private static Monitor GetMonitorFromIndex(int index, Monitor[] monitors)
+        {
+            if (index < monitors.Length)
+                return monitors[index];
             else
-                return _monitors.Where(s => s.IsPrimary).Single();
+                return monitors.GetPrimary();
         }
         
         public static void GetWorkArea(AppBarWindow window, out int screen, out DockEdge edge, out WorkArea windowWA, out WorkArea appbarWA)
@@ -786,39 +789,32 @@ namespace SidebarDiagnostics.Windows
             screen = Framework.Settings.Instance.ScreenIndex;
             edge = Framework.Settings.Instance.DockEdge;
 
-            Monitor _screen = GetMonitorFromIndex(screen);
-
-            double _screenX = _screen.ScaleX;
-            double _screenY = _screen.ScaleY;
-
-            double _inverseX = _screen.InverseScaleX;
-            double _inverseY = _screen.InverseScaleY;
-
             double _uiScale = Framework.Settings.Instance.UIScale;
 
-            double _abScaleX = _screenX * _uiScale;
-            double _abScaleY = _screenY * _uiScale;
-            
             if (OS.SupportDPI)
             {
                 window.UpdateScale(_uiScale, _uiScale, false);
             }
 
+            Monitor[] _monitors = GetMonitors();
+
+            Monitor _primary = _monitors.GetPrimary();
+
+            double _primaryScaleX = _primary.ScaleX;
+            double _primaryScaleY = _primary.ScaleY;
+
+            double _primaryInverseX = _primary.InverseScaleX;
+            double _primaryInverseY = _primary.InverseScaleY;
+
+            Monitor _active = GetMonitorFromIndex(screen, _monitors);
+
             windowWA = new WorkArea()
             {
-                Left = _screen.WorkArea.Left,
-                Top = _screen.WorkArea.Top,
-                Right = _screen.WorkArea.Right,
-                Bottom = _screen.WorkArea.Bottom
+                Left = _active.WorkArea.Left * _primaryInverseX,
+                Top = _active.WorkArea.Top * _primaryInverseY,
+                Right = _active.WorkArea.Right * _primaryInverseX,
+                Bottom = _active.WorkArea.Bottom * _primaryInverseY
             };
-
-            if (Framework.Settings.Instance.HighDPISupport)
-            {
-                windowWA.Left *= _inverseX;
-                windowWA.Top *= _inverseY;
-                windowWA.Right *= _inverseX;
-                windowWA.Bottom *= _inverseY;
-            }
 
             double _windowWidth = Framework.Settings.Instance.SidebarWidth * _uiScale;
 
@@ -828,10 +824,10 @@ namespace SidebarDiagnostics.Windows
                 window.IsAppBar &&
                 window.Screen == screen &&
                 window.DockEdge == edge &&
-                (_screen.WorkArea.Width + window.AppBarWidth) <= _screen.Size.Width
+                (_active.WorkArea.Width + window.ActualWidth) <= _active.Size.Width
                 )
             {
-                _modifyX = window.AppBarWidth;
+                _modifyX = window.ActualWidth;
             }
 
             switch (edge)
@@ -857,28 +853,25 @@ namespace SidebarDiagnostics.Windows
 
             appbarWA = new WorkArea()
             {
-                Left = windowWA.Left,
-                Top = windowWA.Top,
-                Right = windowWA.Right,
-                Bottom = windowWA.Bottom
+                Left = _active.WorkArea.Left,
+                Top = _active.WorkArea.Top,
+                Right = _active.WorkArea.Right,
+                Bottom = _active.WorkArea.Bottom
             };
 
             if (Framework.Settings.Instance.UseAppBar)
             {
-                if (Framework.Settings.Instance.HighDPISupport)
+                double _appbarWidth = windowWA.Width * _primaryScaleX;
+
+                switch (edge)
                 {
-                    double _abWidth = appbarWA.Width * _abScaleX;
+                    case DockEdge.Left:
+                        appbarWA.Right = appbarWA.Left + _appbarWidth;
+                        break;
 
-                    switch (edge)
-                    {
-                        case DockEdge.Left:
-                            appbarWA.Right = appbarWA.Left + _abWidth;
-                            break;
-
-                        case DockEdge.Right:
-                            appbarWA.Left = appbarWA.Right - _abWidth;
-                            break;
-                    }
+                    case DockEdge.Right:
+                        appbarWA.Left = appbarWA.Right - _appbarWidth;
+                        break;
                 }
             }
             else
@@ -894,6 +887,14 @@ namespace SidebarDiagnostics.Windows
                         break;
                 }
             }
+        }
+    }
+
+    public static class MonitorExtensions
+    {
+        public static Monitor GetPrimary(this Monitor[] monitors)
+        {
+            return monitors.Where(m => m.IsPrimary).Single();
         }
     }
 
@@ -1182,31 +1183,31 @@ namespace SidebarDiagnostics.Windows
 
         public void SetTopMost(bool activate)
         {
-            if (IsTop)
+            if (IsTopMost)
             {
                 return;
             }
 
-            IsTop = true;
+            IsTopMost = true;
 
             SetPos(HWND_FLAG.HWND_TOPMOST, activate);
         }
 
         public void ClearTopMost(bool activate)
         {
-            if (!IsTop)
+            if (!IsTopMost)
             {
                 return;
             }
 
-            IsTop = false;
+            IsTopMost = false;
 
             SetPos(HWND_FLAG.HWND_NOTOPMOST, activate);
         }
 
         public void SetBottom(bool activate)
         {
-            IsTop = false;
+            IsTopMost = false;
 
             SetPos(HWND_FLAG.HWND_BOTTOM, activate);
         }
@@ -1344,15 +1345,18 @@ namespace SidebarDiagnostics.Windows
 
             if (_init)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+                Task.Delay(500).ContinueWith(_ =>
                 {
-                    HwndSource.AddHook(AppBarHook);
-
-                    if (callback != null)
+                    Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
                     {
-                        callback();
-                    }
-                }));
+                        HwndSource.AddHook(AppBarHook);
+
+                        if (callback != null)
+                        {
+                            callback();
+                        }
+                    }));
+                });
             }
             else if (callback != null)
             {
@@ -1453,14 +1457,16 @@ namespace SidebarDiagnostics.Windows
                     case APPBARNOTIFY.ABN_FULLSCREENAPP:
                         if (lParam.ToInt32() == 1)
                         {
-                            SetBottom(false);
-                        }
-                        else
-                        {
-                            if (Framework.Settings.Instance.AlwaysTop)
+                            _wasTopMost = IsTopMost;
+
+                            if (IsTopMost)
                             {
-                                SetTopMost(false);
+                                SetBottom(false);
                             }
+                        }
+                        else if (_wasTopMost)
+                        {
+                            SetTopMost(false);
                         }
                         break;
                 }
@@ -1471,7 +1477,7 @@ namespace SidebarDiagnostics.Windows
             return IntPtr.Zero;
         }
 
-        public bool IsTop { get; private set; } = false;
+        public bool IsTopMost { get; private set; } = false;
 
         public bool IsClickThrough { get; private set; } = false;
 
@@ -1487,9 +1493,9 @@ namespace SidebarDiagnostics.Windows
 
         private bool _canMove { get; set; } = true;
 
-        private int _callbackID { get; set; }
+        private bool _wasTopMost { get; set; } = false;
 
-        private int _prevZOrder { get; set; }
+        private int _callbackID { get; set; }
 
         private CancellationTokenSource _cancelReposition { get; set; }
     }
