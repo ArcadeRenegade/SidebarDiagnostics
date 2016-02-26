@@ -52,6 +52,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -64,17 +65,20 @@
                     <Label Grid.Column="0" Grid.Row="1" Content="Screen" />
                     <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ScreenItems}" DisplayMemberPath="Text" SelectedValuePath="Index" SelectedValue="{Binding Path=ScreenIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which screen the sidebar will be on." />
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Reserve Space" />
-                    <CheckBox Grid.Column="1" Grid.Row="2" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Reserves space in the work area for the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="2" Content="Language" />
+                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=CultureItems}" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedValue="{Binding Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Current language of the app." />
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Always On Top" />
-                    <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes the sidebar always on top of other windows." />
+                    <Label Grid.Column="0" Grid.Row="3" Content="Reserve Space" />
+                    <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Reserves space in the work area for the sidebar." />
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Auto Update" />
-                    <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Path=AutoUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Updates the app automatically." />
+                    <Label Grid.Column="0" Grid.Row="4" Content="Always On Top" />
+                    <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes the sidebar always on top of other windows." />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="Run at Startup" />
-                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the app when you first log in." />
+                    <Label Grid.Column="0" Grid.Row="5" Content="Auto Update" />
+                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=AutoUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Updates the app automatically." />
+
+                    <Label Grid.Column="0" Grid.Row="6" Content="Run at Startup" />
+                    <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the app when you first log in." />
                 </Grid>
             </TabItem>
             <TabItem Header="Advanced">

@@ -31,7 +31,7 @@
                     <Setter Property="Opacity" Value="0.85" />
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsEnabled}" Value="True">
+                        <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsEnabled, Mode=OneWay}" Value="True">
                             <Setter Property="Visibility" Value="Visible" />
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard x:Name="SpinAnimation">

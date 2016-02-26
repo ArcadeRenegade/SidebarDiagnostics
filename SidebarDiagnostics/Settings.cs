@@ -124,6 +124,23 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private string _culture { get; set; } = Utilities.Culture.DEFAULT;
+
+        [JsonProperty]
+        public string Culture
+        {
+            get
+            {
+                return _culture;
+            }
+            set
+            {
+                _culture = value;
+
+                NotifyPropertyChanged("Culture");
+            }
+        }
+
         private bool _useAppBar { get; set; } = true;
         
         [JsonProperty]

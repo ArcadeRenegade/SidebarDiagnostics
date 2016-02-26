@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Windows;
 using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
@@ -30,6 +31,9 @@ namespace SidebarDiagnostics.Models
             {
                 ScreenIndex = _monitors.Where(s => s.IsPrimary).Select((s, i) => i).Single();
             }
+
+            CultureItems = Utilities.Culture.GetAll();
+            Culture = Framework.Settings.Instance.Culture;
 
             UIScale = Framework.Settings.Instance.UIScale;
             XOffset = Framework.Settings.Instance.XOffset;
@@ -107,8 +111,14 @@ namespace SidebarDiagnostics.Models
 
         public void Save()
         {
+            if (!string.Equals(Culture, Framework.Settings.Instance.Culture, StringComparison.Ordinal))
+            {
+                MessageBox.Show(Constants.Generic.LANGUAGEMSG, Constants.Generic.LANGUAGETITLE, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            }
+
             Framework.Settings.Instance.DockEdge = DockEdge;
             Framework.Settings.Instance.ScreenIndex = ScreenIndex;
+            Framework.Settings.Instance.Culture = Culture;
             Framework.Settings.Instance.UIScale = UIScale;
             Framework.Settings.Instance.XOffset = XOffset;
             Framework.Settings.Instance.YOffset = YOffset;
@@ -308,6 +318,38 @@ namespace SidebarDiagnostics.Models
                 _screenItems = value;
 
                 NotifyPropertyChanged("ScreenItems");
+            }
+        }
+
+        private string _culture { get; set; }
+
+        public string Culture
+        {
+            get
+            {
+                return _culture;
+            }
+            set
+            {
+                _culture = value;
+
+                NotifyPropertyChanged("Culture");
+            }
+        }
+
+        private CultureItem[] _cultureItems { get; set; }
+
+        public CultureItem[] CultureItems
+        {
+            get
+            {
+                return _cultureItems;
+            }
+            set
+            {
+                _cultureItems = value;
+
+                NotifyPropertyChanged("CultureItems");
             }
         }
 
@@ -846,6 +888,7 @@ namespace SidebarDiagnostics.Models
     public class ScreenItem
     {
         public int Index { get; set; }
+
         public string Text { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using Microsoft.Win32.TaskScheduler;
 
 namespace SidebarDiagnostics.Utilities
@@ -150,5 +152,34 @@ namespace SidebarDiagnostics.Utilities
                 _taskService.RootFolder.DeleteTask(Constants.Generic.TASKNAME, false);
             }
         }
+    }
+
+    public static class Culture
+    {
+        public const string DEFAULT = "Default";
+
+        public static void SetDefault()
+        {
+            Default = Thread.CurrentThread.CurrentUICulture;
+        }
+
+        public static void SetCurrent(string name)
+        {
+            Thread.CurrentThread.CurrentUICulture = string.Equals(name, DEFAULT, StringComparison.Ordinal) ? Default : new CultureInfo(name);
+        }
+
+        public static CultureItem[] GetAll()
+        {
+            return new CultureItem[1] { new CultureItem() { Value = DEFAULT, Text = DEFAULT } }.Concat(CultureInfo.GetCultures(CultureTypes.AllCultures).OrderBy(c => c.DisplayName).Select(c => new CultureItem() { Value = c.Name, Text = c.DisplayName })).ToArray();
+        }
+
+        public static CultureInfo Default { get; private set; }
+    }
+
+    public class CultureItem
+    {
+        public string Value { get; set; }
+
+        public string Text { get; set; }
     }
 }

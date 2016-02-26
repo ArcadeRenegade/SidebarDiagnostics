@@ -157,17 +157,6 @@
                 <Setter Property="TextWrapping" Value="WrapWithOverflow" />
             </Style>
 
-            <Style x:Key="ContentView" TargetType="ScrollViewer">
-                <Setter Property="Margin" Value="5,15" />
-                <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
-                <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
             <Style x:Key="ContentPanel" TargetType="{x:Type StackPanel}">
                 <Setter Property="Margin" Value="15,0" />
                 <Setter Property="Orientation" Value="Vertical" />
@@ -553,7 +542,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="{x:Type ScrollBar}">
+            <Style x:Key="MinScrollBar" TargetType="{x:Type ScrollBar}">
                 <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
                 <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="Background" Value="Transparent" />
@@ -602,6 +591,20 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+
+            <Style x:Key="ContentView" TargetType="ScrollViewer">
+                <Setter Property="Margin" Value="5,15" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                    </Trigger>
+                </Style.Triggers>
+                <Style.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MinScrollBar}" />
+                </Style.Resources>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -663,6 +663,47 @@ namespace SidebarDiagnostics.Windows
                 return Bottom - Top;
             }
         }
+
+        public void Scale(double x, double y)
+        {
+            Left *= x;
+            Top *= y;
+            Right *= x;
+            Bottom *= y;
+        }
+
+        public void Offset(double x, double y)
+        {
+            Left += x;
+            Top += y;
+            Right += x;
+            Bottom += y;
+        }
+
+        public void SetWidth(DockEdge edge, double width)
+        {
+            switch (edge)
+            {
+                case DockEdge.Left:
+                    Right = Left + width;
+                    break;
+
+                case DockEdge.Right:
+                    Left = Right - width;
+                    break;
+            }
+        }
+
+        public static WorkArea FromRECT(RECT rect)
+        {
+            return new WorkArea()
+            {
+                Left = rect.Left,
+                Top = rect.Top,
+                Right = rect.Right,
+                Bottom = rect.Bottom
+            };
+        }
     }
 
     public class Monitor
@@ -808,17 +849,11 @@ namespace SidebarDiagnostics.Windows
 
             Monitor _active = GetMonitorFromIndex(screen, _monitors);
 
-            windowWA = new WorkArea()
-            {
-                Left = _active.WorkArea.Left * _primaryInverseX,
-                Top = _active.WorkArea.Top * _primaryInverseY,
-                Right = _active.WorkArea.Right * _primaryInverseX,
-                Bottom = _active.WorkArea.Bottom * _primaryInverseY
-            };
-
-            double _windowWidth = Framework.Settings.Instance.SidebarWidth * _uiScale;
+            windowWA = Windows.WorkArea.FromRECT(_active.WorkArea);
+            windowWA.Scale(_primaryInverseX, _primaryInverseY);
 
             double _modifyX = 0d;
+            double _modifyY = 0d;
 
             if (
                 window.IsAppBar &&
@@ -828,65 +863,33 @@ namespace SidebarDiagnostics.Windows
                 )
             {
                 _modifyX = window.ActualWidth;
+
+                if (edge == DockEdge.Left)
+                {
+                    _modifyX *= -1;
+                }
             }
 
-            switch (edge)
-            {
-                case DockEdge.Left:
-                    windowWA.Right = windowWA.Left + _windowWidth - _modifyX;
-                    windowWA.Left -= _modifyX;
-                    break;
+            windowWA.Offset(_modifyX, _modifyY);
 
-                case DockEdge.Right:
-                    windowWA.Left = windowWA.Right - _windowWidth + _modifyX;
-                    windowWA.Right += _modifyX;
-                    break;
-            }
+            double _windowWidth = Framework.Settings.Instance.SidebarWidth * _uiScale;
 
+            windowWA.SetWidth(edge, _windowWidth);
+            
             int _offsetX = Framework.Settings.Instance.XOffset;
             int _offsetY = Framework.Settings.Instance.YOffset;
 
-            windowWA.Left += _offsetX;
-            windowWA.Top += _offsetY;
-            windowWA.Right += _offsetX;
-            windowWA.Bottom += _offsetY;
+            windowWA.Offset(_offsetX, _offsetY);
 
-            appbarWA = new WorkArea()
-            {
-                Left = _active.WorkArea.Left,
-                Top = _active.WorkArea.Top,
-                Right = _active.WorkArea.Right,
-                Bottom = _active.WorkArea.Bottom
-            };
+            appbarWA = Windows.WorkArea.FromRECT(_active.WorkArea);
 
-            if (Framework.Settings.Instance.UseAppBar)
-            {
-                double _appbarWidth = windowWA.Width * _primaryScaleX;
+            appbarWA.Offset(_modifyX, _modifyY);
 
-                switch (edge)
-                {
-                    case DockEdge.Left:
-                        appbarWA.Right = appbarWA.Left + _appbarWidth;
-                        break;
+            double _appbarWidth = Framework.Settings.Instance.UseAppBar ? windowWA.Width * _primaryScaleX : 0;
 
-                    case DockEdge.Right:
-                        appbarWA.Left = appbarWA.Right - _appbarWidth;
-                        break;
-                }
-            }
-            else
-            {
-                switch (edge)
-                {
-                    case DockEdge.Left:
-                        appbarWA.Right = appbarWA.Left;
-                        break;
+            appbarWA.SetWidth(edge, _appbarWidth);
 
-                    case DockEdge.Right:
-                        appbarWA.Left = appbarWA.Right;
-                        break;
-                }
-            }
+            appbarWA.Offset(_offsetX, _offsetY);
         }
     }
 

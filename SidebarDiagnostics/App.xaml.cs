@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using Squirrel;
 using Hardcodet.Wpf.TaskbarNotification;
 using SidebarDiagnostics.Monitoring;
+using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
@@ -38,6 +39,10 @@ namespace SidebarDiagnostics
             
             // SETTINGS
             CheckSettings();
+
+            // LANGUAGE
+            Culture.SetDefault();
+            Culture.SetCurrent(Framework.Settings.Instance.Culture);
 
             // VERSION
             Version _version = Assembly.GetExecutingAssembly().GetName().Version;
