@@ -261,6 +261,11 @@ namespace SidebarDiagnostics
             Process.Start(ConfigurationManager.AppSettings["DonateURL"]);
         }
 
+        private void GitHub_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(ConfigurationManager.AppSettings["RepoURL"]);
+        }
+
         private async void Update_Click(object sender, RoutedEventArgs e)
         {
             await AppUpdate(true);
