@@ -1,5 +1,16 @@
 ﻿[
   {
+    "Version": "3.2.0",
+    "Changes": [
+      "Fixed all high DPI monitor issues.",
+      "For real this time guys.",
+      "Removed the \"High DPI Support\" option as it is now redundant.",
+      "Please set your horizontal and vertical offset options back to 0.",
+      "Added initial localization for Danish, Dutch, German, and Japanese.",
+      "Want to help localize? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.1.0",
     "Changes": [
       "Implemented initial French localization.",
