@@ -29,7 +29,7 @@
                         </MenuItem>
                         <Separator />
                         <MenuItem Header="{x:Static frame:Resources.Donate}" Click="Donate_Click" />
-                        <MenuItem Header="GitHub" Click="GitHub_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.GitHub}" Click="GitHub_Click" />
                         <MenuItem Header="{x:Static frame:Resources.Update}" Click="Update_Click" />
                         <MenuItem Header="{x:Static frame:Resources.Close}" Click="Close_Click" />
                     </ContextMenu>
