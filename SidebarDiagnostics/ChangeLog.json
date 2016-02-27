@@ -1,5 +1,13 @@
 ﻿[
   {
+    "Version": "3.2.1",
+    "Changes": [
+      "Fixed a bug where the sidebar would often freeze between updates.",
+      "Fixed a bug with reserved space in Windows 7.",
+      "Added an option for Language."
+    ]
+  },
+  {
     "Version": "3.2.0",
     "Changes": [
       "Fixed all high DPI monitor issues.",

@@ -839,18 +839,11 @@ namespace SidebarDiagnostics.Windows
 
             Monitor[] _monitors = GetMonitors();
 
-            Monitor _primary = _monitors.GetPrimary();
-
-            double _primaryScaleX = _primary.ScaleX;
-            double _primaryScaleY = _primary.ScaleY;
-
-            double _primaryInverseX = _primary.InverseScaleX;
-            double _primaryInverseY = _primary.InverseScaleY;
-
+            Monitor _primary = _monitors.GetPrimary();            
             Monitor _active = GetMonitorFromIndex(screen, _monitors);
 
             windowWA = Windows.WorkArea.FromRECT(_active.WorkArea);
-            windowWA.Scale(_primaryInverseX, _primaryInverseY);
+            windowWA.Scale(_primary.InverseScaleX, _primary.InverseScaleY);
 
             double _modifyX = 0d;
             double _modifyY = 0d;
@@ -885,7 +878,7 @@ namespace SidebarDiagnostics.Windows
 
             appbarWA.Offset(_modifyX, _modifyY);
 
-            double _appbarWidth = Framework.Settings.Instance.UseAppBar ? windowWA.Width * _primaryScaleX : 0;
+            double _appbarWidth = Framework.Settings.Instance.UseAppBar ? windowWA.Width * _primary.ScaleX : 0;
 
             appbarWA.SetWidth(edge, _appbarWidth);
 
