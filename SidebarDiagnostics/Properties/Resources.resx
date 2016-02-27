@@ -237,4 +237,8 @@
     <value>GitHub</value>
     <comment>GitHub taskbar menu item</comment>
   </data>
+  <data name="CPULoad" xml:space="preserve">
+    <value>Load</value>
+    <comment>Label for CPU load percentage sensors</comment>
+  </data>
 </root>

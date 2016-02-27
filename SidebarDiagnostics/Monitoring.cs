@@ -508,7 +508,7 @@ namespace SidebarDiagnostics.Monitoring
 
                 if (_totalCPU != null)
                 {
-                    _sensorList.Add(new OHMSensor(_totalCPU, DataType.Percent, Resources.Load, roundAll));
+                    _sensorList.Add(new OHMSensor(_totalCPU, DataType.Percent, Resources.CPULoad, roundAll));
                 }
 
                 if (coreLoads)

@@ -166,7 +166,7 @@
     <comment>Label for bandwidth in sensors</comment>
   </data>
   <data name="Load" xml:space="preserve">
-    <value>Belastning</value>
+    <value>I brug</value>
     <comment>Label for load percentage sensors</comment>
   </data>
   <data name="Network" xml:space="preserve">
@@ -232,5 +232,9 @@
   <data name="Write" xml:space="preserve">
     <value>Skriv</value>
     <comment>Label for drive read rate sensors</comment>
+  </data>
+  <data name="CPULoad" xml:space="preserve">
+    <value>Belastning</value>
+    <comment>Label for CPU load percentage sensors</comment>
   </data>
 </root>

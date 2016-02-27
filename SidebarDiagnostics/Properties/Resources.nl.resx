@@ -233,4 +233,8 @@
     <value>Schrijven</value>
     <comment>Label for drive read rate sensors</comment>
   </data>
+  <data name="CPULoad" xml:space="preserve">
+    <value>Gebruik</value>
+    <comment>Label for CPU load percentage sensors</comment>
+  </data>
 </root>

@@ -233,4 +233,8 @@
     <value>書き込み</value>
     <comment>Label for drive read rate sensors</comment>
   </data>
+  <data name="CPULoad" xml:space="preserve">
+    <value>負荷</value>
+    <comment>Label for CPU load percentage sensors</comment>
+  </data>
 </root>
