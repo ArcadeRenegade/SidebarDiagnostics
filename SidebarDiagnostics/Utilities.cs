@@ -177,7 +177,7 @@ namespace SidebarDiagnostics.Utilities
         {
             get
             {
-                return new string[6] { "en", "da", "de", "fre", "ja", "nl" };
+                return new string[6] { "en", "da", "de", "fr", "ja", "nl" };
             }
         }
 
