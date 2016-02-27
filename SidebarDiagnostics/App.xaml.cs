@@ -37,12 +37,12 @@ namespace SidebarDiagnostics
             }
             #endif
             
-            // SETTINGS
-            CheckSettings();
-
             // LANGUAGE
             Culture.SetDefault();
             Culture.SetCurrent(Framework.Settings.Instance.Culture);
+
+            // SETTINGS
+            CheckSettings();
 
             // VERSION
             Version _version = Assembly.GetExecutingAssembly().GetName().Version;

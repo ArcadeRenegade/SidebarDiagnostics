@@ -170,7 +170,7 @@ namespace SidebarDiagnostics.Utilities
 
         public static CultureItem[] GetAll()
         {
-            return new CultureItem[1] { new CultureItem() { Value = DEFAULT, Text = DEFAULT } }.Concat(CultureInfo.GetCultures(CultureTypes.AllCultures).OrderBy(c => c.DisplayName).Select(c => new CultureItem() { Value = c.Name, Text = c.DisplayName })).ToArray();
+            return new CultureItem[1] { new CultureItem() { Value = DEFAULT, Text = DEFAULT } }.Concat(CultureInfo.GetCultures(CultureTypes.SpecificCultures | CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).Select(c => new CultureItem() { Value = c.Name, Text = c.DisplayName })).ToArray();
         }
 
         public static CultureInfo Default { get; private set; }
