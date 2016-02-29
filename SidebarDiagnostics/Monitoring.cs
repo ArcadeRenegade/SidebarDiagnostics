@@ -1081,7 +1081,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 if (_converter.IsDynamic)
                 {
-                    DataType _dataType = DataType.Variable;
+                    DataType _dataType = DataType.Dynamic;
 
                     _converter.Convert(ref _val, ref _dataType);
 
@@ -2010,7 +2010,7 @@ namespace SidebarDiagnostics.Monitoring
 
     public enum DataType : byte
     {
-        Variable,
+        Dynamic,
         Bit,
         Kilobit,
         Megabit,
@@ -2147,7 +2147,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public void Convert(ref double value)
         {
-            DataType _dataType = DataType.Variable;
+            DataType _dataType = DataType.Dynamic;
             Convert(ref value, ref _dataType);
         }
 
@@ -2211,7 +2211,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public void Convert(ref double value)
         {
-            DataType _dataType = DataType.Variable;
+            DataType _dataType = DataType.Dynamic;
             Convert(ref value, ref _dataType);
         }
 
