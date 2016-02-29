@@ -325,7 +325,24 @@ namespace SidebarDiagnostics.Monitoring
 
     public interface iMonitor : INotifyPropertyChanged, IDisposable
     {
+        string ID { get; }
+
+        string Name { get; }
+
+        bool ShowName { get; }
+
+        iMetric[] Metrics { get; }
+
         void Update();
+    }
+
+    public interface iMetric : INotifyPropertyChanged, IDisposable
+    {
+        double Value { get; }
+
+        string Label { get; }
+
+        string Text { get; }
     }
     
     public class OHMMonitor : iMonitor
@@ -383,12 +400,12 @@ namespace SidebarDiagnostics.Monitoring
             {
                 if (disposing)
                 {
-                    foreach (OHMSensor _sensor in Sensors)
+                    foreach (OHMSensor _sensor in Metrics)
                     {
                         _sensor.Dispose();
                     }
 
-                    _sensors = null;
+                    _metrics = null;
                     _hardware = null;
                 }
 
@@ -405,7 +422,7 @@ namespace SidebarDiagnostics.Monitoring
         {
             UpdateHardware();
 
-            foreach (OHMSensor _sensor in Sensors)
+            foreach (OHMSensor _sensor in Metrics)
             {
                 _sensor.Update();
             }
@@ -525,7 +542,7 @@ namespace SidebarDiagnostics.Monitoring
                 }
             }
 
-            Sensors = _sensorList.ToArray();
+            Metrics = _sensorList.ToArray();
         }
 
         public void InitRAM(IHardware board, bool roundAll)
@@ -577,7 +594,7 @@ namespace SidebarDiagnostics.Monitoring
                 _sensorList.Add(new OHMSensor(_availSensor, DataType.Gigabyte, Resources.Free, roundAll));
             }
 
-            Sensors = _sensorList.ToArray();
+            Metrics = _sensorList.ToArray();
         }
 
         public void InitGPU(bool roundAll, bool useGHz, bool useFahrenheit, double tempAlert)
@@ -633,7 +650,23 @@ namespace SidebarDiagnostics.Monitoring
                 _sensorList.Add(new OHMSensor(_fanSensor, DataType.Percent, Resources.Fan));
             }
 
-            Sensors = _sensorList.ToArray();
+            Metrics = _sensorList.ToArray();
+        }
+
+        private string _id { get; set; }
+
+        public string ID
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+
+                NotifyPropertyChanged("ID");
+            }
         }
 
         private string _name { get; set; }
@@ -668,19 +701,19 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private OHMSensor[] _sensors { get; set; }
+        private iMetric[] _metrics { get; set; }
 
-        public OHMSensor[] Sensors
+        public iMetric[] Metrics
         {
             get
             {
-                return _sensors;
+                return _metrics;
             }
             private set
             {
-                _sensors = value;
+                _metrics = value;
 
-                NotifyPropertyChanged("Sensors");
+                NotifyPropertyChanged("Metrics");
             }
         }
 
@@ -689,7 +722,7 @@ namespace SidebarDiagnostics.Monitoring
         private bool _disposed { get; set; } = false;
     }
 
-    public class OHMSensor : INotifyPropertyChanged, IDisposable
+    public class OHMSensor : iMetric
     {
         public OHMSensor(ISensor sensor, DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null)
         {
@@ -741,14 +774,14 @@ namespace SidebarDiagnostics.Monitoring
         {
             if (_sensor.Value.HasValue)
             {
-                double _value = _sensor.Value.Value;
+                double _val = _sensor.Value.Value;
 
                 if (_converter != null)
                 {
-                    _converter.Convert(ref _value);
+                    _converter.Convert(ref _val);
                 }
                 
-                if (AlertValue > 0 && AlertValue <= _value)
+                if (AlertValue > 0 && AlertValue <= _val)
                 {
                     if (!IsAlert)
                     {
@@ -763,9 +796,11 @@ namespace SidebarDiagnostics.Monitoring
                 Text = string.Format(
                     "{0}: {1:#,##0.##}{2}",
                     Label,
-                    _value.Round(Round),
+                    _val.Round(Round),
                     Append
                     );
+
+                Value = _val;
             }
             else
             {
@@ -783,6 +818,38 @@ namespace SidebarDiagnostics.Monitoring
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private string _label { get; set; }
+
+        public string Label
+        {
+            get
+            {
+                return _label;
+            }
+            private set
+            {
+                _label = value;
+
+                NotifyPropertyChanged("Label");
+            }
+        }
+
+        private double _value { get; set; }
+
+        public double Value
+        {
+            get
+            {
+                return _value;
+            }
+            private set
+            {
+                _value = value;
+
+                NotifyPropertyChanged("Value");
+            }
+        }
+
         private string _text { get; set; }
 
         public string Text
@@ -799,15 +866,67 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public DataType DataType { get; private set; }
+        private DataType _dataType { get; set; }
 
-        public string Label { get; set; }
+        public DataType DataType
+        {
+            get
+            {
+                return _dataType;
+            }
+            private set
+            {
+                _dataType = value;
+            }
+        }
 
-        public string Append { get; private set; }
+        private string _append { get; set; }
+
+        public string Append
+        {
+            get
+            {
+                return _append;
+            }
+            private set
+            {
+                _append = value;
+
+                NotifyPropertyChanged("Append");
+            }
+        }
         
-        public bool Round { get; set; }
+        private bool _round { get; set; }
 
-        public double AlertValue { get; private set; }
+        public bool Round
+        {
+            get
+            {
+                return _round;
+            }
+            private set
+            {
+                _round = value;
+
+                NotifyPropertyChanged("Round");
+            }
+        }
+
+        private double _alertValue { get; set; }
+
+        public double AlertValue
+        {
+            get
+            {
+                return _alertValue;
+            }
+            private set
+            {
+                _alertValue = value;
+
+                NotifyPropertyChanged("AlertValue");
+            }
+        }
 
         private bool _isAlert { get; set; } = false;
 
@@ -1275,24 +1394,16 @@ namespace SidebarDiagnostics.Monitoring
 
     public class NetworkMonitor : iMonitor
     {
-        internal const string CATEGORYNAME = "Network Interface";
+        private const string CATEGORYNAME = "Network Interface";
 
-        public NetworkMonitor(HardwareConfig[] hardwareConfig, ConfigParam[] parameters)
+        private const string BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
+        private const string BYTESSENTPERSECOND = "Bytes Sent/sec";
+
+        public NetworkMonitor(string instance, string name, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
         {
-            bool _showName = parameters.GetValue<bool>(ParamKey.HardwareNames);
-            bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
-            bool _useBytes = parameters.GetValue<bool>(ParamKey.UseBytes);
-            int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
-            int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
-
-            Nics = (
-                from hw in GetHardware()
-                join c in hardwareConfig on hw.ID equals c.ID into merged
-                from n in merged.DefaultIfEmpty(hw)
-                where n.Enabled
-                orderby n.Order descending, n.Name ascending
-                select new NicInfo(n.ID, n.Name, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)
-                ).ToArray();
+            ID = instance;
+            Name = name;
+            ShowName = showName;
         }
 
         public void Dispose()
@@ -1342,6 +1453,24 @@ namespace SidebarDiagnostics.Monitoring
             return _instances.OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h });
         }
 
+        public static iMonitor[] GetAll(HardwareConfig[] hardwareConfig, ConfigParam[] parameters)
+        {
+            bool _showName = parameters.GetValue<bool>(ParamKey.HardwareNames);
+            bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
+            bool _useBytes = parameters.GetValue<bool>(ParamKey.UseBytes);
+            int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
+            int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
+
+            return (
+                from hw in GetHardware()
+                join c in hardwareConfig on hw.ID equals c.ID into merged
+                from n in merged.DefaultIfEmpty(hw)
+                where n.Enabled
+                orderby n.Order descending, n.Name ascending
+                select new NetworkMonitor(n.ID, n.Name, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)
+                ).ToArray();
+        }
+
         public void Update()
         {
             foreach (NicInfo _nic in Nics)
@@ -1360,19 +1489,67 @@ namespace SidebarDiagnostics.Monitoring
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private NicInfo[] _nics { get; set; }
+        private string _id { get; set; }
 
-        public NicInfo[] Nics
+        public string ID
         {
             get
             {
-                return _nics;
+                return _id;
             }
             private set
             {
-                _nics = value;
+                _id = value;
 
-                NotifyPropertyChanged("Nics");
+                NotifyPropertyChanged("ID");
+            }
+        }
+
+        private string _name { get; set; }
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            private set
+            {
+                _name = value;
+
+                NotifyPropertyChanged("Name");
+            }
+        }
+
+        private bool _showName { get; set; }
+
+        public bool ShowName
+        {
+            get
+            {
+                return _showName;
+            }
+            set
+            {
+                _showName = value;
+
+                NotifyPropertyChanged("ShowName");
+            }
+        }
+
+        private iMetric[] _metrics { get; set; }
+
+        public iMetric[] Metrics
+        {
+            get
+            {
+                return _metrics;
+            }
+            set
+            {
+                _metrics = value;
+
+                NotifyPropertyChanged("Metrics");
             }
         }
 
