@@ -209,8 +209,8 @@
             <Style x:Key="DriveProgress" TargetType="{x:Type ProgressBar}">
                 <Setter Property="Minimum" Value="0" />
                 <Setter Property="Maximum" Value="100" />
-                <Setter Property="Margin" Value="8,2,0,0" />
-                <Setter Property="Width" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.BarWidth, Mode=OneWay}" />
+                <Setter Property="Margin" Value="0,4" />
+                <Setter Property="Width" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.BarWidthWide, Mode=OneWay}" />
                 <Setter Property="Height" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.BarHeight, Mode=OneWay}" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />

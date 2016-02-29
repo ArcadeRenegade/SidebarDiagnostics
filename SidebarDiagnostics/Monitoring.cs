@@ -166,14 +166,7 @@ namespace SidebarDiagnostics.Monitoring
             return new MonitorPanel(
                 type.GetDescription(),
                 pathData,
-                (
-                from hw in GetHardware(hardwareTypes)
-                join c in hardwareConfig on hw.Identifier.ToString() equals c.ID into merged
-                from n in merged.DefaultIfEmpty(new HardwareConfig() { ID = hw.Identifier.ToString(), Name = hw.Name })
-                where n.Enabled
-                orderby n.Order descending, n.Name ascending
-                select new OHMMonitor(type, n.Name, hw, _board, parameters)
-                ).ToArray()
+                OHMMonitor.GetInstances(hardwareConfig, parameters, type, _board, GetHardware(hardwareTypes).ToArray())
                 );
         }
 
@@ -182,7 +175,7 @@ namespace SidebarDiagnostics.Monitoring
             return new MonitorPanel(
                 type.GetDescription(),
                 "m12.56977,260.69523l0,63.527l352.937,0l0,-63.527l-352.937,0zm232.938,45.881c-7.797,0 -14.118,-6.318 -14.118,-14.117c0,-7.801 6.321,-14.117 14.118,-14.117c7.795,0 14.117,6.316 14.117,14.117c0.001,7.798 -6.322,14.117 -14.117,14.117zm42.353,0c-7.797,0 -14.118,-6.318 -14.118,-14.117c0,-7.801 6.321,-14.117 14.118,-14.117c7.796,0 14.117,6.316 14.117,14.117c0,7.798 -6.321,14.117 -14.117,14.117zm42.352,0c-7.797,0 -14.117,-6.318 -14.117,-14.117c0,-7.801 6.32,-14.117 14.117,-14.117c7.796,0 14.118,6.316 14.118,14.117c0,7.798 -6.323,14.117 -14.118,14.117 M309.0357666015625,52.46223449707031 69.03976440429688,52.46223449707031 12.569778442382812,246.57623291015625 365.50677490234375,246.57623291015625z",
-                new DriveMonitor(hardwareConfig, parameters)
+                DriveMonitor.GetInstances(hardwareConfig, parameters)
                 );
         }
 
@@ -191,7 +184,7 @@ namespace SidebarDiagnostics.Monitoring
             return new MonitorPanel(
                 type.GetDescription(),
                 "M 40,44L 39.9999,51L 44,51C 45.1046,51 46,51.8954 46,53L 46,57C 46,58.1046 45.1045,59 44,59L 32,59C 30.8954,59 30,58.1046 30,57L 30,53C 30,51.8954 30.8954,51 32,51L 36,51L 36,44L 40,44 Z M 47,53L 57,53L 57,57L 47,57L 47,53 Z M 29,53L 29,57L 19,57L 19,53L 29,53 Z M 19,22L 57,22L 57,31L 19,31L 19,22 Z M 55,24L 53,24L 53,29L 55,29L 55,24 Z M 51,24L 49,24L 49,29L 51,29L 51,24 Z M 47,24L 45,24L 45,29L 47,29L 47,24 Z M 21,27L 21,29L 23,29L 23,27L 21,27 Z M 19,33L 57,33L 57,42L 19,42L 19,33 Z M 55,35L 53,35L 53,40L 55,40L 55,35 Z M 51,35L 49,35L 49,40L 51,40L 51,35 Z M 47,35L 45,35L 45,40L 47,40L 47,35 Z M 21,38L 21,40L 23,40L 23,38L 21,38 Z",
-                new NetworkMonitor(hardwareConfig, parameters)
+                NetworkMonitor.GetInstances(hardwareConfig, parameters)
                 );
         }
 
@@ -251,6 +244,7 @@ namespace SidebarDiagnostics.Monitoring
                     }
 
                     _monitors = null;
+                    _iconPath = null;
                 }
 
                 _disposed = true;
@@ -336,22 +330,133 @@ namespace SidebarDiagnostics.Monitoring
         void Update();
     }
 
-    public interface iMetric : INotifyPropertyChanged, IDisposable
+    public class BaseMonitor : iMonitor
     {
-        double Value { get; }
-
-        string Label { get; }
-
-        string Text { get; }
-    }
-    
-    public class OHMMonitor : iMonitor
-    {
-        public OHMMonitor(MonitorType type, string name, IHardware hardware, IHardware board, ConfigParam[] parameters)
+        public BaseMonitor(string id, string name, bool showName)
         {
+            ID = id;
             Name = name;
-            ShowName = parameters.GetValue<bool>(ParamKey.HardwareNames);
+            ShowName = showName;
+        }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    foreach (iMetric _metric in Metrics)
+                    {
+                        _metric.Dispose();
+                    }
+
+                    _metrics = null;
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~BaseMonitor()
+        {
+            Dispose(false);
+        }
+
+        public virtual void Update()
+        {
+            foreach (iMetric _metric in Metrics)
+            {
+                _metric.Update();
+            }
+        }
+
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string _id { get; set; }
+
+        public string ID
+        {
+            get
+            {
+                return _id;
+            }
+            protected set
+            {
+                _id = value;
+
+                NotifyPropertyChanged("ID");
+            }
+        }
+
+        private string _name { get; set; }
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            protected set
+            {
+                _name = value;
+
+                NotifyPropertyChanged("Name");
+            }
+        }
+
+        private bool _showName { get; set; }
+
+        public bool ShowName
+        {
+            get
+            {
+                return _showName;
+            }
+            protected set
+            {
+                _showName = value;
+
+                NotifyPropertyChanged("ShowName");
+            }
+        }
+
+        private iMetric[] _metrics { get; set; }
+
+        public iMetric[] Metrics
+        {
+            get
+            {
+                return _metrics;
+            }
+            protected set
+            {
+                _metrics = value;
+
+                NotifyPropertyChanged("Metrics");
+            }
+        }
+
+        private bool _disposed { get; set; } = false;
+    }
+
+    public class OHMMonitor : BaseMonitor
+    {
+        public OHMMonitor(MonitorType type, string id, string name, IHardware hardware, IHardware board, ConfigParam[] parameters) : base(id, name, parameters.GetValue<bool>(ParamKey.HardwareNames))
+        {
             _hardware = hardware;
 
             UpdateHardware();
@@ -385,27 +490,26 @@ namespace SidebarDiagnostics.Monitoring
                         parameters.GetValue<int>(ParamKey.TempAlert)
                         );
                     break;
+
+                default:
+                    throw new ArgumentException("Invalid MonitorType.");
             }
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
+
             if (!_disposed)
             {
                 if (disposing)
                 {
-                    foreach (OHMSensor _sensor in Metrics)
-                    {
-                        _sensor.Dispose();
-                    }
-
-                    _metrics = null;
                     _hardware = null;
                 }
 
@@ -418,26 +522,25 @@ namespace SidebarDiagnostics.Monitoring
             Dispose(false);
         }
 
-        public void Update()
+        public static iMonitor[] GetInstances(HardwareConfig[] hardwareConfig, ConfigParam[] parameters, MonitorType type, IHardware board, IHardware[] hardware)
+        {
+            return (
+                from hw in hardware
+                join c in hardwareConfig on hw.Identifier.ToString() equals c.ID into merged
+                from n in merged.DefaultIfEmpty(new HardwareConfig() { ID = hw.Identifier.ToString(), Name = hw.Name })
+                where n.Enabled
+                orderby n.Order descending, n.Name ascending
+                select new OHMMonitor(type, n.ID, n.Name, hw, board, parameters)
+                ).ToArray();
+        }
+
+        public override void Update()
         {
             UpdateHardware();
 
-            foreach (OHMSensor _sensor in Metrics)
-            {
-                _sensor.Update();
-            }
+            base.Update();
         }
-
-        public void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        
         private void UpdateHardware()
         {
             _hardware.Update();
@@ -445,7 +548,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private void InitCPU(IHardware board, bool roundAll, bool allCoreClocks, bool coreLoads, bool useGHz, bool useFahrenheit, double tempAlert)
         {
-            List<OHMSensor> _sensorList = new List<OHMSensor>();
+            List<OHMMetric> _sensorList = new List<OHMMetric>();
 
             ISensor[] _coreClocks = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("CPU")).ToArray();
 
@@ -459,7 +562,7 @@ namespace SidebarDiagnostics.Monitoring
 
                         if (_coreClock != null)
                         {
-                            _sensorList.Add(new OHMSensor(_coreClock, DataType.MHz, string.Format("{0} {1}", Resources.Core, i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                            _sensorList.Add(new OHMMetric(_coreClock, DataType.MHz, string.Format("{0} {1}", Resources.Core, i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                         }
                     }
                 }
@@ -469,7 +572,7 @@ namespace SidebarDiagnostics.Monitoring
 
                     if (_firstClock != null)
                     {
-                        _sensorList.Add(new OHMSensor(_firstClock, DataType.MHz, Resources.Clock, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                        _sensorList.Add(new OHMMetric(_firstClock, DataType.MHz, Resources.Clock, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                     }
                 }
             }
@@ -504,17 +607,17 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
+                _sensorList.Add(new OHMMetric(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
             }
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, Resources.Temp, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
+                _sensorList.Add(new OHMMetric(_tempSensor, DataType.Celcius, Resources.Temp, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             if (_fanSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_fanSensor, DataType.RPM, Resources.Fan, roundAll));
+                _sensorList.Add(new OHMMetric(_fanSensor, DataType.RPM, Resources.Fan, roundAll));
             }
 
             ISensor[] _loadSensors = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load).ToArray();
@@ -525,7 +628,7 @@ namespace SidebarDiagnostics.Monitoring
 
                 if (_totalCPU != null)
                 {
-                    _sensorList.Add(new OHMSensor(_totalCPU, DataType.Percent, Resources.CPULoad, roundAll));
+                    _sensorList.Add(new OHMMetric(_totalCPU, DataType.Percent, Resources.CPULoad, roundAll));
                 }
 
                 if (coreLoads)
@@ -536,7 +639,7 @@ namespace SidebarDiagnostics.Monitoring
 
                         if (_coreLoad != null)
                         {
-                            _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, string.Format("{0} {1}", Resources.Core, i - 1), roundAll));
+                            _sensorList.Add(new OHMMetric(_coreLoad, DataType.Percent, string.Format("{0} {1}", Resources.Core, i - 1), roundAll));
                         }
                     }
                 }
@@ -547,13 +650,13 @@ namespace SidebarDiagnostics.Monitoring
 
         public void InitRAM(IHardware board, bool roundAll)
         {
-            List<OHMSensor> _sensorList = new List<OHMSensor>();
+            List<OHMMetric> _sensorList = new List<OHMMetric>();
 
             ISensor _ramClock = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock).FirstOrDefault();
 
             if (_ramClock != null)
             {
-                _sensorList.Add(new OHMSensor(_ramClock, DataType.MHz, Resources.Clock, true));
+                _sensorList.Add(new OHMMetric(_ramClock, DataType.MHz, Resources.Clock, true));
             }
 
             ISensor _voltage = null;
@@ -570,28 +673,28 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
+                _sensorList.Add(new OHMMetric(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
             }
 
             ISensor _loadSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_loadSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_loadSensor, DataType.Percent, Resources.Load, roundAll));
+                _sensorList.Add(new OHMMetric(_loadSensor, DataType.Percent, Resources.Load, roundAll));
             }
 
             ISensor _usedSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 0).FirstOrDefault();
 
             if (_usedSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_usedSensor, DataType.Gigabyte, Resources.Used, roundAll));
+                _sensorList.Add(new OHMMetric(_usedSensor, DataType.Gigabyte, Resources.Used, roundAll));
             }
 
             ISensor _availSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 1).FirstOrDefault();
 
             if (_availSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_availSensor, DataType.Gigabyte, Resources.Free, roundAll));
+                _sensorList.Add(new OHMMetric(_availSensor, DataType.Gigabyte, Resources.Free, roundAll));
             }
 
             Metrics = _sensorList.ToArray();
@@ -599,398 +702,132 @@ namespace SidebarDiagnostics.Monitoring
 
         public void InitGPU(bool roundAll, bool useGHz, bool useFahrenheit, double tempAlert)
         {
-            List<OHMSensor> _sensorList = new List<OHMSensor>();
+            List<OHMMetric> _sensorList = new List<OHMMetric>();
 
             ISensor _coreClock = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 0).FirstOrDefault();
 
             if (_coreClock != null)
             {
-                _sensorList.Add(new OHMSensor(_coreClock, DataType.MHz, Resources.Core, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                _sensorList.Add(new OHMMetric(_coreClock, DataType.MHz, Resources.Core, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
             }
 
             ISensor _memoryClock = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 1).FirstOrDefault();
 
             if (_memoryClock != null)
             {
-                _sensorList.Add(new OHMSensor(_memoryClock, DataType.MHz, Resources.VRAM, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                _sensorList.Add(new OHMMetric(_memoryClock, DataType.MHz, Resources.VRAM, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
             }
 
             ISensor _coreLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_coreLoad != null)
             {
-                _sensorList.Add(new OHMSensor(_coreLoad, DataType.Percent, Resources.Core, roundAll));
+                _sensorList.Add(new OHMMetric(_coreLoad, DataType.Percent, Resources.Core, roundAll));
             }
 
             ISensor _memoryLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 3).FirstOrDefault();
 
             if (_memoryLoad != null)
             {
-                _sensorList.Add(new OHMSensor(_memoryLoad, DataType.Percent, Resources.VRAM, roundAll));
+                _sensorList.Add(new OHMMetric(_memoryLoad, DataType.Percent, Resources.VRAM, roundAll));
             }
 
             ISensor _voltage = _hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Index == 0).FirstOrDefault();
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMSensor(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
+                _sensorList.Add(new OHMMetric(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
             }
 
             ISensor _tempSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_tempSensor, DataType.Celcius, Resources.Temp, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
+                _sensorList.Add(new OHMMetric(_tempSensor, DataType.Celcius, Resources.Temp, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             ISensor _fanSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
 
             if (_fanSensor != null)
             {
-                _sensorList.Add(new OHMSensor(_fanSensor, DataType.Percent, Resources.Fan));
+                _sensorList.Add(new OHMMetric(_fanSensor, DataType.Percent, Resources.Fan));
             }
 
             Metrics = _sensorList.ToArray();
         }
-
-        private string _id { get; set; }
-
-        public string ID
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-
-                NotifyPropertyChanged("ID");
-            }
-        }
-
-        private string _name { get; set; }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-
-                NotifyPropertyChanged("Name");
-            }
-        }
-
-        private bool _showName { get; set; }
-
-        public bool ShowName
-        {
-            get
-            {
-                return _showName;
-            }
-            set
-            {
-                _showName = value;
-
-                NotifyPropertyChanged("ShowName");
-            }
-        }
-
-        private iMetric[] _metrics { get; set; }
-
-        public iMetric[] Metrics
-        {
-            get
-            {
-                return _metrics;
-            }
-            private set
-            {
-                _metrics = value;
-
-                NotifyPropertyChanged("Metrics");
-            }
-        }
-
+        
         private IHardware _hardware { get; set; }
 
         private bool _disposed { get; set; } = false;
     }
 
-    public class OHMSensor : iMetric
+    public class DriveMonitor : BaseMonitor
     {
-        public OHMSensor(ISensor sensor, DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null)
+        private const string CATEGORYNAME = "LogicalDisk";
+
+        private const string FREEMB = "Free Megabytes";
+        private const string PERCENTFREE = "% Free Space";
+        private const string BYTESREADPERSECOND = "Disk Read Bytes/sec";
+        private const string BYTESWRITEPERSECOND = "Disk Write Bytes/sec";
+
+        public DriveMonitor(string id, string name, bool showDetails = false, bool driveSpace = true, bool driveIO = true, bool roundAll = false, double usedSpaceAlert = 0) : base(id, name, true)
         {
-            _sensor = sensor;
-            _converter = converter;
-            
-            if (_converter == null)
+            ShowDetails = showDetails;
+
+            _counterFreeMB = new PerformanceCounter(CATEGORYNAME, FREEMB, id);
+            _counterFreePercent = new PerformanceCounter(CATEGORYNAME, PERCENTFREE, id);
+
+            List<iMetric> _metrics = new List<iMetric>();
+
+            _loadMetric = new BaseMetric(DataType.Percent, Resources.Load, roundAll, usedSpaceAlert);
+            _metrics.Add(_loadMetric);
+
+            if (showDetails)
             {
-                DataType = dataType;
-                Append = dataType.GetAppend();
-            }
-            else
-            {
-                DataType = converter.TargetType;
-                Append = converter.TargetType.GetAppend();
+                if (driveSpace)
+                {
+                    _usedMetric = new BaseMetric(DataType.Gigabyte, Resources.Used, roundAll);
+                    _metrics.Add(_usedMetric);
+
+                    _freeMetric = new BaseMetric(DataType.Gigabyte, Resources.Free, roundAll);
+                    _metrics.Add(_freeMetric);
+                }
+
+                if (driveIO)
+                {
+                    _metrics.Add(new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESREADPERSECOND, id), DataType.Bps, Resources.Read, roundAll, 0, BytesPerSecondConverter.Instance));
+                    _metrics.Add(new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESWRITEPERSECOND, id), DataType.Bps, Resources.Write, roundAll, 0, BytesPerSecondConverter.Instance));
+                }
             }
 
-            Label = label;
-            Round = round;
-            AlertValue = alertValue;
+            Metrics = _metrics.ToArray();
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
+
             if (!_disposed)
             {
                 if (disposing)
                 {
-                    _sensor = null;
-                    _converter = null;
-                }
-
-                _disposed = true;
-            }
-        }
-
-        ~OHMSensor()
-        {
-            Dispose(false);
-        }
-
-        public void Update()
-        {
-            if (_sensor.Value.HasValue)
-            {
-                double _val = _sensor.Value.Value;
-
-                if (_converter != null)
-                {
-                    _converter.Convert(ref _val);
-                }
-                
-                if (AlertValue > 0 && AlertValue <= _val)
-                {
-                    if (!IsAlert)
+                    if (_counterFreeMB != null)
                     {
-                        IsAlert = true;
-                    }
-                }
-                else if (IsAlert)
-                {
-                    IsAlert = false;
-                }
-
-                Text = string.Format(
-                    "{0}: {1:#,##0.##}{2}",
-                    Label,
-                    _val.Round(Round),
-                    Append
-                    );
-
-                Value = _val;
-            }
-            else
-            {
-                Text = string.Format("{0}: No Value", Label);
-            }
-        }
-
-        public void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private string _label { get; set; }
-
-        public string Label
-        {
-            get
-            {
-                return _label;
-            }
-            private set
-            {
-                _label = value;
-
-                NotifyPropertyChanged("Label");
-            }
-        }
-
-        private double _value { get; set; }
-
-        public double Value
-        {
-            get
-            {
-                return _value;
-            }
-            private set
-            {
-                _value = value;
-
-                NotifyPropertyChanged("Value");
-            }
-        }
-
-        private string _text { get; set; }
-
-        public string Text
-        {
-            get
-            {
-                return _text;
-            }
-            private set
-            {
-                _text = value;
-
-                NotifyPropertyChanged("Text");
-            }
-        }
-
-        private DataType _dataType { get; set; }
-
-        public DataType DataType
-        {
-            get
-            {
-                return _dataType;
-            }
-            private set
-            {
-                _dataType = value;
-            }
-        }
-
-        private string _append { get; set; }
-
-        public string Append
-        {
-            get
-            {
-                return _append;
-            }
-            private set
-            {
-                _append = value;
-
-                NotifyPropertyChanged("Append");
-            }
-        }
-        
-        private bool _round { get; set; }
-
-        public bool Round
-        {
-            get
-            {
-                return _round;
-            }
-            private set
-            {
-                _round = value;
-
-                NotifyPropertyChanged("Round");
-            }
-        }
-
-        private double _alertValue { get; set; }
-
-        public double AlertValue
-        {
-            get
-            {
-                return _alertValue;
-            }
-            private set
-            {
-                _alertValue = value;
-
-                NotifyPropertyChanged("AlertValue");
-            }
-        }
-
-        private bool _isAlert { get; set; } = false;
-
-        public bool IsAlert
-        {
-            get
-            {
-                return _isAlert;
-            }
-            private set
-            {
-                _isAlert = value;
-
-                NotifyPropertyChanged("IsAlert");
-            }
-        }
-
-        private ISensor _sensor { get; set; }
-
-        private iConverter _converter { get; set; }
-
-        private bool _disposed { get; set; } = false;
-    }
-
-    public class DriveMonitor : iMonitor
-    {
-        internal const string CATEGORYNAME = "LogicalDisk";
-
-        public DriveMonitor(HardwareConfig[] hardwareConfig, ConfigParam[] parameters)
-        {            
-            bool _showDetails = parameters.GetValue<bool>(ParamKey.DriveDetails);
-            bool _driveSpace = parameters.GetValue<bool>(ParamKey.DriveSpace);
-            bool _driveIO = parameters.GetValue<bool>(ParamKey.DriveIO);
-            bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
-            int _usedSpaceAlert = parameters.GetValue<int>(ParamKey.UsedSpaceAlert);
-
-            Drives = (
-                from hw in GetHardware()
-                join c in hardwareConfig on hw.ID equals c.ID into merged
-                from n in merged.DefaultIfEmpty(hw)
-                where n.Enabled
-                orderby n.Order descending, n.Name ascending
-                select new DriveInfo(n.ID, n.Name, _showDetails, _driveSpace, _driveIO, _roundAll, _usedSpaceAlert)
-                ).ToArray();
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    foreach (DriveInfo _drive in Drives)
-                    {
-                        _drive.Dispose();
+                        _counterFreeMB.Dispose();
+                        _counterFreeMB = null;
                     }
 
-                    _drives = null;
+                    if (_counterFreePercent != null)
+                    {
+                        _counterFreePercent.Dispose();
+                        _counterFreePercent = null;
+                    }
                 }
 
                 _disposed = true;
@@ -1022,119 +859,27 @@ namespace SidebarDiagnostics.Monitoring
             return _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(h => new HardwareConfig() { ID = h, Name = h });
         }
 
-        public void Update()
+        public static iMonitor[] GetInstances(HardwareConfig[] hardwareConfig, ConfigParam[] parameters)
         {
-            foreach (DriveInfo _drive in Drives)
-            {
-                _drive.Update();
-            }
+            bool _showDetails = parameters.GetValue<bool>(ParamKey.DriveDetails);
+            bool _driveSpace = parameters.GetValue<bool>(ParamKey.DriveSpace);
+            bool _driveIO = parameters.GetValue<bool>(ParamKey.DriveIO);
+            bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
+            int _usedSpaceAlert = parameters.GetValue<int>(ParamKey.UsedSpaceAlert);
+
+            return (
+                from hw in GetHardware()
+                join c in hardwareConfig on hw.ID equals c.ID into merged
+                from n in merged.DefaultIfEmpty(hw)
+                where n.Enabled
+                orderby n.Order descending, n.Name ascending
+                select new DriveMonitor(n.ID, n.Name, _showDetails, _driveSpace, _driveIO, _roundAll, _usedSpaceAlert)
+                ).ToArray();
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public override void Update()
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private DriveInfo[] _drives { get; set; }
-
-        public DriveInfo[] Drives
-        {
-            get
-            {
-                return _drives;
-            }
-            private set
-            {
-                _drives = value;
-
-                NotifyPropertyChanged("Drives");
-            }
-        }
-
-        private bool _disposed { get; set; } = false;
-    }
-
-    public class DriveInfo : IDisposable, INotifyPropertyChanged
-    {
-        private const string FREEMB = "Free Megabytes";
-        private const string PERCENTFREE = "% Free Space";
-        private const string BYTESREADPERSECOND = "Disk Read Bytes/sec";
-        private const string BYTESWRITEPERSECOND = "Disk Write Bytes/sec";
-
-        public DriveInfo(string instance, string name, bool showDetails = false, bool driveSpace = true, bool driveIO = true, bool roundAll = false, double usedSpaceAlert = 0)
-        {
-            Instance = instance;
-            Label = name;
-            ShowDetails = showDetails;
-            DriveSpace = driveSpace;
-            DriveIO = driveIO;
-            RoundAll = roundAll;
-            UsedSpaceAlert = usedSpaceAlert;
-
-            _counterFreeMB = new PerformanceCounter(DriveMonitor.CATEGORYNAME, FREEMB, instance);
-            _counterFreePercent = new PerformanceCounter(DriveMonitor.CATEGORYNAME, PERCENTFREE, instance);
-
-            if (showDetails && driveIO)
-            {
-                _counterReadRate = new PerformanceCounter(DriveMonitor.CATEGORYNAME, BYTESREADPERSECOND, instance);
-                _counterWriteRate = new PerformanceCounter(DriveMonitor.CATEGORYNAME, BYTESWRITEPERSECOND, instance);
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    if (_counterFreeMB != null)
-                    {
-                        _counterFreeMB.Dispose();
-                        _counterFreeMB = null;
-                    }
-
-                    if (_counterFreePercent != null)
-                    {
-                        _counterFreePercent.Dispose();
-                        _counterFreePercent = null;
-                    }
-
-                    if (_counterReadRate != null)
-                    {
-                        _counterReadRate.Dispose();
-                        _counterReadRate = null;
-                    }
-
-                    if (_counterWriteRate != null)
-                    {
-                        _counterWriteRate.Dispose();
-                        _counterWriteRate = null;
-                    }
-                }
-
-                _disposed = true;
-            }
-        }
-
-        ~DriveInfo()
-        {
-            Dispose(false);
-        }
-
-        public void Update()
-        {
-            if (!PerformanceCounterCategory.InstanceExists(Instance, DriveMonitor.CATEGORYNAME))
+            if (!PerformanceCounterCategory.InstanceExists(ID, CATEGORYNAME))
             {
                 return;
             }
@@ -1144,189 +889,25 @@ namespace SidebarDiagnostics.Monitoring
 
             double _usedPercent = 100d - _freePercent;
 
-            double _totalGB = _freeGB / (_freePercent / 100);
+            double _totalGB = _freeGB / (_freePercent / 100d);
             double _usedGB = _totalGB - _freeGB;
 
-            Value = _usedPercent;
-
-            if (ShowDetails)
+            if (_loadMetric != null)
             {
-                if (DriveSpace)
-                {
-                    Load = string.Format("{0}: {1:#,##0.##}%", Resources.Load, _usedPercent.Round(RoundAll));
-                    UsedGB = string.Format("{0}: {1:#,##0.##} GB", Resources.Used, _usedGB.Round(RoundAll));
-                    FreeGB = string.Format("{0}: {1:#,##0.##} GB", Resources.Free, _freeGB.Round(RoundAll));
-                }
-
-                if (DriveIO)
-                {
-                    double _readRate = _counterReadRate.NextValue() / 1024d;
-
-                    string _readFormat;
-                    Data.MinifyKiloBytesPerSecond(ref _readRate, out _readFormat);
-
-                    ReadRate = string.Format("{0}: {1:#,##0.##} {2}", Resources.Read, _readRate.Round(RoundAll), _readFormat);
-
-                    double _writeRate = _counterWriteRate.NextValue() / 1024d;
-
-                    string _writeFormat;
-                    Data.MinifyKiloBytesPerSecond(ref _writeRate, out _writeFormat);
-
-                    WriteRate = string.Format("{0}: {1:#,##0.##} {2}", Resources.Write, _writeRate.Round(RoundAll), _writeFormat);
-                }
+                _loadMetric.Update(_usedPercent);
             }
 
-            if (UsedSpaceAlert > 0 && UsedSpaceAlert <= _usedPercent)
+            if (_usedMetric != null)
             {
-                if (!IsAlert)
-                {
-                    IsAlert = true;
-                }
+                _usedMetric.Update(_usedGB);
             }
-            else if (IsAlert)
+
+            if (_freeMetric != null)
             {
-                IsAlert = false;
+                _freeMetric.Update(_freeGB);
             }
-        }
 
-        public void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public string Instance { get; private set; }
-
-        private string _label { get; set; }
-
-        public string Label
-        {
-            get
-            {
-                return _label;
-            }
-            set
-            {
-                _label = value;
-
-                NotifyPropertyChanged("Label");
-            }
-        }
-
-        private double _value { get; set; }
-
-        public double Value
-        {
-            get
-            {
-                return _value;
-            }
-            private set
-            {
-                _value = value;
-
-                NotifyPropertyChanged("Value");
-            }
-        }
-        
-        private string _load { get; set; }
-
-        public string Load
-        {
-            get
-            {
-                return _load;
-            }
-            private set
-            {
-                _load = value;
-
-                NotifyPropertyChanged("Load");
-            }
-        }
-
-        private string _usedGB { get; set; }
-
-        public string UsedGB
-        {
-            get
-            {
-                return _usedGB;
-            }
-            private set
-            {
-                _usedGB = value;
-
-                NotifyPropertyChanged("UsedGB");
-            }
-        }
-
-        private string _freeGB { get; set; }
-
-        public string FreeGB
-        {
-            get
-            {
-                return _freeGB;
-            }
-            private set
-            {
-                _freeGB = value;
-
-                NotifyPropertyChanged("FreeGB");
-            }
-        }
-
-        public string _readRate { get; set; }
-
-        public string ReadRate
-        {
-            get
-            {
-                return _readRate;
-            }
-            private set
-            {
-                _readRate = value;
-
-                NotifyPropertyChanged("ReadRate");
-            }
-        }
-
-        private string _writeRate { get; set; }
-
-        public string WriteRate
-        {
-            get
-            {
-                return _writeRate;
-            }
-            private set
-            {
-                _writeRate = value;
-
-                NotifyPropertyChanged("WriteRate");
-            }
-        }
-
-        private bool _isAlert { get; set; }
-
-        public bool IsAlert
-        {
-            get
-            {
-                return _isAlert;
-            }
-            private set
-            {
-                _isAlert = value;
-
-                NotifyPropertyChanged("IsAlert");
-            }
+            base.Update();
         }
 
         private bool _showDetails { get; set; }
@@ -1337,97 +918,52 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _showDetails;
             }
-            private set
+            set
             {
                 _showDetails = value;
 
                 NotifyPropertyChanged("ShowDetails");
             }
         }
+        
+        private iMetric _loadMetric { get; set; }
 
-        private bool _driveSpace { get; set; }
+        private iMetric _usedMetric { get; set; }
 
-        public bool DriveSpace
-        {
-            get
-            {
-                return _driveSpace;
-            }
-            private set
-            {
-                _driveSpace = value;
-
-                NotifyPropertyChanged("DriveSpace");
-            }
-        }
-
-        private bool _driveIO { get; set; }
-
-        public bool DriveIO
-        {
-            get
-            {
-                return _driveIO;
-            }
-            private set
-            {
-                _driveIO = value;
-
-                NotifyPropertyChanged("DriveIO");
-            }
-        }
-
-        public bool RoundAll { get; set; }
-
-        public double UsedSpaceAlert { get; private set; }
+        private iMetric _freeMetric { get; set; }
 
         private PerformanceCounter _counterFreeMB { get; set; }
 
         private PerformanceCounter _counterFreePercent { get; set; }
 
-        private PerformanceCounter _counterReadRate { get; set; }
-
-        private PerformanceCounter _counterWriteRate { get; set; }
-
         private bool _disposed { get; set; } = false;
     }
 
-    public class NetworkMonitor : iMonitor
+    public class NetworkMonitor : BaseMonitor
     {
         private const string CATEGORYNAME = "Network Interface";
 
         private const string BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
         private const string BYTESSENTPERSECOND = "Bytes Sent/sec";
 
-        public NetworkMonitor(string instance, string name, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
+        public NetworkMonitor(string id, string name, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0) : base(id, name, showName)
         {
-            ID = instance;
-            Name = name;
-            ShowName = showName;
-        }
+            iConverter _converter;
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
+            if (useBytes)
             {
-                if (disposing)
-                {
-                    foreach (NicInfo _nic in Nics)
-                    {
-                        _nic.Dispose();
-                    }
-
-                    _nics = null;
-                }
-
-                _disposed = true;
+                _converter = BytesPerSecondConverter.Instance;
             }
+            else
+            {
+                _converter = BitsPerSecondConverter.Instance;
+            }
+
+            Metrics = new iMetric[2]
+            {
+                new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESRECEIVEDPERSECOND, id), DataType.bps, Resources.In, roundAll, bandwidthInAlert, _converter),
+                new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESSENTPERSECOND, id), DataType.bps, Resources.Out, roundAll, bandwidthOutAlert, _converter)
+            };
         }
 
         ~NetworkMonitor()
@@ -1453,7 +989,7 @@ namespace SidebarDiagnostics.Monitoring
             return _instances.OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h });
         }
 
-        public static iMonitor[] GetAll(HardwareConfig[] hardwareConfig, ConfigParam[] parameters)
+        public static iMonitor[] GetInstances(HardwareConfig[] hardwareConfig, ConfigParam[] parameters)
         {
             bool _showName = parameters.GetValue<bool>(ParamKey.HardwareNames);
             bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
@@ -1471,247 +1007,44 @@ namespace SidebarDiagnostics.Monitoring
                 ).ToArray();
         }
 
-        public void Update()
+        public override void Update()
         {
-            foreach (NicInfo _nic in Nics)
-            {
-                _nic.Update();
-            }
-        }
-
-        public void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private string _id { get; set; }
-
-        public string ID
-        {
-            get
-            {
-                return _id;
-            }
-            private set
-            {
-                _id = value;
-
-                NotifyPropertyChanged("ID");
-            }
-        }
-
-        private string _name { get; set; }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            private set
-            {
-                _name = value;
-
-                NotifyPropertyChanged("Name");
-            }
-        }
-
-        private bool _showName { get; set; }
-
-        public bool ShowName
-        {
-            get
-            {
-                return _showName;
-            }
-            set
-            {
-                _showName = value;
-
-                NotifyPropertyChanged("ShowName");
-            }
-        }
-
-        private iMetric[] _metrics { get; set; }
-
-        public iMetric[] Metrics
-        {
-            get
-            {
-                return _metrics;
-            }
-            set
-            {
-                _metrics = value;
-
-                NotifyPropertyChanged("Metrics");
-            }
-        }
-
-        private bool _disposed { get; set; } = false;
-    }
-
-    public class NicInfo : INotifyPropertyChanged, IDisposable
-    {
-        private const string BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
-        private const string BYTESSENTPERSECOND = "Bytes Sent/sec";
-
-        public NicInfo(string instance, string name, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0)
-        {
-            Instance = instance;
-            Name = name;
-            ShowName = showName;
-
-            InBandwidth = new Bandwidth(
-                new PerformanceCounter(NetworkMonitor.CATEGORYNAME, BYTESRECEIVEDPERSECOND, instance),
-                Resources.In,
-                roundAll,
-                useBytes,
-                bandwidthInAlert
-                );
-
-            OutBandwidth = new Bandwidth(
-                new PerformanceCounter(NetworkMonitor.CATEGORYNAME, BYTESSENTPERSECOND, instance),
-                Resources.Out,
-                roundAll,
-                useBytes,
-                bandwidthOutAlert
-                );
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    InBandwidth.Dispose();
-                    InBandwidth = null;
-
-                    OutBandwidth.Dispose();
-                    OutBandwidth = null;
-                }
-
-                _disposed = true;
-            }
-        }
-
-        ~NicInfo()
-        {
-            Dispose(false);
-        }
-
-        public void Update()
-        {
-            if (!PerformanceCounterCategory.InstanceExists(Instance, NetworkMonitor.CATEGORYNAME))
+            if (!PerformanceCounterCategory.InstanceExists(ID, CATEGORYNAME))
             {
                 return;
             }
 
-            InBandwidth.Update();
-            OutBandwidth.Update();
+            base.Update();
         }
-
-        public void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public string Instance { get; private set; }
-
-        private string _name { get; set; }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-
-                NotifyPropertyChanged("Name");
-            }
-        }
-
-        private bool _showName { get; set; }
-
-        public bool ShowName
-        {
-            get
-            {
-                return _showName;
-            }
-            set
-            {
-                _showName = value;
-
-                NotifyPropertyChanged("ShowName");
-            }
-        }
-
-        private Bandwidth _inBandwidth { get; set; }
-        
-        public Bandwidth InBandwidth
-        {
-            get
-            {
-                return _inBandwidth;
-            }
-            set
-            {
-                _inBandwidth = value;
-
-                NotifyPropertyChanged("InBandwidth");
-            }
-        }
-
-        private Bandwidth _outBandwidth { get; set; }
-
-        public Bandwidth OutBandwidth
-        {
-            get
-            {
-                return _outBandwidth;
-            }
-            set
-            {
-                _outBandwidth = value;
-
-                NotifyPropertyChanged("OutBandwidth");
-            }
-        }
-
-        private bool _disposed { get; set; } = false;
     }
 
-    public class Bandwidth : INotifyPropertyChanged, IDisposable
+    public interface iMetric : INotifyPropertyChanged, IDisposable
     {
-        public Bandwidth(PerformanceCounter counter, string label, bool round = false, bool useBytes = false, double alertValue = 0)
+        string Label { get; }
+
+        double Value { get; }
+
+        string Append { get; }
+
+        string Text { get; }
+
+        bool IsAlert { get; }
+
+        void Update();
+
+        void Update(double value);
+    }
+
+    public class BaseMetric : iMetric
+    {
+        public BaseMetric(DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null)
         {
-            _counter = counter;
+            _converter = converter;
+            _round = round;
+            _alertValue = alertValue;
 
             Label = label;
-            Round = round;
-            UseBytes = useBytes;
-            AlertValue = alertValue;
+            Append = converter == null ? dataType.GetAppend() : converter.TargetType.GetAppend();
         }
 
         public void Dispose()
@@ -1726,32 +1059,41 @@ namespace SidebarDiagnostics.Monitoring
             {
                 if (disposing)
                 {
-                    if (_counter != null)
-                    {
-                        _counter.Dispose();
-                        _counter = null;
-                    }
+                    _converter = null;
                 }
 
                 _disposed = true;
             }
         }
 
-        ~Bandwidth()
+        ~BaseMetric()
         {
             Dispose(false);
         }
 
-        public void Update()
+        public virtual void Update() { }
+
+        public void Update(double value)
         {
-            if (!PerformanceCounterCategory.InstanceExists(_counter.InstanceName, NetworkMonitor.CATEGORYNAME))
+            double _val = value;
+
+            if (_converter != null)
             {
-                return;
+                if (_converter.IsDynamic)
+                {
+                    DataType _dataType = DataType.Variable;
+
+                    _converter.Convert(ref _val, ref _dataType);
+
+                    Append = _dataType.GetAppend();
+                }
+                else
+                {
+                    _converter.Convert(ref _val);
+                }
             }
 
-            double _value = _counter.NextValue() / (UseBytes ? 1024d : 128d);
-
-            if (AlertValue > 0 && AlertValue <= _value)
+            if (_alertValue > 0 && _alertValue <= _val)
             {
                 if (!IsAlert)
                 {
@@ -1763,18 +1105,14 @@ namespace SidebarDiagnostics.Monitoring
                 IsAlert = false;
             }
 
-            string _format;
+            Text = string.Format(
+                "{0}: {1:#,##0.##}{2}",
+                Label,
+                _val.Round(_round),
+                Append
+                );
 
-            if (UseBytes)
-            {
-                Data.MinifyKiloBytesPerSecond(ref _value, out _format);
-            }
-            else
-            {
-                Data.MinifyKiloBitsPerSecond(ref _value, out _format);
-            }
-
-            Text = string.Format("{0}: {1:#,##0.##} {2}", Label, _value.Round(Round), _format);
+            Value = _val;
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -1787,7 +1125,53 @@ namespace SidebarDiagnostics.Monitoring
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Label { get; set; }
+        private string _label { get; set; }
+
+        public string Label
+        {
+            get
+            {
+                return _label;
+            }
+            protected set
+            {
+                _label = value;
+
+                NotifyPropertyChanged("Label");
+            }
+        }
+
+        private double _value { get; set; }
+
+        public double Value
+        {
+            get
+            {
+                return _value;
+            }
+            protected set
+            {
+                _value = value;
+
+                NotifyPropertyChanged("Value");
+            }
+        }
+
+        private string _append { get; set; }
+
+        public string Append
+        {
+            get
+            {
+                return _append;
+            }
+            protected set
+            {
+                _append = value;
+
+                NotifyPropertyChanged("Append");
+            }
+        }
 
         private string _text { get; set; }
 
@@ -1797,7 +1181,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _text;
             }
-            private set
+            protected set
             {
                 _text = value;
 
@@ -1813,7 +1197,7 @@ namespace SidebarDiagnostics.Monitoring
             {
                 return _isAlert;
             }
-            private set
+            protected set
             {
                 _isAlert = value;
 
@@ -1821,11 +1205,106 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public bool Round { get; private set; }
+        protected iConverter _converter { get; set; }
 
-        public bool UseBytes { get; private set; }
+        protected bool _round { get; set; }
 
-        public double AlertValue { get; private set; }
+        protected double _alertValue { get; set; }
+
+        private bool _disposed { get; set; } = false;
+    }
+
+    public class OHMMetric : BaseMetric
+    {
+        public OHMMetric(ISensor sensor, DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null) : base(dataType, label, round, alertValue, converter)
+        {
+            _sensor = sensor;
+        }
+
+        public new void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _sensor = null;
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~OHMMetric()
+        {
+            Dispose(false);
+        }
+
+        public override void Update()
+        {
+            if (_sensor.Value.HasValue)
+            {
+                Update(_sensor.Value.Value);
+            }
+            else
+            {
+                Text = string.Format("{0}: No Value", Label);
+            }
+        }
+
+        private ISensor _sensor { get; set; }
+
+        private bool _disposed { get; set; } = false;
+    }
+
+    public class PCMetric : BaseMetric
+    {
+        public PCMetric(PerformanceCounter counter, DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null) : base(dataType, label, round, alertValue, converter)
+        {
+            _counter = counter;
+        }
+
+        public new void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (_counter != null)
+                    {
+                        _counter.Dispose();
+                        _counter = null;
+                    }
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~PCMetric()
+        {
+            Dispose(false);
+        }
+
+        public override void Update()
+        {
+            Update(_counter.NextValue());
+        }
 
         private PerformanceCounter _counter { get; set; }
 
@@ -2531,21 +2010,41 @@ namespace SidebarDiagnostics.Monitoring
 
     public enum DataType : byte
     {
+        Variable,
+        Bit,
+        Kilobit,
+        Megabit,
+        Gigabit,
+        Byte,
+        Kilobyte,
+        Megabyte,
+        Gigabyte,
+        bps,
+        kbps,
+        Mbps,
+        Gbps,
+        Bps,
+        kBps,
+        MBps,
+        GBps,
         MHz,
         GHz,
         Voltage,
         Percent,
         RPM,
         Celcius,
-        Fahrenheit,
-        Gigabyte
+        Fahrenheit
     }
 
     public interface iConverter
     {
         void Convert(ref double value);
 
+        void Convert(ref double value, ref DataType targetType);
+
         DataType TargetType { get; }
+        
+        bool IsDynamic { get; }
     }
 
     public class CelciusToFahrenheit : iConverter
@@ -2557,11 +2056,25 @@ namespace SidebarDiagnostics.Monitoring
             value = value * 1.8d + 32d;
         }
 
+        public void Convert(ref double value, ref DataType targetType)
+        {
+            Convert(ref value);
+            targetType = TargetType;
+        }
+
         public DataType TargetType
         {
             get
             {
                 return DataType.Fahrenheit;
+            }
+        }
+
+        public bool IsDynamic
+        {
+            get
+            {
+                return false;
             }
         }
 
@@ -2590,11 +2103,25 @@ namespace SidebarDiagnostics.Monitoring
             value = value / 1000d;
         }
 
+        public void Convert(ref double value, ref DataType targetType)
+        {
+            Convert(ref value);
+            targetType = TargetType;
+        }
+
         public DataType TargetType
         {
             get
             {
                 return DataType.GHz;
+            }
+        }
+
+        public bool IsDynamic
+        {
+            get
+            {
+                return false;
             }
         }
 
@@ -2614,47 +2141,130 @@ namespace SidebarDiagnostics.Monitoring
         }
     }
 
-    public static class Data
+    public class BitsPerSecondConverter : iConverter
     {
-        public static void MinifyKiloBytesPerSecond(ref double input, out string format)
+        private BitsPerSecondConverter() { }
+
+        public void Convert(ref double value)
         {
-            if (input < 1024d)
+            DataType _dataType = DataType.Variable;
+            Convert(ref value, ref _dataType);
+        }
+
+        public void Convert(ref double value, ref DataType targetType)
+        {
+            if (value < 131072d)
             {
-                format = "kB/s";
+                value /= 128d;
+                targetType = DataType.kbps;
                 return;
             }
-            else if (input < 1048576d)
+            else if (value < 134217728d)
             {
-                input /= 1024d;
-                format = "MB/s";
+                value /= 131072d;
+                targetType = DataType.Mbps;
                 return;
             }
             else
             {
-                input /= 1048576d;
-                format = "GB/s";
+                value /= 134217728d;
+                targetType = DataType.Gbps;
                 return;
             }
         }
 
-        public static void MinifyKiloBitsPerSecond(ref double input, out string format)
+        public DataType TargetType
         {
-            if (input < 1024d)
+            get
             {
-                format = "kbps";
+                return DataType.bps;
+            }
+        }
+
+        public bool IsDynamic
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        private static BitsPerSecondConverter _instance { get; set; } = null;
+
+        public static BitsPerSecondConverter Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new BitsPerSecondConverter();
+                }
+
+                return _instance;
+            }
+        }
+    }
+
+    public class BytesPerSecondConverter : iConverter
+    {
+        private BytesPerSecondConverter() { }
+
+        public void Convert(ref double value)
+        {
+            DataType _dataType = DataType.Variable;
+            Convert(ref value, ref _dataType);
+        }
+
+        public void Convert(ref double value, ref DataType targetType)
+        {
+            if (value < 1048576d)
+            {
+                value /= 1024d;
+                targetType = DataType.kBps;
                 return;
             }
-            else if (input < 1048576d)
+            else if (value < 1073741824d)
             {
-                input /= 1024d;
-                format = "Mbps";
+                value /= 1048576d;
+                targetType = DataType.MBps;
                 return;
             }
             else
             {
-                input /= 1048576d;
-                format = "Gbps";
+                value /= 1073741824d;
+                targetType = DataType.GBps;
                 return;
+            }
+        }
+
+        public DataType TargetType
+        {
+            get
+            {
+                return DataType.Bps;
+            }
+        }
+
+        public bool IsDynamic
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        private static BytesPerSecondConverter _instance { get; set; } = null;
+
+        public static BytesPerSecondConverter Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new BytesPerSecondConverter();
+                }
+
+                return _instance;
             }
         }
     }
@@ -2711,7 +2321,55 @@ namespace SidebarDiagnostics.Monitoring
         public static string GetAppend(this DataType type)
         {
             switch (type)
-            {
+            {                
+                case DataType.Bit:
+                    return " b";
+
+                case DataType.Kilobit:
+                    return " kb";
+
+                case DataType.Megabit:
+                    return " mb";
+
+                case DataType.Gigabit:
+                    return " gb";
+
+                case DataType.Byte:
+                    return " B";
+
+                case DataType.Kilobyte:
+                    return " KB";
+
+                case DataType.Megabyte:
+                    return " MB";
+
+                case DataType.Gigabyte:
+                    return " GB";
+
+                case DataType.bps:
+                    return " bps";
+
+                case DataType.kbps:
+                    return " kbps";
+
+                case DataType.Mbps:
+                    return " Mbps";
+
+                case DataType.Gbps:
+                    return " Gbps";
+
+                case DataType.Bps:
+                    return " B/s";
+
+                case DataType.kBps:
+                    return " kB/s";
+
+                case DataType.MBps:
+                    return " MB/s";
+
+                case DataType.GBps:
+                    return " GB/s";
+
                 case DataType.MHz:
                     return " MHz";
 
@@ -2733,11 +2391,8 @@ namespace SidebarDiagnostics.Monitoring
                 case DataType.Fahrenheit:
                     return " F";
 
-                case DataType.Gigabyte:
-                    return " GB";
-
                 default:
-                    return "";
+                    throw new ArgumentException("Invalid DataType.");
             }
         }
 
