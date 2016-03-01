@@ -8,7 +8,7 @@ Go to the <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases
 
 ### Features
 * Monitors CPU, RAM, GPU, network, and logical drives.
-* Graphs for all metrics.
+* Create graphs for all metrics.
 * Allows for lots of customization.
 * Allows alerts for various values.
 * Allows binding hotkeys.
