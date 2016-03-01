@@ -134,7 +134,7 @@ namespace SidebarDiagnostics
                 return;
             }
 
-            new Graph(_sidebar.Model.MonitorManager);
+            new Graph(_sidebar);
         }
 
         private async Task AppUpdate(bool showInfo)

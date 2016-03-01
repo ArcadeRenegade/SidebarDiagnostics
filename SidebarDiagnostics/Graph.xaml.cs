@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SidebarDiagnostics.Monitoring;
+using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
@@ -21,16 +21,17 @@ namespace SidebarDiagnostics
     /// </summary>
     public partial class Graph : DPIAwareWindow
     {
-        public Graph(MonitorManager manager)
+        public Graph(Sidebar sidebar)
         {
             InitializeComponent();
-            BindData(manager);
+
+            DataContext = Model = new GraphModel();
+            Model.BindData(sidebar.Model.MonitorManager);
+
+            Owner = sidebar;
             Show();
         }
 
-        public void BindData(MonitorManager manager)
-        {
-
-        }
+        public GraphModel Model { get; private set; }
     }
 }

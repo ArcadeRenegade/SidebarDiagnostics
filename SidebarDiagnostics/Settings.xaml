@@ -60,13 +60,13 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="Dock" />
-                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=DockEdgeItems}" SelectedValue="{Binding Path=DockEdge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which edge the sidebar will dock to." />
+                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=DockEdgeItems, Mode=OneWay}" SelectedValue="{Binding Path=DockEdge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which edge the sidebar will dock to." />
 
                     <Label Grid.Column="0" Grid.Row="1" Content="Screen" />
-                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ScreenItems}" DisplayMemberPath="Text" SelectedValuePath="Index" SelectedValue="{Binding Path=ScreenIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which screen the sidebar will be on." />
+                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ScreenItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedValuePath="Index" SelectedValue="{Binding Path=ScreenIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which screen the sidebar will be on." />
 
                     <Label Grid.Column="0" Grid.Row="2" Content="Language" />
-                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=CultureItems}" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedValue="{Binding Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Current language of the app." />
+                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=CultureItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedValue="{Binding Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Current language of the app." />
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Reserve Space" />
                     <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Reserves space in the work area for the sidebar." />
@@ -173,7 +173,7 @@
                     </DockPanel>
 
                     <Label Grid.Column="0" Grid.Row="4" Content="Font Size" />
-                    <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Path=FontSettingItems}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Size of text and icons." />
+                    <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Path=FontSettingItems, Mode=OneWay}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Size of text and icons." />
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Font Color" />
                     <xctk:ColorPicker Grid.Column="1" Grid.Row="5" SelectedColor="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Color of text and icons."/>

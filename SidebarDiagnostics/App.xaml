@@ -521,6 +521,15 @@
                 <Setter Property="Margin" Value="0,0,0,4" />
                 <Setter Property="TextWrapping" Value="Wrap" />
             </Style>
+
+            <Style x:Key="ChartContent" TargetType="{x:Type DockPanel}">
+                <Setter Property="LastChildFill" Value="True" />
+                <Setter Property="Margin" Value="15" />
+            </Style>
+
+            <Style x:Key="ChartDropdown" TargetType="{x:Type ComboBox}">
+                <Setter Property="Margin" Value="0,0,10,0" />
+            </Style>
             
             <Style x:Key="ScrollBarTrackThumb" TargetType="{x:Type Thumb}">
                 <Setter Property="Template">

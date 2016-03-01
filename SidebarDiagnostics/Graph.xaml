@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
@@ -15,7 +16,11 @@
         MinHeight="200"
         ResizeMode="CanResizeWithGrip"
         Style="{StaticResource FlatWindowStyle}">
-    <Grid>
-        
-    </Grid>
+    <DockPanel Style="{StaticResource ChartContent}">
+        <WrapPanel Orientation="Horizontal">
+            <ComboBox ItemsSource="{Binding Path=MonitorItems, Mode=OneWay}" SelectedValue="{Binding Path=Monitor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Text" SelectedValuePath="Value" Style="{StaticResource ChartDropdown}" />
+            <ComboBox ItemsSource="{Binding Path=HardwareItems, Mode=OneWay}" SelectedValue="{Binding Path=Hardware, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Text" SelectedValuePath="Value" Style="{StaticResource ChartDropdown}" />
+            <xctk:CheckComboBox ItemsSource="{Binding Path=MetricItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedMemberPath="Value" />
+        </WrapPanel>
+    </DockPanel>
 </win:DPIAwareWindow>
