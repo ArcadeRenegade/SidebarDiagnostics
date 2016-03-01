@@ -87,7 +87,7 @@ namespace SidebarDiagnostics.Models
                     new LineSeries()
                     {
                         Title = _metric.Label,
-                        TrackerFormatString = string.Format("{0}\r\n{{Value:#,##0.##}}{1}\r\n{{Recorded:T}}", _metric.Label, _metric.Append),
+                        TrackerFormatString = string.Format("{0}\r\n{{Value:#,##0.##}}{1}\r\n{{Recorded:T}}", _metric.Label, _metric.nAppend),
                         ItemsSource = _records,
                         DataFieldX = "Recorded",
                         DataFieldY = "Value"
@@ -160,7 +160,7 @@ namespace SidebarDiagnostics.Models
                 return;
             }
 
-            if (e.PropertyName != "Value")
+            if (e.PropertyName != "nValue")
             {
                 return;
             }
@@ -182,7 +182,7 @@ namespace SidebarDiagnostics.Models
                     _data[_metric].Remove(_record);
                 }
 
-                _data[_metric].Add(new MetricRecord(_metric.Value, _now));
+                _data[_metric].Add(new MetricRecord(_metric.nValue, _now));
             }
             catch
             {

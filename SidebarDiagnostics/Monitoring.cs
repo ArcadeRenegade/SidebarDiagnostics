@@ -1026,6 +1026,10 @@ namespace SidebarDiagnostics.Monitoring
 
         string Append { get; }
 
+        double nValue { get; }
+
+        string nAppend { get; }
+
         string Text { get; }
 
         bool IsAlert { get; }
@@ -1044,7 +1048,7 @@ namespace SidebarDiagnostics.Monitoring
             _alertValue = alertValue;
 
             Label = label;
-            Append = converter == null ? dataType.GetAppend() : converter.TargetType.GetAppend();
+            nAppend = Append = converter == null ? dataType.GetAppend() : converter.TargetType.GetAppend();
         }
 
         public void Dispose()
@@ -1077,21 +1081,28 @@ namespace SidebarDiagnostics.Monitoring
         {
             double _val = value;
 
-            if (_converter != null)
+            if (_converter == null)
             {
-                if (_converter.IsDynamic)
-                {
-                    DataType _dataType = DataType.Dynamic;
-
-                    _converter.Convert(ref _val, ref _dataType);
-
-                    Append = _dataType.GetAppend();
-                }
-                else
-                {
-                    _converter.Convert(ref _val);
-                }
+                nValue = _val;
             }
+            else if (_converter.IsDynamic)
+            {
+                double _nVal;
+                DataType _dataType;
+
+                _converter.Convert(ref _val, out _nVal, out _dataType);
+
+                nValue = _nVal;
+                Append = _dataType.GetAppend();
+            }
+            else
+            {
+                _converter.Convert(ref _val);
+
+                nValue = _val;
+            }
+
+            Value = _val;
 
             if (_alertValue > 0 && _alertValue <= _val)
             {
@@ -1111,8 +1122,6 @@ namespace SidebarDiagnostics.Monitoring
                 _val.Round(_round),
                 Append
                 );
-
-            Value = _val;
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -1170,6 +1179,38 @@ namespace SidebarDiagnostics.Monitoring
                 _append = value;
 
                 NotifyPropertyChanged("Append");
+            }
+        }
+
+        private double _nValue { get; set; }
+
+        public double nValue
+        {
+            get
+            {
+                return _nValue;
+            }
+            set
+            {
+                _nValue = value;
+
+                NotifyPropertyChanged("nValue");
+            }
+        }
+
+        private string _nAppend { get; set; }
+
+        public string nAppend
+        {
+            get
+            {
+                return _nAppend;
+            }
+            set
+            {
+                _nAppend = value;
+
+                NotifyPropertyChanged("nAppend");
             }
         }
 
@@ -2040,7 +2081,7 @@ namespace SidebarDiagnostics.Monitoring
     {
         void Convert(ref double value);
 
-        void Convert(ref double value, ref DataType targetType);
+        void Convert(ref double value, out double normalized, out DataType targetType);
 
         DataType TargetType { get; }
         
@@ -2056,9 +2097,10 @@ namespace SidebarDiagnostics.Monitoring
             value = value * 1.8d + 32d;
         }
 
-        public void Convert(ref double value, ref DataType targetType)
+        public void Convert(ref double value, out double normalized, out DataType targetType)
         {
             Convert(ref value);
+            normalized = value;
             targetType = TargetType;
         }
 
@@ -2103,9 +2145,10 @@ namespace SidebarDiagnostics.Monitoring
             value = value / 1000d;
         }
 
-        public void Convert(ref double value, ref DataType targetType)
+        public void Convert(ref double value, out double normalized, out DataType targetType)
         {
             Convert(ref value);
+            normalized = value;
             targetType = TargetType;
         }
 
@@ -2147,27 +2190,30 @@ namespace SidebarDiagnostics.Monitoring
 
         public void Convert(ref double value)
         {
-            DataType _dataType = DataType.Dynamic;
-            Convert(ref value, ref _dataType);
+            double _normalized;
+            DataType _dataType;
+
+            Convert(ref value, out _normalized, out _dataType);
         }
 
-        public void Convert(ref double value, ref DataType targetType)
+        public void Convert(ref double value, out double normalized, out DataType targetType)
         {
-            if (value < 131072d)
+            normalized = value /= 128d;
+
+            if (value < 1024d)
             {
-                value /= 128d;
                 targetType = DataType.kbps;
                 return;
             }
-            else if (value < 134217728d)
+            else if (value < 1048576d)
             {
-                value /= 131072d;
+                value /= 1024d;
                 targetType = DataType.Mbps;
                 return;
             }
             else
             {
-                value /= 134217728d;
+                value /= 1048576d;
                 targetType = DataType.Gbps;
                 return;
             }
@@ -2177,7 +2223,7 @@ namespace SidebarDiagnostics.Monitoring
         {
             get
             {
-                return DataType.bps;
+                return DataType.kbps;
             }
         }
 
@@ -2211,27 +2257,30 @@ namespace SidebarDiagnostics.Monitoring
 
         public void Convert(ref double value)
         {
-            DataType _dataType = DataType.Dynamic;
-            Convert(ref value, ref _dataType);
+            double _normalized;
+            DataType _dataType;
+
+            Convert(ref value, out _normalized, out _dataType);
         }
 
-        public void Convert(ref double value, ref DataType targetType)
+        public void Convert(ref double value, out double normalized, out DataType targetType)
         {
-            if (value < 1048576d)
+            normalized = value /= 1024d;
+
+            if (value < 1024d)
             {
-                value /= 1024d;
                 targetType = DataType.kBps;
                 return;
             }
-            else if (value < 1073741824d)
+            else if (value < 1048576d)
             {
-                value /= 1048576d;
+                value /= 1024d;
                 targetType = DataType.MBps;
                 return;
             }
             else
             {
-                value /= 1073741824d;
+                value /= 1048576d;
                 targetType = DataType.GBps;
                 return;
             }
@@ -2241,7 +2290,7 @@ namespace SidebarDiagnostics.Monitoring
         {
             get
             {
-                return DataType.Bps;
+                return DataType.kBps;
             }
         }
 
