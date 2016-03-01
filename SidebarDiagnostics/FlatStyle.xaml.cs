@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace SidebarDiagnostics.Style
 {
@@ -25,7 +26,7 @@ namespace SidebarDiagnostics.Style
             }
         }
 
-        public void PART_MINIMIZE_Click(object sender, RoutedEventArgs e)
+        private void PART_MINIMIZE_Click(object sender, RoutedEventArgs e)
         {
             Button _button = (Button)sender;
 
@@ -40,7 +41,7 @@ namespace SidebarDiagnostics.Style
             }
         }
 
-        public void PART_MAXIMIZE_RESTORE_Click(object sender, RoutedEventArgs e)
+        private void PART_MAXIMIZE_RESTORE_Click(object sender, RoutedEventArgs e)
         {
             Button _button = (Button)sender;
 
@@ -64,7 +65,7 @@ namespace SidebarDiagnostics.Style
             }
         }
 
-        public void PART_CLOSE_Click(object sender, RoutedEventArgs e)
+        private void PART_CLOSE_Click(object sender, RoutedEventArgs e)
         {
             Button _button = (Button)sender;
 
@@ -75,6 +76,33 @@ namespace SidebarDiagnostics.Style
                 if (_window != null && _window.IsInitialized)
                 {
                     _window.Close();
+                }
+            }
+        }
+
+        private void PART_RESIZE_BOTRIGHT_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            Thumb _thumb = (Thumb)sender;
+
+            if (_thumb != null)
+            {
+                Window _window = Window.GetWindow(_thumb);
+
+                if (_window != null && _window.IsInitialized)
+                {
+                    double _newWidth = _window.Width + e.HorizontalChange;
+
+                    if (_newWidth > 0)
+                    {
+                        _window.Width = _newWidth > _window.MinWidth ? _newWidth : _window.MinWidth;
+                    }
+
+                    double _newHeight = _window.Height + e.VerticalChange;
+
+                    if (_newHeight > 0)
+                    {
+                        _window.Height = _newHeight > _window.MinHeight ? _newHeight : _window.MinHeight;
+                    }
                 }
             }
         }

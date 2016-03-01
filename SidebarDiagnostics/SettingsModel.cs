@@ -113,7 +113,7 @@ namespace SidebarDiagnostics.Models
         {
             if (!string.Equals(Culture, Framework.Settings.Instance.Culture, StringComparison.Ordinal))
             {
-                MessageBox.Show(Constants.Generic.LANGUAGEMSG, Constants.Generic.LANGUAGETITLE, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                MessageBox.Show(Constants.Generic.LANGUAGEMSG, Constants.Generic.LANGUAGETITLE, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
             }
 
             Framework.Settings.Instance.DockEdge = DockEdge;

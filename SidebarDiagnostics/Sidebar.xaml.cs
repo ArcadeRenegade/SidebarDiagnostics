@@ -198,6 +198,11 @@ namespace SidebarDiagnostics
             }));
         }
 
+        private void GraphButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Application.Current as App).OpenGraph();
+        }
+
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             (Application.Current as App).OpenSettings();

@@ -125,6 +125,18 @@ namespace SidebarDiagnostics
             new Settings(_sidebar);
         }
 
+        public void OpenGraph()
+        {
+            Sidebar _sidebar = GetSidebar;
+
+            if (_sidebar == null || !_sidebar.Ready)
+            {
+                return;
+            }
+
+            new Graph(_sidebar.Model.MonitorManager);
+        }
+
         private async Task AppUpdate(bool showInfo)
         {
             string _exe = await SquirrelUpdate(showInfo);
@@ -220,6 +232,11 @@ namespace SidebarDiagnostics
             }
 
             _sidebar.Reload();
+        }
+
+        private void Graph_Click(object sender, EventArgs e)
+        {
+            OpenGraph();
         }
 
         private void Visibility_SubmenuOpened(object sender, EventArgs e)

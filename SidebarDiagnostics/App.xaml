@@ -22,6 +22,7 @@
                     <ContextMenu>
                         <MenuItem Header="{x:Static frame:Resources.Settings}" Click="Settings_Click" />
                         <MenuItem Header="{x:Static frame:Resources.Reload}" Click="Reload_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.Graph}" Click="Graph_Click" />
                         <Separator />
                         <MenuItem Header="{x:Static frame:Resources.Visibility}" SubmenuOpened="Visibility_SubmenuOpened">
                             <MenuItem Header="{x:Static frame:Resources.Show}" Click="Show_Click" />
@@ -110,6 +111,7 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Opacity" Value="0.8" />
+                                    <Setter Property="Cursor" Value="Hand" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

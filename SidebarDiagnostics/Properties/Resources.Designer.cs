@@ -169,6 +169,15 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Graph.
+        /// </summary>
+        public static string Graph {
+            get {
+                return ResourceManager.GetString("Graph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide.
         /// </summary>
         public static string Hide {

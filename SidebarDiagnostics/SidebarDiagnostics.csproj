@@ -187,6 +187,9 @@
       <DependentUpon>ChangeLog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ChangeLogModel.cs" />
+    <Compile Include="Graph.xaml.cs">
+      <DependentUpon>Graph.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.de.Designer.cs">
       <DependentUpon>Resources.de.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -243,6 +246,10 @@
       <DependentUpon>FlatStyle.xaml</DependentUpon>
     </Compile>
     <Page Include="ChangeLog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Graph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -241,4 +241,8 @@
     <value>Load</value>
     <comment>Label for CPU load percentage sensors</comment>
   </data>
+  <data name="Graph" xml:space="preserve">
+    <value>Graph</value>
+    <comment>Graph taskbar menu item</comment>
+  </data>
 </root>
