@@ -248,6 +248,7 @@
                         <Setter Property="MinWidth" Value="60" />
                     </Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+                    <Style TargetType="{x:Type xctk:CheckComboBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
                     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}">
                         <Setter Property="Margin" Value="0,6,0,0" />
@@ -524,13 +525,28 @@
 
             <Style x:Key="ChartContent" TargetType="{x:Type DockPanel}">
                 <Setter Property="LastChildFill" Value="True" />
-                <Setter Property="Margin" Value="15" />
+                <Setter Property="Margin" Value="15,5,15,15" />
             </Style>
 
-            <Style x:Key="ChartDropdown" TargetType="{x:Type ComboBox}">
-                <Setter Property="Margin" Value="0,0,10,0" />
+            <Style x:Key="ChartExpander" TargetType="{x:Type Expander}">
+                <Setter Property="Padding" Value="0,5" />
             </Style>
-            
+
+            <Style x:Key="ChartLabel" TargetType="{x:Type Label}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,2,15,2" />
+                <Setter Property="MinWidth" Value="60" />
+            </Style>
+
+            <Style x:Key="ChartComboBox" TargetType="{x:Type ComboBox}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="ChartCheckComboBox" TargetType="{x:Type xctk:CheckComboBox}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Delimiter" Value=", " />
+            </Style>
+
             <Style x:Key="ScrollBarTrackThumb" TargetType="{x:Type Thumb}">
                 <Setter Property="Template">
                     <Setter.Value>

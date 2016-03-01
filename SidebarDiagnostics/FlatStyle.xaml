@@ -84,7 +84,7 @@
                 <ControlTemplate TargetType="{x:Type style:FlatWindow}">
                     <Border x:Name="PART_BORDER" Margin="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
                         <Border.Effect>
-                            <DropShadowEffect BlurRadius="15" Direction="-90" ShadowDepth="2" Opacity="0.5" Color="#333333" />
+                            <DropShadowEffect BlurRadius="10" Direction="-90" ShadowDepth="2" Opacity="0.5" Color="#333333" />
                         </Border.Effect>
                         <Grid>
                             <DockPanel LastChildFill="True">
@@ -117,7 +117,6 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=WindowState}" Value="Maximized">
-                            <Setter TargetName="PART_BORDER" Property="Margin" Value="0" />
                             <Setter TargetName="PART_RESIZE_BOTRIGHT" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
 

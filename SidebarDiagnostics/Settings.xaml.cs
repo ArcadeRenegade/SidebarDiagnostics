@@ -31,9 +31,9 @@ namespace SidebarDiagnostics
         {
             Model.Save();
 
-            await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(async () =>
+            await App.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(async () =>
             {
-                Sidebar _sidebar = (Application.Current as App).GetSidebar;
+                Sidebar _sidebar = App.Current.Sidebar;
 
                 if (_sidebar == null)
                 {
@@ -287,7 +287,7 @@ namespace SidebarDiagnostics
         {
             if (Model.IsChanged)
             {
-                Sidebar _sidebar = (Application.Current as App).GetSidebar;
+                Sidebar _sidebar = App.Current.Sidebar;
 
                 if (_sidebar != null)
                 {

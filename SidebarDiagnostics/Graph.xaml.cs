@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows.Input;
 using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Windows;
 
@@ -25,11 +13,29 @@ namespace SidebarDiagnostics
         {
             InitializeComponent();
 
-            DataContext = Model = new GraphModel();
+            DataContext = Model = new GraphModel(OPGraph);
             Model.BindData(sidebar.Model.MonitorManager);
-
-            Owner = sidebar;
+            
             Show();
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                OPGraph.ResetAllAxes();
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            DataContext = null;
+
+            if (Model != null)
+            {
+                Model.Dispose();
+                Model = null;
+            }
         }
 
         public GraphModel Model { get; private set; }

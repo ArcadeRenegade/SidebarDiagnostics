@@ -313,9 +313,9 @@ namespace SidebarDiagnostics.Windows
                                 return;
                             }
 
-                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+                            App.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
                             {
-                                Sidebar _sidebar = (Application.Current as App).GetSidebar;
+                                Sidebar _sidebar = App.Current.Sidebar;
 
                                 if (_sidebar != null)
                                 {
@@ -554,7 +554,7 @@ namespace SidebarDiagnostics.Windows
                             break;
 
                         case KeyAction.Close:
-                            Application.Current.Shutdown();
+                            App.Current.Shutdown();
                             break;
 
                         case KeyAction.CycleEdge:

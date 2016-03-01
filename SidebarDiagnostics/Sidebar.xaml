@@ -52,7 +52,7 @@
         <DockPanel Style="{StaticResource MainPanel}">
             <StackPanel x:Name="WindowControls" Style="{StaticResource MenuBar}">
                 <Button Click="GraphButton_Click" Style="{StaticResource MenuButton}">
-                    <Path Data="M 17,19L 20,19L 20,54L 59,54L 59,57L 17,57L 17,19 Z M 22,52L 22,47.25L 32,37L 45,43.75L 57,25L 59,27L 46,48L 32.25,41L 22,52 Z" />
+                    <Path Width="12" Height="12" Data="M 17,19L 20,19L 20,54L 59,54L 59,57L 17,57L 17,19 Z M 22,52L 22,47.25L 32,37L 45,43.75L 57,25L 59,27L 46,48L 32.25,41L 22,52 Z" />
                 </Button>
                 
                 <Button Click="SettingsButton_Click" Style="{StaticResource MenuButton}">

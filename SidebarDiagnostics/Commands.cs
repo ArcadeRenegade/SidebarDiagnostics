@@ -9,7 +9,7 @@ namespace SidebarDiagnostics.Commands
     {
         public void Execute(object parameter)
         {
-            Sidebar _sidebar = (Application.Current as App).GetSidebar;
+            Sidebar _sidebar = App.Current.Sidebar;
 
             if (_sidebar == null)
             {

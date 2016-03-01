@@ -1,19 +1,98 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OxyPlot.Wpf;
+using SidebarDiagnostics.Framework;
 using SidebarDiagnostics.Monitoring;
 
 namespace SidebarDiagnostics.Models
 {
-    public class GraphModel : INotifyPropertyChanged
+    public class GraphModel : INotifyPropertyChanged, IDisposable
     {
+        public GraphModel(Plot plot)
+        {
+            _plot = plot;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _monitorItems = null;
+                    _monitor = null;
+
+                    _hardwareItems = null;
+                    _hardware = null;
+
+                    _metricItems = null;
+
+                    if (_metrics != null)
+                    {
+                        _metrics.CollectionChanged -= Metrics_CollectionChanged;
+
+                        foreach (iMetric _metric in _metrics)
+                        {
+                            _metric.PropertyChanged -= Metric_PropertyChanged;
+                        }
+
+                        _metrics = null;
+                    }
+
+                    _plot = null;
+                    _data = null;
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~GraphModel()
+        {
+            Dispose(false);
+        }
+
         public void BindData(MonitorManager manager)
         {
             BindMonitors(manager.MonitorPanels);
-            BindHardware(new iMonitor[0]);
+
+            ExpandConfig = true;
+        }
+
+        public void SetupPlot()
+        {
+            _data = new Dictionary<iMetric, ObservableCollection<MetricRecord>>();
+
+            _plot.Series.Clear();
+
+            foreach (iMetric _metric in Metrics)
+            {
+                ObservableCollection<MetricRecord> _records = new ObservableCollection<MetricRecord>();
+
+                _data.Add(_metric, _records);
+                
+                _metric.PropertyChanged += Metric_PropertyChanged;
+
+                _plot.Series.Add(
+                    new LineSeries()
+                    {
+                        Title = _metric.Label,
+                        TrackerFormatString = string.Format("{0}\r\n{{Value:#,##0.##}}{1}\r\n{{Recorded:T}}", _metric.Label, _metric.Append),
+                        ItemsSource = _records,
+                        DataFieldX = "Recorded",
+                        DataFieldY = "Value"
+                    });
+            }
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -28,19 +107,108 @@ namespace SidebarDiagnostics.Models
 
         private void BindMonitors(MonitorPanel[] panels)
         {
-            MonitorItems = new MonitorItem[1] { MonitorItem.Default }.Concat(panels.Select(p => new MonitorItem() { Text = p.Title, Value = p })).ToArray();
-            Monitor = null;
+            MonitorItems = panels;
+
+            if (panels.Length > 0)
+            {
+                Monitor = panels[0];
+            }
+            else
+            {
+                Monitor = null;
+            }
         }
 
         private void BindHardware(iMonitor[] monitors)
         {
-            HardwareItems = new HardwareItem[1] { HardwareItem.Default }.Concat(monitors.Select(m => new HardwareItem() { Text = m.Name, Value = m })).ToArray();
-            Hardware = null;
+            HardwareItems = monitors;
+
+            if (monitors.Length > 0)
+            {
+                Hardware = monitors[0];
+            }
+            else
+            {
+                Hardware = null;
+            }
         }
 
-        private MonitorItem[] _monitorItems { get; set; }
+        private void BindMetrics(iMetric[] metrics)
+        {
+            MetricItems = metrics;
+            Metrics = new ObservableCollection<iMetric>();
+        }
 
-        public MonitorItem[] MonitorItems
+        private void Metrics_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (iMetric _metric in e.OldItems)
+                {
+                    _metric.PropertyChanged -= Metric_PropertyChanged;
+                }
+            }
+
+            SetupPlot();
+        }
+
+        private void Metric_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (_disposed)
+            {
+                (sender as iMetric).PropertyChanged -= Metric_PropertyChanged;
+                return;
+            }
+
+            if (e.PropertyName != "Value")
+            {
+                return;
+            }
+
+            iMetric _metric = (iMetric)sender;
+
+            if (_data == null || !_data.ContainsKey(_metric))
+            {
+                _metric.PropertyChanged -= Metric_PropertyChanged;
+                return;
+            }
+
+            DateTime _now = DateTime.Now;
+
+            try
+            {
+                foreach (MetricRecord _record in _data[_metric].Where(r => (_now - r.Recorded).TotalSeconds > Duration).ToArray())
+                {
+                    _data[_metric].Remove(_record);
+                }
+
+                _data[_metric].Add(new MetricRecord(_metric.Value, _now));
+            }
+            catch
+            {
+                _metric.PropertyChanged -= Metric_PropertyChanged;
+            }
+        }
+
+        private string _title { get; set; } = Resources.Graph;
+
+        public string Title
+        {
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                _title = value;
+
+                NotifyPropertyChanged("Title");
+            }
+        }
+
+        private MonitorPanel[] _monitorItems { get; set; }
+
+        public MonitorPanel[] MonitorItems
         {
             get
             {
@@ -79,9 +247,9 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private HardwareItem[] _hardwareItems { get; set; }
+        private iMonitor[] _hardwareItems { get; set; }
 
-        public HardwareItem[] HardwareItems
+        public iMonitor[] HardwareItems
         {
             get
             {
@@ -107,35 +275,147 @@ namespace SidebarDiagnostics.Models
             {
                 _hardware = value;
 
+                if (_hardware == null)
+                {
+                    BindMetrics(new iMetric[0]);
+
+                    Title = Resources.Graph;
+                }
+                else
+                {
+                    BindMetrics(_hardware.Metrics);
+
+                    Title = string.Format("{0} - {1}", Resources.Graph, _hardware.Name);
+                }
+
                 NotifyPropertyChanged("Hardware");
             }
         }
+
+        private iMetric[] _metricItems { get; set; }
+
+        public iMetric[] MetricItems
+        {
+            get
+            {
+                return _metricItems;
+            }
+            set
+            {
+                _metricItems = value;
+
+                NotifyPropertyChanged("MetricItems");
+            }
+        }
+
+        private ObservableCollection<iMetric> _metrics { get; set; }
+
+        public ObservableCollection<iMetric> Metrics
+        {
+            get
+            {
+                return _metrics;
+            }
+            set
+            {
+                if (_metrics != null)
+                {
+                    foreach (iMetric _metric in _metrics)
+                    {
+                        _metric.PropertyChanged -= Metric_PropertyChanged;
+                    }
+                }
+
+                _metrics = value;
+
+                if (_metrics != null)
+                {
+                    SetupPlot();
+
+                    _metrics.CollectionChanged += Metrics_CollectionChanged;
+                }
+
+                NotifyPropertyChanged("Metrics");
+            }
+        }
+
+        public DurationItem[] DurationItems
+        {
+            get
+            {
+                return new DurationItem[5]
+                {
+                    new DurationItem(15, "15 Seconds"),
+                    new DurationItem(30, "30 Seconds"),
+                    new DurationItem(60, "1 Minute"),
+                    new DurationItem(300, "5 Minutes"),
+                    new DurationItem(900, "15 Minutes")
+                };
+            }
+        }
+
+        private int _duration { get; set; } = 15;
+
+        public int Duration
+        {
+            get
+            {
+                return _duration;
+            }
+            set
+            {
+                _duration = value;
+
+                NotifyPropertyChanged("Duration");
+            }
+        }
+
+        private bool _expandConfig { get; set; } = true;
+
+        public bool ExpandConfig
+        {
+            get
+            {
+                return _expandConfig;
+            }
+            set
+            {
+                _expandConfig = value;
+
+                NotifyPropertyChanged("ExpandConfig");
+            }
+        }
+
+        private Plot _plot { get; set; }
+
+        private Dictionary<iMetric, ObservableCollection<MetricRecord>> _data { get; set; }
+
+        private bool _disposed { get; set; } = false;
     }
 
-    public class MonitorItem
+    public class DurationItem
     {
-        public MonitorPanel Value { get; set; }
+        public DurationItem(int seconds, string text)
+        {
+            Seconds = seconds;
+            Text = text;
+        }
+
+        public int Seconds { get; set; }
 
         public string Text { get; set; }
-
-        public static MonitorItem Default = new MonitorItem() { Text = "Select Monitor" };
     }
 
-    public class HardwareItem
+    public class MetricRecord
     {
-        public iMonitor Value { get; set; }
+        public MetricRecord(double value, DateTime recorded)
+        {
+            Value = value > 0 ? value : 0.001d;
+            Recorded = recorded;
+        }
 
-        public string Text { get; set; }
+        public double Value { get; set; }
 
-        public static HardwareItem Default = new HardwareItem() { Text = "Select Hardware" };
-    }
-
-    public class MetricItem
-    {
-        public iMonitor Value { get; set; }
-
-        public string Text { get; set; }
-
-        public static MetricItem Default = new MetricItem() { Text = "Select Metrics" };
+        public DateTime Recorded { get; set; }
     }
 }

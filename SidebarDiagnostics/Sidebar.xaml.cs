@@ -74,6 +74,8 @@ namespace SidebarDiagnostics
             Model.Reload();
 
             Ready = true;
+
+            BindGraphs();
         }
 
         private async Task Initialize()
@@ -178,11 +180,21 @@ namespace SidebarDiagnostics
 
             Ready = true;
 
+            BindGraphs();
+
             if (_openSettings)
             {
                 _openSettings = false;
 
-                (Application.Current as App).OpenSettings();
+                App.Current.OpenSettings();
+            }
+        }
+
+        private void BindGraphs()
+        {
+            foreach (Graph _graph in App.Current.Graphs)
+            {
+                _graph.Model.BindData(Model.MonitorManager);
             }
         }
 
@@ -200,17 +212,17 @@ namespace SidebarDiagnostics
 
         private void GraphButton_Click(object sender, RoutedEventArgs e)
         {
-            (Application.Current as App).OpenGraph();
+            App.Current.OpenGraph();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            (Application.Current as App).OpenSettings();
+            App.Current.OpenSettings();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            App.Current.Shutdown();
         }
         
         private void Window_MouseEnter(object sender, MouseEventArgs e)
@@ -270,7 +282,7 @@ namespace SidebarDiagnostics
             }
             else
             {
-                Application.Current.Shutdown();
+                App.Current.Shutdown();
             }
         }
 

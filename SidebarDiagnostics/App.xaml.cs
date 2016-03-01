@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
@@ -115,7 +116,7 @@ namespace SidebarDiagnostics
                 return;
             }
 
-            Sidebar _sidebar = GetSidebar;
+            Sidebar _sidebar = Sidebar;
 
             if (_sidebar == null)
             {
@@ -127,7 +128,7 @@ namespace SidebarDiagnostics
 
         public void OpenGraph()
         {
-            Sidebar _sidebar = GetSidebar;
+            Sidebar _sidebar = Sidebar;
 
             if (_sidebar == null || !_sidebar.Ready)
             {
@@ -224,7 +225,7 @@ namespace SidebarDiagnostics
 
         private void Reload_Click(object sender, EventArgs e)
         {
-            Sidebar _sidebar = GetSidebar;
+            Sidebar _sidebar = Sidebar;
 
             if (_sidebar == null)
             {
@@ -241,7 +242,7 @@ namespace SidebarDiagnostics
 
         private void Visibility_SubmenuOpened(object sender, EventArgs e)
         {
-            Sidebar _sidebar = GetSidebar;
+            Sidebar _sidebar = Sidebar;
 
             if (_sidebar == null)
             {
@@ -256,7 +257,7 @@ namespace SidebarDiagnostics
         
         private void Show_Click(object sender, EventArgs e)
         {
-            Sidebar _sidebar = GetSidebar;
+            Sidebar _sidebar = Sidebar;
 
             if (_sidebar == null || _sidebar.Visibility == Visibility.Visible)
             {
@@ -268,7 +269,7 @@ namespace SidebarDiagnostics
 
         private void Hide_Click(object sender, EventArgs e)
         {
-            Sidebar _sidebar = GetSidebar;
+            Sidebar _sidebar = Sidebar;
 
             if (_sidebar == null || _sidebar.Visibility == Visibility.Hidden)
             {
@@ -305,11 +306,27 @@ namespace SidebarDiagnostics
             MessageBox.Show(ex.ToString(), Constants.Generic.ERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
         
-        public Sidebar GetSidebar
+        public Sidebar Sidebar
         {
             get
             {
                 return Windows.OfType<Sidebar>().FirstOrDefault();
+            }
+        }
+
+        public IEnumerable<Graph> Graphs
+        {
+            get
+            {
+                return Windows.OfType<Graph>();
+            }
+        }
+
+        public new static App Current
+        {
+            get
+            {
+                return (App)Application.Current;
             }
         }
 
