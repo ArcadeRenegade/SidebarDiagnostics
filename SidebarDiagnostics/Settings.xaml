@@ -218,7 +218,7 @@
                             <DataTemplate>
                                 <Border Style="{StaticResource MonitorDetailsBorder}">
                                     <StackPanel Style="{StaticResource VerticalPanel}">
-                                        <ListView ItemsSource="{Binding Path=HardwareOC, Mode=OneWay}" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" ItemContainerStyle="{StaticResource MonitorHardwareItem}">
+                                        <ListView ItemsSource="{Binding Path=HardwareOC, Mode=OneWay}" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" ItemContainerStyle="{StaticResource MonitorHardwareItem}" Style="{StaticResource HardwareGrid}">
                                             <ListView.View>
                                                 <GridView AllowsColumnReorder="False">
                                                     <GridViewColumn Header="Enabled" HeaderContainerStyle="{StaticResource MonitorHardwareHeaderCenter}">

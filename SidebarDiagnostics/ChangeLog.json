@@ -1,5 +1,13 @@
 ﻿[
   {
+    "Version": "3.3.0",
+    "Changes": [
+      "Added graphs.",
+      "For performance reasons, graphs only store data while they are open. No historical data.",
+      "Fixed French being missing in the Language dropdown."
+    ]
+  },
+  {
     "Version": "3.2.1",
     "Changes": [
       "Fixed a bug where the sidebar would often freeze between updates.",
