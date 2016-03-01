@@ -8,6 +8,7 @@ Go to the <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases
 
 ### Features
 * Monitors CPU, RAM, GPU, network, and logical drives.
+* Graphs for all metrics.
 * Allows for lots of customization.
 * Allows alerts for various values.
 * Allows binding hotkeys.
@@ -49,3 +50,5 @@ You will need to run it as administrator.
 Data provided by <a href="http://openhardwaremonitor.org/">Open Hardware Monitor</a>.
 
 <img src="http://i.imgur.com/70LkdwO.png" />
+
+<img src="http://i.imgur.com/mkrO6W6.png" />
