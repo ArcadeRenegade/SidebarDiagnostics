@@ -562,7 +562,7 @@ namespace SidebarDiagnostics.Monitoring
 
                         if (_coreClock != null)
                         {
-                            _sensorList.Add(new OHMMetric(_coreClock, DataType.MHz, string.Format("{0} {1}", Resources.Core, i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                            _sensorList.Add(new OHMMetric(_coreClock, MetricKey.CPUClock, DataType.MHz, string.Format("{0} {1}", Resources.CPUCoreClockLabel, i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                         }
                     }
                 }
@@ -572,7 +572,7 @@ namespace SidebarDiagnostics.Monitoring
 
                     if (_firstClock != null)
                     {
-                        _sensorList.Add(new OHMMetric(_firstClock, DataType.MHz, Resources.Clock, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                        _sensorList.Add(new OHMMetric(_firstClock, MetricKey.CPUClock, DataType.MHz, null, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                     }
                 }
             }
@@ -607,17 +607,17 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMMetric(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
+                _sensorList.Add(new OHMMetric(_voltage, MetricKey.CPUVoltage, DataType.Voltage, null, roundAll));
             }
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMMetric(_tempSensor, DataType.Celcius, Resources.Temp, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
+                _sensorList.Add(new OHMMetric(_tempSensor, MetricKey.CPUTemp, DataType.Celcius, null, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             if (_fanSensor != null)
             {
-                _sensorList.Add(new OHMMetric(_fanSensor, DataType.RPM, Resources.Fan, roundAll));
+                _sensorList.Add(new OHMMetric(_fanSensor, MetricKey.CPUFan, DataType.RPM, null, roundAll));
             }
 
             ISensor[] _loadSensors = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load).ToArray();
@@ -628,7 +628,7 @@ namespace SidebarDiagnostics.Monitoring
 
                 if (_totalCPU != null)
                 {
-                    _sensorList.Add(new OHMMetric(_totalCPU, DataType.Percent, Resources.CPULoad, roundAll));
+                    _sensorList.Add(new OHMMetric(_totalCPU, MetricKey.CPULoad, DataType.Percent, null, roundAll));
                 }
 
                 if (coreLoads)
@@ -639,7 +639,7 @@ namespace SidebarDiagnostics.Monitoring
 
                         if (_coreLoad != null)
                         {
-                            _sensorList.Add(new OHMMetric(_coreLoad, DataType.Percent, string.Format("{0} {1}", Resources.Core, i - 1), roundAll));
+                            _sensorList.Add(new OHMMetric(_coreLoad, MetricKey.CPUCoreLoad, DataType.Percent, string.Format("{0} {1}", Resources.CPUCoreLoadLabel, i - 1), roundAll));
                         }
                     }
                 }
@@ -656,7 +656,7 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_ramClock != null)
             {
-                _sensorList.Add(new OHMMetric(_ramClock, DataType.MHz, Resources.Clock, true));
+                _sensorList.Add(new OHMMetric(_ramClock, MetricKey.RAMClock, DataType.MHz, null, true));
             }
 
             ISensor _voltage = null;
@@ -673,28 +673,28 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMMetric(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
+                _sensorList.Add(new OHMMetric(_voltage, MetricKey.RAMVoltage, DataType.Voltage, null, roundAll));
             }
 
             ISensor _loadSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_loadSensor != null)
             {
-                _sensorList.Add(new OHMMetric(_loadSensor, DataType.Percent, Resources.Load, roundAll));
+                _sensorList.Add(new OHMMetric(_loadSensor, MetricKey.RAMLoad, DataType.Percent, null, roundAll));
             }
 
             ISensor _usedSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 0).FirstOrDefault();
 
             if (_usedSensor != null)
             {
-                _sensorList.Add(new OHMMetric(_usedSensor, DataType.Gigabyte, Resources.Used, roundAll));
+                _sensorList.Add(new OHMMetric(_usedSensor, MetricKey.RAMUsed, DataType.Gigabyte, null, roundAll));
             }
 
             ISensor _availSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Data && s.Index == 1).FirstOrDefault();
 
             if (_availSensor != null)
             {
-                _sensorList.Add(new OHMMetric(_availSensor, DataType.Gigabyte, Resources.Free, roundAll));
+                _sensorList.Add(new OHMMetric(_availSensor, MetricKey.RAMFree, DataType.Gigabyte, null, roundAll));
             }
 
             Metrics = _sensorList.ToArray();
@@ -708,49 +708,49 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_coreClock != null)
             {
-                _sensorList.Add(new OHMMetric(_coreClock, DataType.MHz, Resources.Core, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                _sensorList.Add(new OHMMetric(_coreClock, MetricKey.GPUCoreClock, DataType.MHz, null, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
             }
 
             ISensor _memoryClock = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Index == 1).FirstOrDefault();
 
             if (_memoryClock != null)
             {
-                _sensorList.Add(new OHMMetric(_memoryClock, DataType.MHz, Resources.VRAM, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                _sensorList.Add(new OHMMetric(_memoryClock, MetricKey.GPUVRAMClock, DataType.MHz, null, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
             }
 
             ISensor _coreLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 0).FirstOrDefault();
 
             if (_coreLoad != null)
             {
-                _sensorList.Add(new OHMMetric(_coreLoad, DataType.Percent, Resources.Core, roundAll));
+                _sensorList.Add(new OHMMetric(_coreLoad, MetricKey.GPUCoreLoad, DataType.Percent, null, roundAll));
             }
 
             ISensor _memoryLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 3).FirstOrDefault();
 
             if (_memoryLoad != null)
             {
-                _sensorList.Add(new OHMMetric(_memoryLoad, DataType.Percent, Resources.VRAM, roundAll));
+                _sensorList.Add(new OHMMetric(_memoryLoad, MetricKey.GPUVRAMLoad, DataType.Percent, null, roundAll));
             }
 
             ISensor _voltage = _hardware.Sensors.Where(s => s.SensorType == SensorType.Voltage && s.Index == 0).FirstOrDefault();
 
             if (_voltage != null)
             {
-                _sensorList.Add(new OHMMetric(_voltage, DataType.Voltage, Resources.Voltage, roundAll));
+                _sensorList.Add(new OHMMetric(_voltage, MetricKey.GPUVoltage, DataType.Voltage, null, roundAll));
             }
 
             ISensor _tempSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Index == 0).FirstOrDefault();
 
             if (_tempSensor != null)
             {
-                _sensorList.Add(new OHMMetric(_tempSensor, DataType.Celcius, Resources.Temp, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
+                _sensorList.Add(new OHMMetric(_tempSensor, MetricKey.GPUTemp, DataType.Celcius, null, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
             }
 
             ISensor _fanSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
 
             if (_fanSensor != null)
             {
-                _sensorList.Add(new OHMMetric(_fanSensor, DataType.Percent, Resources.Fan));
+                _sensorList.Add(new OHMMetric(_fanSensor, MetricKey.GPUFan, DataType.Percent));
             }
 
             Metrics = _sensorList.ToArray();
@@ -779,24 +779,24 @@ namespace SidebarDiagnostics.Monitoring
 
             List<iMetric> _metrics = new List<iMetric>();
 
-            _loadMetric = new BaseMetric(DataType.Percent, Resources.Load, roundAll, usedSpaceAlert);
+            _loadMetric = new BaseMetric(MetricKey.DriveLoad, DataType.Percent, null, roundAll, usedSpaceAlert);
             _metrics.Add(_loadMetric);
 
             if (showDetails)
             {
                 if (driveSpace)
                 {
-                    _usedMetric = new BaseMetric(DataType.Gigabyte, Resources.Used, roundAll);
+                    _usedMetric = new BaseMetric(MetricKey.DriveUsed, DataType.Gigabyte, null, roundAll);
                     _metrics.Add(_usedMetric);
 
-                    _freeMetric = new BaseMetric(DataType.Gigabyte, Resources.Free, roundAll);
+                    _freeMetric = new BaseMetric(MetricKey.DriveFree, DataType.Gigabyte, null, roundAll);
                     _metrics.Add(_freeMetric);
                 }
 
                 if (driveIO)
                 {
-                    _metrics.Add(new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESREADPERSECOND, id), DataType.Bps, Resources.Read, roundAll, 0, BytesPerSecondConverter.Instance));
-                    _metrics.Add(new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESWRITEPERSECOND, id), DataType.Bps, Resources.Write, roundAll, 0, BytesPerSecondConverter.Instance));
+                    _metrics.Add(new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESREADPERSECOND, id), MetricKey.DriveRead, DataType.kBps, null, roundAll, 0, BytesPerSecondConverter.Instance));
+                    _metrics.Add(new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESWRITEPERSECOND, id), MetricKey.DriveWrite, DataType.kBps, null, roundAll, 0, BytesPerSecondConverter.Instance));
                 }
             }
 
@@ -961,8 +961,8 @@ namespace SidebarDiagnostics.Monitoring
 
             Metrics = new iMetric[2]
             {
-                new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESRECEIVEDPERSECOND, id), DataType.bps, Resources.In, roundAll, bandwidthInAlert, _converter),
-                new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESSENTPERSECOND, id), DataType.bps, Resources.Out, roundAll, bandwidthOutAlert, _converter)
+                new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESRECEIVEDPERSECOND, id), MetricKey.NetworkIn, DataType.kbps, null, roundAll, bandwidthInAlert, _converter),
+                new PCMetric(new PerformanceCounter(CATEGORYNAME, BYTESSENTPERSECOND, id), MetricKey.NetworkOut, DataType.kbps, null, roundAll, bandwidthOutAlert, _converter)
             };
         }
 
@@ -1020,6 +1020,10 @@ namespace SidebarDiagnostics.Monitoring
 
     public interface iMetric : INotifyPropertyChanged, IDisposable
     {
+        MetricKey Key { get; }
+
+        string FullName { get; }
+
         string Label { get; }
 
         double Value { get; }
@@ -1041,13 +1045,24 @@ namespace SidebarDiagnostics.Monitoring
 
     public class BaseMetric : iMetric
     {
-        public BaseMetric(DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null)
+        public BaseMetric(MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null)
         {
             _converter = converter;
             _round = round;
             _alertValue = alertValue;
 
-            Label = label;
+            Key = key;
+
+            if (label == null)
+            {
+                FullName = key.GetFullName();
+                Label = key.GetLabel();
+            }
+            else
+            {
+                FullName = Label = label;
+            }
+
             nAppend = Append = converter == null ? dataType.GetAppend() : converter.TargetType.GetAppend();
         }
 
@@ -1133,6 +1148,38 @@ namespace SidebarDiagnostics.Monitoring
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private MetricKey _key { get; set; }
+
+        public MetricKey Key
+        {
+            get
+            {
+                return _key;
+            }
+            protected set
+            {
+                _key = value;
+
+                NotifyPropertyChanged("Key");
+            }
+        }
+
+        private string _fullName { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return _fullName;
+            }
+            protected set
+            {
+                _fullName = value;
+
+                NotifyPropertyChanged("FullName");
+            }
+        }
 
         private string _label { get; set; }
 
@@ -1257,7 +1304,7 @@ namespace SidebarDiagnostics.Monitoring
 
     public class OHMMetric : BaseMetric
     {
-        public OHMMetric(ISensor sensor, DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null) : base(dataType, label, round, alertValue, converter)
+        public OHMMetric(ISensor sensor, MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
         {
             _sensor = sensor;
         }
@@ -1307,7 +1354,7 @@ namespace SidebarDiagnostics.Monitoring
 
     public class PCMetric : BaseMetric
     {
-        public PCMetric(PerformanceCounter counter, DataType dataType, string label, bool round = false, double alertValue = 0, iConverter converter = null) : base(dataType, label, round, alertValue, converter)
+        public PCMetric(PerformanceCounter counter, MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
         {
             _counter = counter;
         }
@@ -1716,6 +1763,107 @@ namespace SidebarDiagnostics.Monitoring
                 NotifyPropertyChanged("Order");
             }
         }
+    }
+
+    [JsonObject(MemberSerialization.OptIn)]
+    public class MetricConfig : INotifyPropertyChanged, ICloneable
+    {
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ConfigParam Clone()
+        {
+            return (ConfigParam)MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
+        private MetricKey _key { get; set; }
+
+        [JsonProperty]
+        public MetricKey Key
+        {
+            get
+            {
+                return _key;
+            }
+            set
+            {
+                _key = value;
+
+                NotifyPropertyChanged("Key");
+            }
+        }
+
+        private bool _enabled { get; set; }
+
+        [JsonProperty]
+        public bool Enabled
+        {
+            get
+            {
+                return _enabled;
+            }
+            set
+            {
+                _enabled = value;
+
+                NotifyPropertyChanged("Enabled");
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return Key.GetFullName();
+            }
+        }
+    }
+
+    [Serializable]
+    public enum MetricKey : byte
+    {
+        CPUClock = 0,
+        CPUTemp = 1,
+        CPUVoltage = 2,
+        CPUFan = 3,
+        CPULoad = 4,
+        CPUCoreLoad = 5,
+
+        RAMClock = 6,
+        RAMVoltage = 7,
+        RAMLoad = 8,
+        RAMUsed = 9,
+        RAMFree = 10,
+
+        GPUCoreClock = 11,
+        GPUVRAMClock = 12,
+        GPUCoreLoad = 13,
+        GPUVRAMLoad = 14,
+        GPUVoltage = 15,
+        GPUTemp = 16,
+        GPUFan = 17,
+
+        NetworkIn = 18,
+        NetworkOut = 19,
+
+        DriveLoadBar = 20,
+        DriveLoad = 21,
+        DriveUsed = 22,
+        DriveFree = 23,
+        DriveRead = 24,
+        DriveWrite = 25
     }
 
     [JsonObject(MemberSerialization.OptIn)]
@@ -2365,6 +2513,180 @@ namespace SidebarDiagnostics.Monitoring
         public static T GetValue<T>(this ConfigParam[] parameters, ParamKey key)
         {
             return (T)parameters.Single(p => p.Key == key).Value;
+        }
+
+        public static string GetFullName(this MetricKey key)
+        {
+            switch (key)
+            {
+                case MetricKey.CPUClock:
+                    return Resources.CPUClock;
+
+                case MetricKey.CPUTemp:
+                    return Resources.CPUTemp;
+
+                case MetricKey.CPUVoltage:
+                    return Resources.CPUVoltage;
+
+                case MetricKey.CPUFan:
+                    return Resources.CPUFan;
+
+                case MetricKey.CPULoad:
+                    return Resources.CPULoad;
+
+                case MetricKey.CPUCoreLoad:
+                    return Resources.CPUCoreLoad;
+
+                case MetricKey.RAMClock:
+                    return Resources.RAMClock;
+
+                case MetricKey.RAMVoltage:
+                    return Resources.RAMVoltage;
+
+                case MetricKey.RAMLoad:
+                    return Resources.RAMLoad;
+
+                case MetricKey.RAMUsed:
+                    return Resources.RAMUsed;
+
+                case MetricKey.RAMFree:
+                    return Resources.RAMFree;
+
+                case MetricKey.GPUCoreClock:
+                    return Resources.GPUCoreClock;
+
+                case MetricKey.GPUVRAMClock:
+                    return Resources.GPUVRAMClock;
+
+                case MetricKey.GPUCoreLoad:
+                    return Resources.GPUCoreLoad;
+
+                case MetricKey.GPUVRAMLoad:
+                    return Resources.GPUVRAMLoad;
+
+                case MetricKey.GPUVoltage:
+                    return Resources.GPUVoltage;
+
+                case MetricKey.GPUTemp:
+                    return Resources.GPUTemp;
+
+                case MetricKey.GPUFan:
+                    return Resources.GPUFan;
+
+                case MetricKey.NetworkIn:
+                    return Resources.NetworkIn;
+
+                case MetricKey.NetworkOut:
+                    return Resources.NetworkOut;
+
+                case MetricKey.DriveLoadBar:
+                    return Resources.DriveLoadBar;
+
+                case MetricKey.DriveLoad:
+                    return Resources.DriveLoad;
+
+                case MetricKey.DriveUsed:
+                    return Resources.DriveUsed;
+
+                case MetricKey.DriveFree:
+                    return Resources.DriveFree;
+
+                case MetricKey.DriveRead:
+                    return Resources.DriveRead;
+
+                case MetricKey.DriveWrite:
+                    return Resources.DriveWrite;
+
+                default:
+                    return "Unknown";
+            }
+        }
+
+        public static string GetLabel(this MetricKey key)
+        {
+            switch (key)
+            {
+                case MetricKey.CPUClock:
+                    return Resources.CPUClockLabel;
+
+                case MetricKey.CPUTemp:
+                    return Resources.CPUTempLabel;
+
+                case MetricKey.CPUVoltage:
+                    return Resources.CPUVoltageLabel;
+
+                case MetricKey.CPUFan:
+                    return Resources.CPUFanLabel;
+
+                case MetricKey.CPULoad:
+                    return Resources.CPULoadLabel;
+
+                case MetricKey.CPUCoreLoad:
+                    return Resources.CPUCoreLoadLabel;
+
+                case MetricKey.RAMClock:
+                    return Resources.RAMClockLabel;
+
+                case MetricKey.RAMVoltage:
+                    return Resources.RAMVoltageLabel;
+
+                case MetricKey.RAMLoad:
+                    return Resources.RAMLoadLabel;
+
+                case MetricKey.RAMUsed:
+                    return Resources.RAMUsedLabel;
+
+                case MetricKey.RAMFree:
+                    return Resources.RAMFreeLabel;
+
+                case MetricKey.GPUCoreClock:
+                    return Resources.GPUCoreClockLabel;
+
+                case MetricKey.GPUVRAMClock:
+                    return Resources.GPUVRAMClockLabel;
+
+                case MetricKey.GPUCoreLoad:
+                    return Resources.GPUCoreLoadLabel;
+
+                case MetricKey.GPUVRAMLoad:
+                    return Resources.GPUVRAMLoadLabel;
+
+                case MetricKey.GPUVoltage:
+                    return Resources.GPUVoltageLabel;
+
+                case MetricKey.GPUTemp:
+                    return Resources.GPUTempLabel;
+
+                case MetricKey.GPUFan:
+                    return Resources.GPUFanLabel;
+
+                case MetricKey.NetworkIn:
+                    return Resources.NetworkInLabel;
+
+                case MetricKey.NetworkOut:
+                    return Resources.NetworkOutLabel;
+
+                case MetricKey.DriveLoadBar:
+                    return Resources.DriveLoadBarLabel;
+
+                case MetricKey.DriveLoad:
+                    return Resources.DriveLoadLabel;
+
+                case MetricKey.DriveUsed:
+                    return Resources.DriveUsedLabel;
+
+                case MetricKey.DriveFree:
+                    return Resources.DriveFreeLabel;
+
+                case MetricKey.DriveRead:
+                    return Resources.DriveReadLabel;
+
+                case MetricKey.DriveWrite:
+                    return Resources.DriveWriteLabel;
+
+                default:
+                    return "Unknown";
+            }
         }
 
         public static string GetAppend(this DataType type)

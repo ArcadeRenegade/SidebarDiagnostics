@@ -70,29 +70,11 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clock.
-        /// </summary>
-        public static string Clock {
-            get {
-                return ResourceManager.GetString("Clock", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Core.
-        /// </summary>
-        public static string Core {
-            get {
-                return ResourceManager.GetString("Core", resourceCulture);
             }
         }
         
@@ -106,11 +88,128 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clock.
+        /// </summary>
+        public static string CPUClock {
+            get {
+                return ResourceManager.GetString("CPUClock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clock.
+        /// </summary>
+        public static string CPUClockLabel {
+            get {
+                return ResourceManager.GetString("CPUClockLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core Clock.
+        /// </summary>
+        public static string CPUCoreClock {
+            get {
+                return ResourceManager.GetString("CPUCoreClock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core.
+        /// </summary>
+        public static string CPUCoreClockLabel {
+            get {
+                return ResourceManager.GetString("CPUCoreClockLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core Load.
+        /// </summary>
+        public static string CPUCoreLoad {
+            get {
+                return ResourceManager.GetString("CPUCoreLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core.
+        /// </summary>
+        public static string CPUCoreLoadLabel {
+            get {
+                return ResourceManager.GetString("CPUCoreLoadLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fan Usage.
+        /// </summary>
+        public static string CPUFan {
+            get {
+                return ResourceManager.GetString("CPUFan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fan.
+        /// </summary>
+        public static string CPUFanLabel {
+            get {
+                return ResourceManager.GetString("CPUFanLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load.
         /// </summary>
         public static string CPULoad {
             get {
                 return ResourceManager.GetString("CPULoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string CPULoadLabel {
+            get {
+                return ResourceManager.GetString("CPULoadLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temperature.
+        /// </summary>
+        public static string CPUTemp {
+            get {
+                return ResourceManager.GetString("CPUTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temp.
+        /// </summary>
+        public static string CPUTempLabel {
+            get {
+                return ResourceManager.GetString("CPUTempLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltage.
+        /// </summary>
+        public static string CPUVoltage {
+            get {
+                return ResourceManager.GetString("CPUVoltage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltage.
+        /// </summary>
+        public static string CPUVoltageLabel {
+            get {
+                return ResourceManager.GetString("CPUVoltageLabel", resourceCulture);
             }
         }
         
@@ -124,6 +223,78 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Free.
+        /// </summary>
+        public static string DriveFree {
+            get {
+                return ResourceManager.GetString("DriveFree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free.
+        /// </summary>
+        public static string DriveFreeLabel {
+            get {
+                return ResourceManager.GetString("DriveFreeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string DriveLoad {
+            get {
+                return ResourceManager.GetString("DriveLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Bar.
+        /// </summary>
+        public static string DriveLoadBar {
+            get {
+                return ResourceManager.GetString("DriveLoadBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string DriveLoadBarLabel {
+            get {
+                return ResourceManager.GetString("DriveLoadBarLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string DriveLoadLabel {
+            get {
+                return ResourceManager.GetString("DriveLoadLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read Rate.
+        /// </summary>
+        public static string DriveRead {
+            get {
+                return ResourceManager.GetString("DriveRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read.
+        /// </summary>
+        public static string DriveReadLabel {
+            get {
+                return ResourceManager.GetString("DriveReadLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drives.
         /// </summary>
         public static string Drives {
@@ -133,20 +304,38 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fan.
+        ///   Looks up a localized string similar to Used.
         /// </summary>
-        public static string Fan {
+        public static string DriveUsed {
             get {
-                return ResourceManager.GetString("Fan", resourceCulture);
+                return ResourceManager.GetString("DriveUsed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Free.
+        ///   Looks up a localized string similar to Used.
         /// </summary>
-        public static string Free {
+        public static string DriveUsedLabel {
             get {
-                return ResourceManager.GetString("Free", resourceCulture);
+                return ResourceManager.GetString("DriveUsedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write Rate.
+        /// </summary>
+        public static string DriveWrite {
+            get {
+                return ResourceManager.GetString("DriveWrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        public static string DriveWriteLabel {
+            get {
+                return ResourceManager.GetString("DriveWriteLabel", resourceCulture);
             }
         }
         
@@ -169,6 +358,132 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Core Clock.
+        /// </summary>
+        public static string GPUCoreClock {
+            get {
+                return ResourceManager.GetString("GPUCoreClock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core.
+        /// </summary>
+        public static string GPUCoreClockLabel {
+            get {
+                return ResourceManager.GetString("GPUCoreClockLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core Load.
+        /// </summary>
+        public static string GPUCoreLoad {
+            get {
+                return ResourceManager.GetString("GPUCoreLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core.
+        /// </summary>
+        public static string GPUCoreLoadLabel {
+            get {
+                return ResourceManager.GetString("GPUCoreLoadLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fan Usage.
+        /// </summary>
+        public static string GPUFan {
+            get {
+                return ResourceManager.GetString("GPUFan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fan.
+        /// </summary>
+        public static string GPUFanLabel {
+            get {
+                return ResourceManager.GetString("GPUFanLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temperature.
+        /// </summary>
+        public static string GPUTemp {
+            get {
+                return ResourceManager.GetString("GPUTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temp.
+        /// </summary>
+        public static string GPUTempLabel {
+            get {
+                return ResourceManager.GetString("GPUTempLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltage.
+        /// </summary>
+        public static string GPUVoltage {
+            get {
+                return ResourceManager.GetString("GPUVoltage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltage.
+        /// </summary>
+        public static string GPUVoltageLabel {
+            get {
+                return ResourceManager.GetString("GPUVoltageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VRAM Clock.
+        /// </summary>
+        public static string GPUVRAMClock {
+            get {
+                return ResourceManager.GetString("GPUVRAMClock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VRAM.
+        /// </summary>
+        public static string GPUVRAMClockLabel {
+            get {
+                return ResourceManager.GetString("GPUVRAMClockLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VRAM Load.
+        /// </summary>
+        public static string GPUVRAMLoad {
+            get {
+                return ResourceManager.GetString("GPUVRAMLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VRAM.
+        /// </summary>
+        public static string GPUVRAMLoadLabel {
+            get {
+                return ResourceManager.GetString("GPUVRAMLoadLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Graph.
         /// </summary>
         public static string Graph {
@@ -187,24 +502,6 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In.
-        /// </summary>
-        public static string In {
-            get {
-                return ResourceManager.GetString("In", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Load.
-        /// </summary>
-        public static string Load {
-            get {
-                return ResourceManager.GetString("Load", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Network.
         /// </summary>
         public static string Network {
@@ -214,11 +511,38 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bandwidth In.
+        /// </summary>
+        public static string NetworkIn {
+            get {
+                return ResourceManager.GetString("NetworkIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In.
+        /// </summary>
+        public static string NetworkInLabel {
+            get {
+                return ResourceManager.GetString("NetworkInLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bandwidth Out.
+        /// </summary>
+        public static string NetworkOut {
+            get {
+                return ResourceManager.GetString("NetworkOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Out.
         /// </summary>
-        public static string Out {
+        public static string NetworkOutLabel {
             get {
-                return ResourceManager.GetString("Out", resourceCulture);
+                return ResourceManager.GetString("NetworkOutLabel", resourceCulture);
             }
         }
         
@@ -232,11 +556,92 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Read.
+        ///   Looks up a localized string similar to Clock.
         /// </summary>
-        public static string Read {
+        public static string RAMClock {
             get {
-                return ResourceManager.GetString("Read", resourceCulture);
+                return ResourceManager.GetString("RAMClock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clock.
+        /// </summary>
+        public static string RAMClockLabel {
+            get {
+                return ResourceManager.GetString("RAMClockLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free.
+        /// </summary>
+        public static string RAMFree {
+            get {
+                return ResourceManager.GetString("RAMFree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free.
+        /// </summary>
+        public static string RAMFreeLabel {
+            get {
+                return ResourceManager.GetString("RAMFreeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string RAMLoad {
+            get {
+                return ResourceManager.GetString("RAMLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string RAMLoadLabel {
+            get {
+                return ResourceManager.GetString("RAMLoadLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used.
+        /// </summary>
+        public static string RAMUsed {
+            get {
+                return ResourceManager.GetString("RAMUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used.
+        /// </summary>
+        public static string RAMUsedLabel {
+            get {
+                return ResourceManager.GetString("RAMUsedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltage.
+        /// </summary>
+        public static string RAMVoltage {
+            get {
+                return ResourceManager.GetString("RAMVoltage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltage.
+        /// </summary>
+        public static string RAMVoltageLabel {
+            get {
+                return ResourceManager.GetString("RAMVoltageLabel", resourceCulture);
             }
         }
         
@@ -277,15 +682,6 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Temp.
-        /// </summary>
-        public static string Temp {
-            get {
-                return ResourceManager.GetString("Temp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Time.
         /// </summary>
         public static string Time {
@@ -304,47 +700,11 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Used.
-        /// </summary>
-        public static string Used {
-            get {
-                return ResourceManager.GetString("Used", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Visibility.
         /// </summary>
         public static string Visibility {
             get {
                 return ResourceManager.GetString("Visibility", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Voltage.
-        /// </summary>
-        public static string Voltage {
-            get {
-                return ResourceManager.GetString("Voltage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to VRAM.
-        /// </summary>
-        public static string VRAM {
-            get {
-                return ResourceManager.GetString("VRAM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Write.
-        /// </summary>
-        public static string Write {
-            get {
-                return ResourceManager.GetString("Write", resourceCulture);
             }
         }
     }

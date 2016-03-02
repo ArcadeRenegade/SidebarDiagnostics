@@ -86,8 +86,8 @@ namespace SidebarDiagnostics.Models
                 _plot.Series.Add(
                     new LineSeries()
                     {
-                        Title = _metric.Label,
-                        TrackerFormatString = string.Format("{0}\r\n{{Value:#,##0.##}}{1}\r\n{{Recorded:T}}", _metric.Label, _metric.nAppend),
+                        Title = _metric.FullName,
+                        TrackerFormatString = string.Format("{0}\r\n{{Value:#,##0.##}}{1}\r\n{{Recorded:T}}", _metric.FullName, _metric.nAppend),
                         ItemsSource = _records,
                         DataFieldX = "Recorded",
                         DataFieldY = "Value"
