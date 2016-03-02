@@ -238,7 +238,12 @@
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
-                                        
+
+                                        <DockPanel LastChildFill="True" Margin="0,15,0,0">
+                                            <Label DockPanel.Dock="Left" Content="Metrics:" Margin="0,0,10,0" />
+                                            <xctk:CheckComboBox ItemsSource="{Binding Path=Metrics, Mode=OneWay}" DisplayMemberPath="Name" SelectedMemberPath="Enabled" Delimiter=", " ToolTip="Enable or disable specific metrics." />
+                                        </DockPanel>
+
                                         <ItemsControl ItemsSource="{Binding Path=Params}" Margin="10">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate DataType="{x:Type monitor:ConfigParam}">

@@ -762,6 +762,11 @@ namespace SidebarDiagnostics.Models
                         _hardware.PropertyChanged += Child_PropertyChanged;
                     }
 
+                    foreach (MetricConfig _metric in _config.Metrics)
+                    {
+                        _metric.PropertyChanged += Child_PropertyChanged;
+                    }
+
                     foreach (ConfigParam _param in _config.Params)
                     {
                         _param.PropertyChanged += Child_PropertyChanged;
