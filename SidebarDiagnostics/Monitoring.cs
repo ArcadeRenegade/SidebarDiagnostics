@@ -846,8 +846,9 @@ namespace SidebarDiagnostics.Monitoring
 
         public DriveMonitor(string id, string name, MetricConfig[] metrics, bool roundAll = false, double usedSpaceAlert = 0) : base(id, name, true)
         {
+            _loadEnabled = metrics.IsEnabled(MetricKey.DriveLoad);
+
             bool _loadBarEnabled = metrics.IsEnabled(MetricKey.DriveLoadBar);
-            bool _loadEnabled = metrics.IsEnabled(MetricKey.DriveLoad);
             bool _usedEnabled = metrics.IsEnabled(MetricKey.DriveUsed);
             bool _freeEnabled = metrics.IsEnabled(MetricKey.DriveFree);
             bool _readEnabled = metrics.IsEnabled(MetricKey.DriveRead);
@@ -880,11 +881,7 @@ namespace SidebarDiagnostics.Monitoring
             if (_loadBarEnabled || _loadEnabled)
             {
                 LoadMetric = new BaseMetric(MetricKey.DriveLoad, DataType.Percent, null, roundAll, usedSpaceAlert);
-
-                if (_loadEnabled)
-                {
-                    _metrics.Add(LoadMetric);
-                }
+                _metrics.Add(LoadMetric);
             }
 
             if (_usedEnabled)
@@ -1101,9 +1098,26 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
+        public iMetric[] DriveMetrics
+        {
+            get
+            {
+                if (_loadEnabled)
+                {
+                    return Metrics;
+                }
+                else
+                {
+                    return Metrics.Where(m => m.Key != MetricKey.DriveLoad).ToArray();
+                }
+            }
+        }
+
         private PerformanceCounter _counterFreeMB { get; set; }
 
         private PerformanceCounter _counterFreePercent { get; set; }
+
+        private bool _loadEnabled { get; set; }
 
         private bool _disposed { get; set; } = false;
 

@@ -187,7 +187,7 @@
                                                         </ContentControl.Style>
                                                     </ContentControl>
 
-                                                    <ItemsControl ItemsSource="{Binding Path=Metrics, Mode=OneWay}">
+                                                    <ItemsControl ItemsSource="{Binding Path=DriveMetrics, Mode=OneWay}">
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate DataType="{x:Type monitor:iMetric}">
                                                                 <TextBlock Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
