@@ -16,7 +16,12 @@ namespace SidebarDiagnostics.Models
     {
         public SettingsModel(Sidebar sidebar)
         {
-            DockEdgeItems = new DockEdge[2] { DockEdge.Left, DockEdge.Right };
+            DockEdgeItems = new DockItem[2]
+            {
+                new DockItem() { Text = Resources.SettingsDockLeft, Value = DockEdge.Left },
+                new DockItem() { Text = Resources.SettingsDockRight, Value = DockEdge.Right }
+            };
+
             DockEdge = Framework.Settings.Instance.DockEdge;
 
             Monitor[] _monitors = Monitor.GetMonitors();
@@ -113,7 +118,7 @@ namespace SidebarDiagnostics.Models
         {
             if (!string.Equals(Culture, Framework.Settings.Instance.Culture, StringComparison.Ordinal))
             {
-                MessageBox.Show(Constants.Generic.LANGUAGEMSG, Constants.Generic.LANGUAGETITLE, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                MessageBox.Show(Resources.LanguageChangedText, Resources.LanguageChangedTitle, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
             }
 
             Framework.Settings.Instance.DockEdge = DockEdge;
@@ -273,9 +278,9 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private DockEdge[] _dockEdgeItems { get; set; }
+        private DockItem[] _dockEdgeItems { get; set; }
 
-        public DockEdge[] DockEdgeItems
+        public DockItem[] DockEdgeItems
         {
             get
             {
@@ -888,6 +893,13 @@ namespace SidebarDiagnostics.Models
                 NotifyPropertyChanged("CycleScreenKey");
             }
         }
+    }
+
+    public class DockItem
+    {
+        public DockEdge Value { get; set; }
+
+        public string Text { get; set; }
     }
 
     public class ScreenItem

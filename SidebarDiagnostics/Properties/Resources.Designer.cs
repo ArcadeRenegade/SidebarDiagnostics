@@ -70,11 +70,164 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        public static string ButtonApply {
+            get {
+                return ResourceManager.GetString("ButtonApply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ButtonCancel {
+            get {
+                return ResourceManager.GetString("ButtonCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
-        public static string Close {
+        public static string ButtonClose {
             get {
-                return ResourceManager.GetString("Close", resourceCulture);
+                return ResourceManager.GetString("ButtonClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donate.
+        /// </summary>
+        public static string ButtonDonate {
+            get {
+                return ResourceManager.GetString("ButtonDonate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        public static string ButtonDone {
+            get {
+                return ResourceManager.GetString("ButtonDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GitHub.
+        /// </summary>
+        public static string ButtonGitHub {
+            get {
+                return ResourceManager.GetString("ButtonGitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Graph.
+        /// </summary>
+        public static string ButtonGraph {
+            get {
+                return ResourceManager.GetString("ButtonGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide.
+        /// </summary>
+        public static string ButtonHide {
+            get {
+                return ResourceManager.GetString("ButtonHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string ButtonNo {
+            get {
+                return ResourceManager.GetString("ButtonNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload.
+        /// </summary>
+        public static string ButtonReload {
+            get {
+                return ResourceManager.GetString("ButtonReload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string ButtonSave {
+            get {
+                return ResourceManager.GetString("ButtonSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string ButtonSettings {
+            get {
+                return ResourceManager.GetString("ButtonSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string ButtonShow {
+            get {
+                return ResourceManager.GetString("ButtonShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip.
+        /// </summary>
+        public static string ButtonSkip {
+            get {
+                return ResourceManager.GetString("ButtonSkip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string ButtonUpdate {
+            get {
+                return ResourceManager.GetString("ButtonUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visibility.
+        /// </summary>
+        public static string ButtonVisibility {
+            get {
+                return ResourceManager.GetString("ButtonVisibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string ButtonYes {
+            get {
+                return ResourceManager.GetString("ButtonYes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Log.
+        /// </summary>
+        public static string ChangeLogTitle {
+            get {
+                return ResourceManager.GetString("ChangeLogTitle", resourceCulture);
             }
         }
         
@@ -214,15 +367,6 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Donate.
-        /// </summary>
-        public static string Donate {
-            get {
-                return ResourceManager.GetString("Donate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Free.
         /// </summary>
         public static string DriveFree {
@@ -340,11 +484,20 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GitHub.
+        ///   Looks up a localized string similar to Your Performance Counter cache is corrupted.\r\nClick OK to visit the wiki and fix this error..
         /// </summary>
-        public static string GitHub {
+        public static string ErrorPerformanceCounter {
             get {
-                return ResourceManager.GetString("GitHub", resourceCulture);
+                return ResourceManager.GetString("ErrorPerformanceCounter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sidebar Error.
+        /// </summary>
+        public static string ErrorTitle {
+            get {
+                return ResourceManager.GetString("ErrorTitle", resourceCulture);
             }
         }
         
@@ -484,20 +637,101 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Graph.
+        ///   Looks up a localized string similar to Config.
         /// </summary>
-        public static string Graph {
+        public static string GraphConfigSectionTitle {
             get {
-                return ResourceManager.GetString("Graph", resourceCulture);
+                return ResourceManager.GetString("GraphConfigSectionTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hide.
+        ///   Looks up a localized string similar to Duration.
         /// </summary>
-        public static string Hide {
+        public static string GraphDuration {
             get {
-                return ResourceManager.GetString("Hide", resourceCulture);
+                return ResourceManager.GetString("GraphDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minute.
+        /// </summary>
+        public static string GraphDurationMinute {
+            get {
+                return ResourceManager.GetString("GraphDurationMinute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minutes.
+        /// </summary>
+        public static string GraphDurationMinutes {
+            get {
+                return ResourceManager.GetString("GraphDurationMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seconds.
+        /// </summary>
+        public static string GraphDurationSeconds {
+            get {
+                return ResourceManager.GetString("GraphDurationSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hardware.
+        /// </summary>
+        public static string GraphHardware {
+            get {
+                return ResourceManager.GetString("GraphHardware", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metrics.
+        /// </summary>
+        public static string GraphMetrics {
+            get {
+                return ResourceManager.GetString("GraphMetrics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monitor.
+        /// </summary>
+        public static string GraphMonitor {
+            get {
+                return ResourceManager.GetString("GraphMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Graph.
+        /// </summary>
+        public static string GraphTitle {
+            get {
+                return ResourceManager.GetString("GraphTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please restart the app..
+        /// </summary>
+        public static string LanguageChangedText {
+            get {
+                return ResourceManager.GetString("LanguageChangedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language Changed.
+        /// </summary>
+        public static string LanguageChangedTitle {
+            get {
+                return ResourceManager.GetString("LanguageChangedTitle", resourceCulture);
             }
         }
         
@@ -646,29 +880,335 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reload.
+        ///   Looks up a localized string similar to Advanced.
         /// </summary>
-        public static string Reload {
+        public static string SettingsAdvancedTab {
             get {
-                return ResourceManager.GetString("Reload", resourceCulture);
+                return ResourceManager.GetString("SettingsAdvancedTab", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings.
+        ///   Looks up a localized string similar to Always On Top.
         /// </summary>
-        public static string Settings {
+        public static string SettingsAlwaysOnTop {
             get {
-                return ResourceManager.GetString("Settings", resourceCulture);
+                return ResourceManager.GetString("SettingsAlwaysOnTop", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show.
+        ///   Looks up a localized string similar to Makes the sidebar always on top of other windows..
         /// </summary>
-        public static string Show {
+        public static string SettingsAlwaysOnTopTooltip {
             get {
-                return ResourceManager.GetString("Show", resourceCulture);
+                return ResourceManager.GetString("SettingsAlwaysOnTopTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Update.
+        /// </summary>
+        public static string SettingsAutoUpdate {
+            get {
+                return ResourceManager.GetString("SettingsAutoUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updates the app automatically..
+        /// </summary>
+        public static string SettingsAutoUpdateTooltip {
+            get {
+                return ResourceManager.GetString("SettingsAutoUpdateTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customize.
+        /// </summary>
+        public static string SettingsCustomizeTab {
+            get {
+                return ResourceManager.GetString("SettingsCustomizeTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dock.
+        /// </summary>
+        public static string SettingsDock {
+            get {
+                return ResourceManager.GetString("SettingsDock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom.
+        /// </summary>
+        public static string SettingsDockBottom {
+            get {
+                return ResourceManager.GetString("SettingsDockBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string SettingsDockLeft {
+            get {
+                return ResourceManager.GetString("SettingsDockLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string SettingsDockRight {
+            get {
+                return ResourceManager.GetString("SettingsDockRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Which edge the sidebar will dock to..
+        /// </summary>
+        public static string SettingsDockTooltip {
+            get {
+                return ResourceManager.GetString("SettingsDockTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top.
+        /// </summary>
+        public static string SettingsDockTop {
+            get {
+                return ResourceManager.GetString("SettingsDockTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string SettingsGeneralTab {
+            get {
+                return ResourceManager.GetString("SettingsGeneralTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal Offset.
+        /// </summary>
+        public static string SettingsHorizontalOffset {
+            get {
+                return ResourceManager.GetString("SettingsHorizontalOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal offset of the sidebar..
+        /// </summary>
+        public static string SettingsHorizontalOffsetTooltip {
+            get {
+                return ResourceManager.GetString("SettingsHorizontalOffsetTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotkeys.
+        /// </summary>
+        public static string SettingsHotkeysTab {
+            get {
+                return ResourceManager.GetString("SettingsHotkeysTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string SettingsLanguage {
+            get {
+                return ResourceManager.GetString("SettingsLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string SettingsLanguageDefault {
+            get {
+                return ResourceManager.GetString("SettingsLanguageDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current language of the app..
+        /// </summary>
+        public static string SettingsLanguageTooltip {
+            get {
+                return ResourceManager.GetString("SettingsLanguageTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monitors.
+        /// </summary>
+        public static string SettingsMonitorsTab {
+            get {
+                return ResourceManager.GetString("SettingsMonitorsTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reserve Space.
+        /// </summary>
+        public static string SettingsReserveSpace {
+            get {
+                return ResourceManager.GetString("SettingsReserveSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reserves space in the work area for the sidebar..
+        /// </summary>
+        public static string SettingsReserveSpaceTooltip {
+            get {
+                return ResourceManager.GetString("SettingsReserveSpaceTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run at Startup.
+        /// </summary>
+        public static string SettingsRunAtStartup {
+            get {
+                return ResourceManager.GetString("SettingsRunAtStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Runs the app when you first log in..
+        /// </summary>
+        public static string SettingsRunAtStartupTooltip {
+            get {
+                return ResourceManager.GetString("SettingsRunAtStartupTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Screen.
+        /// </summary>
+        public static string SettingsScreen {
+            get {
+                return ResourceManager.GetString("SettingsScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Which screen the sidebar will be on..
+        /// </summary>
+        public static string SettingsScreenTooltip {
+            get {
+                return ResourceManager.GetString("SettingsScreenTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sidebar Settings.
+        /// </summary>
+        public static string SettingsTitle {
+            get {
+                return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical Offset.
+        /// </summary>
+        public static string SettingsVerticalOffset {
+            get {
+                return ResourceManager.GetString("SettingsVerticalOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical offset of the sidebar..
+        /// </summary>
+        public static string SettingsVerticalOffsetTooltip {
+            get {
+                return ResourceManager.GetString("SettingsVerticalOffsetTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use the sliders and textboxes to move the sidebar to the correct position..
+        /// </summary>
+        public static string SetupCustomSubtitle {
+            get {
+                return ResourceManager.GetString("SetupCustomSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        public static string SetupCustomTitle {
+            get {
+                return ResourceManager.GetString("SetupCustomTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you want to customize the sidebar click the settings button..
+        /// </summary>
+        public static string SetupDoneSubtitle {
+            get {
+                return ResourceManager.GetString("SetupDoneSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can also access the settings via the gear icon at the top-right of the sidebar or via the tray icon in the taskbar..
+        /// </summary>
+        public static string SetupDoneText {
+            get {
+                return ResourceManager.GetString("SetupDoneText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done!.
+        /// </summary>
+        public static string SetupDoneTitle {
+            get {
+                return ResourceManager.GetString("SetupDoneTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a quick setup to get the sidebar in the correct position..
+        /// </summary>
+        public static string SetupSubtitle {
+            get {
+                return ResourceManager.GetString("SetupSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is the sidebar visible and docked to the right edge of your primary monitor?.
+        /// </summary>
+        public static string SetupText {
+            get {
+                return ResourceManager.GetString("SetupText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial Setup.
+        /// </summary>
+        public static string SetupTitle {
+            get {
+                return ResourceManager.GetString("SetupTitle", resourceCulture);
             }
         }
         
@@ -691,20 +1231,47 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to A fatal error occurred while trying to update.\r\nAuto update is now disabled..
         /// </summary>
-        public static string Update {
+        public static string UpdateErrorFatalText {
             get {
-                return ResourceManager.GetString("Update", resourceCulture);
+                return ResourceManager.GetString("UpdateErrorFatalText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visibility.
+        ///   Looks up a localized string similar to Unable to update. Check your internet connection..
         /// </summary>
-        public static string Visibility {
+        public static string UpdateErrorText {
             get {
-                return ResourceManager.GetString("Visibility", resourceCulture);
+                return ResourceManager.GetString("UpdateErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Error.
+        /// </summary>
+        public static string UpdateErrorTitle {
+            get {
+                return ResourceManager.GetString("UpdateErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have the latest version..
+        /// </summary>
+        public static string UpdateSuccessText {
+            get {
+                return ResourceManager.GetString("UpdateSuccessText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating.
+        /// </summary>
+        public static string UpdateTitle {
+            get {
+                return ResourceManager.GetString("UpdateTitle", resourceCulture);
             }
         }
     }

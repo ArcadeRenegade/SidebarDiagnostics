@@ -20,19 +20,19 @@
             <tb:TaskbarIcon x:Key="TrayIcon" IconSource="Sidebar.ico" LeftClickCommand="{StaticResource ShowCommand}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="{x:Static frame:Resources.Settings}" Click="Settings_Click" />
-                        <MenuItem Header="{x:Static frame:Resources.Reload}" Click="Reload_Click" />
-                        <MenuItem Header="{x:Static frame:Resources.Graph}" Click="Graph_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonSettings}" Click="Settings_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonReload}" Click="Reload_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonGraph}" Click="Graph_Click" />
                         <Separator />
-                        <MenuItem Header="{x:Static frame:Resources.Visibility}" SubmenuOpened="Visibility_SubmenuOpened">
-                            <MenuItem Header="{x:Static frame:Resources.Show}" Click="Show_Click" />
-                            <MenuItem Header="{x:Static frame:Resources.Hide}" Click="Hide_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonVisibility}" SubmenuOpened="Visibility_SubmenuOpened">
+                            <MenuItem Header="{x:Static frame:Resources.ButtonShow}" Click="Show_Click" />
+                            <MenuItem Header="{x:Static frame:Resources.ButtonHide}" Click="Hide_Click" />
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="{x:Static frame:Resources.Donate}" Click="Donate_Click" />
-                        <MenuItem Header="{x:Static frame:Resources.GitHub}" Click="GitHub_Click" />
-                        <MenuItem Header="{x:Static frame:Resources.Update}" Click="Update_Click" />
-                        <MenuItem Header="{x:Static frame:Resources.Close}" Click="Close_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonDonate}" Click="Donate_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonGitHub}" Click="GitHub_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonUpdate}" Click="Update_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonClose}" Click="Close_Click" />
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>

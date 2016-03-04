@@ -139,8 +139,6 @@ namespace SidebarDiagnostics
             {
                 Hotkey.Enable();
             }
-
-            Utilities.Culture.SetCurrent(Framework.Settings.Instance.Culture);
         }
 
         private void BindPosition(Action callback)

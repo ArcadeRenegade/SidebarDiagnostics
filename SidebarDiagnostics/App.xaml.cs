@@ -40,7 +40,7 @@ namespace SidebarDiagnostics
             
             // LANGUAGE
             Culture.SetDefault();
-            Culture.SetCurrent(Framework.Settings.Instance.Culture);
+            Culture.SetCurrent(true);
 
             // SETTINGS
             CheckSettings();
@@ -97,7 +97,7 @@ namespace SidebarDiagnostics
 
         public static void ShowPerformanceCounterError()
         {
-            MessageBoxResult _result = MessageBox.Show(Constants.Generic.PERFORMANCECOUNTERERROR, Constants.Generic.ERRORTITLE, MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBoxResult _result = MessageBox.Show(Framework.Resources.ErrorPerformanceCounter, Framework.Resources.ErrorTitle, MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
 
             if (_result == MessageBoxResult.OK)
             {
@@ -178,7 +178,7 @@ namespace SidebarDiagnostics
                     }
                     else if (showInfo)
                     {
-                        MessageBox.Show(Constants.Generic.UPDATEMSG, Framework.Resources.AppName, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                        MessageBox.Show(Framework.Resources.UpdateSuccessText, Framework.Resources.AppName, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace SidebarDiagnostics
             {
                 if (showInfo)
                 {
-                    MessageBox.Show(Constants.Generic.UPDATEERROR, Constants.Generic.UPDATEERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    MessageBox.Show(Framework.Resources.UpdateErrorText, Framework.Resources.UpdateErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                 }
             }
             catch (Exception)
@@ -194,7 +194,7 @@ namespace SidebarDiagnostics
                 Framework.Settings.Instance.AutoUpdate = false;
                 Framework.Settings.Instance.Save();
 
-                MessageBox.Show(Constants.Generic.UPDATEFATAL, Constants.Generic.ERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                MessageBox.Show(Framework.Resources.UpdateErrorFatalText, Framework.Resources.UpdateErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
             }
 
             return null;
@@ -303,7 +303,7 @@ namespace SidebarDiagnostics
         {
             Exception ex = (Exception)e.ExceptionObject;
 
-            MessageBox.Show(ex.ToString(), Constants.Generic.ERRORTITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBox.Show(ex.ToString(), Framework.Resources.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
         
         public Sidebar Sidebar

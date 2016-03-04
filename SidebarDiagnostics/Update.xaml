@@ -6,8 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
+        xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
         mc:Ignorable="d"
-        Title="Sidebar Diagnostics"
+        Title="{x:Static frame:Resources.AppName}"
         Icon="Sidebar.ico"
         Width="300"
         SizeToContent="Height"
@@ -24,7 +25,7 @@
         <TaskbarItemInfo ProgressState="Normal" ProgressValue="{Binding Path=ProgressNormalized, Mode=OneWay}" />
     </Window.TaskbarItemInfo>
     <DockPanel LastChildFill="True">
-        <Label DockPanel.Dock="Top" Content="Updating" Style="{StaticResource UpdateTitle}" />
+        <Label DockPanel.Dock="Top" Content="{x:Static frame:Resources.UpdateTitle}" Style="{StaticResource UpdateTitle}" />
         <ProgressBar Value="{Binding Path=Progress, Mode=OneWay}" Style="{StaticResource UpdateProgress}" />
     </DockPanel>
 </win:DPIAwareWindow>

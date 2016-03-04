@@ -190,7 +190,7 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private string _title { get; set; } = Resources.Graph;
+        private string _title { get; set; } = Resources.GraphTitle;
 
         public string Title
         {
@@ -279,13 +279,13 @@ namespace SidebarDiagnostics.Models
                 {
                     BindMetrics(new iMetric[0]);
 
-                    Title = Resources.Graph;
+                    Title = Resources.GraphTitle;
                 }
                 else
                 {
                     BindMetrics(_hardware.Metrics);
 
-                    Title = string.Format("{0} - {1}", Resources.Graph, _hardware.Name);
+                    Title = string.Format("{0} - {1}", Resources.GraphTitle, _hardware.Name);
                 }
 
                 NotifyPropertyChanged("Hardware");
@@ -343,13 +343,14 @@ namespace SidebarDiagnostics.Models
         {
             get
             {
+
                 return new DurationItem[5]
                 {
-                    new DurationItem(15, "15 Seconds"),
-                    new DurationItem(30, "30 Seconds"),
-                    new DurationItem(60, "1 Minute"),
-                    new DurationItem(300, "5 Minutes"),
-                    new DurationItem(900, "15 Minutes")
+                    new DurationItem(15, string.Format("15 {0}", Resources.GraphDurationSeconds)),
+                    new DurationItem(30, string.Format("30 {0}", Resources.GraphDurationSeconds)),
+                    new DurationItem(60, string.Format("1 {0}", Resources.GraphDurationMinute)),
+                    new DurationItem(300, string.Format("5 {0}", Resources.GraphDurationMinutes)),
+                    new DurationItem(900, string.Format("15 {0}", Resources.GraphDurationMinutes))
                 };
             }
         }

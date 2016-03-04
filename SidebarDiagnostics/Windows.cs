@@ -905,6 +905,13 @@ namespace SidebarDiagnostics.Windows
             public const int WM_WINDOWPOSCHANGED = 0x0047;
         }
 
+        public override void BeginInit()
+        {
+            Utilities.Culture.SetCurrent(false);
+
+            base.BeginInit();
+        }
+
         public override void EndInit()
         {
             base.EndInit();

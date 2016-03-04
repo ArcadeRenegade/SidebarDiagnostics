@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Newtonsoft.Json;
 using SidebarDiagnostics.Utilities;
+using SidebarDiagnostics.Framework;
 
 namespace SidebarDiagnostics.Models
 {
@@ -14,7 +14,7 @@ namespace SidebarDiagnostics.Models
         {
             string _vstring = version.ToString(3);
 
-            Title = string.Format("Change Log v{0}", _vstring);
+            Title = string.Format("{0} v{1}", Resources.ChangeLogTitle, _vstring);
 
             ChangeLogEntry _log = ChangeLogEntry.Load().FirstOrDefault(e => string.Equals(e.Version, _vstring, StringComparison.OrdinalIgnoreCase));
 

@@ -125,17 +125,17 @@
     <value>Clock</value>
     <comment>Full name for CPU clock metric</comment>
   </data>
-  <data name="Close" xml:space="preserve">
+  <data name="ButtonClose" xml:space="preserve">
     <value>Close</value>
-    <comment>Close app taskbar menu item</comment>
+    <comment>Text of the close button</comment>
   </data>
   <data name="CPU" xml:space="preserve">
     <value>CPU</value>
     <comment>CPU monitor title</comment>
   </data>
-  <data name="Donate" xml:space="preserve">
+  <data name="ButtonDonate" xml:space="preserve">
     <value>Donate</value>
-    <comment>Donate taskbar menu item</comment>
+    <comment>Text of the donate button</comment>
   </data>
   <data name="Drives" xml:space="preserve">
     <value>Drives</value>
@@ -149,9 +149,9 @@
     <value>GPU</value>
     <comment>GPU monitor title</comment>
   </data>
-  <data name="Hide" xml:space="preserve">
+  <data name="ButtonHide" xml:space="preserve">
     <value>Hide</value>
-    <comment>Hide taskbar menu item</comment>
+    <comment>Text of the hide button</comment>
   </data>
   <data name="Network" xml:space="preserve">
     <value>Network</value>
@@ -161,17 +161,17 @@
     <value>RAM</value>
     <comment>RAM monitor title</comment>
   </data>
-  <data name="Reload" xml:space="preserve">
+  <data name="ButtonReload" xml:space="preserve">
     <value>Reload</value>
-    <comment>Reload taskbar menu item</comment>
+    <comment>Text of the reload button</comment>
   </data>
-  <data name="Settings" xml:space="preserve">
+  <data name="ButtonSettings" xml:space="preserve">
     <value>Settings</value>
-    <comment>Settings taskbar menu item</comment>
+    <comment>Text of the settings button</comment>
   </data>
-  <data name="Show" xml:space="preserve">
+  <data name="ButtonShow" xml:space="preserve">
     <value>Show</value>
-    <comment>Show taskbar menu item</comment>
+    <comment>Text of the show button</comment>
   </data>
   <data name="Sidebar" xml:space="preserve">
     <value>Sidebar</value>
@@ -185,29 +185,29 @@
     <value>Time</value>
     <comment>Sidebar clock title</comment>
   </data>
-  <data name="Update" xml:space="preserve">
+  <data name="ButtonUpdate" xml:space="preserve">
     <value>Update</value>
-    <comment>Update taskbar menu item</comment>
+    <comment>Text of the update button</comment>
   </data>
-  <data name="Visibility" xml:space="preserve">
+  <data name="ButtonVisibility" xml:space="preserve">
     <value>Visibility</value>
-    <comment>Visibility taskbar menu item</comment>
+    <comment>Text of the visibility button</comment>
   </data>
   <data name="CPUVoltage" xml:space="preserve">
     <value>Voltage</value>
     <comment>Full name for CPU voltage metric</comment>
   </data>
-  <data name="GitHub" xml:space="preserve">
+  <data name="ButtonGitHub" xml:space="preserve">
     <value>GitHub</value>
-    <comment>GitHub taskbar menu item</comment>
+    <comment>Text of the GitHub button</comment>
   </data>
   <data name="CPULoad" xml:space="preserve">
     <value>Load</value>
     <comment>Full name for CPU load metric</comment>
   </data>
-  <data name="Graph" xml:space="preserve">
+  <data name="ButtonGraph" xml:space="preserve">
     <value>Graph</value>
-    <comment>Graph taskbar menu item</comment>
+    <comment>Text of the graph button</comment>
   </data>
   <data name="CPUClockLabel" xml:space="preserve">
     <value>Clock</value>
@@ -404,5 +404,257 @@
   <data name="RAMVoltageLabel" xml:space="preserve">
     <value>Voltage</value>
     <comment>Short label for RAM voltage metric</comment>
+  </data>
+  <data name="ButtonApply" xml:space="preserve">
+    <value>Apply</value>
+    <comment>Text of the apply button</comment>
+  </data>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Text of the cancel button</comment>
+  </data>
+  <data name="ButtonDone" xml:space="preserve">
+    <value>Done</value>
+    <comment>Text of the done button</comment>
+  </data>
+  <data name="ButtonNo" xml:space="preserve">
+    <value>No</value>
+    <comment>Text of the no button</comment>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Save</value>
+    <comment>Text of the save button</comment>
+  </data>
+  <data name="ButtonSkip" xml:space="preserve">
+    <value>Skip</value>
+    <comment>Text of the skip button</comment>
+  </data>
+  <data name="ButtonYes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>Text of the yes button</comment>
+  </data>
+  <data name="ChangeLogTitle" xml:space="preserve">
+    <value>Change Log</value>
+    <comment>Title of the change log window</comment>
+  </data>
+  <data name="ErrorPerformanceCounter" xml:space="preserve">
+    <value>Your Performance Counter cache is corrupted.\r\nClick OK to visit the wiki and fix this error.</value>
+    <comment>Text of the performance counter error</comment>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Sidebar Error</value>
+    <comment>Title of the error popup</comment>
+  </data>
+  <data name="GraphConfigSectionTitle" xml:space="preserve">
+    <value>Config</value>
+    <comment>Title of the config section in the graph window</comment>
+  </data>
+  <data name="GraphDuration" xml:space="preserve">
+    <value>Duration</value>
+    <comment>Graph config duration label</comment>
+  </data>
+  <data name="GraphDurationMinute" xml:space="preserve">
+    <value>Minute</value>
+    <comment>Graph duration minute</comment>
+  </data>
+  <data name="GraphDurationMinutes" xml:space="preserve">
+    <value>Minutes</value>
+    <comment>Graph duration minutes plural</comment>
+  </data>
+  <data name="GraphDurationSeconds" xml:space="preserve">
+    <value>Seconds</value>
+    <comment>Graph duration seconds</comment>
+  </data>
+  <data name="GraphHardware" xml:space="preserve">
+    <value>Hardware</value>
+    <comment>Graph config hardware label</comment>
+  </data>
+  <data name="GraphMetrics" xml:space="preserve">
+    <value>Metrics</value>
+    <comment>Graph config metrics label</comment>
+  </data>
+  <data name="GraphMonitor" xml:space="preserve">
+    <value>Monitor</value>
+    <comment>Graph config monitor label</comment>
+  </data>
+  <data name="GraphTitle" xml:space="preserve">
+    <value>Graph</value>
+    <comment>Title of the graph window</comment>
+  </data>
+  <data name="LanguageChangedText" xml:space="preserve">
+    <value>Please restart the app.</value>
+    <comment>Text of the language changed popup</comment>
+  </data>
+  <data name="LanguageChangedTitle" xml:space="preserve">
+    <value>Language Changed</value>
+    <comment>Title of the language changed popup</comment>
+  </data>
+  <data name="SettingsAdvancedTab" xml:space="preserve">
+    <value>Advanced</value>
+    <comment>Title of the settings advanced tab</comment>
+  </data>
+  <data name="SettingsAlwaysOnTop" xml:space="preserve">
+    <value>Always On Top</value>
+    <comment>Settings always on top label</comment>
+  </data>
+  <data name="SettingsAlwaysOnTopTooltip" xml:space="preserve">
+    <value>Makes the sidebar always on top of other windows.</value>
+    <comment>Settings always on top tooltip</comment>
+  </data>
+  <data name="SettingsAutoUpdate" xml:space="preserve">
+    <value>Auto Update</value>
+    <comment>Settings auto update label</comment>
+  </data>
+  <data name="SettingsAutoUpdateTooltip" xml:space="preserve">
+    <value>Updates the app automatically.</value>
+    <comment>Settings auto update tooltip</comment>
+  </data>
+  <data name="SettingsCustomizeTab" xml:space="preserve">
+    <value>Customize</value>
+    <comment>Title of the settings customize tab</comment>
+  </data>
+  <data name="SettingsDock" xml:space="preserve">
+    <value>Dock</value>
+    <comment>Dock settings label</comment>
+  </data>
+  <data name="SettingsDockBottom" xml:space="preserve">
+    <value>Bottom</value>
+    <comment>Dock bottom settings label</comment>
+  </data>
+  <data name="SettingsDockLeft" xml:space="preserve">
+    <value>Left</value>
+    <comment>Dock left settings label</comment>
+  </data>
+  <data name="SettingsDockRight" xml:space="preserve">
+    <value>Right</value>
+    <comment>Dock right settings label</comment>
+  </data>
+  <data name="SettingsDockTooltip" xml:space="preserve">
+    <value>Which edge the sidebar will dock to.</value>
+    <comment>Dock settings tooltip</comment>
+  </data>
+  <data name="SettingsDockTop" xml:space="preserve">
+    <value>Top</value>
+    <comment>Dock top settings label</comment>
+  </data>
+  <data name="SettingsGeneralTab" xml:space="preserve">
+    <value>General</value>
+    <comment>Title of the settings general tab</comment>
+  </data>
+  <data name="SettingsHorizontalOffset" xml:space="preserve">
+    <value>Horizontal Offset</value>
+    <comment>Horizontal offset settings label</comment>
+  </data>
+  <data name="SettingsHorizontalOffsetTooltip" xml:space="preserve">
+    <value>Horizontal offset of the sidebar.</value>
+    <comment>Horizontal offset settings tooltip</comment>
+  </data>
+  <data name="SettingsHotkeysTab" xml:space="preserve">
+    <value>Hotkeys</value>
+    <comment>Title of the settings hotkeys tab</comment>
+  </data>
+  <data name="SettingsLanguage" xml:space="preserve">
+    <value>Language</value>
+    <comment>Settings language label</comment>
+  </data>
+  <data name="SettingsLanguageDefault" xml:space="preserve">
+    <value>Default</value>
+    <comment>Settings language default label</comment>
+  </data>
+  <data name="SettingsLanguageTooltip" xml:space="preserve">
+    <value>Current language of the app.</value>
+    <comment>Settings language tooltip</comment>
+  </data>
+  <data name="SettingsMonitorsTab" xml:space="preserve">
+    <value>Monitors</value>
+    <comment>Title of the settings monitors tab</comment>
+  </data>
+  <data name="SettingsReserveSpace" xml:space="preserve">
+    <value>Reserve Space</value>
+    <comment>Settings reserve space label</comment>
+  </data>
+  <data name="SettingsReserveSpaceTooltip" xml:space="preserve">
+    <value>Reserves space in the work area for the sidebar.</value>
+    <comment>Settings reserve space tooltip</comment>
+  </data>
+  <data name="SettingsRunAtStartup" xml:space="preserve">
+    <value>Run at Startup</value>
+    <comment>Settings run at startup label</comment>
+  </data>
+  <data name="SettingsRunAtStartupTooltip" xml:space="preserve">
+    <value>Runs the app when you first log in.</value>
+    <comment>Settings run at startup tooltip</comment>
+  </data>
+  <data name="SettingsScreen" xml:space="preserve">
+    <value>Screen</value>
+    <comment>Screen settings label</comment>
+  </data>
+  <data name="SettingsScreenTooltip" xml:space="preserve">
+    <value>Which screen the sidebar will be on.</value>
+    <comment>Screen settings tooltip</comment>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Sidebar Settings</value>
+    <comment>Title of the settings window</comment>
+  </data>
+  <data name="SettingsVerticalOffset" xml:space="preserve">
+    <value>Vertical Offset</value>
+    <comment>Vertical offset settings label</comment>
+  </data>
+  <data name="SettingsVerticalOffsetTooltip" xml:space="preserve">
+    <value>Vertical offset of the sidebar.</value>
+    <comment>Vertical Offset settings tooltip</comment>
+  </data>
+  <data name="SetupCustomSubtitle" xml:space="preserve">
+    <value>Use the sliders and textboxes to move the sidebar to the correct position.</value>
+    <comment>Subtitle of the custom setup page</comment>
+  </data>
+  <data name="SetupCustomTitle" xml:space="preserve">
+    <value>Custom</value>
+    <comment>Title of the custom setup page</comment>
+  </data>
+  <data name="SetupDoneSubtitle" xml:space="preserve">
+    <value>If you want to customize the sidebar click the settings button.</value>
+    <comment>Subtitle of the setup done page</comment>
+  </data>
+  <data name="SetupDoneText" xml:space="preserve">
+    <value>You can also access the settings via the gear icon at the top-right of the sidebar or via the tray icon in the taskbar.</value>
+    <comment>Text of the setup done page</comment>
+  </data>
+  <data name="SetupDoneTitle" xml:space="preserve">
+    <value>Done!</value>
+    <comment>Title of the setup done page</comment>
+  </data>
+  <data name="SetupSubtitle" xml:space="preserve">
+    <value>This is a quick setup to get the sidebar in the correct position.</value>
+    <comment>Subtitle of the initial setup page</comment>
+  </data>
+  <data name="SetupText" xml:space="preserve">
+    <value>Is the sidebar visible and docked to the right edge of your primary monitor?</value>
+    <comment>Text of the initial setup page</comment>
+  </data>
+  <data name="SetupTitle" xml:space="preserve">
+    <value>Initial Setup</value>
+    <comment>Title of the initial setup page</comment>
+  </data>
+  <data name="UpdateErrorFatalText" xml:space="preserve">
+    <value>A fatal error occurred while trying to update.\r\nAuto update is now disabled.</value>
+    <comment>Fatal text of the update error popup</comment>
+  </data>
+  <data name="UpdateErrorText" xml:space="preserve">
+    <value>Unable to update. Check your internet connection.</value>
+    <comment>Text of the update error popup</comment>
+  </data>
+  <data name="UpdateErrorTitle" xml:space="preserve">
+    <value>Update Error</value>
+    <comment>Title of the update error popup</comment>
+  </data>
+  <data name="UpdateSuccessText" xml:space="preserve">
+    <value>You have the latest version.</value>
+    <comment>Text of the update success popup</comment>
+  </data>
+  <data name="UpdateTitle" xml:space="preserve">
+    <value>Updating</value>
+    <comment>Title of the update window</comment>
   </data>
 </root>

@@ -4,7 +4,10 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using System.Windows;
+using System.Windows.Markup;
 using Microsoft.Win32.TaskScheduler;
+using SidebarDiagnostics.Framework;
 
 namespace SidebarDiagnostics.Utilities
 {
@@ -163,14 +166,24 @@ namespace SidebarDiagnostics.Utilities
             Default = Thread.CurrentThread.CurrentUICulture;
         }
 
-        public static void SetCurrent(string name)
+        public static void SetCurrent(bool init)
         {
-            Thread.CurrentThread.CurrentUICulture = string.Equals(name, DEFAULT, StringComparison.Ordinal) ? Default : new CultureInfo(name);
+            SetCurrent(Framework.Settings.Instance.Culture, init);
+        }
+
+        public static void SetCurrent(string name, bool init)
+        {
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = string.Equals(name, DEFAULT, StringComparison.Ordinal) ? Default : new CultureInfo(name);
+
+            if (init)
+            {
+                FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name)));
+            }
         }
 
         public static CultureItem[] GetAll()
         {
-            return new CultureItem[1] { new CultureItem() { Value = DEFAULT, Text = DEFAULT } }.Concat(CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(c => Languages.Contains(c.TwoLetterISOLanguageName)).OrderBy(c => c.DisplayName).Select(c => new CultureItem() { Value = c.Name, Text = c.DisplayName })).ToArray();
+            return new CultureItem[1] { new CultureItem() { Value = DEFAULT, Text = Resources.SettingsLanguageDefault } }.Concat(CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(c => Languages.Contains(c.TwoLetterISOLanguageName)).OrderBy(c => c.DisplayName).Select(c => new CultureItem() { Value = c.Name, Text = c.DisplayName })).ToArray();
         }
 
         public static string[] Languages

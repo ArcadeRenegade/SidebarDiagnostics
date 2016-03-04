@@ -10,11 +10,12 @@
         xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitoring"
         xmlns:conv="clr-namespace:SidebarDiagnostics.Converters"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
+        xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Closing="Window_Closing"
         Closed="Window_Closed"
-        Title="Sidebar Settings"
+        Title="{x:Static frame:Resources.SettingsTitle}"
         Icon="Settings.ico"
         Width="420"
         SizeToContent="Height"
@@ -27,15 +28,15 @@
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons_SM}">
-            <Button Content="Save" Click="SaveButton_Click" />
-            <Button Content="Apply" IsEnabled="{Binding Path=IsChanged, Mode=OneWay}" Click="ApplyButton_Click" />
+            <Button Content="{x:Static frame:Resources.ButtonSave}" Click="SaveButton_Click" />
+            <Button Content="{x:Static frame:Resources.ButtonApply}" IsEnabled="{Binding Path=IsChanged, Mode=OneWay}" Click="ApplyButton_Click" />
             <Button Click="CloseButton_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NeutralButton_SM}">
-                        <Setter Property="Content" Value="Close" />
+                        <Setter Property="Content" Value="{x:Static frame:Resources.ButtonClose}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=IsChanged, Mode=OneWay}" Value="True">
-                                <Setter Property="Content" Value="Cancel" />
+                                <Setter Property="Content" Value="{x:Static frame:Resources.ButtonCancel}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -43,7 +44,7 @@
             </Button>
         </StackPanel>
         <TabControl Style="{StaticResource SettingTab}">
-            <TabItem Header="General">
+            <TabItem Header="{x:Static frame:Resources.SettingsGeneralTab}">
                 <Grid Style="{StaticResource SettingGrid}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -59,29 +60,29 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0" Content="Dock" />
-                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=DockEdgeItems, Mode=OneWay}" SelectedValue="{Binding Path=DockEdge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which edge the sidebar will dock to." />
+                    <Label Grid.Column="0" Grid.Row="0" Content="{x:Static frame:Resources.SettingsDock}" />
+                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=DockEdgeItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedValue="{Binding Path=DockEdge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsDockTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="1" Content="Screen" />
-                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ScreenItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedValuePath="Index" SelectedValue="{Binding Path=ScreenIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Which screen the sidebar will be on." />
+                    <Label Grid.Column="0" Grid.Row="1" Content="{x:Static frame:Resources.SettingsScreen}" />
+                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ScreenItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedValuePath="Index" SelectedValue="{Binding Path=ScreenIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsScreenTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Language" />
-                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=CultureItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedValue="{Binding Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Current language of the app." />
+                    <Label Grid.Column="0" Grid.Row="2" Content="{x:Static frame:Resources.SettingsLanguage}" />
+                    <ComboBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=CultureItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedValue="{Binding Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsLanguageTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Reserve Space" />
-                    <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Reserves space in the work area for the sidebar." />
+                    <Label Grid.Column="0" Grid.Row="3" Content="{x:Static frame:Resources.SettingsReserveSpace}" />
+                    <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Path=UseAppBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsReserveSpaceTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Always On Top" />
-                    <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Makes the sidebar always on top of other windows." />
+                    <Label Grid.Column="0" Grid.Row="4" Content="{x:Static frame:Resources.SettingsAlwaysOnTop}" />
+                    <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Path=AlwaysTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsAlwaysOnTopTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="Auto Update" />
-                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=AutoUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Updates the app automatically." />
+                    <Label Grid.Column="0" Grid.Row="5" Content="{x:Static frame:Resources.SettingsAutoUpdate}" />
+                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=AutoUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsAutoUpdateTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="Run at Startup" />
-                    <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Runs the app when you first log in." />
+                    <Label Grid.Column="0" Grid.Row="6" Content="{x:Static frame:Resources.SettingsRunAtStartup}" />
+                    <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding Path=RunAtStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsRunAtStartupTooltip}" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Advanced">
+            <TabItem Header="{x:Static frame:Resources.SettingsAdvancedTab}">
                 <Grid Style="{StaticResource SettingGrid}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -135,7 +136,7 @@
                     <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Collapses the menu bar rather than just hiding it.&#x0a;This removes the extra space at the top of the sidebar." />
                 </Grid>
             </TabItem>
-            <TabItem Header="Customize">
+            <TabItem Header="{x:Static frame:Resources.SettingsCustomizeTab}">
                 <Grid Style="{StaticResource SettingGrid}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -191,7 +192,7 @@
                     <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="Changes the clock's time format to 24 hours." />
                 </Grid>
             </TabItem>
-            <TabItem Header="Monitors">
+            <TabItem Header="{x:Static frame:Resources.SettingsMonitorsTab}">
                 <StackPanel Style="{StaticResource VerticalPanel}">
                     <StackPanel Style="{StaticResource SettingTitle}">
                         <TextBlock Text="Click a row to edit its settings." />
@@ -310,7 +311,7 @@
                     </DataGrid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Hotkeys">
+            <TabItem Header="{x:Static frame:Resources.SettingsHotkeysTab}">
                 <Grid Style="{StaticResource SettingGrid}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
