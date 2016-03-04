@@ -880,11 +880,83 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 24 Hour Clock.
+        /// </summary>
+        public static string Settings24HourClock {
+            get {
+                return ResourceManager.GetString("Settings24HourClock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changes the clock&apos;s time format to 24 hours..
+        /// </summary>
+        public static string Settings24HourClockTooltip {
+            get {
+                return ResourceManager.GetString("Settings24HourClockTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advanced.
         /// </summary>
         public static string SettingsAdvancedTab {
             get {
                 return ResourceManager.GetString("SettingsAdvancedTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alert Font Color.
+        /// </summary>
+        public static string SettingsAlertFontColor {
+            get {
+                return ResourceManager.GetString("SettingsAlertFontColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color of alert text..
+        /// </summary>
+        public static string SettingsAlertFontColorTooltip {
+            get {
+                return ResourceManager.GetString("SettingsAlertFontColorTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show All Core Clocks.
+        /// </summary>
+        public static string SettingsAllCoreClocks {
+            get {
+                return ResourceManager.GetString("SettingsAllCoreClocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the clock speeds of all cores not just the first..
+        /// </summary>
+        public static string SettingsAllCoreClocksTooltip {
+            get {
+                return ResourceManager.GetString("SettingsAllCoreClocksTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show in Alt + Tab.
+        /// </summary>
+        public static string SettingsAltTab {
+            get {
+                return ResourceManager.GetString("SettingsAltTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the sidebar in the Alt + Tab menu..
+        /// </summary>
+        public static string SettingsAltTabTooltip {
+            get {
+                return ResourceManager.GetString("SettingsAltTabTooltip", resourceCulture);
             }
         }
         
@@ -907,6 +979,24 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto Background Color.
+        /// </summary>
+        public static string SettingsAutoBackground {
+            get {
+                return ResourceManager.GetString("SettingsAutoBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the background color to your Windows color settings..
+        /// </summary>
+        public static string SettingsAutoBackgroundTooltip {
+            get {
+                return ResourceManager.GetString("SettingsAutoBackgroundTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Update.
         /// </summary>
         public static string SettingsAutoUpdate {
@@ -925,11 +1015,164 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Background Color.
+        /// </summary>
+        public static string SettingsBackgroundColor {
+            get {
+                return ResourceManager.GetString("SettingsBackgroundColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color of the background..
+        /// </summary>
+        public static string SettingsBackgroundColorTooltip {
+            get {
+                return ResourceManager.GetString("SettingsBackgroundColorTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background Opacity.
+        /// </summary>
+        public static string SettingsBackgroundOpacity {
+            get {
+                return ResourceManager.GetString("SettingsBackgroundOpacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opacity of the background..
+        /// </summary>
+        public static string SettingsBackgroundOpacityTooltip {
+            get {
+                return ResourceManager.GetString("SettingsBackgroundOpacityTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bandwidth In Alert.
+        /// </summary>
+        public static string SettingsBandwidthInAlert {
+            get {
+                return ResourceManager.GetString("SettingsBandwidthInAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The kbps or kBps threshold at which bandwidth received alerts occur. Use 0 to disable..
+        /// </summary>
+        public static string SettingsBandwidthInAlertTooltip {
+            get {
+                return ResourceManager.GetString("SettingsBandwidthInAlertTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bandwidth Out Alert.
+        /// </summary>
+        public static string SettingsBandwidthOutAlert {
+            get {
+                return ResourceManager.GetString("SettingsBandwidthOutAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The kbps or kBps threshold at which bandwidth sent alerts occur. Use 0 to disable..
+        /// </summary>
+        public static string SettingsBandwidthOutAlertTooltip {
+            get {
+                return ResourceManager.GetString("SettingsBandwidthOutAlertTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click Through.
+        /// </summary>
+        public static string SettingsClickThrough {
+            get {
+                return ResourceManager.GetString("SettingsClickThrough", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Makes mouse events pass through the window. Note this will prevent any interaction with the sidebar..
+        /// </summary>
+        public static string SettingsClickThroughTooltip {
+            get {
+                return ResourceManager.GetString("SettingsClickThroughTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collapse Menu Bar.
+        /// </summary>
+        public static string SettingsCollapseMenuBar {
+            get {
+                return ResourceManager.GetString("SettingsCollapseMenuBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removes the extra space at the top of the sidebar..
+        /// </summary>
+        public static string SettingsCollapseMenuBarTooltip {
+            get {
+                return ResourceManager.GetString("SettingsCollapseMenuBarTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Core Loads.
+        /// </summary>
+        public static string SettingsCoreLoads {
+            get {
+                return ResourceManager.GetString("SettingsCoreLoads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the percentage load of all cores..
+        /// </summary>
+        public static string SettingsCoreLoadsTooltip {
+            get {
+                return ResourceManager.GetString("SettingsCoreLoadsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customize.
         /// </summary>
         public static string SettingsCustomizeTab {
             get {
                 return ResourceManager.GetString("SettingsCustomizeTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Format.
+        /// </summary>
+        public static string SettingsDateFormat {
+            get {
+                return ResourceManager.GetString("SettingsDateFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string SettingsDateFormatDisabled {
+            get {
+                return ResourceManager.GetString("SettingsDateFormatDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format of the date below the clock..
+        /// </summary>
+        public static string SettingsDateFormatTooltip {
+            get {
+                return ResourceManager.GetString("SettingsDateFormatTooltip", resourceCulture);
             }
         }
         
@@ -988,11 +1231,92 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shows extra drive details as text..
+        /// </summary>
+        public static string SettingsDriveDetailsTooltip {
+            get {
+                return ResourceManager.GetString("SettingsDriveDetailsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font Color.
+        /// </summary>
+        public static string SettingsFontColor {
+            get {
+                return ResourceManager.GetString("SettingsFontColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color of text and icons..
+        /// </summary>
+        public static string SettingsFontColorTooltip {
+            get {
+                return ResourceManager.GetString("SettingsFontColorTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font Size.
+        /// </summary>
+        public static string SettingsFontSize {
+            get {
+                return ResourceManager.GetString("SettingsFontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size of text and icons..
+        /// </summary>
+        public static string SettingsFontSizeTooltip {
+            get {
+                return ResourceManager.GetString("SettingsFontSizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string SettingsGeneralTab {
             get {
                 return ResourceManager.GetString("SettingsGeneralTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string SettingsHardwareColumn1 {
+            get {
+                return ResourceManager.GetString("SettingsHardwareColumn1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hardware.
+        /// </summary>
+        public static string SettingsHardwareColumn2 {
+            get {
+                return ResourceManager.GetString("SettingsHardwareColumn2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables this hardware. (Double click to change. Known bug.).
+        /// </summary>
+        public static string SettingsHardwareEnabledTooltip {
+            get {
+                return ResourceManager.GetString("SettingsHardwareEnabledTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit the name of this hardware..
+        /// </summary>
+        public static string SettingsHardwareNameTooltip {
+            get {
+                return ResourceManager.GetString("SettingsHardwareNameTooltip", resourceCulture);
             }
         }
         
@@ -1015,11 +1339,74 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string SettingsHotkeyClose {
+            get {
+                return ResourceManager.GetString("SettingsHotkeyClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch Edge.
+        /// </summary>
+        public static string SettingsHotkeyCycleEdge {
+            get {
+                return ResourceManager.GetString("SettingsHotkeyCycleEdge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch Screen.
+        /// </summary>
+        public static string SettingsHotkeyCycleScreen {
+            get {
+                return ResourceManager.GetString("SettingsHotkeyCycleScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide.
+        /// </summary>
+        public static string SettingsHotkeyHide {
+            get {
+                return ResourceManager.GetString("SettingsHotkeyHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload.
+        /// </summary>
+        public static string SettingsHotkeyReload {
+            get {
+                return ResourceManager.GetString("SettingsHotkeyReload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string SettingsHotkeyShow {
+            get {
+                return ResourceManager.GetString("SettingsHotkeyShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hotkeys.
         /// </summary>
         public static string SettingsHotkeysTab {
             get {
                 return ResourceManager.GetString("SettingsHotkeysTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle.
+        /// </summary>
+        public static string SettingsHotkeyToggle {
+            get {
+                return ResourceManager.GetString("SettingsHotkeyToggle", resourceCulture);
             }
         }
         
@@ -1051,11 +1438,92 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Metrics:.
+        /// </summary>
+        public static string SettingsMetrics {
+            get {
+                return ResourceManager.GetString("SettingsMetrics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable or disable specific metrics..
+        /// </summary>
+        public static string SettingsMetricsTooltip {
+            get {
+                return ResourceManager.GetString("SettingsMetricsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables this monitor..
+        /// </summary>
+        public static string SettingsMonitorEnabledTooltip {
+            get {
+                return ResourceManager.GetString("SettingsMonitorEnabledTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string SettingsMonitorsColumn1 {
+            get {
+                return ResourceManager.GetString("SettingsMonitorsColumn1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monitor.
+        /// </summary>
+        public static string SettingsMonitorsColumn2 {
+            get {
+                return ResourceManager.GetString("SettingsMonitorsColumn2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click a row to edit its settings..
+        /// </summary>
+        public static string SettingsMonitorsSubtitle1 {
+            get {
+                return ResourceManager.GetString("SettingsMonitorsSubtitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag a row to change its order..
+        /// </summary>
+        public static string SettingsMonitorsSubtitle2 {
+            get {
+                return ResourceManager.GetString("SettingsMonitorsSubtitle2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Monitors.
         /// </summary>
         public static string SettingsMonitorsTab {
             get {
                 return ResourceManager.GetString("SettingsMonitorsTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Polling Interval.
+        /// </summary>
+        public static string SettingsPollingInterval {
+            get {
+                return ResourceManager.GetString("SettingsPollingInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time between polling for data in milliseconds..
+        /// </summary>
+        public static string SettingsPollingIntervalTooltip {
+            get {
+                return ResourceManager.GetString("SettingsPollingIntervalTooltip", resourceCulture);
             }
         }
         
@@ -1074,6 +1542,24 @@ namespace SidebarDiagnostics.Framework {
         public static string SettingsReserveSpaceTooltip {
             get {
                 return ResourceManager.GetString("SettingsReserveSpaceTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round All Decimals.
+        /// </summary>
+        public static string SettingsRoundAllDecimals {
+            get {
+                return ResourceManager.GetString("SettingsRoundAllDecimals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round all decimal values to the nearest integer..
+        /// </summary>
+        public static string SettingsRoundAllDecimalsTooltip {
+            get {
+                return ResourceManager.GetString("SettingsRoundAllDecimalsTooltip", resourceCulture);
             }
         }
         
@@ -1114,11 +1600,236 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Clock.
+        /// </summary>
+        public static string SettingsShowClock {
+            get {
+                return ResourceManager.GetString("SettingsShowClock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the clock..
+        /// </summary>
+        public static string SettingsShowClockTooltip {
+            get {
+                return ResourceManager.GetString("SettingsShowClockTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Drive Details.
+        /// </summary>
+        public static string SettingsShowDriveDetails {
+            get {
+                return ResourceManager.GetString("SettingsShowDriveDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Drive IO.
+        /// </summary>
+        public static string SettingsShowDriveIO {
+            get {
+                return ResourceManager.GetString("SettingsShowDriveIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows drive read and write speeds if drive details is enabled..
+        /// </summary>
+        public static string SettingsShowDriveIOTooltip {
+            get {
+                return ResourceManager.GetString("SettingsShowDriveIOTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Drive Space.
+        /// </summary>
+        public static string SettingsShowDriveSpace {
+            get {
+                return ResourceManager.GetString("SettingsShowDriveSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows load percent, used space, and free space if drive details is enabled..
+        /// </summary>
+        public static string SettingsShowDriveSpaceTooltip {
+            get {
+                return ResourceManager.GetString("SettingsShowDriveSpaceTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Hardware Names.
+        /// </summary>
+        public static string SettingsShowHardwareNames {
+            get {
+                return ResourceManager.GetString("SettingsShowHardwareNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows hardware names..
+        /// </summary>
+        public static string SettingsShowHardwareNamesTooltip {
+            get {
+                return ResourceManager.GetString("SettingsShowHardwareNamesTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Tray Icon.
+        /// </summary>
+        public static string SettingsShowTrayIcon {
+            get {
+                return ResourceManager.GetString("SettingsShowTrayIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the tray icon in the taskbar. This is sometimes required..
+        /// </summary>
+        public static string SettingsShowTrayIconTooltip {
+            get {
+                return ResourceManager.GetString("SettingsShowTrayIconTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sidebar Width.
+        /// </summary>
+        public static string SettingsSidebarWidth {
+            get {
+                return ResourceManager.GetString("SettingsSidebarWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width of the sidebar in pixels..
+        /// </summary>
+        public static string SettingsSidebarWidthTooltip {
+            get {
+                return ResourceManager.GetString("SettingsSidebarWidthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temperature Alert.
+        /// </summary>
+        public static string SettingsTemperatureAlert {
+            get {
+                return ResourceManager.GetString("SettingsTemperatureAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The temperature threshold at which alerts occur. Use 0 to disable..
+        /// </summary>
+        public static string SettingsTemperatureAlertTooltip {
+            get {
+                return ResourceManager.GetString("SettingsTemperatureAlertTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sidebar Settings.
         /// </summary>
         public static string SettingsTitle {
             get {
                 return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UI Scale.
+        /// </summary>
+        public static string SettingsUIScale {
+            get {
+                return ResourceManager.GetString("SettingsUIScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale of all windows and UI components..
+        /// </summary>
+        public static string SettingsUIScaleTooltip {
+            get {
+                return ResourceManager.GetString("SettingsUIScaleTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Bytes Per Second.
+        /// </summary>
+        public static string SettingsUseBytesPerSecond {
+            get {
+                return ResourceManager.GetString("SettingsUseBytesPerSecond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows bandwidth in bytes instead of bits per second..
+        /// </summary>
+        public static string SettingsUseBytesPerSecondTooltip {
+            get {
+                return ResourceManager.GetString("SettingsUseBytesPerSecondTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used Space Alert.
+        /// </summary>
+        public static string SettingsUsedSpaceAlert {
+            get {
+                return ResourceManager.GetString("SettingsUsedSpaceAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The percentage threshold at which used space alerts occur. Use 0 to disable..
+        /// </summary>
+        public static string SettingsUsedSpaceAlertTooltip {
+            get {
+                return ResourceManager.GetString("SettingsUsedSpaceAlertTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Fahrenheit.
+        /// </summary>
+        public static string SettingsUseFahrenheit {
+            get {
+                return ResourceManager.GetString("SettingsUseFahrenheit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temperatures for sensors and alerts will be in Fahrenheit instead of Celcius..
+        /// </summary>
+        public static string SettingsUseFahrenheitTooltip {
+            get {
+                return ResourceManager.GetString("SettingsUseFahrenheitTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use GHz.
+        /// </summary>
+        public static string SettingsUseGHz {
+            get {
+                return ResourceManager.GetString("SettingsUseGHz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clock speeds will be in GHz instead of MHz..
+        /// </summary>
+        public static string SettingsUseGHzTooltip {
+            get {
+                return ResourceManager.GetString("SettingsUseGHzTooltip", resourceCulture);
             }
         }
         

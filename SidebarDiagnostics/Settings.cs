@@ -686,7 +686,7 @@ namespace SidebarDiagnostics.Framework
             {
                 if (string.Equals(Format, "Disabled", StringComparison.Ordinal))
                 {
-                    return Format;
+                    return Resources.SettingsDateFormatDisabled;
                 }
 
                 return DateTime.Today.ToString(Format);

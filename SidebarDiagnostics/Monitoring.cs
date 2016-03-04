@@ -2232,46 +2232,46 @@ namespace SidebarDiagnostics.Monitoring
                 switch (Key)
                 {
                     case ParamKey.HardwareNames:
-                        return "Show Hardware Names";
+                        return Resources.SettingsShowHardwareNames;
 
                     case ParamKey.UseFahrenheit:
-                        return "Use Fahrenheit";
+                        return Resources.SettingsUseFahrenheit;
 
                     case ParamKey.AllCoreClocks:
-                        return "Show All Core Clocks";
+                        return Resources.SettingsAllCoreClocks;
 
                     case ParamKey.CoreLoads:
-                        return "Show Core Loads";
+                        return Resources.SettingsCoreLoads;
 
                     case ParamKey.TempAlert:
-                        return "Temperature Alert";
+                        return Resources.SettingsTemperatureAlert;
 
                     case ParamKey.DriveDetails:
-                        return "Show Drive Details";
+                        return Resources.SettingsShowDriveDetails;
 
                     case ParamKey.UsedSpaceAlert:
-                        return "Used Space Alert";
+                        return Resources.SettingsUsedSpaceAlert;
 
                     case ParamKey.BandwidthInAlert:
-                        return "Bandwidth In Alert";
+                        return Resources.SettingsBandwidthInAlert;
 
                     case ParamKey.BandwidthOutAlert:
-                        return "Bandwidth Out Alert";
+                        return Resources.SettingsBandwidthOutAlert;
 
                     case ParamKey.UseBytes:
-                        return "Use Bytes Per Second";
+                        return Resources.SettingsUseBytesPerSecond;
 
                     case ParamKey.RoundAll:
-                        return "Round All Decimals";
+                        return Resources.SettingsRoundAllDecimals;
 
                     case ParamKey.DriveSpace:
-                        return "Show Drive Space";
+                        return Resources.SettingsShowDriveSpace;
 
                     case ParamKey.DriveIO:
-                        return "Show Drive IO";
+                        return Resources.SettingsShowDriveIO;
 
                     case ParamKey.UseGHz:
-                        return "Use GHz";
+                        return Resources.SettingsUseGHz;
 
                     default:
                         return "Unknown";
@@ -2286,46 +2286,46 @@ namespace SidebarDiagnostics.Monitoring
                 switch (Key)
                 {
                     case ParamKey.HardwareNames:
-                        return "Shows hardware names.";
+                        return Resources.SettingsShowHardwareNamesTooltip;
 
                     case ParamKey.UseFahrenheit:
-                        return "Temperatures for sensors and alerts will be in Fahrenheit instead of Celcius.";
+                        return Resources.SettingsUseFahrenheitTooltip;
 
                     case ParamKey.AllCoreClocks:
-                        return "Shows the clock speeds of all cores not just the first.";
+                        return Resources.SettingsAllCoreClocksTooltip;
 
                     case ParamKey.CoreLoads:
-                        return "Shows the percentage load of all cores.";
+                        return Resources.SettingsCoreLoadsTooltip;
 
                     case ParamKey.TempAlert:
-                        return "The temperature threshold at which alerts occur. Use 0 to disable.";
+                        return Resources.SettingsTemperatureAlertTooltip;
 
                     case ParamKey.DriveDetails:
-                        return "Shows extra drive details as text.";
+                        return Resources.SettingsDriveDetailsTooltip;
 
                     case ParamKey.UsedSpaceAlert:
-                        return "The percentage threshold at which used space alerts occur. Use 0 to disable.";
+                        return Resources.SettingsUsedSpaceAlertTooltip;
 
                     case ParamKey.BandwidthInAlert:
-                        return "The kbps or kBps threshold at which bandwidth received alerts occur. Use 0 to disable.";
+                        return Resources.SettingsBandwidthInAlertTooltip;
 
                     case ParamKey.BandwidthOutAlert:
-                        return "The kbps or kBps threshold at which bandwidth sent alerts occur. Use 0 to disable.";
+                        return Resources.SettingsBandwidthOutAlertTooltip;
 
                     case ParamKey.UseBytes:
-                        return "Shows bandwidth in bytes instead of bits per second.";
+                        return Resources.SettingsUseBytesPerSecondTooltip;
 
                     case ParamKey.RoundAll:
-                        return "Round all decimal values to the nearest integer.";
+                        return Resources.SettingsRoundAllDecimalsTooltip;
 
                     case ParamKey.DriveSpace:
-                        return "Shows load percent, used space, and free space if drive details is enabled.";
+                        return Resources.SettingsShowDriveSpaceTooltip;
 
                     case ParamKey.DriveIO:
-                        return "Shows drive read and write speeds if drive details is enabled.";
+                        return Resources.SettingsShowDriveIOTooltip;
 
                     case ParamKey.UseGHz:
-                        return "Clock speeds will be in GHz instead of MHz.";
+                        return Resources.SettingsUseGHzTooltip;
 
                     default:
                         return "Unknown";

@@ -1,5 +1,15 @@
 ﻿[
   {
+    "Version": "3.3.1",
+    "Changes": [
+      "Added the option to enable or disable specific metrics.",
+      "Fixed a bug where charts for scaling metrics like bandwidth were incorrect.",
+      "Finished preparing all text for localization.",
+      "The complete Excel file of all text to be translated has been uploaded to the localization thread.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.3.0",
     "Changes": [
       "Added graphs.",

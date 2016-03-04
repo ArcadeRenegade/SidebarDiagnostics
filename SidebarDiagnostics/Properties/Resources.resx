@@ -489,9 +489,41 @@
     <value>Language Changed</value>
     <comment>Title of the language changed popup</comment>
   </data>
+  <data name="Settings24HourClock" xml:space="preserve">
+    <value>24 Hour Clock</value>
+    <comment>Settings 24 hour clock label</comment>
+  </data>
+  <data name="Settings24HourClockTooltip" xml:space="preserve">
+    <value>Changes the clock's time format to 24 hours.</value>
+    <comment>Settings 24 hour clock tooltip</comment>
+  </data>
   <data name="SettingsAdvancedTab" xml:space="preserve">
     <value>Advanced</value>
     <comment>Title of the settings advanced tab</comment>
+  </data>
+  <data name="SettingsAlertFontColor" xml:space="preserve">
+    <value>Alert Font Color</value>
+    <comment>Settings alert font color label</comment>
+  </data>
+  <data name="SettingsAlertFontColorTooltip" xml:space="preserve">
+    <value>Color of alert text.</value>
+    <comment>Settings alert font color tooltip</comment>
+  </data>
+  <data name="SettingsAllCoreClocks" xml:space="preserve">
+    <value>Show All Core Clocks</value>
+    <comment>Settings all core clocks label</comment>
+  </data>
+  <data name="SettingsAllCoreClocksTooltip" xml:space="preserve">
+    <value>Shows the clock speeds of all cores not just the first.</value>
+    <comment>Settings all core clocks tooltip</comment>
+  </data>
+  <data name="SettingsAltTab" xml:space="preserve">
+    <value>Show in Alt + Tab</value>
+    <comment>Settings alt tab label</comment>
+  </data>
+  <data name="SettingsAltTabTooltip" xml:space="preserve">
+    <value>Shows the sidebar in the Alt + Tab menu.</value>
+    <comment>Settings alt tab tooltip</comment>
   </data>
   <data name="SettingsAlwaysOnTop" xml:space="preserve">
     <value>Always On Top</value>
@@ -501,6 +533,14 @@
     <value>Makes the sidebar always on top of other windows.</value>
     <comment>Settings always on top tooltip</comment>
   </data>
+  <data name="SettingsAutoBackground" xml:space="preserve">
+    <value>Auto Background Color</value>
+    <comment>Settings auto background label</comment>
+  </data>
+  <data name="SettingsAutoBackgroundTooltip" xml:space="preserve">
+    <value>Sets the background color to your Windows color settings.</value>
+    <comment>Settings auto background tooltip</comment>
+  </data>
   <data name="SettingsAutoUpdate" xml:space="preserve">
     <value>Auto Update</value>
     <comment>Settings auto update label</comment>
@@ -509,9 +549,77 @@
     <value>Updates the app automatically.</value>
     <comment>Settings auto update tooltip</comment>
   </data>
+  <data name="SettingsBackgroundColor" xml:space="preserve">
+    <value>Background Color</value>
+    <comment>Settings background color label</comment>
+  </data>
+  <data name="SettingsBackgroundColorTooltip" xml:space="preserve">
+    <value>Color of the background.</value>
+    <comment>Settings background color tooltip</comment>
+  </data>
+  <data name="SettingsBackgroundOpacity" xml:space="preserve">
+    <value>Background Opacity</value>
+    <comment>Settings background opacity label</comment>
+  </data>
+  <data name="SettingsBackgroundOpacityTooltip" xml:space="preserve">
+    <value>Opacity of the background.</value>
+    <comment>Settings background opacity tooltip</comment>
+  </data>
+  <data name="SettingsBandwidthInAlert" xml:space="preserve">
+    <value>Bandwidth In Alert</value>
+    <comment>Settings bandwidth in alert label</comment>
+  </data>
+  <data name="SettingsBandwidthInAlertTooltip" xml:space="preserve">
+    <value>The kbps or kBps threshold at which bandwidth received alerts occur. Use 0 to disable.</value>
+    <comment>Settings bandwidth in alert tooltip</comment>
+  </data>
+  <data name="SettingsBandwidthOutAlert" xml:space="preserve">
+    <value>Bandwidth Out Alert</value>
+    <comment>Settings bandwidth out alert label</comment>
+  </data>
+  <data name="SettingsBandwidthOutAlertTooltip" xml:space="preserve">
+    <value>The kbps or kBps threshold at which bandwidth sent alerts occur. Use 0 to disable.</value>
+    <comment>Settings bandwidth out alert tooltip</comment>
+  </data>
+  <data name="SettingsClickThrough" xml:space="preserve">
+    <value>Click Through</value>
+    <comment>Settings click through label</comment>
+  </data>
+  <data name="SettingsClickThroughTooltip" xml:space="preserve">
+    <value>Makes mouse events pass through the window. Note this will prevent any interaction with the sidebar.</value>
+    <comment>Settings click through tooltip</comment>
+  </data>
+  <data name="SettingsCollapseMenuBar" xml:space="preserve">
+    <value>Collapse Menu Bar</value>
+    <comment>Settings collapse menu bar label</comment>
+  </data>
+  <data name="SettingsCollapseMenuBarTooltip" xml:space="preserve">
+    <value>Removes the extra space at the top of the sidebar.</value>
+    <comment>Settings collapse menu bar tooltip</comment>
+  </data>
+  <data name="SettingsCoreLoads" xml:space="preserve">
+    <value>Show Core Loads</value>
+    <comment>Settings core loads label</comment>
+  </data>
+  <data name="SettingsCoreLoadsTooltip" xml:space="preserve">
+    <value>Shows the percentage load of all cores.</value>
+    <comment>Settings core loads tooltip</comment>
+  </data>
   <data name="SettingsCustomizeTab" xml:space="preserve">
     <value>Customize</value>
     <comment>Title of the settings customize tab</comment>
+  </data>
+  <data name="SettingsDateFormat" xml:space="preserve">
+    <value>Date Format</value>
+    <comment>Settings date format label</comment>
+  </data>
+  <data name="SettingsDateFormatDisabled" xml:space="preserve">
+    <value>Disabled</value>
+    <comment>Settings date format disabled value</comment>
+  </data>
+  <data name="SettingsDateFormatTooltip" xml:space="preserve">
+    <value>Format of the date below the clock.</value>
+    <comment>Settings date format tooltip</comment>
   </data>
   <data name="SettingsDock" xml:space="preserve">
     <value>Dock</value>
@@ -537,9 +645,45 @@
     <value>Top</value>
     <comment>Dock top settings label</comment>
   </data>
+  <data name="SettingsDriveDetailsTooltip" xml:space="preserve">
+    <value>Shows extra drive details as text.</value>
+    <comment>Settings drive details tooltip</comment>
+  </data>
+  <data name="SettingsFontColor" xml:space="preserve">
+    <value>Font Color</value>
+    <comment>Settings font color label</comment>
+  </data>
+  <data name="SettingsFontColorTooltip" xml:space="preserve">
+    <value>Color of text and icons.</value>
+    <comment>Settings font color tooltip</comment>
+  </data>
+  <data name="SettingsFontSize" xml:space="preserve">
+    <value>Font Size</value>
+    <comment>Settings font size label</comment>
+  </data>
+  <data name="SettingsFontSizeTooltip" xml:space="preserve">
+    <value>Size of text and icons.</value>
+    <comment>Settings font size tooltip</comment>
+  </data>
   <data name="SettingsGeneralTab" xml:space="preserve">
     <value>General</value>
     <comment>Title of the settings general tab</comment>
+  </data>
+  <data name="SettingsHardwareColumn1" xml:space="preserve">
+    <value>Enabled</value>
+    <comment>Settings hardware data grid enabled column header</comment>
+  </data>
+  <data name="SettingsHardwareColumn2" xml:space="preserve">
+    <value>Hardware</value>
+    <comment>Settings hardware data grid hardware column header</comment>
+  </data>
+  <data name="SettingsHardwareEnabledTooltip" xml:space="preserve">
+    <value>Enables this hardware. (Double click to change. Known bug.)</value>
+    <comment>Settings hardware enabled checkbox tooltip</comment>
+  </data>
+  <data name="SettingsHardwareNameTooltip" xml:space="preserve">
+    <value>Edit the name of this hardware.</value>
+    <comment>Settings hardware name tooltip</comment>
   </data>
   <data name="SettingsHorizontalOffset" xml:space="preserve">
     <value>Horizontal Offset</value>
@@ -549,9 +693,37 @@
     <value>Horizontal offset of the sidebar.</value>
     <comment>Horizontal offset settings tooltip</comment>
   </data>
+  <data name="SettingsHotkeyClose" xml:space="preserve">
+    <value>Close</value>
+    <comment>Settings hotkey close label</comment>
+  </data>
+  <data name="SettingsHotkeyCycleEdge" xml:space="preserve">
+    <value>Switch Edge</value>
+    <comment>Settings hotkey switch edge</comment>
+  </data>
+  <data name="SettingsHotkeyCycleScreen" xml:space="preserve">
+    <value>Switch Screen</value>
+    <comment>Settings hotkey switch screen</comment>
+  </data>
+  <data name="SettingsHotkeyHide" xml:space="preserve">
+    <value>Hide</value>
+    <comment>Settings hotkey hide label</comment>
+  </data>
+  <data name="SettingsHotkeyReload" xml:space="preserve">
+    <value>Reload</value>
+    <comment>Settings hotkey reload label</comment>
+  </data>
+  <data name="SettingsHotkeyShow" xml:space="preserve">
+    <value>Show</value>
+    <comment>Settings hotkey show label</comment>
+  </data>
   <data name="SettingsHotkeysTab" xml:space="preserve">
     <value>Hotkeys</value>
     <comment>Title of the settings hotkeys tab</comment>
+  </data>
+  <data name="SettingsHotkeyToggle" xml:space="preserve">
+    <value>Toggle</value>
+    <comment>Settings hotkey toggle label</comment>
   </data>
   <data name="SettingsLanguage" xml:space="preserve">
     <value>Language</value>
@@ -565,9 +737,45 @@
     <value>Current language of the app.</value>
     <comment>Settings language tooltip</comment>
   </data>
+  <data name="SettingsMetrics" xml:space="preserve">
+    <value>Metrics:</value>
+    <comment>Settings metrics label with colon</comment>
+  </data>
+  <data name="SettingsMetricsTooltip" xml:space="preserve">
+    <value>Enable or disable specific metrics.</value>
+    <comment>Settings metrics tooltip</comment>
+  </data>
+  <data name="SettingsMonitorEnabledTooltip" xml:space="preserve">
+    <value>Enables this monitor.</value>
+    <comment>Settings monitor enabled checkbox tooltip</comment>
+  </data>
+  <data name="SettingsMonitorsColumn1" xml:space="preserve">
+    <value>Enabled</value>
+    <comment>Settings monitors data grid enabled column header</comment>
+  </data>
+  <data name="SettingsMonitorsColumn2" xml:space="preserve">
+    <value>Monitor</value>
+    <comment>Settings monitors data grid monitor column header</comment>
+  </data>
+  <data name="SettingsMonitorsSubtitle1" xml:space="preserve">
+    <value>Click a row to edit its settings.</value>
+    <comment>Settings monitors subtitle line one</comment>
+  </data>
+  <data name="SettingsMonitorsSubtitle2" xml:space="preserve">
+    <value>Drag a row to change its order.</value>
+    <comment>Settings monitors subtitle line two</comment>
+  </data>
   <data name="SettingsMonitorsTab" xml:space="preserve">
     <value>Monitors</value>
     <comment>Title of the settings monitors tab</comment>
+  </data>
+  <data name="SettingsPollingInterval" xml:space="preserve">
+    <value>Polling Interval</value>
+    <comment>Settings polling interval label</comment>
+  </data>
+  <data name="SettingsPollingIntervalTooltip" xml:space="preserve">
+    <value>Time between polling for data in milliseconds.</value>
+    <comment>Settings polling interval tooltip</comment>
   </data>
   <data name="SettingsReserveSpace" xml:space="preserve">
     <value>Reserve Space</value>
@@ -576,6 +784,14 @@
   <data name="SettingsReserveSpaceTooltip" xml:space="preserve">
     <value>Reserves space in the work area for the sidebar.</value>
     <comment>Settings reserve space tooltip</comment>
+  </data>
+  <data name="SettingsRoundAllDecimals" xml:space="preserve">
+    <value>Round All Decimals</value>
+    <comment>Settings round all decimals label</comment>
+  </data>
+  <data name="SettingsRoundAllDecimalsTooltip" xml:space="preserve">
+    <value>Round all decimal values to the nearest integer.</value>
+    <comment>Settings round all decimals tooltip</comment>
   </data>
   <data name="SettingsRunAtStartup" xml:space="preserve">
     <value>Run at Startup</value>
@@ -593,9 +809,109 @@
     <value>Which screen the sidebar will be on.</value>
     <comment>Screen settings tooltip</comment>
   </data>
+  <data name="SettingsShowClock" xml:space="preserve">
+    <value>Show Clock</value>
+    <comment>Settings show clock label</comment>
+  </data>
+  <data name="SettingsShowClockTooltip" xml:space="preserve">
+    <value>Shows the clock.</value>
+    <comment>Settings show clock tooltip</comment>
+  </data>
+  <data name="SettingsShowDriveDetails" xml:space="preserve">
+    <value>Show Drive Details</value>
+    <comment>Settings show drive details label</comment>
+  </data>
+  <data name="SettingsShowDriveIO" xml:space="preserve">
+    <value>Show Drive IO</value>
+    <comment>Settings show drive IO label</comment>
+  </data>
+  <data name="SettingsShowDriveIOTooltip" xml:space="preserve">
+    <value>Shows drive read and write speeds if drive details is enabled.</value>
+    <comment>Settings show drive IO tooltip</comment>
+  </data>
+  <data name="SettingsShowDriveSpace" xml:space="preserve">
+    <value>Show Drive Space</value>
+    <comment>Settings show drive space label</comment>
+  </data>
+  <data name="SettingsShowDriveSpaceTooltip" xml:space="preserve">
+    <value>Shows load percent, used space, and free space if drive details is enabled.</value>
+    <comment>Settings show drive space tooltip</comment>
+  </data>
+  <data name="SettingsShowHardwareNames" xml:space="preserve">
+    <value>Show Hardware Names</value>
+    <comment>Settings show hardware names label</comment>
+  </data>
+  <data name="SettingsShowHardwareNamesTooltip" xml:space="preserve">
+    <value>Shows hardware names.</value>
+    <comment>Settings show hardware names tooltip</comment>
+  </data>
+  <data name="SettingsShowTrayIcon" xml:space="preserve">
+    <value>Show Tray Icon</value>
+    <comment>Settings show tray icon label</comment>
+  </data>
+  <data name="SettingsShowTrayIconTooltip" xml:space="preserve">
+    <value>Shows the tray icon in the taskbar. This is sometimes required.</value>
+    <comment>Settings show tray icon tooltip</comment>
+  </data>
+  <data name="SettingsSidebarWidth" xml:space="preserve">
+    <value>Sidebar Width</value>
+    <comment>Settings sidebar width label</comment>
+  </data>
+  <data name="SettingsSidebarWidthTooltip" xml:space="preserve">
+    <value>Width of the sidebar in pixels.</value>
+    <comment>Settings sidebar width tooltip</comment>
+  </data>
+  <data name="SettingsTemperatureAlert" xml:space="preserve">
+    <value>Temperature Alert</value>
+    <comment>Settings temperature alert label</comment>
+  </data>
+  <data name="SettingsTemperatureAlertTooltip" xml:space="preserve">
+    <value>The temperature threshold at which alerts occur. Use 0 to disable.</value>
+    <comment>Settings temperature alert tooltip</comment>
+  </data>
   <data name="SettingsTitle" xml:space="preserve">
     <value>Sidebar Settings</value>
     <comment>Title of the settings window</comment>
+  </data>
+  <data name="SettingsUIScale" xml:space="preserve">
+    <value>UI Scale</value>
+    <comment>Settings UI scale label</comment>
+  </data>
+  <data name="SettingsUIScaleTooltip" xml:space="preserve">
+    <value>Scale of all windows and UI components.</value>
+    <comment>Settings UI scale tooltip</comment>
+  </data>
+  <data name="SettingsUseBytesPerSecond" xml:space="preserve">
+    <value>Use Bytes Per Second</value>
+    <comment>Settings use bytes per second label</comment>
+  </data>
+  <data name="SettingsUseBytesPerSecondTooltip" xml:space="preserve">
+    <value>Shows bandwidth in bytes instead of bits per second.</value>
+    <comment>Settings use bytes per second tooltip</comment>
+  </data>
+  <data name="SettingsUsedSpaceAlert" xml:space="preserve">
+    <value>Used Space Alert</value>
+    <comment>Settings used space alert label</comment>
+  </data>
+  <data name="SettingsUsedSpaceAlertTooltip" xml:space="preserve">
+    <value>The percentage threshold at which used space alerts occur. Use 0 to disable.</value>
+    <comment>Settings used space alert tooltip</comment>
+  </data>
+  <data name="SettingsUseFahrenheit" xml:space="preserve">
+    <value>Use Fahrenheit</value>
+    <comment>Settings use fahrenheit label</comment>
+  </data>
+  <data name="SettingsUseFahrenheitTooltip" xml:space="preserve">
+    <value>Temperatures for sensors and alerts will be in Fahrenheit instead of Celcius.</value>
+    <comment>Settings use fahrenheit tooltip</comment>
+  </data>
+  <data name="SettingsUseGHz" xml:space="preserve">
+    <value>Use GHz</value>
+    <comment>Settings use GHz label</comment>
+  </data>
+  <data name="SettingsUseGHzTooltip" xml:space="preserve">
+    <value>Clock speeds will be in GHz instead of MHz.</value>
+    <comment>Settings use GHz tooltip</comment>
   </data>
   <data name="SettingsVerticalOffset" xml:space="preserve">
     <value>Vertical Offset</value>
