@@ -121,69 +121,261 @@
     <value>Sidebar Diagnostics</value>
     <comment>Name of the app</comment>
   </data>
-  <data name="Clock" xml:space="preserve">
-    <value>Horloge</value>
-    <comment>Label for clock speed sensors</comment>
-  </data>
   <data name="Close" xml:space="preserve">
     <value>Fermer</value>
     <comment>Close app taskbar menu item</comment>
-  </data>
-  <data name="Core" xml:space="preserve">
-    <value>Noyau</value>
-    <comment>Label for CPU or GPU core sensors</comment>
   </data>
   <data name="CPU" xml:space="preserve">
     <value>CPU</value>
     <comment>CPU monitor title</comment>
   </data>
+  <data name="CPUClock" xml:space="preserve">
+    <value>Horloge</value>
+    <comment>Full name for CPU clock metric</comment>
+  </data>
+  <data name="CPUClockLabel" xml:space="preserve">
+    <value>Horloge</value>
+    <comment>Short label for CPU clock metric</comment>
+  </data>
+  <data name="CPUCoreClock" xml:space="preserve">
+    <value>Noyau</value>
+    <comment>Full name for CPU core clock metric</comment>
+  </data>
+  <data name="CPUCoreClockLabel" xml:space="preserve">
+    <value>Noyau</value>
+    <comment>Short label for CPU core clock metric</comment>
+  </data>
+  <data name="CPUCoreLoad" xml:space="preserve">
+    <value>Noyau</value>
+    <comment>Full name for CPU core load metric</comment>
+  </data>
+  <data name="CPUCoreLoadLabel" xml:space="preserve">
+    <value>Noyau</value>
+    <comment>Short label for CPU core load metric</comment>
+  </data>
+  <data name="CPUFan" xml:space="preserve">
+    <value>Ventilateur</value>
+    <comment>Full name for CPU fan metric</comment>
+  </data>
+  <data name="CPUFanLabel" xml:space="preserve">
+    <value>Ventilateur</value>
+    <comment>Short label for CPU fan metric</comment>
+  </data>
+  <data name="CPULoad" xml:space="preserve">
+    <value>Charge</value>
+    <comment>Full name for CPU load metric</comment>
+  </data>
+  <data name="CPULoadLabel" xml:space="preserve">
+    <value>Charge</value>
+    <comment>Short label for CPU load metric</comment>
+  </data>
+  <data name="CPUTemp" xml:space="preserve">
+    <value>Temp</value>
+    <comment>Full name for CPU temp metric</comment>
+  </data>
+  <data name="CPUTempLabel" xml:space="preserve">
+    <value>Temp</value>
+    <comment>Short label for CPU temp metric</comment>
+  </data>
+  <data name="CPUVoltage" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Full name for CPU voltage metric</comment>
+  </data>
+  <data name="CPUVoltageLabel" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Short label for CPU voltage metric</comment>
+  </data>
   <data name="Donate" xml:space="preserve">
     <value>Don</value>
     <comment>Donate taskbar menu item</comment>
+  </data>
+  <data name="DriveFree" xml:space="preserve">
+    <value>Libre</value>
+    <comment>Full name for drive free metric</comment>
+  </data>
+  <data name="DriveFreeLabel" xml:space="preserve">
+    <value>Libre</value>
+    <comment>Short label for drive free metric</comment>
+  </data>
+  <data name="DriveLoad" xml:space="preserve">
+    <value>Charge</value>
+    <comment>Full name for drive load metric</comment>
+  </data>
+  <data name="DriveLoadBar" xml:space="preserve">
+    <value>Load Bar</value>
+    <comment>Full name for drive load bar metric</comment>
+  </data>
+  <data name="DriveLoadBarLabel" xml:space="preserve">
+    <value>Charge</value>
+    <comment>Short label for drive load bar metric</comment>
+  </data>
+  <data name="DriveLoadLabel" xml:space="preserve">
+    <value>Charge</value>
+    <comment>Short label for drive load metric</comment>
+  </data>
+  <data name="DriveRead" xml:space="preserve">
+    <value>Lecture</value>
+    <comment>Full name for drive read metric</comment>
+  </data>
+  <data name="DriveReadLabel" xml:space="preserve">
+    <value>Lecture</value>
+    <comment>Short label for drive read metric</comment>
   </data>
   <data name="Drives" xml:space="preserve">
     <value>Disques</value>
     <comment>Drives monitor title</comment>
   </data>
-  <data name="Fan" xml:space="preserve">
-    <value>Ventilateur</value>
-    <comment>Label for fan speed sensors</comment>
+  <data name="DriveUsed" xml:space="preserve">
+    <value>Occupé</value>
+    <comment>Full name for drive used metric</comment>
   </data>
-  <data name="Free" xml:space="preserve">
-    <value>Libre</value>
-    <comment>Label for amount free sensors</comment>
+  <data name="DriveUsedLabel" xml:space="preserve">
+    <value>Occupé</value>
+    <comment>Short label for drive used metric</comment>
+  </data>
+  <data name="DriveWrite" xml:space="preserve">
+    <value>Ecriture</value>
+    <comment>Full name for drive write metric</comment>
+  </data>
+  <data name="DriveWriteLabel" xml:space="preserve">
+    <value>Ecriture</value>
+    <comment>Short label for drive write metric</comment>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>GitHub</value>
+    <comment>GitHub taskbar menu item</comment>
   </data>
   <data name="GPU" xml:space="preserve">
     <value>GPU</value>
     <comment>GPU monitor title</comment>
   </data>
+  <data name="GPUCoreClock" xml:space="preserve">
+    <value>Core Clock</value>
+    <comment>Full name for GPU core clock metric</comment>
+  </data>
+  <data name="GPUCoreClockLabel" xml:space="preserve">
+    <value>Noyau</value>
+    <comment>Short label for RAM core clock metric</comment>
+  </data>
+  <data name="GPUCoreLoad" xml:space="preserve">
+    <value>Core Load</value>
+    <comment>Full name for GPU core load metric</comment>
+  </data>
+  <data name="GPUCoreLoadLabel" xml:space="preserve">
+    <value>Noyau</value>
+    <comment>Short label for GPU core load metric</comment>
+  </data>
+  <data name="GPUFan" xml:space="preserve">
+    <value>Ventilateur</value>
+    <comment>Full name for GPU fan metric</comment>
+  </data>
+  <data name="GPUFanLabel" xml:space="preserve">
+    <value>Ventilateur</value>
+    <comment>Short label for GPU voltage metric</comment>
+  </data>
+  <data name="GPUTemp" xml:space="preserve">
+    <value>Temp</value>
+    <comment>Full name for GPU temp metric</comment>
+  </data>
+  <data name="GPUTempLabel" xml:space="preserve">
+    <value>Temp</value>
+    <comment>Short label for GPU temp metric</comment>
+  </data>
+  <data name="GPUVoltage" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Full name for GPU voltage metric</comment>
+  </data>
+  <data name="GPUVoltageLabel" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Short label for GPU voltage metric</comment>
+  </data>
+  <data name="GPUVRAMClock" xml:space="preserve">
+    <value>VRAM Clock</value>
+    <comment>Full name for GPU VRAM clock metric</comment>
+  </data>
+  <data name="GPUVRAMClockLabel" xml:space="preserve">
+    <value>Horloge</value>
+    <comment>Short label for GPU VRAM clock metric</comment>
+  </data>
+  <data name="GPUVRAMLoad" xml:space="preserve">
+    <value>VRAM Load</value>
+    <comment>Full name for GPU VRAM load metric</comment>
+  </data>
+  <data name="GPUVRAMLoadLabel" xml:space="preserve">
+    <value>Horloge</value>
+    <comment>Short label for GPU VRAM load metric</comment>
+  </data>
+  <data name="Graph" xml:space="preserve">
+    <value>Graph</value>
+    <comment>Graph taskbar menu item</comment>
+  </data>
   <data name="Hide" xml:space="preserve">
     <value>Cacher</value>
     <comment>Hide taskbar menu item</comment>
-  </data>
-  <data name="In" xml:space="preserve">
-    <value>Entrant</value>
-    <comment>Label for bandwidth in sensors</comment>
-  </data>
-  <data name="Load" xml:space="preserve">
-    <value>Charge</value>
-    <comment>Label for load percentage sensors</comment>
   </data>
   <data name="Network" xml:space="preserve">
     <value>Réseau</value>
     <comment>Network monitor title</comment>
   </data>
-  <data name="Out" xml:space="preserve">
+  <data name="NetworkIn" xml:space="preserve">
+    <value>Entrant</value>
+    <comment>Full name for network in metric</comment>
+  </data>
+  <data name="NetworkInLabel" xml:space="preserve">
+    <value>Entrant</value>
+    <comment>Short label for network in metric</comment>
+  </data>
+  <data name="NetworkOut" xml:space="preserve">
     <value>Sortant</value>
-    <comment>Label for bandwidth out sensors</comment>
+    <comment>Full name for network out metric</comment>
+  </data>
+  <data name="NetworkOutLabel" xml:space="preserve">
+    <value>Sortant</value>
+    <comment>Short label for network out metric</comment>
   </data>
   <data name="RAM" xml:space="preserve">
     <value>Mémoire</value>
     <comment>RAM monitor title</comment>
   </data>
-  <data name="Read" xml:space="preserve">
-    <value>Lecture</value>
-    <comment>Label for drive read rate sensors</comment>
+  <data name="RAMClock" xml:space="preserve">
+    <value>Horloge</value>
+    <comment>Full name for RAM clock metric</comment>
+  </data>
+  <data name="RAMClockLabel" xml:space="preserve">
+    <value>Horloge</value>
+    <comment>Short label for RAM clock metric</comment>
+  </data>
+  <data name="RAMFree" xml:space="preserve">
+    <value>Libre</value>
+    <comment>Full name for RAM free metric</comment>
+  </data>
+  <data name="RAMFreeLabel" xml:space="preserve">
+    <value>Libre</value>
+    <comment>Short label for RAM free metric</comment>
+  </data>
+  <data name="RAMLoad" xml:space="preserve">
+    <value>Charge</value>
+    <comment>Full name for RAM load metric</comment>
+  </data>
+  <data name="RAMLoadLabel" xml:space="preserve">
+    <value>Charge</value>
+    <comment>Short label for RAM load metric</comment>
+  </data>
+  <data name="RAMUsed" xml:space="preserve">
+    <value>Occupé</value>
+    <comment>Full name for RAM load metric</comment>
+  </data>
+  <data name="RAMUsedLabel" xml:space="preserve">
+    <value>Occupé</value>
+    <comment>Short label for RAM used metric</comment>
+  </data>
+  <data name="RAMVoltage" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Full name for RAM voltage metric</comment>
+  </data>
+  <data name="RAMVoltageLabel" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Short label for RAM voltage metric</comment>
   </data>
   <data name="Reload" xml:space="preserve">
     <value>Recharger</value>
@@ -201,40 +393,16 @@
     <value>Barre latérale</value>
     <comment>Title of the sidebar window</comment>
   </data>
-  <data name="Temp" xml:space="preserve">
-    <value>Temp</value>
-    <comment>Label for temperature sensors</comment>
-  </data>
   <data name="Time" xml:space="preserve">
     <value>Heure</value>
     <comment>Sidebar clock title</comment>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Mise à jour</value>
-    <comment>Update taskbar menu item</comment>
-  </data>
-  <data name="Used" xml:space="preserve">
     <value>Occupé</value>
-    <comment>Label for amount used sensors</comment>
+    <comment>Update taskbar menu item</comment>
   </data>
   <data name="Visibility" xml:space="preserve">
     <value>Visibilité</value>
     <comment>Visibility taskbar menu item</comment>
-  </data>
-  <data name="Voltage" xml:space="preserve">
-    <value>Voltage</value>
-    <comment>Label for voltage sensors</comment>
-  </data>
-  <data name="VRAM" xml:space="preserve">
-    <value>VRAM</value>
-    <comment>Label for GPU VRAM sensors</comment>
-  </data>
-  <data name="Write" xml:space="preserve">
-    <value>Ecriture</value>
-    <comment>Label for drive read rate sensors</comment>
-  </data>
-  <data name="CPULoad" xml:space="preserve">
-    <value>Charge</value>
-    <comment>Label for CPU load percentage sensors</comment>
   </data>
 </root>
