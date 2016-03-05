@@ -138,7 +138,10 @@
                                                     <ItemsControl ItemsSource="{Binding Path=Metrics, Mode=OneWay}">
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate DataType="{x:Type monitor:iMetric}">
-                                                                <TextBlock Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                                <DockPanel Style="{StaticResource MetricPanel}">
+                                                                    <TextBlock Text="{Binding Path=Label, Mode=OneWay, Converter={StaticResource MetricLabelConverter}}" Style="{StaticResource MetricLabel}" />
+                                                                    <TextBlock Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource MetricValue}" />
+                                                                </DockPanel>
                                                             </DataTemplate>
                                                         </ItemsControl.ItemTemplate>
                                                         <ItemsControl.ItemsPanel>
@@ -190,7 +193,10 @@
                                                     <ItemsControl ItemsSource="{Binding Path=DriveMetrics, Mode=OneWay}">
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate DataType="{x:Type monitor:iMetric}">
-                                                                <TextBlock Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource SensorText}" />
+                                                                <DockPanel Style="{StaticResource MetricPanel}">
+                                                                    <TextBlock Text="{Binding Path=Label, Mode=OneWay, Converter={StaticResource MetricLabelConverter}}" Style="{StaticResource MetricLabel}" />
+                                                                    <TextBlock Text="{Binding Path=Text, Mode=OneWay}" Style="{StaticResource MetricValue}" />
+                                                                </DockPanel>
                                                             </DataTemplate>
                                                         </ItemsControl.ItemTemplate>
                                                         <ItemsControl.ItemsPanel>

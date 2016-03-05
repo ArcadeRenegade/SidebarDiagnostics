@@ -84,4 +84,19 @@ namespace SidebarDiagnostics.Converters
             return !(bool)value;
         }
     }
+
+    public class MetricLabelConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string _value = (string)value;
+
+            return string.Format("{0}:", _value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 }

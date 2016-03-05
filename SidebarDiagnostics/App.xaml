@@ -37,6 +37,7 @@
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
 
+            <conv:MetricLabelConverter x:Key="MetricLabelConverter" />
             <conv:BoolInverseConverter x:Key="BoolInverseConverter" />
             <conv:PercentConverter x:Key="PercentConverter" />
 
@@ -199,7 +200,13 @@
                 <Setter Property="Margin" Value="0,0,0,6" />
             </Style>
 
-            <Style x:Key="SensorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataText}">
+            <Style x:Key="MetricPanel" TargetType="{x:Type DockPanel}">
+                <Setter Property="LastChildFill" Value="False" />
+            </Style>
+            
+            <Style x:Key="MetricLabel" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataText}">
+                <Setter Property="DockPanel.Dock" Value="Left" />
+                <Setter Property="Margin" Value="0,0,5,0" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
                         <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=AlertFontColor, Mode=OneWay}" />
@@ -207,6 +214,16 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="MetricValue" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MetricLabel}">
+                <Setter Property="Margin" Value="0" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=TextAlign, Mode=OneWay}" Value="Right">
+                        <Setter Property="DockPanel.Dock" Value="Right" />
+                        <Setter Property="TextAlignment" Value="Right" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            
             <Style x:Key="DriveProgress" TargetType="{x:Type ProgressBar}">
                 <Setter Property="Minimum" Value="0" />
                 <Setter Property="Maximum" Value="100" />
@@ -230,6 +247,12 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=TextAlign, Mode=OneWay}" Value="Right">
+                        <Setter Property="Width" Value="Auto" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    </DataTrigger>
+                </Style.Triggers>
             </Style>
 
             <Style x:Key="SettingTab" TargetType="{x:Type TabControl}">

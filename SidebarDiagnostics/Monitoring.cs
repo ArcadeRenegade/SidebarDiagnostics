@@ -1330,8 +1330,7 @@ namespace SidebarDiagnostics.Monitoring
             }
 
             Text = string.Format(
-                "{0}: {1:#,##0.##}{2}",
-                Label,
+                "{0:#,##0.##}{1}",
                 _val.Round(_round),
                 Append
                 );
@@ -1541,7 +1540,7 @@ namespace SidebarDiagnostics.Monitoring
             }
             else
             {
-                Text = string.Format("{0}: No Value", Label);
+                Text = "No Value";
             }
         }
 

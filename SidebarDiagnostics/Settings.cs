@@ -413,6 +413,23 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private TextAlign _textAlign { get; set; } = TextAlign.Left;
+
+        [JsonProperty]
+        public TextAlign TextAlign
+        {
+            get
+            {
+                return _textAlign;
+            }
+            set
+            {
+                _textAlign = value;
+
+                NotifyPropertyChanged("TextAlign");
+            }
+        }
+
         private FontSetting _fontSetting { get; set; } = FontSetting.x14;
 
         [JsonProperty]
@@ -563,6 +580,12 @@ namespace SidebarDiagnostics.Framework
                 return _instance;
             }
         }
+    }
+
+    public enum TextAlign : byte
+    {
+        Left,
+        Right
     }
 
     [JsonObject(MemberSerialization.OptIn)]
