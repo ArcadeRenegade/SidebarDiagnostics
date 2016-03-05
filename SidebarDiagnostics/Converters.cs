@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using SidebarDiagnostics.Windows;
@@ -92,6 +93,21 @@ namespace SidebarDiagnostics.Converters
             string _value = (string)value;
 
             return string.Format("{0}:", _value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class FontToSpaceConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int _value = (int)value;
+
+            return new Thickness(0, 0, _value * 0.4d, 0);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

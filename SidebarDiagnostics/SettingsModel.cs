@@ -56,6 +56,14 @@ namespace SidebarDiagnostics.Models
             BGColor = Framework.Settings.Instance.BGColor;
             BGOpacity = Framework.Settings.Instance.BGOpacity;
 
+            TextAlignItems = new TextAlignItem[2]
+            {
+                new TextAlignItem() { Text = Resources.SettingsTextAlignLeft, Value = TextAlign.Left },
+                new TextAlignItem() { Text = Resources.SettingsTextAlignRight, Value = TextAlign.Right }
+            };
+
+            TextAlign = Framework.Settings.Instance.TextAlign;
+
             FontSettingItems = new FontSetting[5]
             {
                 FontSetting.x10,
@@ -139,6 +147,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.AutoBGColor = AutoBGColor;
             Framework.Settings.Instance.BGColor = BGColor;
             Framework.Settings.Instance.BGOpacity = BGOpacity;
+            Framework.Settings.Instance.TextAlign = TextAlign;
             Framework.Settings.Instance.FontSetting = FontSetting;
             Framework.Settings.Instance.FontColor = FontColor;
             Framework.Settings.Instance.AlertFontColor = AlertFontColor;
@@ -598,6 +607,38 @@ namespace SidebarDiagnostics.Models
             }
         }
 
+        private TextAlign _textAlign { get; set; }
+
+        public TextAlign TextAlign
+        {
+            get
+            {
+                return _textAlign;
+            }
+            set
+            {
+                _textAlign = value;
+
+                NotifyPropertyChanged("TextAlign");
+            }
+        }
+
+        private TextAlignItem[] _textAlignItems { get; set; }
+
+        public TextAlignItem[] TextAlignItems
+        {
+            get
+            {
+                return _textAlignItems;
+            }
+            set
+            {
+                _textAlignItems = value;
+
+                NotifyPropertyChanged("TextAlignItems");
+            }
+        }
+
         private FontSetting _fontSetting { get; set; }
 
         public FontSetting FontSetting
@@ -905,6 +946,13 @@ namespace SidebarDiagnostics.Models
     public class ScreenItem
     {
         public int Index { get; set; }
+
+        public string Text { get; set; }
+    }
+
+    public class TextAlignItem
+    {
+        public TextAlign Value { get; set; }
 
         public string Text { get; set; }
     }

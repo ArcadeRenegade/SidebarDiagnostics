@@ -1735,6 +1735,42 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text Align.
+        /// </summary>
+        public static string SettingsTextAlign {
+            get {
+                return ResourceManager.GetString("SettingsTextAlign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string SettingsTextAlignLeft {
+            get {
+                return ResourceManager.GetString("SettingsTextAlignLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string SettingsTextAlignRight {
+            get {
+                return ResourceManager.GetString("SettingsTextAlignRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alignment of metric text..
+        /// </summary>
+        public static string SettingsTextAlignTooltip {
+            get {
+                return ResourceManager.GetString("SettingsTextAlignTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sidebar Settings.
         /// </summary>
         public static string SettingsTitle {

@@ -190,7 +190,7 @@ namespace SidebarDiagnostics.Utilities
         {
             get
             {
-                return new string[6] { "en", "da", "de", "fr", "ja", "nl" };
+                return new string[7] { "en", "da", "de", "fr", "ja", "nl", "zh" };
             }
         }
 

@@ -1,5 +1,14 @@
 ﻿[
   {
+    "Version": "3.3.2",
+    "Changes": [
+      "Added an option for \"Text Align\" right or left.",
+      "Added complete localization for French and Chinese.",
+      "Thanks @AlexandreBT and @Vassile-D.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.3.1",
     "Changes": [
       "Added the option to enable or disable specific metrics.",
