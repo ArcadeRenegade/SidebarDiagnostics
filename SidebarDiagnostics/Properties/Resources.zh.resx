@@ -306,7 +306,7 @@
     <comment>Short label for drive write metric</comment>
   </data>
   <data name="ErrorPerformanceCounter" xml:space="preserve">
-    <value>性能统计缓存数据已损坏。\r\n要查看如何修复此问题，请点击“好”。</value>
+    <value>性能统计缓存数据已损坏。 要查看如何修复此问题，请点击“好”。</value>
     <comment>Text of the performance counter error</comment>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
@@ -970,7 +970,7 @@
     <comment>Sidebar clock title</comment>
   </data>
   <data name="UpdateErrorFatalText" xml:space="preserve">
-    <value>升级程序版本时出现错误。\r\n自动升级已被暂时禁用。</value>
+    <value>升级程序版本时出现错误。 自动升级已被暂时禁用。</value>
     <comment>Fatal text of the update error popup</comment>
   </data>
   <data name="UpdateErrorText" xml:space="preserve">

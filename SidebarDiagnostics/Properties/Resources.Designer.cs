@@ -484,7 +484,7 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your Performance Counter cache is corrupted.\r\nClick OK to visit the wiki and fix this error..
+        ///   Looks up a localized string similar to Your Performance Counter cache is corrupted. Click OK to visit the wiki and fix this error..
         /// </summary>
         public static string ErrorPerformanceCounter {
             get {
@@ -1978,7 +1978,7 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A fatal error occurred while trying to update.\r\nAuto update is now disabled..
+        ///   Looks up a localized string similar to A fatal error occurred while trying to update. Auto update is now disabled..
         /// </summary>
         public static string UpdateErrorFatalText {
             get {

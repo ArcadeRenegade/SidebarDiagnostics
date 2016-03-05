@@ -438,7 +438,7 @@
     <comment>Title of the change log window</comment>
   </data>
   <data name="ErrorPerformanceCounter" xml:space="preserve">
-    <value>Your Performance Counter cache is corrupted.\r\nClick OK to visit the wiki and fix this error.</value>
+    <value>Your Performance Counter cache is corrupted. Click OK to visit the wiki and fix this error.</value>
     <comment>Text of the performance counter error</comment>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
@@ -954,7 +954,7 @@
     <comment>Title of the initial setup page</comment>
   </data>
   <data name="UpdateErrorFatalText" xml:space="preserve">
-    <value>A fatal error occurred while trying to update.\r\nAuto update is now disabled.</value>
+    <value>A fatal error occurred while trying to update. Auto update is now disabled.</value>
     <comment>Fatal text of the update error popup</comment>
   </data>
   <data name="UpdateErrorText" xml:space="preserve">

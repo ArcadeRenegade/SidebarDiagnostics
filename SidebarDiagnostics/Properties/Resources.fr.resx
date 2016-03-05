@@ -306,7 +306,7 @@
     <comment>Short label for drive write metric</comment>
   </data>
   <data name="ErrorPerformanceCounter" xml:space="preserve">
-    <value>Your Performance Counter cache is corrupted.\r\nClick OK to visit the wiki and fix this error.</value>
+    <value>Your Performance Counter cache is corrupted. Click OK to visit the wiki and fix this error.</value>
     <comment>Text of the performance counter error</comment>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
@@ -970,7 +970,7 @@
     <comment>Sidebar clock title</comment>
   </data>
   <data name="UpdateErrorFatalText" xml:space="preserve">
-    <value>Une erreur fatale est survenue lors de la tentative de mise à jour.\r\nLa mise à jour automatique est maintenant désactivée.</value>
+    <value>Une erreur fatale est survenue lors de la tentative de mise à jour. La mise à jour automatique est maintenant désactivée.</value>
     <comment>Fatal text of the update error popup</comment>
   </data>
   <data name="UpdateErrorText" xml:space="preserve">
