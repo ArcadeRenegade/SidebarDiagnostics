@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Windows;
+using System.ComponentModel;
 
 namespace SidebarDiagnostics
 {
@@ -27,7 +28,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             DataContext = null;
 

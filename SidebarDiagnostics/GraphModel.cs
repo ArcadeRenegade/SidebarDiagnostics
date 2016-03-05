@@ -177,12 +177,14 @@ namespace SidebarDiagnostics.Models
 
             try
             {
-                foreach (MetricRecord _record in _data[_metric].Where(r => (_now - r.Recorded).TotalSeconds > Duration).ToArray())
+                ObservableCollection<MetricRecord> _mData = _data[_metric];
+
+                foreach (MetricRecord _record in _mData.Where(r => (_now - r.Recorded).TotalSeconds > Duration).ToArray())
                 {
-                    _data[_metric].Remove(_record);
+                    _mData.Remove(_record);
                 }
 
-                _data[_metric].Add(new MetricRecord(_metric.nValue, _now));
+                _mData.Add(new MetricRecord(_metric.nValue, _now));
             }
             catch
             {
