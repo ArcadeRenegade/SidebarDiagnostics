@@ -138,15 +138,15 @@
     <comment>Short label for CPU clock metric</comment>
   </data>
   <data name="CPUCoreClock" xml:space="preserve">
-    <value>Core Clock</value>
+    <value>Frekvens</value>
     <comment>Full name for CPU core clock metric</comment>
   </data>
   <data name="CPUCoreClockLabel" xml:space="preserve">
-    <value>Kerne</value>
+    <value>Frekvens</value>
     <comment>Short label for CPU core clock metric</comment>
   </data>
   <data name="CPUCoreLoad" xml:space="preserve">
-    <value>Core Load</value>
+    <value>Kerne</value>
     <comment>Full name for CPU core load metric</comment>
   </data>
   <data name="CPUCoreLoadLabel" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Short label for CPU core load metric</comment>
   </data>
   <data name="CPUFan" xml:space="preserve">
-    <value>Fan Usage</value>
+    <value>Blæser</value>
     <comment>Full name for CPU fan metric</comment>
   </data>
   <data name="CPUFanLabel" xml:space="preserve">
@@ -170,7 +170,7 @@
     <comment>Short label for CPU load metric</comment>
   </data>
   <data name="CPUTemp" xml:space="preserve">
-    <value>Temperature</value>
+    <value>Temperatur</value>
     <comment>Full name for CPU temp metric</comment>
   </data>
   <data name="CPUTempLabel" xml:space="preserve">
@@ -178,7 +178,7 @@
     <comment>Short label for CPU temp metric</comment>
   </data>
   <data name="CPUVoltage" xml:space="preserve">
-    <value>Voltage</value>
+    <value>Volt</value>
     <comment>Full name for CPU voltage metric</comment>
   </data>
   <data name="CPUVoltageLabel" xml:space="preserve">
@@ -186,7 +186,7 @@
     <comment>Short label for CPU voltage metric</comment>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>Donér</value>
+    <value>Doner</value>
     <comment>Donate taskbar menu item</comment>
   </data>
   <data name="DriveFree" xml:space="preserve">
@@ -202,7 +202,7 @@
     <comment>Full name for drive load metric</comment>
   </data>
   <data name="DriveLoadBar" xml:space="preserve">
-    <value>Load Bar</value>
+    <value>I brug</value>
     <comment>Full name for drive load bar metric</comment>
   </data>
   <data name="DriveLoadBarLabel" xml:space="preserve">
@@ -214,7 +214,7 @@
     <comment>Short label for drive load metric</comment>
   </data>
   <data name="DriveRead" xml:space="preserve">
-    <value>Read Rate</value>
+    <value>Læs</value>
     <comment>Full name for drive read metric</comment>
   </data>
   <data name="DriveReadLabel" xml:space="preserve">
@@ -234,7 +234,7 @@
     <comment>Short label for drive used metric</comment>
   </data>
   <data name="DriveWrite" xml:space="preserve">
-    <value>Write Rate</value>
+    <value>Skriv</value>
     <comment>Full name for drive write metric</comment>
   </data>
   <data name="DriveWriteLabel" xml:space="preserve">
@@ -250,7 +250,7 @@
     <comment>GPU monitor title</comment>
   </data>
   <data name="GPUCoreClock" xml:space="preserve">
-    <value>Core Clock</value>
+    <value>Kerne</value>
     <comment>Full name for GPU core clock metric</comment>
   </data>
   <data name="GPUCoreClockLabel" xml:space="preserve">
@@ -258,7 +258,7 @@
     <comment>Short label for RAM core clock metric</comment>
   </data>
   <data name="GPUCoreLoad" xml:space="preserve">
-    <value>Core Load</value>
+    <value>Kerne</value>
     <comment>Full name for GPU core load metric</comment>
   </data>
   <data name="GPUCoreLoadLabel" xml:space="preserve">
@@ -266,7 +266,7 @@
     <comment>Short label for GPU core load metric</comment>
   </data>
   <data name="GPUFan" xml:space="preserve">
-    <value>Fan Usage</value>
+    <value>Blæser</value>
     <comment>Full name for GPU fan metric</comment>
   </data>
   <data name="GPUFanLabel" xml:space="preserve">
@@ -282,7 +282,7 @@
     <comment>Short label for GPU temp metric</comment>
   </data>
   <data name="GPUVoltage" xml:space="preserve">
-    <value>Voltage</value>
+    <value>Volt</value>
     <comment>Full name for GPU voltage metric</comment>
   </data>
   <data name="GPUVoltageLabel" xml:space="preserve">
@@ -290,7 +290,7 @@
     <comment>Short label for GPU voltage metric</comment>
   </data>
   <data name="GPUVRAMClock" xml:space="preserve">
-    <value>VRAM Clock</value>
+    <value>VRAM frekvens</value>
     <comment>Full name for GPU VRAM clock metric</comment>
   </data>
   <data name="GPUVRAMClockLabel" xml:space="preserve">
@@ -298,7 +298,7 @@
     <comment>Short label for GPU VRAM clock metric</comment>
   </data>
   <data name="GPUVRAMLoad" xml:space="preserve">
-    <value>VRAM Load</value>
+    <value>VRAM</value>
     <comment>Full name for GPU VRAM load metric</comment>
   </data>
   <data name="GPUVRAMLoadLabel" xml:space="preserve">
@@ -306,7 +306,7 @@
     <comment>Short label for GPU VRAM load metric</comment>
   </data>
   <data name="Graph" xml:space="preserve">
-    <value>Graph</value>
+    <value>Graf</value>
     <comment>Graph taskbar menu item</comment>
   </data>
   <data name="Hide" xml:space="preserve">
@@ -318,7 +318,7 @@
     <comment>Network monitor title</comment>
   </data>
   <data name="NetworkIn" xml:space="preserve">
-    <value>Bandwidth In</value>
+    <value>Ind</value>
     <comment>Full name for network in metric</comment>
   </data>
   <data name="NetworkInLabel" xml:space="preserve">
@@ -330,7 +330,7 @@
     <comment>Full name for network out metric</comment>
   </data>
   <data name="NetworkOutLabel" xml:space="preserve">
-    <value>Out</value>
+    <value>Ud</value>
     <comment>Short label for network out metric</comment>
   </data>
   <data name="RAM" xml:space="preserve">
@@ -370,7 +370,7 @@
     <comment>Short label for RAM used metric</comment>
   </data>
   <data name="RAMVoltage" xml:space="preserve">
-    <value>Voltage</value>
+    <value>Volt</value>
     <comment>Full name for RAM voltage metric</comment>
   </data>
   <data name="RAMVoltageLabel" xml:space="preserve">
@@ -398,7 +398,7 @@
     <comment>Sidebar clock title</comment>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Opdatér</value>
+    <value>Opdater</value>
     <comment>Update taskbar menu item</comment>
   </data>
   <data name="Visibility" xml:space="preserve">

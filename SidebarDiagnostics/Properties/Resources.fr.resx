@@ -514,7 +514,7 @@
     <comment>Settings alt tab label</comment>
   </data>
   <data name="SettingsAltTabTooltip" xml:space="preserve">
-    <value>Afficher la sidebar en effectuant un Altr + Tab</value>
+    <value>Afficher la sidebar en effectuant un Alt + Tab</value>
     <comment>Settings alt tab tooltip</comment>
   </data>
   <data name="SettingsAlwaysOnTop" xml:space="preserve">
@@ -522,7 +522,7 @@
     <comment>Settings always on top label</comment>
   </data>
   <data name="SettingsAlwaysOnTopTooltip" xml:space="preserve">
-    <value>Mettre la sidebare toujours au-dessus des autres fenêtres.</value>
+    <value>Mettre la sidebar toujours au-dessus des autres fenêtres.</value>
     <comment>Settings always on top tooltip</comment>
   </data>
   <data name="SettingsAutoBackground" xml:space="preserve">
@@ -594,7 +594,7 @@
     <comment>Settings core loads label</comment>
   </data>
   <data name="SettingsCoreLoadsTooltip" xml:space="preserve">
-    <value>Affiche la charge en pourcentage de tous les cœurs. </value>
+    <value>Affiche la charge en pourcentage de tous les cœurs.</value>
     <comment>Settings core loads tooltip</comment>
   </data>
   <data name="SettingsCustomizeTab" xml:space="preserve">
@@ -610,7 +610,7 @@
     <comment>Settings date format disabled value</comment>
   </data>
   <data name="SettingsDateFormatTooltip" xml:space="preserve">
-    <value>Format de la date sous l'heure. </value>
+    <value>Format de la date sous l'heure.</value>
     <comment>Settings date format tooltip</comment>
   </data>
   <data name="SettingsDock" xml:space="preserve">
@@ -674,7 +674,7 @@
     <comment>Settings hardware enabled checkbox tooltip</comment>
   </data>
   <data name="SettingsHardwareNameTooltip" xml:space="preserve">
-    <value>Editer le nom de ce matériel. </value>
+    <value>Editer le nom de ce matériel.</value>
     <comment>Settings hardware name tooltip</comment>
   </data>
   <data name="SettingsHorizontalOffset" xml:space="preserve">
@@ -730,11 +730,11 @@
     <comment>Settings language tooltip</comment>
   </data>
   <data name="SettingsMetrics" xml:space="preserve">
-    <value>Métriques: </value>
+    <value>Métriques:</value>
     <comment>Settings metrics label with colon</comment>
   </data>
   <data name="SettingsMetricsTooltip" xml:space="preserve">
-    <value>Activer ou désactiver des métriques spécifiques.</value>
+    <value>Activer ou désactiver des m‚triques sp‚cifiques.</value>
     <comment>Settings metrics tooltip</comment>
   </data>
   <data name="SettingsMonitorEnabledTooltip" xml:space="preserve">
@@ -762,7 +762,7 @@
     <comment>Title of the settings monitors tab</comment>
   </data>
   <data name="SettingsPollingInterval" xml:space="preserve">
-    <value>Interval de rafraichissement. </value>
+    <value>Interval de rafraichissement.</value>
     <comment>Settings polling interval label</comment>
   </data>
   <data name="SettingsPollingIntervalTooltip" xml:space="preserve">
@@ -786,7 +786,7 @@
     <comment>Settings round all decimals tooltip</comment>
   </data>
   <data name="SettingsRunAtStartup" xml:space="preserve">
-    <value>Lancer au démarrage. </value>
+    <value>Lancer au démarrage.</value>
     <comment>Settings run at startup label</comment>
   </data>
   <data name="SettingsRunAtStartupTooltip" xml:space="preserve">
@@ -830,7 +830,7 @@
     <comment>Settings show drive space tooltip</comment>
   </data>
   <data name="SettingsShowHardwareNames" xml:space="preserve">
-    <value>Afficher les noms des Matériels</value>
+    <value>Afficher les noms des matériels</value>
     <comment>Settings show hardware names label</comment>
   </data>
   <data name="SettingsShowHardwareNamesTooltip" xml:space="preserve">
@@ -850,7 +850,7 @@
     <comment>Settings sidebar width label</comment>
   </data>
   <data name="SettingsSidebarWidthTooltip" xml:space="preserve">
-    <value>Largeur de la Sidebare en pixels.</value>
+    <value>Largeur de la Sidebar en pixels.</value>
     <comment>Settings sidebar width tooltip</comment>
   </data>
   <data name="SettingsTemperatureAlert" xml:space="preserve">
@@ -874,7 +874,7 @@
     <comment>Settings text align right value</comment>
   </data>
   <data name="SettingsTextAlignTooltip" xml:space="preserve">
-    <value>Alignement du texte métrique.</value>
+    <value>Alignement métrique du texte.</value>
     <comment>Settings text align tooltip</comment>
   </data>
   <data name="SettingsTitle" xml:space="preserve">
@@ -882,7 +882,7 @@
     <comment>Title of the settings window</comment>
   </data>
   <data name="SettingsUIScale" xml:space="preserve">
-    <value>Echelle UI</value>
+    <value>Echelle de l'UI</value>
     <comment>Settings UI scale label</comment>
   </data>
   <data name="SettingsUIScaleTooltip" xml:space="preserve">
@@ -894,7 +894,7 @@
     <comment>Settings use bytes per second label</comment>
   </data>
   <data name="SettingsUseBytesPerSecondTooltip" xml:space="preserve">
-    <value>Affiche la bande passante en Bytes par seconde au lieu de l'octeur par seconde.</value>
+    <value>Affiche la bande passante en Bytes par seconde au lieu de l'octet par seconde.</value>
     <comment>Settings use bytes per second tooltip</comment>
   </data>
   <data name="SettingsUsedSpaceAlert" xml:space="preserve">
@@ -938,7 +938,7 @@
     <comment>Title of the custom setup page</comment>
   </data>
   <data name="SetupDoneSubtitle" xml:space="preserve">
-    <value>Si vous souhaitez personnaliser la sidebar, clique sur le bouton Réglages.</value>
+    <value>Si vous souhaitez personnaliser la sidebar, cliquez sur le bouton Réglages.</value>
     <comment>Subtitle of the setup done page</comment>
   </data>
   <data name="SetupDoneText" xml:space="preserve">
@@ -950,11 +950,11 @@
     <comment>Title of the setup done page</comment>
   </data>
   <data name="SetupSubtitle" xml:space="preserve">
-    <value>Ceci est une configuration rapide pour avoir la sidebare dans la position correcte. </value>
+    <value>Ceci est une configuration rapide pour avoir la sidebar dans la position correcte.</value>
     <comment>Subtitle of the initial setup page</comment>
   </data>
   <data name="SetupText" xml:space="preserve">
-    <value>Est-ce que la sideba est visible et ancrée sur le bord droit de votre écran principal ?</value>
+    <value>Est-ce que la sidebar est visible et ancrée sur le bord droit de votre écran principal ?</value>
     <comment>Text of the initial setup page</comment>
   </data>
   <data name="SetupTitle" xml:space="preserve">
