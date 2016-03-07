@@ -203,6 +203,11 @@
       <DependentUpon>Graph.xaml</DependentUpon>
     </Compile>
     <Compile Include="GraphModel.cs" />
+    <Compile Include="Properties\Resources.de-CH.Designer.cs">
+      <DependentUpon>Resources.de-CH.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\Resources.zh.Designer.cs">
       <DependentUpon>Resources.zh.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -336,6 +341,11 @@
     <Resource Include="Sidebar.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.de-CH.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.de-CH.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.zh.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.zh.Designer.cs</LastGenOutput>
