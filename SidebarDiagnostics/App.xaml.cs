@@ -189,10 +189,16 @@ namespace SidebarDiagnostics
                     MessageBox.Show(Framework.Resources.UpdateErrorText, Framework.Resources.UpdateErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Framework.Settings.Instance.AutoUpdate = false;
                 Framework.Settings.Instance.Save();
+
+                using (EventLog _log = new EventLog("Application"))
+                {
+                    _log.Source = Framework.Resources.AppName;
+                    _log.WriteEntry(e.ToString(), EventLogEntryType.Error, 100, 1);
+                }
 
                 MessageBox.Show(Framework.Resources.UpdateErrorFatalText, Framework.Resources.UpdateErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
             }
