@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.3.4",
+    "Changes": [
+      "Made the \"Show Desktop\" fix for when \"Always on Top\" is disabled to be more consistent.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.3.3",
     "Changes": [
       "Localization updates.",

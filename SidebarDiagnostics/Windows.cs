@@ -154,6 +154,7 @@ namespace SidebarDiagnostics.Windows
             _delegate = new WinEventDelegate(WinEventHook);
             _hookIntPtr = NativeMethods.SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, _delegate, 0, 0, WINEVENT_OUTOFCONTEXT);
             _sidebar = sidebar;
+            _sidebarHwnd = new WindowInteropHelper(sidebar).Handle;
         }
 
         public static void RemoveHook()
@@ -170,6 +171,7 @@ namespace SidebarDiagnostics.Windows
             _delegate = null;
             _hookIntPtr = null;
             _sidebar = null;
+            _sidebarHwnd = null;
         }
 
         private static string GetWindowClass(IntPtr hwnd)
@@ -191,9 +193,9 @@ namespace SidebarDiagnostics.Windows
                 {
                     _sidebar.SetTopMost(false);
                 }
-                else
+                else if (_sidebar.IsTopMost)
                 {
-                    _sidebar.ClearTopMost(false);
+                    _sidebar.SetBottom(false);
                 }
             }
         }
@@ -205,6 +207,8 @@ namespace SidebarDiagnostics.Windows
         private static WinEventDelegate _delegate { get; set; }
 
         private static Sidebar _sidebar { get; set; }
+
+        private static IntPtr? _sidebarHwnd { get; set; }
     }
 
     public static class Devices
