@@ -1317,7 +1317,7 @@ namespace SidebarDiagnostics.Monitoring
 
             Value = _val;
 
-            if (_alertValue > 0 && _alertValue <= _val)
+            if (_alertValue > 0 && _alertValue <= nValue)
             {
                 if (!IsAlert)
                 {
