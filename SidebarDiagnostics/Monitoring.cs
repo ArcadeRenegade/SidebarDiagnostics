@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Threading;
 using System.Windows.Media;
 using OpenHardwareMonitor.Hardware;
 using Newtonsoft.Json;
@@ -1276,6 +1277,12 @@ namespace SidebarDiagnostics.Monitoring
             {
                 if (disposing)
                 {
+                    if (_alertColorTimer != null)
+                    {
+                        _alertColorTimer.Stop();
+                        _alertColorTimer = null;
+                    }
+
                     _converter = null;
                 }
 
@@ -1487,8 +1494,42 @@ namespace SidebarDiagnostics.Monitoring
                 _isAlert = value;
 
                 NotifyPropertyChanged("IsAlert");
+
+                if (value)
+                {
+                    _alertColorFlag = false;
+
+                    _alertColorTimer = new DispatcherTimer(DispatcherPriority.Normal, App.Current.Dispatcher);
+                    _alertColorTimer.Interval = TimeSpan.FromSeconds(0.5d);
+                    _alertColorTimer.Tick += new EventHandler(AlertColorTimer_Tick);
+                    _alertColorTimer.Start();
+                }
+                else if (_alertColorTimer != null)
+                {
+                    _alertColorTimer.Stop();
+                    _alertColorTimer = null;
+                }
             }
         }
+        
+        public string AlertColor
+        {
+            get
+            {
+                return _alertColorFlag ? Framework.Settings.Instance.FontColor : Framework.Settings.Instance.AlertFontColor;
+            }
+        }
+
+        private DispatcherTimer _alertColorTimer;
+
+        private void AlertColorTimer_Tick(object sender, EventArgs e)
+        {
+            _alertColorFlag = !_alertColorFlag;
+
+            NotifyPropertyChanged("AlertColor");
+        }
+
+        private bool _alertColorFlag = false;
 
         protected iConverter _converter { get; set; }
 

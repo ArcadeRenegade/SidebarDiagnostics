@@ -210,7 +210,7 @@
                 <Setter Property="Margin" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.FontSize, Mode=OneWay, Converter={StaticResource FontToSpaceConverter}}" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
-                        <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=AlertFontColor, Mode=OneWay}" />
+                        <Setter Property="Foreground" Value="{Binding Path=AlertColor, Mode=OneWay}" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>

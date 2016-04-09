@@ -1,5 +1,13 @@
 ﻿[
   {
+    "Version": "3.3.6",
+    "Changes": [
+      "Metric alerts now blink to be more conspicuous.",
+      "Fixed a bug with the font size settings.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.3.5",
     "Changes": [
       "Fixed network bandwidth alerts.",
