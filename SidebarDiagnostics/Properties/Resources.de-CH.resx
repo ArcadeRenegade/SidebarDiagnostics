@@ -130,7 +130,7 @@
     <comment>Text of the cancel button</comment>
   </data>
   <data name="ButtonClose" xml:space="preserve">
-    <value>Schliessen</value>
+    <value>Schließen</value>
     <comment>Text of the close button</comment>
   </data>
   <data name="ButtonDonate" xml:space="preserve">
@@ -146,7 +146,7 @@
     <comment>Text of the GitHub button</comment>
   </data>
   <data name="ButtonGraph" xml:space="preserve">
-    <value>Graphik</value>
+    <value>Grafik</value>
     <comment>Text of the graph button</comment>
   </data>
   <data name="ButtonHide" xml:space="preserve">
@@ -190,7 +190,7 @@
     <comment>Text of the yes button</comment>
   </data>
   <data name="ChangeLogTitle" xml:space="preserve">
-    <value>Änderungs Protokoll</value>
+    <value>ChangeLog (Änderungen)</value>
     <comment>Title of the change log window</comment>
   </data>
   <data name="CPU" xml:space="preserve">
@@ -278,7 +278,7 @@
     <comment>Short label for drive load metric</comment>
   </data>
   <data name="DriveRead" xml:space="preserve">
-    <value>Lese Geschwindigkeit</value>
+    <value>Leserate</value>
     <comment>Full name for drive read metric</comment>
   </data>
   <data name="DriveReadLabel" xml:space="preserve">
@@ -298,7 +298,7 @@
     <comment>Short label for drive used metric</comment>
   </data>
   <data name="DriveWrite" xml:space="preserve">
-    <value>Schreib Geschwindigkeit</value>
+    <value>Schreibrate</value>
     <comment>Full name for drive write metric</comment>
   </data>
   <data name="DriveWriteLabel" xml:space="preserve">
@@ -306,7 +306,7 @@
     <comment>Short label for drive write metric</comment>
   </data>
   <data name="ErrorPerformanceCounter" xml:space="preserve">
-    <value>Your Performance Counter cache is corrupted. Click OK to visit the wiki and fix this error.</value>
+    <value>Der Performance Counter Cache ist fehlerhaft. Klicken Sie auf OK um das Wiki zu besuchen und diesen Fehler zu beheben.</value>
     <comment>Text of the performance counter error</comment>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
@@ -398,7 +398,7 @@
     <comment>Graph config hardware label</comment>
   </data>
   <data name="GraphMetrics" xml:space="preserve">
-    <value>Metrics</value>
+    <value>Anzeigen</value>
     <comment>Graph config metrics label</comment>
   </data>
   <data name="GraphMonitor" xml:space="preserve">
@@ -406,27 +406,27 @@
     <comment>Graph config monitor label</comment>
   </data>
   <data name="GraphTitle" xml:space="preserve">
-    <value>Graphik</value>
+    <value>Grafik</value>
     <comment>Title of the graph window</comment>
   </data>
   <data name="LanguageChangedText" xml:space="preserve">
-    <value>Bitte starte die Anwendung neu!</value>
+    <value>Bitte starten Sie die Anwendung neu!</value>
     <comment>Text of the language changed popup</comment>
   </data>
   <data name="LanguageChangedTitle" xml:space="preserve">
-    <value>Sprachänderung</value>
+    <value>Sprachauswahl</value>
     <comment>Title of the language changed popup</comment>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Network</value>
-    <comment>Netzwerk monitor title</comment>
+    <value>Netzwerk</value>
+    <comment>Networkmonitor title</comment>
   </data>
   <data name="NetworkIn" xml:space="preserve">
     <value>Empfangen</value>
     <comment>Full name for network in metric</comment>
   </data>
   <data name="NetworkInLabel" xml:space="preserve">
-    <value>Ein</value>
+    <value>Download</value>
     <comment>Short label for network in metric</comment>
   </data>
   <data name="NetworkOut" xml:space="preserve">
@@ -434,51 +434,51 @@
     <comment>Full name for network out metric</comment>
   </data>
   <data name="NetworkOutLabel" xml:space="preserve">
-    <value>Aus</value>
+    <value>Upload</value>
     <comment>Short label for network out metric</comment>
   </data>
   <data name="RAM" xml:space="preserve">
-    <value>RAM</value>
+    <value>Arbeitsspeicher</value>
     <comment>RAM monitor title</comment>
   </data>
   <data name="RAMClock" xml:space="preserve">
-    <value>Clock</value>
+    <value>Takt</value>
     <comment>Full name for RAM clock metric</comment>
   </data>
   <data name="RAMClockLabel" xml:space="preserve">
-    <value>Clock</value>
+    <value>Takt</value>
     <comment>Short label for RAM clock metric</comment>
   </data>
   <data name="RAMFree" xml:space="preserve">
-    <value>Free</value>
+    <value>Frei</value>
     <comment>Full name for RAM free metric</comment>
   </data>
   <data name="RAMFreeLabel" xml:space="preserve">
-    <value>Free</value>
+    <value>Frei</value>
     <comment>Short label for RAM free metric</comment>
   </data>
   <data name="RAMLoad" xml:space="preserve">
-    <value>Load</value>
+    <value>Auslastung</value>
     <comment>Full name for RAM load metric</comment>
   </data>
   <data name="RAMLoadLabel" xml:space="preserve">
-    <value>Load</value>
+    <value>Auslastung</value>
     <comment>Short label for RAM load metric</comment>
   </data>
   <data name="RAMUsed" xml:space="preserve">
-    <value>Used</value>
+    <value>Belegt</value>
     <comment>Full name for RAM load metric</comment>
   </data>
   <data name="RAMUsedLabel" xml:space="preserve">
-    <value>Used</value>
+    <value>Belegt</value>
     <comment>Short label for RAM used metric</comment>
   </data>
   <data name="RAMVoltage" xml:space="preserve">
-    <value>Voltage</value>
+    <value>Spannung</value>
     <comment>Full name for RAM voltage metric</comment>
   </data>
   <data name="RAMVoltageLabel" xml:space="preserve">
-    <value>Voltage</value>
+    <value>Spannung</value>
     <comment>Short label for RAM voltage metric</comment>
   </data>
   <data name="Settings24HourClock" xml:space="preserve">
@@ -494,67 +494,67 @@
     <comment>Title of the settings advanced tab</comment>
   </data>
   <data name="SettingsAlertFontColor" xml:space="preserve">
-    <value>Farbe Warnungen</value>
+    <value>Farbe für Warnungen</value>
     <comment>Settings alert font color label</comment>
   </data>
   <data name="SettingsAlertFontColorTooltip" xml:space="preserve">
-    <value>Farbe des Warnungstextes</value>
+    <value>Farbe des Warntextes</value>
     <comment>Settings alert font color tooltip</comment>
   </data>
   <data name="SettingsAllCoreClocks" xml:space="preserve">
-    <value>Show All Core Clocks</value>
+    <value>Zeige den Takt aller Kerne an</value>
     <comment>Settings all core clocks label</comment>
   </data>
   <data name="SettingsAllCoreClocksTooltip" xml:space="preserve">
-    <value>Shows the clock speeds of all cores not just the first.</value>
+    <value>Zeige den Takt nur den ersten sondern für alle Kerne an</value>
     <comment>Settings all core clocks tooltip</comment>
   </data>
   <data name="SettingsAltTab" xml:space="preserve">
-    <value>Show in Alt + Tab</value>
+    <value>Anzeige in Alt + Tab</value>
     <comment>Settings alt tab label</comment>
   </data>
   <data name="SettingsAltTabTooltip" xml:space="preserve">
-    <value>Shows the sidebar in the Alt + Tab menu.</value>
+    <value>Zeige das Programm in der Alt + Tab Ansicht an Ansicht an</value>
     <comment>Settings alt tab tooltip</comment>
   </data>
   <data name="SettingsAlwaysOnTop" xml:space="preserve">
-    <value>Always On Top</value>
+    <value>Anzeige als oberstes Fenster</value>
     <comment>Settings always on top label</comment>
   </data>
   <data name="SettingsAlwaysOnTopTooltip" xml:space="preserve">
-    <value>Makes the sidebar always on top of other windows.</value>
+    <value>Zeige die Sidebar immer über allen anderen Fenstern an</value>
     <comment>Settings always on top tooltip</comment>
   </data>
   <data name="SettingsAutoBackground" xml:space="preserve">
-    <value>Auto Background Color</value>
+    <value>Automatische Hintergrundfarbe</value>
     <comment>Settings auto background label</comment>
   </data>
   <data name="SettingsAutoBackgroundTooltip" xml:space="preserve">
-    <value>Sets the background color to your Windows color settings.</value>
+    <value>Passt die Hintergrundfarbe an das Windows Farbschema an</value>
     <comment>Settings auto background tooltip</comment>
   </data>
   <data name="SettingsAutoUpdate" xml:space="preserve">
-    <value>Auto Update</value>
+    <value>Automatisches Update</value>
     <comment>Settings auto update label</comment>
   </data>
   <data name="SettingsAutoUpdateTooltip" xml:space="preserve">
-    <value>Updates the app automatically.</value>
+    <value>Automatische Aktualisierung des Programms.</value>
     <comment>Settings auto update tooltip</comment>
   </data>
   <data name="SettingsBackgroundColor" xml:space="preserve">
-    <value>Background Color</value>
+    <value>Hintergrundfarbe</value>
     <comment>Settings background color label</comment>
   </data>
   <data name="SettingsBackgroundColorTooltip" xml:space="preserve">
-    <value>Color of the background.</value>
+    <value>Farbe des Hintergrunds.</value>
     <comment>Settings background color tooltip</comment>
   </data>
   <data name="SettingsBackgroundOpacity" xml:space="preserve">
-    <value>Background Opacity</value>
+    <value>Hintergrund Deckkraft</value>
     <comment>Settings background opacity label</comment>
   </data>
   <data name="SettingsBackgroundOpacityTooltip" xml:space="preserve">
-    <value>Opacity of the background.</value>
+    <value>Deckkraft des Hintergrunds.</value>
     <comment>Settings background opacity tooltip</comment>
   </data>
   <data name="SettingsBandwidthInAlert" xml:space="preserve">
@@ -602,7 +602,7 @@
     <comment>Title of the settings customize tab</comment>
   </data>
   <data name="SettingsDateFormat" xml:space="preserve">
-    <value>Formatiere Datum</value>
+    <value>Datumsformat</value>
     <comment>Settings date format label</comment>
   </data>
   <data name="SettingsDateFormatDisabled" xml:space="preserve">
@@ -630,7 +630,7 @@
     <comment>Dock right settings label</comment>
   </data>
   <data name="SettingsDockTooltip" xml:space="preserve">
-    <value>An welchem Rand man die Seitenleiste anfügt.</value>
+    <value>An welchem Rand die Seitenleiste eingefügt wird.</value>
     <comment>Dock settings tooltip</comment>
   </data>
   <data name="SettingsDockTop" xml:space="preserve">
@@ -638,7 +638,7 @@
     <comment>Dock top settings label</comment>
   </data>
   <data name="SettingsDriveDetailsTooltip" xml:space="preserve">
-    <value>Zeigt zusätzliche Festplatten informationen als Text an.</value>
+    <value>Zeigt zusätzliche Festplatten Informationen als Text an.</value>
     <comment>Settings drive details tooltip</comment>
   </data>
   <data name="SettingsFontColor" xml:space="preserve">
@@ -650,11 +650,11 @@
     <comment>Settings font color tooltip</comment>
   </data>
   <data name="SettingsFontSize" xml:space="preserve">
-    <value>Schriftgrösse</value>
+    <value>Schriftgröße</value>
     <comment>Settings font size label</comment>
   </data>
   <data name="SettingsFontSizeTooltip" xml:space="preserve">
-    <value>Schriftgrösse der Symbole und Texte.</value>
+    <value>Schriftgröße der Symbole und Texte.</value>
     <comment>Settings font size tooltip</comment>
   </data>
   <data name="SettingsGeneralTab" xml:space="preserve">
@@ -670,7 +670,7 @@
     <comment>Settings hardware data grid hardware column header</comment>
   </data>
   <data name="SettingsHardwareEnabledTooltip" xml:space="preserve">
-    <value>Hardware aktivieren. (Doppel klick um es zu ändern. Bekannter Bug.)</value>
+    <value>Hardware aktivieren. (Doppelklick um zu ändern. Bekannter Bug.)</value>
     <comment>Settings hardware enabled checkbox tooltip</comment>
   </data>
   <data name="SettingsHardwareNameTooltip" xml:space="preserve">
@@ -678,15 +678,15 @@
     <comment>Settings hardware name tooltip</comment>
   </data>
   <data name="SettingsHorizontalOffset" xml:space="preserve">
-    <value>Horizontaller Abstand</value>
+    <value>Horizontaler Abstand</value>
     <comment>Horizontal offset settings label</comment>
   </data>
   <data name="SettingsHorizontalOffsetTooltip" xml:space="preserve">
-    <value>Horizontaller Abstand der Seitenleiste.</value>
+    <value>Horizontaler Abstand der Seitenleiste.</value>
     <comment>Horizontal offset settings tooltip</comment>
   </data>
   <data name="SettingsHotkeyClose" xml:space="preserve">
-    <value>Schliessen</value>
+    <value>Schließen</value>
     <comment>Settings hotkey close label</comment>
   </data>
   <data name="SettingsHotkeyCycleEdge" xml:space="preserve">
@@ -702,7 +702,7 @@
     <comment>Settings hotkey hide label</comment>
   </data>
   <data name="SettingsHotkeyReload" xml:space="preserve">
-    <value>Neu Laden</value>
+    <value>Neu laden</value>
     <comment>Settings hotkey reload label</comment>
   </data>
   <data name="SettingsHotkeyShow" xml:space="preserve">
@@ -722,7 +722,7 @@
     <comment>Settings language label</comment>
   </data>
   <data name="SettingsLanguageDefault" xml:space="preserve">
-    <value>Standad</value>
+    <value>Standardsprache</value>
     <comment>Settings language default label</comment>
   </data>
   <data name="SettingsLanguageTooltip" xml:space="preserve">
@@ -730,11 +730,11 @@
     <comment>Settings language tooltip</comment>
   </data>
   <data name="SettingsMetrics" xml:space="preserve">
-    <value>Metrics:</value>
+    <value>Anzeigen</value>
     <comment>Settings metrics label with colon</comment>
   </data>
   <data name="SettingsMetricsTooltip" xml:space="preserve">
-    <value>Enable or disable specific metrics.</value>
+    <value>Verschiedene Anzeigen ein- und ausschalten.</value>
     <comment>Settings metrics tooltip</comment>
   </data>
   <data name="SettingsMonitorEnabledTooltip" xml:space="preserve">
@@ -790,7 +790,7 @@
     <comment>Settings run at startup label</comment>
   </data>
   <data name="SettingsRunAtStartupTooltip" xml:space="preserve">
-    <value>Seitenleiste wird ausgeführt bei System start.</value>
+    <value>Seitenleiste wird bei Systemstart ausgeführt.</value>
     <comment>Settings run at startup tooltip</comment>
   </data>
   <data name="SettingsScreen" xml:space="preserve">
@@ -818,7 +818,7 @@
     <comment>Settings show drive IO label</comment>
   </data>
   <data name="SettingsShowDriveIOTooltip" xml:space="preserve">
-    <value>Zeigt die Lese- und Schreibgeschwindigkeit wenn die Festplatten details aktiviert sind.</value>
+    <value>Zeigt die Lese- und Schreibgeschwindigkeit an, wenn die Festplattendetails aktiviert sind.</value>
     <comment>Settings show drive IO tooltip</comment>
   </data>
   <data name="SettingsShowDriveSpace" xml:space="preserve">
@@ -826,7 +826,7 @@
     <comment>Settings show drive space label</comment>
   </data>
   <data name="SettingsShowDriveSpaceTooltip" xml:space="preserve">
-    <value>Zeigt die Auslastung des Belegten Speicherplatzes und freien Speicherplatzes in Prozent an.</value>
+    <value>Zeigt die Auslastung des belegten Speicherplatzes und freien Speicherplatzes in Prozent an.</value>
     <comment>Settings show drive space tooltip</comment>
   </data>
   <data name="SettingsShowHardwareNames" xml:space="preserve">
@@ -838,7 +838,7 @@
     <comment>Settings show hardware names tooltip</comment>
   </data>
   <data name="SettingsShowTrayIcon" xml:space="preserve">
-    <value>Tray-Icon Anzeige</value>
+    <value>Tray-Icon Anzeige (Taskleiste)</value>
     <comment>Settings show tray icon label</comment>
   </data>
   <data name="SettingsShowTrayIconTooltip" xml:space="preserve">
@@ -846,7 +846,7 @@
     <comment>Settings show tray icon tooltip</comment>
   </data>
   <data name="SettingsSidebarWidth" xml:space="preserve">
-    <value>Seitenleiste breite</value>
+    <value>Seitenleistenbreite</value>
     <comment>Settings sidebar width label</comment>
   </data>
   <data name="SettingsSidebarWidthTooltip" xml:space="preserve">
@@ -858,7 +858,7 @@
     <comment>Settings temperature alert label</comment>
   </data>
   <data name="SettingsTemperatureAlertTooltip" xml:space="preserve">
-    <value>The Temperaturschwelle, bei der Warnungen auftreten. Verwenden Sie 0 um es zu deaktivieren.</value>
+    <value>Temperaturschwelle, ab welcher Warnungen auftreten. Verwenden Sie 0 um es zu deaktivieren.</value>
     <comment>Settings temperature alert tooltip</comment>
   </data>
   <data name="SettingsTextAlign" xml:space="preserve">
@@ -874,7 +874,7 @@
     <comment>Settings text align right value</comment>
   </data>
   <data name="SettingsTextAlignTooltip" xml:space="preserve">
-    <value>Ausrichtung Zahlenwert-Texte</value>
+    <value>Ausrichtung von Zahlenwert-Texten</value>
     <comment>Settings text align tooltip</comment>
   </data>
   <data name="SettingsTitle" xml:space="preserve">
@@ -882,15 +882,15 @@
     <comment>Title of the settings window</comment>
   </data>
   <data name="SettingsUIScale" xml:space="preserve">
-    <value>Bedienoberfläche Massstab</value>
+    <value>Benutzeroberfläche Maßstab</value>
     <comment>Settings UI scale label</comment>
   </data>
   <data name="SettingsUIScaleTooltip" xml:space="preserve">
-    <value>Massstab aller Fenster und Bedienoberflächen.</value>
+    <value>Maßstab aller Fenster und Bedienoberflächen.</value>
     <comment>Settings UI scale tooltip</comment>
   </data>
   <data name="SettingsUseBytesPerSecond" xml:space="preserve">
-    <value>Vewendet Bytes pro Sekunde</value>
+    <value>Vewende Bytes pro Sekunde</value>
     <comment>Settings use bytes per second label</comment>
   </data>
   <data name="SettingsUseBytesPerSecondTooltip" xml:space="preserve">
@@ -902,11 +902,11 @@
     <comment>Settings used space alert label</comment>
   </data>
   <data name="SettingsUsedSpaceAlertTooltip" xml:space="preserve">
-    <value>Die prozentuale Schwellenwert Warnung bei verwendeten Speicherplatz. Verwenden Sie 0 um es zu deaktivieren.</value>
+    <value>Prozentuale Schwellenwert Warnung bei verwendeten Speicherplatz. Verwenden Sie 0 um es zu deaktivieren.</value>
     <comment>Settings used space alert tooltip</comment>
   </data>
   <data name="SettingsUseFahrenheit" xml:space="preserve">
-    <value>Fahrenheit anwenden</value>
+    <value>Fahrenheit verwenden</value>
     <comment>Settings use fahrenheit label</comment>
   </data>
   <data name="SettingsUseFahrenheitTooltip" xml:space="preserve">
@@ -914,7 +914,7 @@
     <comment>Settings use fahrenheit tooltip</comment>
   </data>
   <data name="SettingsUseGHz" xml:space="preserve">
-    <value>GHz anwenden</value>
+    <value>GHz verwenden</value>
     <comment>Settings use GHz label</comment>
   </data>
   <data name="SettingsUseGHzTooltip" xml:space="preserve">
@@ -930,7 +930,7 @@
     <comment>Vertical Offset settings tooltip</comment>
   </data>
   <data name="SetupCustomSubtitle" xml:space="preserve">
-    <value>Benutze den Schiberegler und Textfelder, um die Seitenleiste in die richtige Position zu bewegen.</value>
+    <value>Benutze den Schieberegler und Textfelder, um die Seitenleiste in die richtige Position zu bewegen.</value>
     <comment>Subtitle of the custom setup page</comment>
   </data>
   <data name="SetupCustomTitle" xml:space="preserve">
@@ -970,19 +970,19 @@
     <comment>Sidebar clock title</comment>
   </data>
   <data name="UpdateErrorFatalText" xml:space="preserve">
-    <value>A fatal error occurred while trying to update. Auto update is now disabled.</value>
+    <value>Ein schwerer Fehler ist während dem Update aufgetreten. Die automatische Aktualisierung wurde deaktiviert.</value>
     <comment>Fatal text of the update error popup</comment>
   </data>
   <data name="UpdateErrorText" xml:space="preserve">
-    <value>Aktualisierung nicht Möglich. Bitte Kontrolliere Sie ihre Internet Verbindung.</value>
+    <value>Aktualisierung nicht Möglich. Bitte überprüfen Sie Ihre Internet Verbindung.</value>
     <comment>Text of the update error popup</comment>
   </data>
   <data name="UpdateErrorTitle" xml:space="preserve">
-    <value>Aktualisierungs Fehler</value>
+    <value>Aktualisierungsfehler</value>
     <comment>Title of the update error popup</comment>
   </data>
   <data name="UpdateSuccessText" xml:space="preserve">
-    <value>Sie haben die neuste Version.</value>
+    <value>Sie verwenden nun die neuste Version von Sidebar Diagnostics.</value>
     <comment>Text of the update success popup</comment>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
