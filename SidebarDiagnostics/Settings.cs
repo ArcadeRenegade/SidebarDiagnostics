@@ -615,11 +615,45 @@ namespace SidebarDiagnostics.Framework
             return base.GetHashCode();
         }
 
-        public static readonly FontSetting x10 = new FontSetting(10);
-        public static readonly FontSetting x12 = new FontSetting(12);
-        public static readonly FontSetting x14 = new FontSetting(14);
-        public static readonly FontSetting x16 = new FontSetting(16);
-        public static readonly FontSetting x18 = new FontSetting(18);
+        public static FontSetting x10
+        {
+            get
+            {
+                return new FontSetting(10);
+            }
+        }
+
+        public static FontSetting x12
+        {
+            get
+            {
+                return new FontSetting(12);
+            }
+        }
+
+        public static FontSetting x14
+        {
+            get
+            {
+                return new FontSetting(14);
+            }
+        }
+
+        public static FontSetting x16
+        {
+            get
+            {
+                return new FontSetting(16);
+            }
+        }
+
+        public static FontSetting x18
+        {
+            get
+            {
+                return new FontSetting(18);
+            }
+        }
 
         [JsonProperty]
         public int FontSize { get; set; }
