@@ -1,5 +1,14 @@
 ﻿[
   {
+    "Version": "3.3.7",
+    "Changes": [
+      "Fixed a fatal error that occurred during auto-update.",
+      "Added a setting to enable or disable \"Alert Blink\".",
+      "Polling is now paused when the sidebar is hidden to reduce CPU usage.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.3.6",
     "Changes": [
       "Metric alerts now blink to be more conspicuous.",
