@@ -989,4 +989,12 @@
     <value>Alignment of metric text.</value>
     <comment>Settings text align tooltip</comment>
   </data>
+  <data name="SettingsAlertBlink" xml:space="preserve">
+    <value>Alert Blink</value>
+    <comment>Settings alert blink label</comment>
+  </data>
+  <data name="SettingsAlertBlinkTooltip" xml:space="preserve">
+    <value>Makes the alert text blink.</value>
+    <comment>Settings alert blink tooltip</comment>
+  </data>
 </root>

@@ -1499,10 +1499,13 @@ namespace SidebarDiagnostics.Monitoring
                 {
                     _alertColorFlag = false;
 
-                    _alertColorTimer = new DispatcherTimer(DispatcherPriority.Normal, App.Current.Dispatcher);
-                    _alertColorTimer.Interval = TimeSpan.FromSeconds(0.5d);
-                    _alertColorTimer.Tick += new EventHandler(AlertColorTimer_Tick);
-                    _alertColorTimer.Start();
+                    if (Framework.Settings.Instance.AlertBlink)
+                    {
+                        _alertColorTimer = new DispatcherTimer(DispatcherPriority.Normal, App.Current.Dispatcher);
+                        _alertColorTimer.Interval = TimeSpan.FromSeconds(0.5d);
+                        _alertColorTimer.Tick += new EventHandler(AlertColorTimer_Tick);
+                        _alertColorTimer.Start();
+                    }
                 }
                 else if (_alertColorTimer != null)
                 {

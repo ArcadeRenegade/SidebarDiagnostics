@@ -481,6 +481,23 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private bool _alertBlink { get; set; } = true;
+
+        [JsonProperty]
+        public bool AlertBlink
+        {
+            get
+            {
+                return _alertBlink;
+            }
+            set
+            {
+                _alertBlink = value;
+
+                NotifyPropertyChanged("AlertBlink");
+            }
+        }
+
         private bool _showClock { get; set; } = true;
 
         [JsonProperty]

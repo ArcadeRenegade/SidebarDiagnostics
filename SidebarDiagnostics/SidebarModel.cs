@@ -51,6 +51,18 @@ namespace SidebarDiagnostics.Models
             StartMonitors();
         }
 
+        public void Pause()
+        {
+            PauseClock();
+            PauseMonitors();
+        }
+
+        public void Resume()
+        {
+            ResumeClock();
+            ResumeMonitors();
+        }
+
         public void NotifyPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
@@ -117,6 +129,38 @@ namespace SidebarDiagnostics.Models
         private void UpdateMonitors()
         {
             MonitorManager.Update();
+        }
+
+        private void PauseClock()
+        {
+            if (_clockTimer != null)
+            {
+                _clockTimer.Stop();
+            }
+        }
+
+        private void PauseMonitors()
+        {
+            if (_monitorTimer != null)
+            {
+                _monitorTimer.Stop();
+            }
+        }
+
+        private void ResumeClock()
+        {
+            if (_clockTimer != null)
+            {
+                _clockTimer.Start();
+            }
+        }
+
+        private void ResumeMonitors()
+        {
+            if (_monitorTimer != null)
+            {
+                _monitorTimer.Start();
+            }
         }
 
         private void DisposeClock()

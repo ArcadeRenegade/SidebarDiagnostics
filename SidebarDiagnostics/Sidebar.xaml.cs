@@ -78,6 +78,20 @@ namespace SidebarDiagnostics
             BindGraphs();
         }
 
+        public override void AppBarShow()
+        {
+            base.AppBarShow();
+
+            Model.Resume();
+        }
+
+        public override void AppBarHide()
+        {
+            base.AppBarHide();
+
+            Model.Pause();
+        }
+
         private async Task Initialize()
         {
             Ready = false;

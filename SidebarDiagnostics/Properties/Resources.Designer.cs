@@ -907,6 +907,24 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alert Blink.
+        /// </summary>
+        public static string SettingsAlertBlink {
+            get {
+                return ResourceManager.GetString("SettingsAlertBlink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Makes the alert text blink..
+        /// </summary>
+        public static string SettingsAlertBlinkTooltip {
+            get {
+                return ResourceManager.GetString("SettingsAlertBlinkTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alert Font Color.
         /// </summary>
         public static string SettingsAlertFontColor {

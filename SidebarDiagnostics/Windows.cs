@@ -1387,7 +1387,7 @@ namespace SidebarDiagnostics.Windows
             IsAppBar = false;
         }
 
-        public void AppBarShow()
+        public virtual void AppBarShow()
         {
             if (Framework.Settings.Instance.UseAppBar)
             {
@@ -1405,7 +1405,7 @@ namespace SidebarDiagnostics.Windows
             Activate();
         }
 
-        public void AppBarHide()
+        public virtual void AppBarHide()
         {
             Hide();
 

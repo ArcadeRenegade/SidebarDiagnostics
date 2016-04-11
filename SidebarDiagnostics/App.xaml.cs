@@ -30,6 +30,10 @@ namespace SidebarDiagnostics
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(AppDomain_Error);
             #endif
 
+            // LANGUAGE
+            Culture.SetDefault();
+            Culture.SetCurrent(true);
+
             // UPDATE
             #if !DEBUG
             if (Framework.Settings.Instance.AutoUpdate)
@@ -37,10 +41,6 @@ namespace SidebarDiagnostics
                 await AppUpdate(false);
             }
             #endif
-            
-            // LANGUAGE
-            Culture.SetDefault();
-            Culture.SetCurrent(true);
 
             // SETTINGS
             CheckSettings();

@@ -76,6 +76,7 @@ namespace SidebarDiagnostics.Models
             FontSetting = Framework.Settings.Instance.FontSetting;
             FontColor = Framework.Settings.Instance.FontColor;
             AlertFontColor = Framework.Settings.Instance.AlertFontColor;
+            AlertBlink = Framework.Settings.Instance.AlertBlink;
 
             DateSettingItems = new DateSetting[4]
             {
@@ -151,6 +152,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.FontSetting = FontSetting;
             Framework.Settings.Instance.FontColor = FontColor;
             Framework.Settings.Instance.AlertFontColor = AlertFontColor;
+            Framework.Settings.Instance.AlertBlink = AlertBlink;
             Framework.Settings.Instance.DateSetting = DateSetting;
             Framework.Settings.Instance.CollapseMenuBar = CollapseMenuBar;
             Framework.Settings.Instance.ShowClock = ShowClock;
@@ -700,6 +702,22 @@ namespace SidebarDiagnostics.Models
                 _alertFontColor = value;
 
                 NotifyPropertyChanged("AlertFontColor");
+            }
+        }
+
+        private bool _alertBlink { get; set; } = true;
+        
+        public bool AlertBlink
+        {
+            get
+            {
+                return _alertBlink;
+            }
+            set
+            {
+                _alertBlink = value;
+
+                NotifyPropertyChanged("AlertBlink");
             }
         }
 
