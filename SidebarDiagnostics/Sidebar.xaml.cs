@@ -106,10 +106,15 @@ namespace SidebarDiagnostics
                 }
                 catch (TypeInitializationException) { }
             }
-            
+
             BindSettings(true);
 
             await BindModel();
+            if (Opacity == 0)
+            {
+                AppBarHide();
+                Opacity = 1;
+            }
         }
 
         private void BindSettings(bool enableHotkeys)
@@ -168,7 +173,7 @@ namespace SidebarDiagnostics
 
             SetAppBar(_screen, _edge, _windowWA, _appbarWA, callback);
         }
-        
+
         private async Task BindModel()
         {
             await Task.Run(async () =>
@@ -236,7 +241,7 @@ namespace SidebarDiagnostics
         {
             App.Current.Shutdown();
         }
-        
+
         private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
             WindowControls.Visibility = Visibility.Visible;

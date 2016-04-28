@@ -26,21 +26,21 @@ namespace SidebarDiagnostics
             base.OnStartup(e);
 
             // ERROR HANDLING
-            #if !DEBUG
+#if !DEBUG
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(AppDomain_Error);
-            #endif
+#endif
 
             // LANGUAGE
             Culture.SetDefault();
             Culture.SetCurrent(true);
 
             // UPDATE
-            #if !DEBUG
+#if !DEBUG
             if (Framework.Settings.Instance.AutoUpdate)
             {
                 await AppUpdate(false);
             }
-            #endif
+#endif
 
             // SETTINGS
             CheckSettings();
@@ -85,8 +85,12 @@ namespace SidebarDiagnostics
                 new ChangeLog(_version).Show();
             }
 
-            new Sidebar(openSettings).Show();
-
+            var sidebar = new Sidebar(openSettings);
+            if (Framework.Settings.Instance.StartHidden)
+            {
+                sidebar.Opacity = 0;
+            }
+            sidebar.Show();
             RefreshIcon();
         }
 
@@ -260,7 +264,7 @@ namespace SidebarDiagnostics
             (_this.Items.GetItemAt(0) as MenuItem).IsChecked = _sidebar.Visibility == Visibility.Visible;
             (_this.Items.GetItemAt(1) as MenuItem).IsChecked = _sidebar.Visibility == Visibility.Hidden;
         }
-        
+
         private void Show_Click(object sender, EventArgs e)
         {
             Sidebar _sidebar = Sidebar;
@@ -304,14 +308,14 @@ namespace SidebarDiagnostics
         {
             Shutdown();
         }
-        
+
         private static void AppDomain_Error(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = (Exception)e.ExceptionObject;
 
             MessageBox.Show(ex.ToString(), Framework.Resources.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
-        
+
         public Sidebar Sidebar
         {
             get

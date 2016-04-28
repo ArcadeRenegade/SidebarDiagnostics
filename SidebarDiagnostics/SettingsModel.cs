@@ -51,6 +51,7 @@ namespace SidebarDiagnostics.Models
             ShowTrayIcon = Framework.Settings.Instance.ShowTrayIcon;
             AutoUpdate = Framework.Settings.Instance.AutoUpdate;
             RunAtStartup = Framework.Settings.Instance.RunAtStartup;
+            StartHidden = Framework.Settings.Instance.StartHidden;
             SidebarWidth = Framework.Settings.Instance.SidebarWidth;
             AutoBGColor = Framework.Settings.Instance.AutoBGColor;
             BGColor = Framework.Settings.Instance.BGColor;
@@ -144,6 +145,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.ShowTrayIcon = ShowTrayIcon;
             Framework.Settings.Instance.AutoUpdate = AutoUpdate;
             Framework.Settings.Instance.RunAtStartup = RunAtStartup;
+            Framework.Settings.Instance.StartHidden = StartHidden;
             Framework.Settings.Instance.SidebarWidth = SidebarWidth;
             Framework.Settings.Instance.AutoBGColor = AutoBGColor;
             Framework.Settings.Instance.BGColor = BGColor;
@@ -183,7 +185,7 @@ namespace SidebarDiagnostics.Models
             {
                 _hotkeys.Add(ToggleKey);
             }
-            
+
             if (ShowKey != null)
             {
                 _hotkeys.Add(ShowKey);
@@ -466,7 +468,7 @@ namespace SidebarDiagnostics.Models
         }
 
         private bool _showAltTab { get; set; }
-        
+
         public bool ShowAltTab
         {
             get
@@ -542,6 +544,21 @@ namespace SidebarDiagnostics.Models
                 _runAtStartup = value;
 
                 NotifyPropertyChanged("RunAtStartup");
+            }
+        }
+        private bool _startHidden { get; set; }
+
+        public bool StartHidden
+        {
+            get
+            {
+                return _startHidden;
+            }
+            set
+            {
+                _startHidden = value;
+
+                NotifyPropertyChanged("StartHidden");
             }
         }
 
@@ -657,7 +674,7 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private FontSetting[] _fontSettingItems { get;  set;}
+        private FontSetting[] _fontSettingItems { get; set; }
 
         public FontSetting[] FontSettingItems
         {
@@ -706,7 +723,7 @@ namespace SidebarDiagnostics.Models
         }
 
         private bool _alertBlink { get; set; } = true;
-        
+
         public bool AlertBlink
         {
             get

@@ -1735,6 +1735,24 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start application hidden.
+        /// </summary>
+        public static string SettingsStartHidden {
+            get {
+                return ResourceManager.GetString("SettingsStartHidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide the sidebar on startup..
+        /// </summary>
+        public static string SettingsStartHiddenTooltip {
+            get {
+                return ResourceManager.GetString("SettingsStartHiddenTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temperature Alert.
         /// </summary>
         public static string SettingsTemperatureAlert {
