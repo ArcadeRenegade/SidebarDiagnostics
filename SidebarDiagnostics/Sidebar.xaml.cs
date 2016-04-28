@@ -80,6 +80,11 @@ namespace SidebarDiagnostics
 
         public override void AppBarShow()
         {
+            if (Model == null)
+            {
+                Show();
+                return;
+            }
             base.AppBarShow();
 
             Model.Resume();
@@ -106,7 +111,7 @@ namespace SidebarDiagnostics
                 }
                 catch (TypeInitializationException) { }
             }
-            
+
             BindSettings(true);
 
             await BindModel();
@@ -168,7 +173,7 @@ namespace SidebarDiagnostics
 
             SetAppBar(_screen, _edge, _windowWA, _appbarWA, callback);
         }
-        
+
         private async Task BindModel()
         {
             await Task.Run(async () =>
@@ -236,7 +241,7 @@ namespace SidebarDiagnostics
         {
             App.Current.Shutdown();
         }
-        
+
         private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
             WindowControls.Visibility = Visibility.Visible;
