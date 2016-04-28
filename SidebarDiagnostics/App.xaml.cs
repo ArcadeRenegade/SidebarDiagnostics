@@ -86,16 +86,11 @@ namespace SidebarDiagnostics
             }
 
             var sidebar = new Sidebar(openSettings);
-            if (!Framework.Settings.Instance.StartHidden)
+            if (Framework.Settings.Instance.StartHidden)
             {
-                sidebar.Show();
-            }
-            else
-            {
-                var opacity = sidebar.Opacity;
                 sidebar.Opacity = 0;
-                sidebar.Show();
             }
+            sidebar.Show();
             RefreshIcon();
         }
 
