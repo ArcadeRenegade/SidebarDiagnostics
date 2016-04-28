@@ -80,11 +80,6 @@ namespace SidebarDiagnostics
 
         public override void AppBarShow()
         {
-            if (Model == null)
-            {
-                Show();
-                return;
-            }
             base.AppBarShow();
 
             Model.Resume();
@@ -115,6 +110,11 @@ namespace SidebarDiagnostics
             BindSettings(true);
 
             await BindModel();
+            if (Opacity == 0)
+            {
+                AppBarHide();
+                Opacity = 1;
+            }
         }
 
         private void BindSettings(bool enableHotkeys)

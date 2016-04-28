@@ -90,6 +90,12 @@ namespace SidebarDiagnostics
             {
                 sidebar.Show();
             }
+            else
+            {
+                var opacity = sidebar.Opacity;
+                sidebar.Opacity = 0;
+                sidebar.Show();
+            }
             RefreshIcon();
         }
 
