@@ -142,7 +142,7 @@ namespace SidebarDiagnostics.Framework
         }
 
         private bool _useAppBar { get; set; } = true;
-        
+
         [JsonProperty]
         public bool UseAppBar
         {
@@ -206,6 +206,22 @@ namespace SidebarDiagnostics.Framework
                 _runAtStartup = value;
 
                 NotifyPropertyChanged("RunAtStartup");
+            }
+        }
+        private bool _startHidden { get; set; } = true;
+
+        [JsonProperty]
+        public bool StartHidden
+        {
+            get
+            {
+                return _startHidden;
+            }
+            set
+            {
+                _startHidden = value;
+
+                NotifyPropertyChanged("StartHidden");
             }
         }
 
@@ -448,7 +464,7 @@ namespace SidebarDiagnostics.Framework
         }
 
         private string _fontColor { get; set; } = "#FFFFFF";
-        
+
         [JsonProperty]
         public string FontColor
         {
