@@ -10,6 +10,9 @@ using System.Windows.Media;
 using OpenHardwareMonitor.Hardware;
 using Newtonsoft.Json;
 using SidebarDiagnostics.Framework;
+using System.Net.NetworkInformation;
+using System.Net;
+using System.Net.Sockets;
 
 namespace SidebarDiagnostics.Monitoring
 {
@@ -1140,6 +1143,11 @@ namespace SidebarDiagnostics.Monitoring
         public NetworkMonitor(string id, string name, MetricConfig[] metrics, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0) : base(id, name, showName)
         {
             iConverter _converter;
+            string iPAddr = null;
+            if (metrics.IsEnabled(MetricKey.IPAddress))
+            {
+                iPAddr = this.GetAdapterIPAddress(name);
+            }
 
             if (useBytes)
             {
@@ -1151,6 +1159,10 @@ namespace SidebarDiagnostics.Monitoring
             }
 
             List<iMetric> _metrics = new List<iMetric>();
+            if (metrics.IsEnabled(MetricKey.IPAddress) && iPAddr != null)
+            {
+                _metrics.Add(new IPMetric(iPAddr, MetricKey.IPAddress, DataType.IpAddr));
+            }
 
             if (metrics.IsEnabled(MetricKey.NetworkIn))
             {
@@ -1214,6 +1226,40 @@ namespace SidebarDiagnostics.Monitoring
             }
 
             base.Update();
+        }
+
+        private string GetAdapterIPAddress(string name)
+        {
+            //Here we need to match the apdapter returned by the network interface to the
+            //adapter represented by this instance of the class.
+            string configuredName = Regex.Replace(name, @"[^\w\d\s]", "");
+
+            foreach (NetworkInterface netif in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                //Strange pattern matching as the Performance Monitor routines which provide the ID and Names
+                //instantiating this class return different values for the devices than the NetworkInterface calls used here.
+                //For example Performance Monitor routines return Intel[R] where as NetworkInterface returns Intel(R) causing the
+                //strings not to match.  So to get around this, use Regex to strip off the special characters and just compare the string values.
+                //Also, in some cases the values for Description match the Performance Monitor calls, and 
+                //in others the Name is what matches.  It's a little weird, but this will pick up all 4 network adapters on 
+                //my test machine correctly.
+                string interfaceDesc = Regex.Replace(netif.Description, @"[^\w\d\s]", "");
+                string interfaceName = Regex.Replace(netif.Name, @"[^\w\d\s]", "");
+                if (interfaceDesc == configuredName || interfaceName == configuredName)
+                {
+                    IPInterfaceProperties properties = netif.GetIPProperties();
+
+                    foreach (IPAddressInformation unicast in properties.UnicastAddresses)
+                    {
+                        if (unicast.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            return unicast.Address.ToString();
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
     }
 
@@ -1593,6 +1639,24 @@ namespace SidebarDiagnostics.Monitoring
         private bool _disposed { get; set; } = false;
     }
 
+    public class IPMetric : BaseMetric
+    {
+        public IPMetric(string ipAddress, MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
+        {
+            this.Text = ipAddress;
+        }
+        public new void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~IPMetric()
+        {
+            Dispose(false);
+        }
+    }
+
     public class PCMetric : BaseMetric
     {
         public PCMetric(PerformanceCounter counter, MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
@@ -1963,10 +2027,11 @@ namespace SidebarDiagnostics.Monitoring
                         Enabled = true,
                         Order = 1,
                         Hardware = new HardwareConfig[0],
-                        Metrics = new MetricConfig[2]
+                        Metrics = new MetricConfig[3]
                         {
                             new MetricConfig(MetricKey.NetworkIn, true),
-                            new MetricConfig(MetricKey.NetworkOut, true)
+                            new MetricConfig(MetricKey.NetworkOut, true),
+                            new MetricConfig(MetricKey.IPAddress, true)
                         },
                         Params = new ConfigParam[5]
                         {
@@ -2185,7 +2250,9 @@ namespace SidebarDiagnostics.Monitoring
         DriveUsed = 22,
         DriveFree = 23,
         DriveRead = 24,
-        DriveWrite = 25
+        DriveWrite = 25,
+
+        IPAddress = 26
     }
 
     [JsonObject(MemberSerialization.OptIn)]
@@ -2544,7 +2611,8 @@ namespace SidebarDiagnostics.Monitoring
         Percent,
         RPM,
         Celcius,
-        Fahrenheit
+        Fahrenheit,
+        IpAddr
     }
 
     public interface iConverter
@@ -2924,6 +2992,9 @@ namespace SidebarDiagnostics.Monitoring
                 case MetricKey.DriveWrite:
                     return Resources.DriveWrite;
 
+                case MetricKey.IPAddress:
+                    return Resources.IPAddress;
+
                 default:
                     return "Unknown";
             }
@@ -3011,6 +3082,9 @@ namespace SidebarDiagnostics.Monitoring
                 case MetricKey.DriveWrite:
                     return Resources.DriveWriteLabel;
 
+                case MetricKey.IPAddress:
+                    return Resources.IPAddress;
+
                 default:
                     return "Unknown";
             }
@@ -3088,6 +3162,9 @@ namespace SidebarDiagnostics.Monitoring
 
                 case DataType.Fahrenheit:
                     return " F";
+
+                case DataType.IpAddr:
+                    return string.Empty;
 
                 default:
                     throw new ArgumentException("Invalid DataType.");

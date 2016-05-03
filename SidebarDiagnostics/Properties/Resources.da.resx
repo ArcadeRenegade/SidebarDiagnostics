@@ -405,4 +405,8 @@
     <value>Synlighed</value>
     <comment>Visibility taskbar menu item</comment>
   </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP</value>
+    <comment>Adapter IP Address</comment>
+  </data>
 </root>
