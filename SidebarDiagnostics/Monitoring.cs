@@ -1143,12 +1143,7 @@ namespace SidebarDiagnostics.Monitoring
         public NetworkMonitor(string id, string name, MetricConfig[] metrics, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0) : base(id, name, showName)
         {
             iConverter _converter;
-            string iPAddr = null;
-            if (metrics.IsEnabled(MetricKey.IPAddress))
-            {
-                iPAddr = this.GetAdapterIPAddress(name);
-            }
-
+            
             if (useBytes)
             {
                 _converter = BytesPerSecondConverter.Instance;
@@ -1159,9 +1154,15 @@ namespace SidebarDiagnostics.Monitoring
             }
 
             List<iMetric> _metrics = new List<iMetric>();
-            if (metrics.IsEnabled(MetricKey.IPAddress) && iPAddr != null)
+            
+            if (metrics.IsEnabled(MetricKey.NetworkIP))
             {
-                _metrics.Add(new IPMetric(iPAddr, MetricKey.IPAddress, DataType.IpAddr));
+                string _ipAddress = GetAdapterIPAddress(name);
+
+                if (!string.IsNullOrEmpty(_ipAddress))
+                {
+                    _metrics.Add(new IPMetric(_ipAddress, MetricKey.NetworkIP, DataType.IP));
+                }
             }
 
             if (metrics.IsEnabled(MetricKey.NetworkIn))
@@ -1232,6 +1233,7 @@ namespace SidebarDiagnostics.Monitoring
         {
             //Here we need to match the apdapter returned by the network interface to the
             //adapter represented by this instance of the class.
+
             string configuredName = Regex.Replace(name, @"[^\w\d\s]", "");
 
             foreach (NetworkInterface netif in NetworkInterface.GetAllNetworkInterfaces())
@@ -1243,8 +1245,10 @@ namespace SidebarDiagnostics.Monitoring
                 //Also, in some cases the values for Description match the Performance Monitor calls, and 
                 //in others the Name is what matches.  It's a little weird, but this will pick up all 4 network adapters on 
                 //my test machine correctly.
+
                 string interfaceDesc = Regex.Replace(netif.Description, @"[^\w\d\s]", "");
                 string interfaceName = Regex.Replace(netif.Name, @"[^\w\d\s]", "");
+
                 if (interfaceDesc == configuredName || interfaceName == configuredName)
                 {
                     IPInterfaceProperties properties = netif.GetIPProperties();
@@ -1282,6 +1286,8 @@ namespace SidebarDiagnostics.Monitoring
         string Text { get; }
 
         bool IsAlert { get; }
+
+        bool IsNumeric { get; }
 
         void Update();
 
@@ -1560,7 +1566,12 @@ namespace SidebarDiagnostics.Monitoring
                 }
             }
         }
-        
+
+        public virtual bool IsNumeric
+        {
+            get { return true; }
+        }
+
         public string AlertColor
         {
             get
@@ -1643,8 +1654,9 @@ namespace SidebarDiagnostics.Monitoring
     {
         public IPMetric(string ipAddress, MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
         {
-            this.Text = ipAddress;
+            Text = ipAddress;
         }
+
         public new void Dispose()
         {
             Dispose(true);
@@ -1654,6 +1666,11 @@ namespace SidebarDiagnostics.Monitoring
         ~IPMetric()
         {
             Dispose(false);
+        }
+
+        public override bool IsNumeric
+        {
+            get { return false; }
         }
     }
 
@@ -2029,9 +2046,9 @@ namespace SidebarDiagnostics.Monitoring
                         Hardware = new HardwareConfig[0],
                         Metrics = new MetricConfig[3]
                         {
+                            new MetricConfig(MetricKey.NetworkIP, true),
                             new MetricConfig(MetricKey.NetworkIn, true),
-                            new MetricConfig(MetricKey.NetworkOut, true),
-                            new MetricConfig(MetricKey.IPAddress, true)
+                            new MetricConfig(MetricKey.NetworkOut, true)
                         },
                         Params = new ConfigParam[5]
                         {
@@ -2242,6 +2259,7 @@ namespace SidebarDiagnostics.Monitoring
         GPUTemp = 16,
         GPUFan = 17,
 
+        NetworkIP = 26,
         NetworkIn = 18,
         NetworkOut = 19,
 
@@ -2250,9 +2268,7 @@ namespace SidebarDiagnostics.Monitoring
         DriveUsed = 22,
         DriveFree = 23,
         DriveRead = 24,
-        DriveWrite = 25,
-
-        IPAddress = 26
+        DriveWrite = 25
     }
 
     [JsonObject(MemberSerialization.OptIn)]
@@ -2612,7 +2628,7 @@ namespace SidebarDiagnostics.Monitoring
         RPM,
         Celcius,
         Fahrenheit,
-        IpAddr
+        IP
     }
 
     public interface iConverter
@@ -2968,6 +2984,9 @@ namespace SidebarDiagnostics.Monitoring
                 case MetricKey.GPUFan:
                     return Resources.GPUFan;
 
+                case MetricKey.NetworkIP:
+                    return Resources.NetworkIP;
+
                 case MetricKey.NetworkIn:
                     return Resources.NetworkIn;
 
@@ -2991,9 +3010,6 @@ namespace SidebarDiagnostics.Monitoring
 
                 case MetricKey.DriveWrite:
                     return Resources.DriveWrite;
-
-                case MetricKey.IPAddress:
-                    return Resources.IPAddress;
 
                 default:
                     return "Unknown";
@@ -3058,6 +3074,9 @@ namespace SidebarDiagnostics.Monitoring
                 case MetricKey.GPUFan:
                     return Resources.GPUFanLabel;
 
+                case MetricKey.NetworkIP:
+                    return Resources.NetworkIPLabel;
+
                 case MetricKey.NetworkIn:
                     return Resources.NetworkInLabel;
 
@@ -3081,9 +3100,6 @@ namespace SidebarDiagnostics.Monitoring
 
                 case MetricKey.DriveWrite:
                     return Resources.DriveWriteLabel;
-
-                case MetricKey.IPAddress:
-                    return Resources.IPAddress;
 
                 default:
                     return "Unknown";
@@ -3163,7 +3179,7 @@ namespace SidebarDiagnostics.Monitoring
                 case DataType.Fahrenheit:
                     return " F";
 
-                case DataType.IpAddr:
+                case DataType.IP:
                     return string.Empty;
 
                 default:

@@ -989,8 +989,4 @@
     <value>正在升级</value>
     <comment>Title of the update window</comment>
   </data>
-  <data name="IPAddress" xml:space="preserve">
-    <value>【计算机】网际协议。</value>
-    <comment>IP Address of the adapter</comment>
-  </data>
 </root>

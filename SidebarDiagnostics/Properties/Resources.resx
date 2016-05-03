@@ -997,8 +997,12 @@
     <value>Makes the alert text blink.</value>
     <comment>Settings alert blink tooltip</comment>
   </data>
-  <data name="IPAddress" xml:space="preserve">
+  <data name="NetworkIP" xml:space="preserve">
+    <value>IP Address</value>
+    <comment>Full name for the network IP address metric</comment>
+  </data>
+  <data name="NetworkIPLabel" xml:space="preserve">
     <value>IP</value>
-    <comment>IP Address of the adapter</comment>
+    <comment>Short label for network IP address metric</comment>
   </data>
 </root>

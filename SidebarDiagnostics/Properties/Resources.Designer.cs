@@ -718,15 +718,6 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IP.
-        /// </summary>
-        public static string IPAddress {
-            get {
-                return ResourceManager.GetString("IPAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Please restart the app..
         /// </summary>
         public static string LanguageChangedText {
@@ -768,6 +759,24 @@ namespace SidebarDiagnostics.Framework {
         public static string NetworkInLabel {
             get {
                 return ResourceManager.GetString("NetworkInLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP Address.
+        /// </summary>
+        public static string NetworkIP {
+            get {
+                return ResourceManager.GetString("NetworkIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP.
+        /// </summary>
+        public static string NetworkIPLabel {
+            get {
+                return ResourceManager.GetString("NetworkIPLabel", resourceCulture);
             }
         }
         

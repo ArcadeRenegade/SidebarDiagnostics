@@ -285,7 +285,7 @@ namespace SidebarDiagnostics.Models
                 }
                 else
                 {
-                    BindMetrics(_hardware.Metrics);
+                    BindMetrics(_hardware.Metrics.Where(m => m.IsNumeric).ToArray());
 
                     Title = string.Format("{0} - {1}", Resources.GraphTitle, _hardware.Name);
                 }
