@@ -989,4 +989,8 @@
     <value>Aktualisierung</value>
     <comment>Title of the update window</comment>
   </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP</value>
+    <comment>IP Address of the adapter</comment>
+  </data>
 </root>
