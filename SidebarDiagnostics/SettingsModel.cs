@@ -88,6 +88,7 @@ namespace SidebarDiagnostics.Models
 
             DateSetting = Framework.Settings.Instance.DateSetting;
             CollapseMenuBar = Framework.Settings.Instance.CollapseMenuBar;
+            InitiallyHidden = Framework.Settings.Instance.InitiallyHidden;
             ShowClock = Framework.Settings.Instance.ShowClock;
             Clock24HR = Framework.Settings.Instance.Clock24HR;
 
@@ -155,6 +156,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.AlertBlink = AlertBlink;
             Framework.Settings.Instance.DateSetting = DateSetting;
             Framework.Settings.Instance.CollapseMenuBar = CollapseMenuBar;
+            Framework.Settings.Instance.InitiallyHidden = InitiallyHidden;
             Framework.Settings.Instance.ShowClock = ShowClock;
             Framework.Settings.Instance.Clock24HR = Clock24HR;
 
@@ -766,6 +768,22 @@ namespace SidebarDiagnostics.Models
                 _collapseMenuBar = value;
 
                 NotifyPropertyChanged("CollapseMenuBar");
+            }
+        }
+
+        private bool _initiallyHidden { get; set; }
+        
+        public bool InitiallyHidden
+        {
+            get
+            {
+                return _initiallyHidden;
+            }
+            set
+            {
+                _initiallyHidden = value;
+
+                NotifyPropertyChanged("InitiallyHidden");
             }
         }
 

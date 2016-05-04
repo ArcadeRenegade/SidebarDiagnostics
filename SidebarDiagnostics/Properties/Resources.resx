@@ -1005,4 +1005,12 @@
     <value>IP</value>
     <comment>Short label for network IP address metric</comment>
   </data>
+  <data name="SettingsInitiallyHidden" xml:space="preserve">
+    <value>Hide at Startup</value>
+    <comment>Settings initially hidden label</comment>
+  </data>
+  <data name="SettingsInitiallyHiddenTooltip" xml:space="preserve">
+    <value>Makes the sidebar hide at startup.</value>
+    <comment>Settings initially hidden tooltip</comment>
+  </data>
 </root>

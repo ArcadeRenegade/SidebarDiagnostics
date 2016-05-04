@@ -97,6 +97,7 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="{x:Static frame:Resources.SettingsUIScale}" />
@@ -132,8 +133,11 @@
                     <Label Grid.Column="0" Grid.Row="6" Content="{x:Static frame:Resources.SettingsClickThrough}" />
                     <CheckBox Grid.Column="1" Grid.Row="6" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsClickThroughTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="7" Content="{x:Static frame:Resources.SettingsCollapseMenuBar}" />
-                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsCollapseMenuBarTooltip}" />
+                    <Label Grid.Column="0" Grid.Row="7" Content="{x:Static frame:Resources.SettingsInitiallyHidden}" />
+                    <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding Path=InitiallyHidden, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsInitiallyHiddenTooltip}" />
+                    
+                    <Label Grid.Column="0" Grid.Row="8" Content="{x:Static frame:Resources.SettingsCollapseMenuBar}" />
+                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=CollapseMenuBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsCollapseMenuBarTooltip}" />
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static frame:Resources.SettingsCustomizeTab}">

@@ -345,6 +345,23 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private bool _initiallyHidden { get; set; } = false;
+
+        [JsonProperty]
+        public bool InitiallyHidden
+        {
+            get
+            {
+                return _initiallyHidden;
+            }
+            set
+            {
+                _initiallyHidden = value;
+                
+                NotifyPropertyChanged("InitiallyHidden");
+            }
+        }
+
         private int _sidebarWidth { get; set; } = 180;
 
         [JsonProperty]

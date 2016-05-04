@@ -1447,6 +1447,24 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hide at Startup.
+        /// </summary>
+        public static string SettingsInitiallyHidden {
+            get {
+                return ResourceManager.GetString("SettingsInitiallyHidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Makes the sidebar hide at startup..
+        /// </summary>
+        public static string SettingsInitiallyHiddenTooltip {
+            get {
+                return ResourceManager.GetString("SettingsInitiallyHiddenTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string SettingsLanguage {

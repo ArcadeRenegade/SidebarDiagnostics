@@ -15,11 +15,12 @@ namespace SidebarDiagnostics
     /// </summary>
     public partial class Sidebar : AppBarWindow
     {
-        public Sidebar(bool openSettings)
+        public Sidebar(bool openSettings, bool initiallyHidden)
         {
             InitializeComponent();
 
             _openSettings = openSettings;
+            _initiallyHidden = initiallyHidden;
         }
 
         public void Reload()
@@ -200,6 +201,13 @@ namespace SidebarDiagnostics
 
                 App.Current.OpenSettings();
             }
+
+            if (_initiallyHidden)
+            {
+                _initiallyHidden = false;
+
+                AppBarHide();
+            }
         }
 
         private void BindGraphs()
@@ -290,7 +298,7 @@ namespace SidebarDiagnostics
             {
                 App._reloading = false;
 
-                new Sidebar(false).Show();
+                new Sidebar(false, false).Show();
             }
             else
             {
@@ -320,5 +328,7 @@ namespace SidebarDiagnostics
         public SidebarModel Model { get; private set; }
 
         private bool _openSettings { get; set; } = false;
+
+        private bool _initiallyHidden { get; set; } = false;
     }
 }

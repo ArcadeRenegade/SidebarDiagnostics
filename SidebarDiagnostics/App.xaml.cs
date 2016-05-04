@@ -85,7 +85,7 @@ namespace SidebarDiagnostics
                 new ChangeLog(_version).Show();
             }
 
-            new Sidebar(openSettings).Show();
+            new Sidebar(openSettings, Framework.Settings.Instance.InitiallyHidden).Show();
 
             RefreshIcon();
         }
