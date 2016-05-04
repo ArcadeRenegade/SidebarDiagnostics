@@ -110,8 +110,8 @@
       <HintPath>..\packages\squirrel.windows.1.2.4\lib\Net45\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.5.17.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
-      <HintPath>..\packages\TaskScheduler.2.5.17\lib\net45\Microsoft.Win32.TaskScheduler.dll</HintPath>
+    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.5.19.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskScheduler.2.5.19\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
@@ -185,8 +185,28 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.6\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

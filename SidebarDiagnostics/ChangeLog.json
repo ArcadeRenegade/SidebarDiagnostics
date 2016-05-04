@@ -1,5 +1,13 @@
 ﻿[
   {
+    "Version": "3.3.8",
+    "Changes": [
+      "Added a metric for Network Adapter IPV4 address. Thanks dknedlik.",
+      "Added a setting under advanced to hide the sidebar at startup.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.3.7",
     "Changes": [
       "Fixed a fatal error that occurred during auto-update.",
