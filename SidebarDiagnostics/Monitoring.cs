@@ -1229,7 +1229,7 @@ namespace SidebarDiagnostics.Monitoring
             base.Update();
         }
 
-        private string GetAdapterIPAddress(string name)
+        private static string GetAdapterIPAddress(string name)
         {
             //Here we need to match the apdapter returned by the network interface to the
             //adapter represented by this instance of the class.
