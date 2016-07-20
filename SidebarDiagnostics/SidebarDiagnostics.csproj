@@ -140,7 +140,7 @@
     </Reference>
     <Reference Include="OpenHardwareMonitorLib, Version=0.7.1.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\OpenHardwareMonitor\OpenHardwareMonitorLib.dll</HintPath>
+      <HintPath>..\OpenHardwareMonitor\Bin\Release\OpenHardwareMonitorLib.dll</HintPath>
     </Reference>
     <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
       <HintPath>..\packages\OxyPlot.Core.1.0.0-unstable2039\lib\net45\OxyPlot.dll</HintPath>

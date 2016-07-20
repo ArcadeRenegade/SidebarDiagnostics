@@ -1,0 +1,3 @@
+[submodule "OpenHardwareMonitor"]
+	path = OpenHardwareMonitor
+	url = git@github.com:openhardwaremonitor/openhardwaremonitor.git
