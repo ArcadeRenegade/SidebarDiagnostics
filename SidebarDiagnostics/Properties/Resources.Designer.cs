@@ -1942,6 +1942,24 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Virtual Desktop.
+        /// </summary>
+        public static string SettingsVirtualDesktop {
+            get {
+                return ResourceManager.GetString("SettingsVirtualDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled support for virtual desktops..
+        /// </summary>
+        public static string SettingsVirtualDesktopTooltip {
+            get {
+                return ResourceManager.GetString("SettingsVirtualDesktopTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use the sliders and textboxes to move the sidebar to the correct position..
         /// </summary>
         public static string SetupCustomSubtitle {

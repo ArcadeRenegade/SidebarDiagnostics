@@ -98,15 +98,6 @@ namespace SidebarDiagnostics
             Ready = false;
 
             Devices.AddHook(this);
-
-            if (OS.SupportVirtualDesktop)
-            {
-                try
-                {
-                    VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
-                }
-                catch (TypeInitializationException) { }
-            }
             
             BindSettings(true);
 
@@ -146,6 +137,20 @@ namespace SidebarDiagnostics
             else
             {
                 HideInAltTab();
+            }
+
+            if (OS.SupportVirtualDesktop)
+            {
+                VirtualDesktop.CurrentChanged -= VirtualDesktop_CurrentChanged;
+
+                if (Framework.Settings.Instance.VirtualDesktop)
+                {
+                    try
+                    {
+                        VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
+                    }
+                    catch (TypeInitializationException) { }
+                }
             }
 
             Hotkey.Initialize(this, Framework.Settings.Instance.Hotkeys);

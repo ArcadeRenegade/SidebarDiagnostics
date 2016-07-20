@@ -1013,4 +1013,12 @@
     <value>Makes the sidebar hide at startup.</value>
     <comment>Settings initially hidden tooltip</comment>
   </data>
+  <data name="SettingsVirtualDesktop" xml:space="preserve">
+    <value>Virtual Desktop</value>
+    <comment>Settings virtual desktop label</comment>
+  </data>
+  <data name="SettingsVirtualDesktopTooltip" xml:space="preserve">
+    <value>Enabled support for virtual desktops.</value>
+    <comment>Settings virtual desktop tooltip</comment>
+  </data>
 </root>

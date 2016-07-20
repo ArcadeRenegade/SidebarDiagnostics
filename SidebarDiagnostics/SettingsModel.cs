@@ -48,6 +48,7 @@ namespace SidebarDiagnostics.Models
             AlwaysTop = Framework.Settings.Instance.AlwaysTop;
             ShowAltTab = Framework.Settings.Instance.ShowAltTab;
             ClickThrough = Framework.Settings.Instance.ClickThrough;
+            VirtualDesktop = Framework.Settings.Instance.VirtualDesktop;
             ShowTrayIcon = Framework.Settings.Instance.ShowTrayIcon;
             AutoUpdate = Framework.Settings.Instance.AutoUpdate;
             RunAtStartup = Framework.Settings.Instance.RunAtStartup;
@@ -142,6 +143,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.AlwaysTop = AlwaysTop;
             Framework.Settings.Instance.ShowAltTab = ShowAltTab;
             Framework.Settings.Instance.ClickThrough = ClickThrough;
+            Framework.Settings.Instance.VirtualDesktop = VirtualDesktop;
             Framework.Settings.Instance.ShowTrayIcon = ShowTrayIcon;
             Framework.Settings.Instance.AutoUpdate = AutoUpdate;
             Framework.Settings.Instance.RunAtStartup = RunAtStartup;
@@ -496,6 +498,22 @@ namespace SidebarDiagnostics.Models
                 _clickThrough = value;
 
                 NotifyPropertyChanged("ClickThrough");
+            }
+        }
+
+        private bool _virtualDesktop { get; set; }
+        
+        public bool VirtualDesktop
+        {
+            get
+            {
+                return _virtualDesktop;
+            }
+            set
+            {
+                _virtualDesktop = value;
+
+                NotifyPropertyChanged("VirtualDesktop");
             }
         }
 

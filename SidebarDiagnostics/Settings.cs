@@ -311,6 +311,23 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private bool _virtualDesktop { get; set; } = true;
+
+        [JsonProperty]
+        public bool VirtualDesktop
+        {
+            get
+            {
+                return _virtualDesktop;
+            }
+            set
+            {
+                _virtualDesktop = value;
+
+                NotifyPropertyChanged("VirtualDesktop");
+            }
+        }
+
         private bool _showTrayIcon { get; set; } = true;
 
         [JsonProperty]
