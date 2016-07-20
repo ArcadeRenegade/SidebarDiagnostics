@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.3.9",
+    "Changes": [
+      "Added a setting to enable or disable Virtual Desktop support.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.3.8",
     "Changes": [
       "Added a metric for Network Adapter IPV4 address. Thanks dknedlik.",
