@@ -98,7 +98,9 @@ namespace SidebarDiagnostics
             Ready = false;
 
             Devices.AddHook(this);
-            
+
+            DisableAeroPeek();
+
             BindSettings(true);
 
             await BindModel();

@@ -138,6 +138,9 @@ namespace SidebarDiagnostics.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         internal static extern int GetClassName(IntPtr hwnd, StringBuilder name, int count);
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int DwmSetWindowAttribute(IntPtr hwnd, AppBarWindow.DWMWINDOWATTRIBUTE dwmAttribute, IntPtr pvAttribute, uint cbAttribute);
     }
 
     public static class ShowDesktop
@@ -1093,6 +1096,26 @@ namespace SidebarDiagnostics.Windows
             public const int ABN_WINDOWARRANGE = 3;
         }
 
+        internal enum DWMWINDOWATTRIBUTE : int
+        {
+            DWMWA_NCRENDERING_ENABLED = 1,
+            DWMWA_NCRENDERING_POLICY = 2,
+            DWMWA_TRANSITIONS_FORCEDISABLED = 3,
+            DWMWA_ALLOW_NCPAINT = 4,
+            DWMWA_CAPTION_BUTTON_BOUNDS = 5,
+            DWMWA_NONCLIENT_RTL_LAYOUT = 6,
+            DWMWA_FORCE_ICONIC_REPRESENTATION = 7,
+            DWMWA_FLIP3D_POLICY = 8,
+            DWMWA_EXTENDED_FRAME_BOUNDS = 9,
+            DWMWA_HAS_ICONIC_BITMAP = 10,
+            DWMWA_DISALLOW_PEEK = 11,
+            DWMWA_EXCLUDED_FROM_PEEK = 12,
+            DWMWA_CLOAK = 13,
+            DWMWA_CLOAKED = 14,
+            DWMWA_FREEZE_REPRESENTATION = 15,
+            DWMWA_LAST = 16
+        }
+
         private static class HWND_FLAG
         {
             public static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
@@ -1291,6 +1314,16 @@ namespace SidebarDiagnostics.Windows
             IsInAltTab = false;
 
             SetWindowLong(WND_STYLE.WS_EX_TOOLWINDOW, null);
+        }
+
+        public void DisableAeroPeek()
+        {
+            IntPtr _hwnd = new WindowInteropHelper(this).Handle;
+
+            IntPtr _status = Marshal.AllocHGlobal(sizeof(int));
+            Marshal.WriteInt32(_status, 1);
+
+            NativeMethods.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_EXCLUDED_FROM_PEEK, _status, sizeof(int));
         }
 
         private void SetWindowLong(long? add, long? remove)
