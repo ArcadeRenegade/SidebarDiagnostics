@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.4.0",
+    "Changes": [
+      "Fixed a crash when click-through is enabled with 32 bit Windows.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.3.9",
     "Changes": [
       "Added a setting to enable or disable Virtual Desktop support.",

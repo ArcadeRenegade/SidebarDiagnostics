@@ -86,7 +86,13 @@ namespace SidebarDiagnostics.Windows
     internal static class NativeMethods
     {
         [DllImport("user32.dll")]
+        internal static extern long GetWindowLong(IntPtr hwnd, int index);
+
+        [DllImport("user32.dll")]
         internal static extern long GetWindowLongPtr(IntPtr hwnd, int index);
+
+        [DllImport("user32.dll")]
+        internal static extern long SetWindowLong(IntPtr hwnd, int index, long newStyle);
 
         [DllImport("user32.dll")]
         internal static extern long SetWindowLongPtr(IntPtr hwnd, int index, long newStyle);
@@ -1290,7 +1296,19 @@ namespace SidebarDiagnostics.Windows
         private void SetWindowLong(long? add, long? remove)
         {
             IntPtr _hwnd = new WindowInteropHelper(this).Handle;
-            long _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
+
+            bool _32bit = IntPtr.Size == 4;
+
+            long _style;
+
+            if (_32bit)
+            {
+                _style = NativeMethods.GetWindowLong(_hwnd, WND_STYLE.GWL_EXSTYLE);
+            }
+            else
+            {
+                _style = NativeMethods.GetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE);
+            }
 
             if (add.HasValue)
             {
@@ -1302,7 +1320,14 @@ namespace SidebarDiagnostics.Windows
                 _style &= ~remove.Value;
             }
 
-            NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style);
+            if (_32bit)
+            {
+                NativeMethods.SetWindowLong(_hwnd, WND_STYLE.GWL_EXSTYLE, _style);
+            }
+            else
+            {
+                NativeMethods.SetWindowLongPtr(_hwnd, WND_STYLE.GWL_EXSTYLE, _style);
+            }
         }
 
         public void SetAppBar(int screen, DockEdge edge, WorkArea windowWA, WorkArea appbarWA, Action callback)
