@@ -77,7 +77,7 @@ namespace SidebarDiagnostics.Monitoring
                 case MonitorType.CPU:
                 case MonitorType.RAM:
                 case MonitorType.GPU:
-                    return GetHardware(type.GetHardwareTypes()).Select(h => new HardwareConfig() { ID = h.Identifier.ToString(), Name = h.Name }).ToArray();
+                    return GetHardware(type.GetHardwareTypes()).Select(h => new HardwareConfig() { ID = h.Identifier.ToString(), Name = h.Name, ActualName = h.Name }).ToArray();
 
                 case MonitorType.HD:
                     return DriveMonitor.GetHardware().ToArray();
@@ -538,10 +538,10 @@ namespace SidebarDiagnostics.Monitoring
             return (
                 from hw in hardware
                 join c in hardwareConfig on hw.Identifier.ToString() equals c.ID into merged
-                from n in merged.DefaultIfEmpty(new HardwareConfig() { ID = hw.Identifier.ToString(), Name = hw.Name })
+                from n in merged.DefaultIfEmpty(new HardwareConfig() { ID = hw.Identifier.ToString(), Name = hw.Name, ActualName = hw.Name }).Select(n => { n.ActualName = hw.Name; return n; })
                 where n.Enabled
                 orderby n.Order descending, n.Name ascending
-                select new OHMMonitor(type, n.ID, n.Name, hw, board, metrics, parameters)
+                select new OHMMonitor(type, n.ID, n.Name ?? n.ActualName, hw, board, metrics, parameters)
                 ).ToArray();
         }
 
@@ -984,7 +984,7 @@ namespace SidebarDiagnostics.Monitoring
                 App.ShowPerformanceCounterError();
             }
 
-            return _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(h => new HardwareConfig() { ID = h, Name = h });
+            return _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(h => new HardwareConfig() { ID = h, Name = h, ActualName = h });
         }
 
         public static iMonitor[] GetInstances(HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters)
@@ -995,10 +995,10 @@ namespace SidebarDiagnostics.Monitoring
             return (
                 from hw in GetHardware()
                 join c in hardwareConfig on hw.ID equals c.ID into merged
-                from n in merged.DefaultIfEmpty(hw)
+                from n in merged.DefaultIfEmpty(hw).Select(n => { n.ActualName = hw.Name; return n; })
                 where n.Enabled
                 orderby n.Order descending, n.Name ascending
-                select new DriveMonitor(n.ID, n.Name, metrics, _roundAll, _usedSpaceAlert)
+                select new DriveMonitor(n.ID, n.Name ?? n.ActualName, metrics, _roundAll, _usedSpaceAlert)
                 ).ToArray();
         }
 
@@ -1198,7 +1198,7 @@ namespace SidebarDiagnostics.Monitoring
                 App.ShowPerformanceCounterError();
             }
 
-            return _instances.OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h });
+            return _instances.OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h, ActualName = h });
         }
 
         public static iMonitor[] GetInstances(HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters)
@@ -1212,10 +1212,10 @@ namespace SidebarDiagnostics.Monitoring
             return (
                 from hw in GetHardware()
                 join c in hardwareConfig on hw.ID equals c.ID into merged
-                from n in merged.DefaultIfEmpty(hw)
+                from n in merged.DefaultIfEmpty(hw).Select(n => { n.ActualName = hw.Name; return n; })
                 where n.Enabled
                 orderby n.Order descending, n.Name ascending
-                select new NetworkMonitor(n.ID, n.Name, metrics, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)
+                select new NetworkMonitor(n.ID, n.Name ?? n.ActualName, metrics, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)
                 ).ToArray();
         }
 
@@ -2120,6 +2120,8 @@ namespace SidebarDiagnostics.Monitoring
                 NotifyPropertyChanged("Name");
             }
         }
+
+        public string ActualName { get; set; }
 
         private bool _enabled { get; set; } = true;
 
