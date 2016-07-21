@@ -1018,7 +1018,7 @@
     <comment>Settings virtual desktop label</comment>
   </data>
   <data name="SettingsVirtualDesktopTooltip" xml:space="preserve">
-    <value>Enabled support for virtual desktops.</value>
+    <value>Enables support for virtual desktops.</value>
     <comment>Settings virtual desktop tooltip</comment>
   </data>
 </root>

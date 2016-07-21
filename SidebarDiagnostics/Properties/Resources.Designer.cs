@@ -1951,7 +1951,7 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enabled support for virtual desktops..
+        ///   Looks up a localized string similar to Enables support for virtual desktops..
         /// </summary>
         public static string SettingsVirtualDesktopTooltip {
             get {
