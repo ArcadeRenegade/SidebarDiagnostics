@@ -181,6 +181,20 @@ namespace SidebarDiagnostics
             }
         }
 
+        private void BindReserveSpace_Click(object sender, RoutedEventArgs e)
+        {
+            _keybinder = (ToggleButton)sender;
+
+            if (_keybinder.IsChecked == true)
+            {
+                BeginBind(Hotkey.KeyAction.ReserveSpace);
+            }
+            else
+            {
+                EndBind();
+            }
+        }
+
         private void BeginBind(Hotkey.KeyAction action)
         {
             _hotkey = new Hotkey();
@@ -229,6 +243,10 @@ namespace SidebarDiagnostics
 
                 case Hotkey.KeyAction.CycleScreen:
                     Model.CycleScreenKey = _hotkey;
+                    break;
+
+                case Hotkey.KeyAction.ReserveSpace:
+                    Model.ReserveSpaceKey = _hotkey;
                     break;
             }
 

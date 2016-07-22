@@ -120,6 +120,7 @@ namespace SidebarDiagnostics.Models
                 CloseKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.Close);
                 CycleEdgeKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.CycleEdge);
                 CycleScreenKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.CycleScreen);
+                ReserveSpaceKey = Framework.Settings.Instance.Hotkeys.FirstOrDefault(k => k.Action == Hotkey.KeyAction.ReserveSpace);
             }
 
             IsChanged = false;
@@ -221,6 +222,11 @@ namespace SidebarDiagnostics.Models
             if (CycleScreenKey != null)
             {
                 _hotkeys.Add(CycleScreenKey);
+            }
+
+            if (ReserveSpaceKey != null)
+            {
+                _hotkeys.Add(ReserveSpaceKey);
             }
 
             Framework.Settings.Instance.Hotkeys = _hotkeys.ToArray();
@@ -991,6 +997,22 @@ namespace SidebarDiagnostics.Models
                 _cycleScreenKey = value;
 
                 NotifyPropertyChanged("CycleScreenKey");
+            }
+        }
+
+        private Hotkey _reserveSpaceKey { get; set; }
+
+        public Hotkey ReserveSpaceKey
+        {
+            get
+            {
+                return _reserveSpaceKey;
+            }
+            set
+            {
+                _reserveSpaceKey = value;
+
+                NotifyPropertyChanged("ReserveSpaceKey");
             }
         }
     }

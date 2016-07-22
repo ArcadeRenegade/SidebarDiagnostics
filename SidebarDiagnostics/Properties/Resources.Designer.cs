@@ -1420,6 +1420,15 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reserve Space.
+        /// </summary>
+        public static string SettingsHotkeyReserveSpace {
+            get {
+                return ResourceManager.GetString("SettingsHotkeyReserveSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show.
         /// </summary>
         public static string SettingsHotkeyShow {

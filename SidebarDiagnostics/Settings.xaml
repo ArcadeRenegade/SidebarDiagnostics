@@ -342,6 +342,7 @@
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="{x:Static frame:Resources.SettingsHotkeyToggle}" />
@@ -363,14 +364,18 @@
                     <Label Grid.Column="0" Grid.Row="4" Content="{x:Static frame:Resources.SettingsHotkeyCycleScreen}" />
                     <ToggleButton Grid.Column="1" Grid.Row="4" Click="BindCycleScreen_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
                     <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Path=CycleScreenKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" Style="{StaticResource HotkeyLabel}" />
-                    
-                    <Label Grid.Column="0" Grid.Row="5" Content="{x:Static frame:Resources.SettingsHotkeyReload}" />
-                    <ToggleButton Grid.Column="1" Grid.Row="5" Click="BindReload_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
-                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Path=ReloadKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" Style="{StaticResource HotkeyLabel}" />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="{x:Static frame:Resources.SettingsHotkeyClose}" />
-                    <ToggleButton Grid.Column="1" Grid.Row="6" Click="BindClose_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
-                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Path=CloseKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" Style="{StaticResource HotkeyLabel}" />
+                    <Label Grid.Column="0" Grid.Row="5" Content="{x:Static frame:Resources.SettingsHotkeyReserveSpace}" />
+                    <ToggleButton Grid.Column="1" Grid.Row="5" Click="BindReserveSpace_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
+                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Path=ReserveSpaceKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" Style="{StaticResource HotkeyLabel}" />
+
+                    <Label Grid.Column="0" Grid.Row="6" Content="{x:Static frame:Resources.SettingsHotkeyReload}" />
+                    <ToggleButton Grid.Column="1" Grid.Row="6" Click="BindReload_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
+                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Path=ReloadKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" Style="{StaticResource HotkeyLabel}" />
+
+                    <Label Grid.Column="0" Grid.Row="7" Content="{x:Static frame:Resources.SettingsHotkeyClose}" />
+                    <ToggleButton Grid.Column="1" Grid.Row="7" Click="BindClose_Click" LostFocus="BindButton_LostFocus" Style="{StaticResource HotkeyToggle}" />
+                    <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Path=CloseKey, Mode=OneWay, Converter={StaticResource HotkeyConverter}}" Style="{StaticResource HotkeyLabel}" />
                 </Grid>
             </TabItem>
         </TabControl>

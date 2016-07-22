@@ -374,7 +374,8 @@ namespace SidebarDiagnostics.Windows
             Reload,
             Close,
             CycleEdge,
-            CycleScreen
+            CycleScreen,
+            ReserveSpace
         }
 
         public Hotkey() { }
@@ -424,12 +425,11 @@ namespace SidebarDiagnostics.Windows
 
         public static void Initialize(Sidebar window, Hotkey[] settings)
         {
-            if (IsHooked || settings == null || settings.Length == 0)
+            if (settings == null || settings.Length == 0)
             {
+                Dispose();
                 return;
             }
-
-            IsHooked = true;
 
             Disable();
 
@@ -444,6 +444,8 @@ namespace SidebarDiagnostics.Windows
             }).ToArray();
 
             window.HwndSource.AddHook(KeyHook);
+
+            IsHooked = true;
         }
 
         public static void Dispose()
@@ -609,6 +611,13 @@ namespace SidebarDiagnostics.Windows
 
                                 _sidebar.Reposition();
                             }
+                            break;
+
+                        case KeyAction.ReserveSpace:
+                            Framework.Settings.Instance.UseAppBar = !Framework.Settings.Instance.UseAppBar;
+                            Framework.Settings.Instance.Save();
+
+                            _sidebar.Reposition();
                             break;
                     }
 

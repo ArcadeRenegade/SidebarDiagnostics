@@ -1021,4 +1021,8 @@
     <value>Enables support for virtual desktops.</value>
     <comment>Settings virtual desktop tooltip</comment>
   </data>
+  <data name="SettingsHotkeyReserveSpace" xml:space="preserve">
+    <value>Reserve Space</value>
+    <comment>Settings hotkey reserve space</comment>
+  </data>
 </root>

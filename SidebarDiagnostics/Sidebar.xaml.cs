@@ -141,6 +141,18 @@ namespace SidebarDiagnostics
                 HideInAltTab();
             }
 
+            if (WindowControls.Visibility != Visibility.Visible)
+            {
+                if (Framework.Settings.Instance.CollapseMenuBar)
+                {
+                    WindowControls.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    WindowControls.Visibility = Visibility.Hidden;
+                }
+            }
+
             if (OS.SupportVirtualDesktop)
             {
                 VirtualDesktop.CurrentChanged -= VirtualDesktop_CurrentChanged;
