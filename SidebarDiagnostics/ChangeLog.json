@@ -1,5 +1,15 @@
 ﻿[
   {
+    "Version": "3.4.1",
+    "Changes": [
+      "Fixed a bug where the default hardware name stayed the same after the hardware was replaced.",
+      "Sidebar now remains visible during Aero peek.",
+      "Added a new hotkey for toggling \"Reserve Space\".",
+      "Fixed a bug where changes to hotkeys would not apply immediately after saving.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.4.0",
     "Changes": [
       "Fixed a crash when click-through is enabled with 32 bit Windows.",
