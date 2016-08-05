@@ -7,5 +7,10 @@ namespace SidebarDiagnostics
         {
             public const string TASKNAME = "SidebarStartup";
         }
+
+        public static class URLs
+        {
+            public const string IPIFY = "https://api.ipify.org";
+        }
     }
 }

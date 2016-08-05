@@ -277,7 +277,7 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _showAltTab { get; set; } = true;
+        private bool _showAltTab { get; set; } = false;
 
         [JsonProperty]
         public bool ShowAltTab
@@ -308,23 +308,6 @@ namespace SidebarDiagnostics.Framework
                 _clickThrough = value;
 
                 NotifyPropertyChanged("ClickThrough");
-            }
-        }
-
-        private bool _virtualDesktop { get; set; } = true;
-
-        [JsonProperty]
-        public bool VirtualDesktop
-        {
-            get
-            {
-                return _virtualDesktop;
-            }
-            set
-            {
-                _virtualDesktop = value;
-
-                NotifyPropertyChanged("VirtualDesktop");
             }
         }
 

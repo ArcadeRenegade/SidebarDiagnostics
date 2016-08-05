@@ -4,15 +4,16 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.IO;
+using System.Net.NetworkInformation;
+using System.Net;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Windows.Media;
 using OpenHardwareMonitor.Hardware;
 using Newtonsoft.Json;
 using SidebarDiagnostics.Framework;
-using System.Net.NetworkInformation;
-using System.Net;
-using System.Net.Sockets;
 
 namespace SidebarDiagnostics.Monitoring
 {
@@ -1140,7 +1141,7 @@ namespace SidebarDiagnostics.Monitoring
         private const string BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
         private const string BYTESSENTPERSECOND = "Bytes Sent/sec";
 
-        public NetworkMonitor(string id, string name, MetricConfig[] metrics, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0) : base(id, name, showName)
+        public NetworkMonitor(string id, string name, string extIP, MetricConfig[] metrics, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0) : base(id, name, showName)
         {
             iConverter _converter;
             
@@ -1163,6 +1164,11 @@ namespace SidebarDiagnostics.Monitoring
                 {
                     _metrics.Add(new IPMetric(_ipAddress, MetricKey.NetworkIP, DataType.IP));
                 }
+            }
+
+            if (!string.IsNullOrEmpty(extIP))
+            {
+                _metrics.Add(new IPMetric(extIP, MetricKey.NetworkExtIP, DataType.IP));
             }
 
             if (metrics.IsEnabled(MetricKey.NetworkIn))
@@ -1209,13 +1215,20 @@ namespace SidebarDiagnostics.Monitoring
             int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
             int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
 
+            string _extIP = null;
+
+            if (metrics.IsEnabled(MetricKey.NetworkExtIP))
+            {
+                _extIP = GetExternalIPAddress();
+            }
+
             return (
                 from hw in GetHardware()
                 join c in hardwareConfig on hw.ID equals c.ID into merged
                 from n in merged.DefaultIfEmpty(hw).Select(n => { n.ActualName = hw.Name; return n; })
                 where n.Enabled
                 orderby n.Order descending, n.Name ascending
-                select new NetworkMonitor(n.ID, n.Name ?? n.ActualName, metrics, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)
+                select new NetworkMonitor(n.ID, n.Name ?? n.ActualName, _extIP, metrics, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)
                 ).ToArray();
         }
 
@@ -1264,6 +1277,30 @@ namespace SidebarDiagnostics.Monitoring
             }
 
             return null;
+        }
+
+        private static string GetExternalIPAddress()
+        {
+            try
+            {
+                HttpWebRequest _request = (HttpWebRequest)WebRequest.Create(Constants.URLs.IPIFY);
+                _request.Timeout = 5000;
+
+                using (HttpWebResponse _response = (HttpWebResponse)_request.GetResponse())
+                {
+                    using (Stream _stream = _response.GetResponseStream())
+                    {
+                        using (StreamReader _reader = new StreamReader(_stream))
+                        {
+                            return _reader.ReadToEnd();
+                        }
+                    }
+                }
+            }
+            catch (WebException)
+            {
+                return "";
+            }
         }
     }
 
@@ -2044,9 +2081,10 @@ namespace SidebarDiagnostics.Monitoring
                         Enabled = true,
                         Order = 1,
                         Hardware = new HardwareConfig[0],
-                        Metrics = new MetricConfig[3]
+                        Metrics = new MetricConfig[4]
                         {
                             new MetricConfig(MetricKey.NetworkIP, true),
+                            new MetricConfig(MetricKey.NetworkExtIP, false),
                             new MetricConfig(MetricKey.NetworkIn, true),
                             new MetricConfig(MetricKey.NetworkOut, true)
                         },
@@ -2262,6 +2300,7 @@ namespace SidebarDiagnostics.Monitoring
         GPUFan = 17,
 
         NetworkIP = 26,
+        NetworkExtIP = 27,
         NetworkIn = 18,
         NetworkOut = 19,
 
@@ -2989,6 +3028,9 @@ namespace SidebarDiagnostics.Monitoring
                 case MetricKey.NetworkIP:
                     return Resources.NetworkIP;
 
+                case MetricKey.NetworkExtIP:
+                    return Resources.NetworkExtIP;
+
                 case MetricKey.NetworkIn:
                     return Resources.NetworkIn;
 
@@ -3078,6 +3120,9 @@ namespace SidebarDiagnostics.Monitoring
 
                 case MetricKey.NetworkIP:
                     return Resources.NetworkIPLabel;
+
+                case MetricKey.NetworkExtIP:
+                    return Resources.NetworkExtIPLabel;
 
                 case MetricKey.NetworkIn:
                     return Resources.NetworkInLabel;

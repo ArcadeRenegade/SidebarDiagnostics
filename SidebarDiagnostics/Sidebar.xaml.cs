@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Models;
-using WindowsDesktop;
 
 namespace SidebarDiagnostics
 {
@@ -153,20 +152,6 @@ namespace SidebarDiagnostics
                 }
             }
 
-            if (OS.SupportVirtualDesktop)
-            {
-                VirtualDesktop.CurrentChanged -= VirtualDesktop_CurrentChanged;
-
-                if (Framework.Settings.Instance.VirtualDesktop)
-                {
-                    try
-                    {
-                        VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
-                    }
-                    catch (TypeInitializationException) { }
-                }
-            }
-
             Hotkey.Initialize(this, Framework.Settings.Instance.Hotkeys);
 
             if (enableHotkeys)
@@ -237,18 +222,6 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void VirtualDesktop_CurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
-        {
-            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-            {
-                try
-                {
-                    this.MoveToDesktop(VirtualDesktop.Current);
-                }
-                catch (InvalidOperationException) { }
-            }));
-        }
-
         private void GraphButton_Click(object sender, RoutedEventArgs e)
         {
             App.Current.OpenGraph();
@@ -297,11 +270,6 @@ namespace SidebarDiagnostics
             {
                 Model.Dispose();
                 Model = null;
-            }
-
-            if (OS.SupportVirtualDesktop)
-            {
-                VirtualDesktop.CurrentChanged -= VirtualDesktop_CurrentChanged;
             }
 
             ClearAppBar();

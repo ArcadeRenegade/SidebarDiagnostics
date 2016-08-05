@@ -1,5 +1,15 @@
 ﻿[
   {
+    "Version": "3.4.2",
+    "Changes": [
+      "Added a network metric for external IP address, disabled by default.",
+      "Be careful when sharing your desktop to not show your public IP address.",
+      "Removed Virtual Desktop support due to incompatibilities and errors.",
+      "If you want the sidebar to persist between different Virtual Desktops, you can disable the \"Show in Alt + Tab\" setting instead.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.4.1",
     "Changes": [
       "Fixed a bug where the default hardware name stayed the same after the hardware was replaced.",

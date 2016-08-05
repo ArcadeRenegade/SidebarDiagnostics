@@ -745,6 +745,24 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to External IP Address.
+        /// </summary>
+        public static string NetworkExtIP {
+            get {
+                return ResourceManager.GetString("NetworkExtIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ext IP.
+        /// </summary>
+        public static string NetworkExtIPLabel {
+            get {
+                return ResourceManager.GetString("NetworkExtIPLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bandwidth In.
         /// </summary>
         public static string NetworkIn {

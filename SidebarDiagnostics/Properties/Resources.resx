@@ -1025,4 +1025,12 @@
     <value>Reserve Space</value>
     <comment>Settings hotkey reserve space</comment>
   </data>
+  <data name="NetworkExtIP" xml:space="preserve">
+    <value>External IP Address</value>
+    <comment>Full name for the network ext IP address metric</comment>
+  </data>
+  <data name="NetworkExtIPLabel" xml:space="preserve">
+    <value>Ext</value>
+    <comment>Short label for network ext IP address metric</comment>
+  </data>
 </root>
