@@ -1787,6 +1787,11 @@ namespace SidebarDiagnostics.Monitoring
             _clone.Hardware = _clone.Hardware.Select(h => h.Clone()).ToArray();
             _clone.Params = _clone.Params.Select(p => p.Clone()).ToArray();
 
+            if (_clone.HardwareOC != null)
+            {
+                _clone.HardwareOC = new ObservableCollection<HardwareConfig>(_clone.HardwareOC.Select(h => h.Clone()));
+            }
+
             return _clone;
         }
 
