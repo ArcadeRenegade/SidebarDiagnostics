@@ -277,20 +277,20 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _showAltTab { get; set; } = false;
+        private bool _toolbarMode { get; set; } = true;
 
         [JsonProperty]
-        public bool ShowAltTab
+        public bool ToolbarMode
         {
             get
             {
-                return _showAltTab;
+                return _toolbarMode;
             }
             set
             {
-                _showAltTab = value;
+                _toolbarMode = value;
 
-                NotifyPropertyChanged("ShowAltTab");
+                NotifyPropertyChanged("ToolbarMode");
             }
         }
 

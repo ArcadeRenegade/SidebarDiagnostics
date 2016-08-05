@@ -127,8 +127,8 @@
                     <Label Grid.Column="0" Grid.Row="4" Content="{x:Static frame:Resources.SettingsShowTrayIcon}" />
                     <CheckBox Grid.Column="1" Grid.Row="4" x:Name="ShowTrayIconCheckbox" Unchecked="ShowTrayIconCheckbox_Unchecked" IsChecked="{Binding Path=ShowTrayIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsShowTrayIconTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="{x:Static frame:Resources.SettingsAltTab}" />
-                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=ShowAltTab, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsAltTabTooltip}" />
+                    <Label Grid.Column="0" Grid.Row="5" Content="{x:Static frame:Resources.SettingsToolbarMode}" />
+                    <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Path=ToolbarMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsToolbarModeTooltip}" />
 
                     <Label Grid.Column="0" Grid.Row="6" Content="{x:Static frame:Resources.SettingsClickThrough}" />
                     <CheckBox Grid.Column="1" Grid.Row="6" x:Name="ClickThroughCheckbox" Checked="ClickThroughCheckbox_Checked" IsChecked="{Binding Path=ClickThrough, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsClickThroughTooltip}" />

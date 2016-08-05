@@ -517,13 +517,13 @@
     <value>Shows the clock speeds of all cores not just the first.</value>
     <comment>Settings all core clocks tooltip</comment>
   </data>
-  <data name="SettingsAltTab" xml:space="preserve">
-    <value>Show in Alt + Tab</value>
-    <comment>Settings alt tab label</comment>
+  <data name="SettingsToolbarMode" xml:space="preserve">
+    <value>Toolbar Mode</value>
+    <comment>Settings toolbar mode label</comment>
   </data>
-  <data name="SettingsAltTabTooltip" xml:space="preserve">
-    <value>Shows the sidebar in the Alt + Tab menu.</value>
-    <comment>Settings alt tab tooltip</comment>
+  <data name="SettingsToolbarModeTooltip" xml:space="preserve">
+    <value>Hides the sidebar in alt-tab and makes it persist between virtual desktops.</value>
+    <comment>Settings toolbar mode tooltip</comment>
   </data>
   <data name="SettingsAlwaysOnTop" xml:space="preserve">
     <value>Always On Top</value>

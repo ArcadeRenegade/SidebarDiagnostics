@@ -754,7 +754,7 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ext IP.
+        ///   Looks up a localized string similar to Ext.
         /// </summary>
         public static string NetworkExtIPLabel {
             get {
@@ -993,24 +993,6 @@ namespace SidebarDiagnostics.Framework {
         public static string SettingsAllCoreClocksTooltip {
             get {
                 return ResourceManager.GetString("SettingsAllCoreClocksTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show in Alt + Tab.
-        /// </summary>
-        public static string SettingsAltTab {
-            get {
-                return ResourceManager.GetString("SettingsAltTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Shows the sidebar in the Alt + Tab menu..
-        /// </summary>
-        public static string SettingsAltTabTooltip {
-            get {
-                return ResourceManager.GetString("SettingsAltTabTooltip", resourceCulture);
             }
         }
         
@@ -1857,6 +1839,24 @@ namespace SidebarDiagnostics.Framework {
         public static string SettingsTitle {
             get {
                 return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toolbar Mode.
+        /// </summary>
+        public static string SettingsToolbarMode {
+            get {
+                return ResourceManager.GetString("SettingsToolbarMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hides the sidebar in alt-tab and makes it persist between virtual desktops..
+        /// </summary>
+        public static string SettingsToolbarModeTooltip {
+            get {
+                return ResourceManager.GetString("SettingsToolbarModeTooltip", resourceCulture);
             }
         }
         

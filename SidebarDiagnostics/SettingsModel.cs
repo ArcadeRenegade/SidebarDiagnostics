@@ -46,7 +46,7 @@ namespace SidebarDiagnostics.Models
             PollingInterval = Framework.Settings.Instance.PollingInterval;
             UseAppBar = Framework.Settings.Instance.UseAppBar;
             AlwaysTop = Framework.Settings.Instance.AlwaysTop;
-            ShowAltTab = Framework.Settings.Instance.ShowAltTab;
+            ToolbarMode = Framework.Settings.Instance.ToolbarMode;
             ClickThrough = Framework.Settings.Instance.ClickThrough;
             ShowTrayIcon = Framework.Settings.Instance.ShowTrayIcon;
             AutoUpdate = Framework.Settings.Instance.AutoUpdate;
@@ -141,7 +141,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.PollingInterval = PollingInterval;
             Framework.Settings.Instance.UseAppBar = UseAppBar;
             Framework.Settings.Instance.AlwaysTop = AlwaysTop;
-            Framework.Settings.Instance.ShowAltTab = ShowAltTab;
+            Framework.Settings.Instance.ToolbarMode = ToolbarMode;
             Framework.Settings.Instance.ClickThrough = ClickThrough;
             Framework.Settings.Instance.ShowTrayIcon = ShowTrayIcon;
             Framework.Settings.Instance.AutoUpdate = AutoUpdate;
@@ -478,19 +478,19 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _showAltTab { get; set; }
+        private bool _toolbarMode { get; set; }
         
-        public bool ShowAltTab
+        public bool ToolbarMode
         {
             get
             {
-                return _showAltTab;
+                return _toolbarMode;
             }
             set
             {
-                _showAltTab = value;
+                _toolbarMode = value;
 
-                NotifyPropertyChanged("ShowAltTab");
+                NotifyPropertyChanged("ToolbarMode");
             }
         }
 

@@ -131,13 +131,13 @@ namespace SidebarDiagnostics
                 ClearClickThrough();
             }
 
-            if (Framework.Settings.Instance.ShowAltTab)
+            if (Framework.Settings.Instance.ToolbarMode)
             {
-                ShowInAltTab();
+                HideInAltTab();
             }
             else
             {
-                HideInAltTab();
+                ShowInAltTab();
             }
 
             if (WindowControls.Visibility != Visibility.Visible)
