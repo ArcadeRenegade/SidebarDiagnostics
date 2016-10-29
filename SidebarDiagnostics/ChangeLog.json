@@ -1,5 +1,15 @@
 ﻿[
   {
+    "Version": "3.4.3",
+    "Changes": [
+      "ISATAP (Intra-Site Automatic Tunnel Addressing Protocol) are now filtered via Regex from Network Adapters to monitor.",
+      "Showing or toggling the sidebar will no longer cause it to activate or gain focus.",
+      "The \"Show in Alt + Tab\" option has been renamed \"Toolbar Mode\".",
+      "Enabling Toolbar Mode allows the sidebar to persist between Virtual Desktops and not show up in the Alt + Tab menu.",
+      "Want to help translate? Please visit the GitHub wiki!"
+    ]
+  },
+  {
     "Version": "3.4.2",
     "Changes": [
       "Added a network metric for external IP address, disabled by default.",

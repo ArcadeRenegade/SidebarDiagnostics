@@ -1204,7 +1204,9 @@ namespace SidebarDiagnostics.Monitoring
                 App.ShowPerformanceCounterError();
             }
 
-            return _instances.OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h, ActualName = h });
+            Regex _regex = new Regex(@"^isatap\..+\..+\..+$");
+
+            return _instances.Where(i => !_regex.IsMatch(i)).OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h, ActualName = h });
         }
 
         public static iMonitor[] GetInstances(HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters)

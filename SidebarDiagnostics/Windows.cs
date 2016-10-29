@@ -1469,7 +1469,6 @@ namespace SidebarDiagnostics.Windows
             }
 
             Show();
-            Activate();
         }
 
         public virtual void AppBarHide()
