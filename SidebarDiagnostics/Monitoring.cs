@@ -5,8 +5,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.IO;
-using System.Net.NetworkInformation;
 using System.Net;
+using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Windows.Threading;
@@ -970,8 +971,6 @@ namespace SidebarDiagnostics.Monitoring
 
         public static IEnumerable<HardwareConfig> GetHardware()
         {
-            Regex _regex = new Regex("^[A-Z]:$");
-
             string[] _instances;
 
             try
@@ -984,6 +983,8 @@ namespace SidebarDiagnostics.Monitoring
 
                 App.ShowPerformanceCounterError();
             }
+
+            Regex _regex = new Regex("^[A-Z]:$");
 
             return _instances.Where(n => _regex.IsMatch(n)).OrderBy(d => d[0]).Select(h => new HardwareConfig() { ID = h, Name = h, ActualName = h });
         }
@@ -1285,7 +1286,8 @@ namespace SidebarDiagnostics.Monitoring
         {
             try
             {
-                HttpWebRequest _request = (HttpWebRequest)WebRequest.Create(Constants.URLs.IPIFY);
+                HttpWebRequest _request = WebRequest.CreateHttp(Constants.URLs.IPIFY);
+                _request.Method = HttpMethod.Get.Method;
                 _request.Timeout = 5000;
 
                 using (HttpWebResponse _response = (HttpWebResponse)_request.GetResponse())
