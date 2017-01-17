@@ -2120,5 +2120,23 @@ namespace SidebarDiagnostics.Framework {
                 return ResourceManager.GetString("UpdateTitle", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Updating.
+        /// </summary>
+        public static string SettingsFontShadow {
+            get {
+                return ResourceManager.GetString("SettingsFontShadow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating.
+        /// </summary>
+        public static string SettingsFontShadowTooltip {
+            get {
+                return ResourceManager.GetString("SettingsFontShadowTooltip", resourceCulture);
+            }
+        }
     }
 }

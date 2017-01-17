@@ -72,6 +72,13 @@
                             </Setter.Value>
                         </Setter>
                     </DataTrigger>
+                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=FontShadow, Mode=OneWay}" Value="True">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect BlurRadius="7" ShadowDepth="0" RenderingBias="Performance"/>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
                 </Style.Triggers>
             </Style>
 

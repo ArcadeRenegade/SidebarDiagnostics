@@ -1033,4 +1033,14 @@
     <value>Ext</value>
     <comment>Short label for network ext IP address metric</comment>
   </data>
+  <data name="SettingsFontShadow" xml:space="preserve">
+    <value>Shadow</value>
+    <comment>Font Shaddow settings</comment>
+  </data>
+  <data name="FontShadow" xml:space="preserve">
+    <value>Font Shadow</value>
+  </data>
+  <data name="SettingsFontShadowTooltip" xml:space="preserve">
+    <value>Whether to show a drop shadow below toolbar elements</value>
+  </data>
 </root>

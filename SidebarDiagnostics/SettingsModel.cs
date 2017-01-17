@@ -75,6 +75,7 @@ namespace SidebarDiagnostics.Models
 
             FontSetting = Framework.Settings.Instance.FontSetting;
             FontColor = Framework.Settings.Instance.FontColor;
+            FontShadow = Framework.Settings.Instance.FontShadow;
             AlertFontColor = Framework.Settings.Instance.AlertFontColor;
             AlertBlink = Framework.Settings.Instance.AlertBlink;
 
@@ -153,6 +154,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.TextAlign = TextAlign;
             Framework.Settings.Instance.FontSetting = FontSetting;
             Framework.Settings.Instance.FontColor = FontColor;
+            Framework.Settings.Instance.FontShadow = FontShadow;
             Framework.Settings.Instance.AlertFontColor = AlertFontColor;
             Framework.Settings.Instance.AlertBlink = AlertBlink;
             Framework.Settings.Instance.DateSetting = DateSetting;
@@ -699,6 +701,19 @@ namespace SidebarDiagnostics.Models
                 _fontColor = value;
 
                 NotifyPropertyChanged("FontColor");
+            }
+        }
+        
+        private bool _fontShadow { get; set; }
+
+        public bool FontShadow {
+            get {
+                return _fontShadow;
+            }
+            set {
+                _fontShadow = value;
+
+                NotifyPropertyChanged("FontShadow");
             }
         }
 

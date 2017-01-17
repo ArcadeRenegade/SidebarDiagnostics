@@ -481,6 +481,20 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private bool _fontShadow { get; set; } = false;
+
+        [JsonProperty]
+        public bool FontShadow {
+            get {
+                return _fontShadow;
+            }
+            set {
+                _fontShadow = value;
+
+                NotifyPropertyChanged("FontShadow");
+            }
+        }
+
         private string _alertFontColor { get; set; } = "#FF4136";
 
         [JsonProperty]
