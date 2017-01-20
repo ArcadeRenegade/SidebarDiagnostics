@@ -678,7 +678,7 @@
     <comment>Settings hardware data grid hardware column header</comment>
   </data>
   <data name="SettingsHardwareEnabledTooltip" xml:space="preserve">
-    <value>Enables this hardware. (Double click to change. Known bug.)</value>
+    <value>Enables this hardware.</value>
     <comment>Settings hardware enabled checkbox tooltip</comment>
   </data>
   <data name="SettingsHardwareNameTooltip" xml:space="preserve">

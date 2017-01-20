@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.4.4",
+    "Changes": [
+      "Updated to the latest version of Open Hardware Monitor with Kaby Lake support.",
+      "Updated dependencies."
+    ]
+  },
+  {
     "Version": "3.4.3",
     "Changes": [
       "ISATAP (Intra-Site Automatic Tunnel Addressing Protocol) are now filtered via Regex from Network Adapters to monitor.",
