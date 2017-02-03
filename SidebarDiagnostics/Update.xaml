@@ -1,4 +1,4 @@
-﻿<win:DPIAwareWindow
+﻿<sty:FlatWindow
         x:Class="SidebarDiagnostics.Update"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
+        xmlns:sty="clr-namespace:SidebarDiagnostics.Style"
         mc:Ignorable="d"
         Title="{x:Static frame:Resources.AppName}"
         Icon="Sidebar.ico"
@@ -28,4 +29,4 @@
         <Label DockPanel.Dock="Top" Content="{x:Static frame:Resources.UpdateTitle}" Style="{StaticResource UpdateTitle}" />
         <ProgressBar Value="{Binding Path=Progress, Mode=OneWay}" Style="{StaticResource UpdateProgress}" />
     </DockPanel>
-</win:DPIAwareWindow>
+</sty:FlatWindow>

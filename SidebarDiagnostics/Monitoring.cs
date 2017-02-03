@@ -540,7 +540,7 @@ namespace SidebarDiagnostics.Monitoring
             return (
                 from hw in hardware
                 join c in hardwareConfig on hw.Identifier.ToString() equals c.ID into merged
-                from n in merged.DefaultIfEmpty(new HardwareConfig() { ID = hw.Identifier.ToString(), Name = hw.Name, ActualName = hw.Name }).Select(n => { n.ActualName = hw.Name; return n; })
+                from n in merged.DefaultIfEmpty(new HardwareConfig() { ID = hw.Identifier.ToString(), Name = hw.Name, ActualName = hw.Name }).Select(n => { if (n.ActualName != hw.Name) { n.Name = n.ActualName = hw.Name; } return n; })
                 where n.Enabled
                 orderby n.Order descending, n.Name ascending
                 select new OHMMonitor(type, n.ID, n.Name ?? n.ActualName, hw, board, metrics, parameters)
@@ -1205,7 +1205,7 @@ namespace SidebarDiagnostics.Monitoring
                 App.ShowPerformanceCounterError();
             }
 
-            Regex _regex = new Regex(@"^isatap\..+\..+\..+$");
+            Regex _regex = new Regex(@"^isatap.*$");
 
             return _instances.Where(i => !_regex.IsMatch(i)).OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h, ActualName = h });
         }
@@ -2168,7 +2168,22 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public string ActualName { get; set; }
+        private string _actualName { get; set; }
+
+        [JsonProperty]
+        public string ActualName
+        {
+            get
+            {
+                return _actualName;
+            }
+            set
+            {
+                _actualName = value;
+
+                NotifyPropertyChanged("ActualName");
+            }
+        }
 
         private bool _enabled { get; set; } = true;
 

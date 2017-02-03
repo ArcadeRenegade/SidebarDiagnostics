@@ -1,4 +1,4 @@
-﻿<win:DPIAwareWindow
+﻿<sty:FlatWindow
         x:Class="SidebarDiagnostics.Graph"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,6 +8,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
+        xmlns:sty="clr-namespace:SidebarDiagnostics.Style"
         xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
         mc:Ignorable="d"
         PreviewKeyDown="Window_PreviewKeyDown"
@@ -57,4 +58,4 @@
             </oxy:Plot.Axes>
         </oxy:Plot>
     </DockPanel>
-</win:DPIAwareWindow>
+</sty:FlatWindow>

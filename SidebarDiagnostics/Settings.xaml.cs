@@ -9,13 +9,14 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Windows;
+using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics
 {
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : DPIAwareWindow
+    public partial class Settings : FlatWindow
     {
         public Settings(Sidebar sidebar)
         {

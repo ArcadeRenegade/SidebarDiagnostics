@@ -144,6 +144,10 @@ namespace SidebarDiagnostics.Utilities
                 _def.Actions.Add(new ExecAction(exePath ?? Assembly.GetExecutingAssembly().Location));
                 _def.Principal.RunLevel = TaskRunLevel.Highest;
 
+                _def.Settings.DisallowStartIfOnBatteries = false;
+                _def.Settings.StopIfGoingOnBatteries = false;
+                _def.Settings.ExecutionTimeLimit = TimeSpan.Zero;
+
                 _taskService.RootFolder.RegisterTaskDefinition(Constants.Generic.TASKNAME, _def);
             }
         }

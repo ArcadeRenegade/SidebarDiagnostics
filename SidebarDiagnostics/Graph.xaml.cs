@@ -2,13 +2,14 @@
 using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Windows;
 using System.ComponentModel;
+using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics
 {
     /// <summary>
     /// Interaction logic for Graph.xaml
     /// </summary>
-    public partial class Graph : DPIAwareWindow
+    public partial class Graph : FlatWindow
     {
         public Graph(Sidebar sidebar)
         {

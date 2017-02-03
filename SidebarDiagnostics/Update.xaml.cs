@@ -4,13 +4,14 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Windows;
+using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics
 {
     /// <summary>
     /// Interaction logic for Update.xaml
     /// </summary>
-    public partial class Update : DPIAwareWindow
+    public partial class Update : FlatWindow
     {
         public Update()
         {

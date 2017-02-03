@@ -8,13 +8,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
+using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics
 {
     /// <summary>
     /// Interaction logic for Setup.xaml
     /// </summary>
-    public partial class Setup : DPIAwareWindow
+    public partial class Setup : FlatWindow
     {
         public Setup()
         {

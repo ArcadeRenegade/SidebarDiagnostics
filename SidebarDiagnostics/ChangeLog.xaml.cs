@@ -2,13 +2,14 @@
 using System.Windows;
 using SidebarDiagnostics.Models;
 using SidebarDiagnostics.Windows;
+using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics
 {
     /// <summary>
     /// Interaction logic for ChangeLog.xaml
     /// </summary>
-    public partial class ChangeLog : DPIAwareWindow
+    public partial class ChangeLog : FlatWindow
     {
         public ChangeLog(Version version)
         {

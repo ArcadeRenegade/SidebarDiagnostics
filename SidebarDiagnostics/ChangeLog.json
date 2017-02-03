@@ -1,5 +1,17 @@
 ﻿[
   {
+    "Version": "3.4.5",
+    "Changes": [
+      "Updated to the latest version of Open Hardware Monitor with bugfix for Kaby Lake clock speed.",
+      "The \"UI Scale\" setting now only affects the sidebar window.",
+      "Hardware names should now update correctly after the hardware is changed.",
+      "Unfortunately, this fix reset your custom hardware names but you can rename them back.",
+      "The app should now correctly run on Windows startup for laptops running on battery power.",
+      "All isatap network interfaces should be filtered now.",
+      "Updated dependencies."
+    ]
+  },
+  {
     "Version": "3.4.4",
     "Changes": [
       "Updated to the latest version of Open Hardware Monitor with Kaby Lake support.",
