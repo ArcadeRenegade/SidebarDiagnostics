@@ -6,6 +6,12 @@ A simple sidebar for Windows desktop that displays hardware diagnostic informati
 
 Go to the <a href="https://github.com/ArcadeRenegade/SidebarDiagnostics/releases">releases tab</a>.
 
+### Made with <a href="https://www.jetbrains.com/resharper/">ReSharper</a>
+
+![ReSharper](https://cdn.rawgit.com/ArcadeRenegade/SidebarDiagnostics/master/resharper.svg "ReSharper")
+
+Thanks JetBrains!
+
 ### Features
 * Monitors CPU, RAM, GPU, network, and logical drives.
 * Create graphs for all metrics.
