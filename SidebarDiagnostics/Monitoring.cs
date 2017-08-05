@@ -15,6 +15,7 @@ using System.Windows.Media;
 using OpenHardwareMonitor.Hardware;
 using Newtonsoft.Json;
 using SidebarDiagnostics.Framework;
+using System.Threading.Tasks;
 
 namespace SidebarDiagnostics.Monitoring
 {
@@ -1142,10 +1143,16 @@ namespace SidebarDiagnostics.Monitoring
         private const string BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
         private const string BYTESSENTPERSECOND = "Bytes Sent/sec";
 
-        public NetworkMonitor(string id, string name, string extIP, MetricConfig[] metrics, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0) : base(id, name, showName)
+        private event NetworkAddressChangedEventHandler NetworkAddressChangedHandler = null;
+        private bool NetworkChangeDetected = true;
+        private string InterfaceName;
+
+        public NetworkMonitor(string id, string name, MetricConfig[] metrics, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0) : base(id, name, showName)
         {
             iConverter _converter;
-            
+
+            InterfaceName = name;
+
             if (useBytes)
             {
                 _converter = BytesPerSecondConverter.Instance;
@@ -1167,9 +1174,9 @@ namespace SidebarDiagnostics.Monitoring
                 }
             }
 
-            if (!string.IsNullOrEmpty(extIP))
+            if (metrics.IsEnabled(MetricKey.NetworkExtIP))
             {
-                _metrics.Add(new IPMetric(extIP, MetricKey.NetworkExtIP, DataType.IP));
+                _metrics.Add(new IPMetric(String.Empty, MetricKey.NetworkExtIP, DataType.IP));
             }
 
             if (metrics.IsEnabled(MetricKey.NetworkIn))
@@ -1183,6 +1190,12 @@ namespace SidebarDiagnostics.Monitoring
             }
 
             Metrics = _metrics.ToArray();
+
+            if (metrics.IsEnabled(MetricKey.NetworkIP) || metrics.IsEnabled(MetricKey.NetworkExtIP))
+            {
+                NetworkAddressChangedHandler = new NetworkAddressChangedEventHandler(AddressChangedCallback);
+                NetworkChange.NetworkAddressChanged += NetworkAddressChangedHandler;
+            }
         }
 
         ~NetworkMonitor()
@@ -1218,28 +1231,39 @@ namespace SidebarDiagnostics.Monitoring
             int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
             int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
 
-            string _extIP = null;
-
-            if (metrics.IsEnabled(MetricKey.NetworkExtIP))
-            {
-                _extIP = GetExternalIPAddress();
-            }
-
             return (
                 from hw in GetHardware()
                 join c in hardwareConfig on hw.ID equals c.ID into merged
                 from n in merged.DefaultIfEmpty(hw).Select(n => { n.ActualName = hw.Name; return n; })
                 where n.Enabled
                 orderby n.Order descending, n.Name ascending
-                select new NetworkMonitor(n.ID, n.Name ?? n.ActualName, _extIP, metrics, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)
+                select new NetworkMonitor(n.ID, n.Name ?? n.ActualName, metrics, _showName, _roundAll, _useBytes, _bandwidthInAlert, _bandwidthOutAlert)
                 ).ToArray();
         }
 
-        public override void Update()
+        public void AddressChangedCallback(object sender, EventArgs e)
+        {
+            NetworkChangeDetected = true;
+        }
+
+        public async override void Update()
         {
             if (!PerformanceCounterCategory.InstanceExists(ID, CATEGORYNAME))
             {
                 return;
+            }
+
+            if (NetworkChangeDetected)
+            {
+                NetworkChangeDetected = false;
+                foreach (iMetric m in Metrics.Where(m => m.Key == MetricKey.NetworkExtIP))
+                {
+                    m.Update(await GetExternalIPAddressAsync());
+                }
+                foreach (iMetric m in Metrics.Where(m => m.Key == MetricKey.NetworkIP))
+                {
+                    m.Update(GetAdapterIPAddress(InterfaceName));
+                }
             }
 
             base.Update();
@@ -1282,26 +1306,16 @@ namespace SidebarDiagnostics.Monitoring
             return null;
         }
 
-        private static string GetExternalIPAddress()
+        private async static Task<string> GetExternalIPAddressAsync()
         {
             try
             {
-                HttpWebRequest _request = WebRequest.CreateHttp(Constants.URLs.IPIFY);
-                _request.Method = HttpMethod.Get.Method;
-                _request.Timeout = 5000;
-
-                using (HttpWebResponse _response = (HttpWebResponse)_request.GetResponse())
+                using (HttpClient client = new HttpClient())
                 {
-                    using (Stream _stream = _response.GetResponseStream())
-                    {
-                        using (StreamReader _reader = new StreamReader(_stream))
-                        {
-                            return _reader.ReadToEnd();
-                        }
-                    }
+                    return await client.GetStringAsync(Constants.URLs.IPIFY);
                 }
             }
-            catch (WebException)
+            catch (HttpRequestException)
             {
                 return "";
             }
@@ -1333,6 +1347,8 @@ namespace SidebarDiagnostics.Monitoring
         void Update();
 
         void Update(double value);
+
+        void Update(string value);
     }
 
     public class BaseMetric : iMetric
@@ -1434,6 +1450,11 @@ namespace SidebarDiagnostics.Monitoring
                 _val.Round(_round),
                 Append
                 );
+        }
+
+        public void Update(string value)
+        {
+            Text = value;
         }
 
         public void NotifyPropertyChanged(string propertyName)
