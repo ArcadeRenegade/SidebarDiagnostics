@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.4.6",
+    "Changes": [
+      "Updated to the latest version of Open Hardware Monitor.",
+      "Updated dependencies."
+    ]
+  },
+  {
     "Version": "3.4.5",
     "Changes": [
       "Updated to the latest version of Open Hardware Monitor with bugfix for Kaby Lake clock speed.",
