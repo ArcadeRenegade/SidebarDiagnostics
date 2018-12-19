@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.5.1",
+    "Changes": [
+      "Fix for high DPI monitors or settings.",
+      "Fix for sidebar floating left or right."
+    ]
+  },
+  {
     "Version": "3.5.0",
     "Changes": [
       "Updated to .NET framework v4.7.1.",
