@@ -45,12 +45,12 @@ namespace SidebarDiagnostics
 
             Ready = false;
 
-            BindSettings(enableHotkeys);
+            await BindSettings(enableHotkeys);
 
             await BindModel();
         }
 
-        public void Reposition()
+        public async Task Reposition()
         {
             if (!Ready)
             {
@@ -59,7 +59,9 @@ namespace SidebarDiagnostics
 
             Ready = false;
 
-            BindPosition(() => Ready = true);
+            await BindPosition();
+
+            Ready = true;
         }
 
         public void ContentReload()
@@ -78,9 +80,9 @@ namespace SidebarDiagnostics
             BindGraphs();
         }
 
-        public override void AppBarShow()
+        public override async Task AppBarShow()
         {
-            base.AppBarShow();
+            await base.AppBarShow();
 
             Model.Resume();
         }
@@ -100,14 +102,14 @@ namespace SidebarDiagnostics
 
             DisableAeroPeek();
 
-            BindSettings(true);
+            await BindSettings(true);
 
             await BindModel();
         }
 
-        private void BindSettings(bool enableHotkeys)
+        private async Task BindSettings(bool enableHotkeys)
         {
-            BindPosition(null);
+            await BindPosition();
 
             if (Framework.Settings.Instance.AlwaysTop)
             {
@@ -160,18 +162,9 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void BindPosition(Action callback)
+        private async Task BindPosition()
         {
-            int _screen;
-            DockEdge _edge;
-            WorkArea _windowWA;
-            WorkArea _appbarWA;
-
-            Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
-
-            Move(_windowWA);
-
-            SetAppBar(_screen, _edge, _windowWA, _appbarWA, callback);
+            await SetAppBar();
         }
         
         private async Task BindModel()

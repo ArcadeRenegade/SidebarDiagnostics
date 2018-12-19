@@ -232,7 +232,7 @@ namespace SidebarDiagnostics.Windows
             public const int DBT_DEVTYP_PORT = 3;
             public const int DBT_DEVTYP_VOLUME = 2;
         }
-        
+
         private static class FLAGS
         {
             public const int DEVICE_NOTIFY_WINDOW_HANDLE = 0;
@@ -306,7 +306,7 @@ namespace SidebarDiagnostics.Windows
         private static IntPtr DeviceHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == WM_DEVICECHANGE)
-            {                
+            {
                 switch (wParam.ToInt32())
                 {
                     case WM_DEVICECHANGE_EVENT.DBT_DEVICEARRIVAL:
@@ -532,7 +532,7 @@ namespace SidebarDiagnostics.Windows
         }
 
         public static Hotkey[] RegisteredKeys { get; private set; }
-        
+
         private static IntPtr KeyHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == WM_HOTKEY)
@@ -659,7 +659,7 @@ namespace SidebarDiagnostics.Windows
             }
         }
     }
-    
+
     public class WorkArea
     {
         public double Left { get; set; }
@@ -846,8 +846,8 @@ namespace SidebarDiagnostics.Windows
             else
                 return monitors.GetPrimary();
         }
-        
-        public static void GetWorkArea(AppBarWindow window, out int screen, out DockEdge edge, out WorkArea windowWA, out WorkArea appbarWA)
+
+        public static void GetWorkArea(AppBarWindow window, out int screen, out DockEdge edge, out WorkArea initPos, out WorkArea windowWA, out WorkArea appbarWA)
         {
             screen = Framework.Settings.Instance.ScreenIndex;
             edge = Framework.Settings.Instance.DockEdge;
@@ -861,36 +861,29 @@ namespace SidebarDiagnostics.Windows
 
             Monitor[] _monitors = GetMonitors();
 
-            Monitor _primary = _monitors.GetPrimary();            
+            Monitor _primary = _monitors.GetPrimary();
             Monitor _active = GetMonitorFromIndex(screen, _monitors);
 
+            initPos = new WorkArea()
+            {
+                Top = _active.WorkArea.Top,
+                Left = _active.WorkArea.Left,
+                Bottom = _active.WorkArea.Top + 10,
+                Right = _active.WorkArea.Left + 10
+            };
+
             windowWA = Windows.WorkArea.FromRECT(_active.WorkArea);
-            windowWA.Scale(_primary.InverseScaleX, _primary.InverseScaleY);
+            windowWA.Scale(_active.InverseScaleX, _active.InverseScaleY);
 
             double _modifyX = 0d;
             double _modifyY = 0d;
-
-            if (
-                window.IsAppBar &&
-                window.Screen == screen &&
-                window.DockEdge == edge &&
-                (_active.WorkArea.Width + window.ActualWidth) <= _active.Size.Width
-                )
-            {
-                _modifyX = window.ActualWidth;
-
-                if (edge == DockEdge.Left)
-                {
-                    _modifyX *= -1;
-                }
-            }
 
             windowWA.Offset(_modifyX, _modifyY);
 
             double _windowWidth = Framework.Settings.Instance.SidebarWidth * _uiScale;
 
             windowWA.SetWidth(edge, _windowWidth);
-            
+
             int _offsetX = Framework.Settings.Instance.XOffset;
             int _offsetY = Framework.Settings.Instance.YOffset;
 
@@ -900,7 +893,7 @@ namespace SidebarDiagnostics.Windows
 
             appbarWA.Offset(_modifyX, _modifyY);
 
-            double _appbarWidth = Framework.Settings.Instance.UseAppBar ? windowWA.Width * _primary.ScaleX : 0;
+            double _appbarWidth = Framework.Settings.Instance.UseAppBar ? windowWA.Width * _active.ScaleX : 0;
 
             appbarWA.SetWidth(edge, _appbarWidth);
 
@@ -1372,29 +1365,35 @@ namespace SidebarDiagnostics.Windows
             }
         }
 
-        public void SetAppBar(int screen, DockEdge edge, WorkArea windowWA, WorkArea appbarWA, Action callback)
+        public async Task SetAppBar()
         {
-            if (edge == DockEdge.None)
-            {
-                throw new ArgumentException("This parameter cannot be set to 'none'.", "edge");
-            }
+            ClearAppBar();
 
-            bool _init = false;
+            await Task.Delay(100).ContinueWith(async (_) =>
+            {
+                await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(async () =>
+                {
+                    await BindAppBar();
+                }));
+            });
+
+        }
+        
+        private async Task BindAppBar()
+        {
+            Monitor.GetWorkArea(this, out int screen, out DockEdge edge, out WorkArea initPos, out WorkArea windowWA, out WorkArea appbarWA);
+
+            Move(initPos);
 
             APPBARDATA _data = NewData();
 
-            if (!IsAppBar)
-            {
-                IsAppBar = _init = true;
+            _callbackID = _data.uCallbackMessage = NativeMethods.RegisterWindowMessage("AppBarMessage");
 
-                _callbackID = _data.uCallbackMessage = NativeMethods.RegisterWindowMessage("AppBarMessage");
-
-                NativeMethods.SHAppBarMessage(APPBARMSG.ABM_NEW, ref _data);
-            }
+            NativeMethods.SHAppBarMessage(APPBARMSG.ABM_NEW, ref _data);
 
             Screen = screen;
             DockEdge = edge;
-            
+
             _data.uEdge = (int)edge;
             _data.rc = new RECT()
             {
@@ -1408,6 +1407,8 @@ namespace SidebarDiagnostics.Windows
 
             NativeMethods.SHAppBarMessage(APPBARMSG.ABM_SETPOS, ref _data);
 
+            IsAppBar = true;
+
             appbarWA.Left = _data.rc.Left;
             appbarWA.Top = _data.rc.Top;
             appbarWA.Right = _data.rc.Right;
@@ -1415,27 +1416,18 @@ namespace SidebarDiagnostics.Windows
 
             AppBarWidth = appbarWA.Width;
 
-            Move(windowWA);
-
-            if (_init)
+            await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
             {
-                Task.Delay(500).ContinueWith(_ =>
+                Move(windowWA);
+            }));
+
+            await Task.Delay(500).ContinueWith(async (_) =>
+            {
+                await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
-                    {
-                        HwndSource.AddHook(AppBarHook);
-
-                        if (callback != null)
-                        {
-                            callback();
-                        }
-                    }));
-                });
-            }
-            else if (callback != null)
-            {
-                callback();
-            }
+                    HwndSource.AddHook(AppBarHook);
+                }));
+            });
         }
 
         public void ClearAppBar()
@@ -1454,18 +1446,11 @@ namespace SidebarDiagnostics.Windows
             IsAppBar = false;
         }
 
-        public virtual void AppBarShow()
+        public virtual async Task AppBarShow()
         {
             if (Framework.Settings.Instance.UseAppBar)
             {
-                int _screen;
-                DockEdge _edge;
-                WorkArea _windowWA;
-                WorkArea _appbarWA;
-
-                Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
-
-                SetAppBar(_screen, _edge, _windowWA, _appbarWA, null);
+                await SetAppBar();
             }
 
             Show();
@@ -1497,34 +1482,7 @@ namespace SidebarDiagnostics.Windows
                 switch (wParam.ToInt32())
                 {
                     case APPBARNOTIFY.ABN_POSCHANGED:
-                        if (_cancelReposition != null)
-                        {
-                            _cancelReposition.Cancel();
-                        }
-
-                        _cancelReposition = new CancellationTokenSource();
-
-                        Task.Delay(TimeSpan.FromMilliseconds(100), _cancelReposition.Token).ContinueWith(_ =>
-                        {
-                            if (_.IsCanceled)
-                            {
-                                return;
-                            }
-
-                            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
-                            {
-                                int _screen;
-                                DockEdge _edge;
-                                WorkArea _windowWA;
-                                WorkArea _appbarWA;
-
-                                Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
-
-                                SetAppBar(_screen, _edge, _windowWA, _appbarWA, null);
-                            }));
-
-                            _cancelReposition = null;
-                        });
+                        SetAppBar();
                         break;
 
                     case APPBARNOTIFY.ABN_FULLSCREENAPP:

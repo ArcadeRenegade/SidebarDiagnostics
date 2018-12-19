@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Threading;
 using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
@@ -20,14 +21,14 @@ namespace SidebarDiagnostics
 
         public void Reposition()
         {
-            int _screen;
-            DockEdge _edge;
-            WorkArea _windowWA;
-            WorkArea _appbarWA;
+            Monitor.GetWorkArea(this, out int _screen, out DockEdge _edge, out WorkArea _initPos, out WorkArea _windowWA, out WorkArea _appbarWA);
 
-            Monitor.GetWorkArea(this, out _screen, out _edge, out _windowWA, out _appbarWA);
+            Move(_initPos);
 
-            Move(_windowWA);
+            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
+            {
+                Move(_windowWA);
+            }));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
