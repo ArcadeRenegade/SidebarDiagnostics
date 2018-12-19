@@ -1,4 +1,4 @@
-<h1><img src="http://happamedia.com/products/sidebardiagnostics/sidebar.ico" width="64" height="64" /> Sidebar Diagnostics</h1>
+<h1><img src="https://cdn.rawgit.com/ArcadeRenegade/SidebarDiagnostics/master/sidebar.ico" width="64" height="64" /> Sidebar Diagnostics</h1>
 
 A simple sidebar for Windows desktop that displays hardware diagnostic information.
 
@@ -49,7 +49,7 @@ Please provide a link to this GitHub repository if reuploading. Thank you.
 
 Written in C# .NET WPF.
 
-Currently compiled in <a href="https://www.microsoft.com/en-us/download/details.aspx?id=49981">.NET 4.6.1</a>.
+Currently compiled in <a href="https://www.microsoft.com/en-us/download/details.aspx?id=56115">.NET 4.7.1</a>.
 
 You will need to run it as administrator.
 
