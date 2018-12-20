@@ -1744,6 +1744,24 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show PC Name.
+        /// </summary>
+        public static string SettingsShowMachineName {
+            get {
+                return ResourceManager.GetString("SettingsShowMachineName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the name of the computer..
+        /// </summary>
+        public static string SettingsShowMachineNameTooltip {
+            get {
+                return ResourceManager.GetString("SettingsShowMachineNameTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Tray Icon.
         /// </summary>
         public static string SettingsShowTrayIcon {

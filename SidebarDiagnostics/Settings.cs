@@ -515,6 +515,23 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private bool _showMachineName { get; set; } = false;
+
+        [JsonProperty]
+        public bool ShowMachineName
+        {
+            get
+            {
+                return _showMachineName;
+            }
+            set
+            {
+                _showMachineName = value;
+
+                NotifyPropertyChanged("ShowMachineName");
+            }
+        }
+
         private bool _showClock { get; set; } = true;
 
         [JsonProperty]

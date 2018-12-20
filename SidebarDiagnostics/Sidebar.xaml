@@ -70,6 +70,24 @@
                         <ContentControl.Style>
                             <Style TargetType="{x:Type ContentControl}">
                                 <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=ShowMachineName, Mode=OneWay}" Value="True">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <StackPanel Style="{StaticResource HeaderPanel}">
+                                                    <Label Content="{Binding Path=MachineName, Mode=OneWay}" Style="{StaticResource AppTitle}" />
+                                                </StackPanel>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+                    
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="{x:Type ContentControl}">
+                                <Style.Triggers>
                                     <DataTrigger Binding="{Binding Path=ShowClock, Mode=OneWay}" Value="True">
                                         <Setter Property="Content">
                                             <Setter.Value>

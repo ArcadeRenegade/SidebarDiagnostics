@@ -1033,4 +1033,12 @@
     <value>Ext</value>
     <comment>Short label for network ext IP address metric</comment>
   </data>
+  <data name="SettingsShowMachineName" xml:space="preserve">
+    <value>Show PC Name</value>
+    <comment>Settings show machine name label</comment>
+  </data>
+  <data name="SettingsShowMachineNameTooltip" xml:space="preserve">
+    <value>Shows the name of the computer.</value>
+    <comment>Settings show machine name tooltip</comment>
+  </data>
 </root>

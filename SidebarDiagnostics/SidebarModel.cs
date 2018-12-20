@@ -9,6 +9,7 @@ namespace SidebarDiagnostics.Models
     {
         public SidebarModel()
         {
+            InitMachineName();
             InitClock();
             InitMonitors();
         }
@@ -72,6 +73,13 @@ namespace SidebarDiagnostics.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void InitMachineName()
+        {
+            ShowMachineName = Framework.Settings.Instance.ShowMachineName;
+
+            MachineName = Environment.MachineName;
+        }
 
         private void InitClock()
         {
@@ -210,6 +218,38 @@ namespace SidebarDiagnostics.Models
                 _ready = value;
 
                 NotifyPropertyChanged("Ready");
+            }
+        }
+
+        private bool _showMachineName { get; set; }
+
+        public bool ShowMachineName
+        {
+            get
+            {
+                return _showMachineName;
+            }
+            set
+            {
+                _showMachineName = value;
+
+                NotifyPropertyChanged("ShowMachineName");
+            }
+        }
+
+        private string _machineName { get; set; }
+
+        public string MachineName
+        {
+            get
+            {
+                return _machineName;
+            }
+            set
+            {
+                _machineName = value;
+
+                NotifyPropertyChanged("MachineName");
             }
         }
 

@@ -89,6 +89,7 @@ namespace SidebarDiagnostics.Models
             DateSetting = Framework.Settings.Instance.DateSetting;
             CollapseMenuBar = Framework.Settings.Instance.CollapseMenuBar;
             InitiallyHidden = Framework.Settings.Instance.InitiallyHidden;
+            ShowMachineName = Framework.Settings.Instance.ShowMachineName;
             ShowClock = Framework.Settings.Instance.ShowClock;
             Clock24HR = Framework.Settings.Instance.Clock24HR;
 
@@ -158,6 +159,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.DateSetting = DateSetting;
             Framework.Settings.Instance.CollapseMenuBar = CollapseMenuBar;
             Framework.Settings.Instance.InitiallyHidden = InitiallyHidden;
+            Framework.Settings.Instance.ShowMachineName = ShowMachineName;
             Framework.Settings.Instance.ShowClock = ShowClock;
             Framework.Settings.Instance.Clock24HR = Clock24HR;
 
@@ -795,6 +797,22 @@ namespace SidebarDiagnostics.Models
                 _initiallyHidden = value;
 
                 NotifyPropertyChanged("InitiallyHidden");
+            }
+        }
+
+        private bool _showMachineName { get; set; } = true;
+
+        public bool ShowMachineName
+        {
+            get
+            {
+                return _showMachineName;
+            }
+            set
+            {
+                _showMachineName = value;
+
+                NotifyPropertyChanged("ShowMachineName");
             }
         }
 
