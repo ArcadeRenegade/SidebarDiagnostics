@@ -27,7 +27,7 @@ If you are changing your screen's DPI settings, <a href="https://github.com/Arca
 
 ### Author Note
 
-This software will always be free on GitHub. If you really like it please consider donating. It'll help with stuff like paying for the code signing certificate. I'd appreciate it!
+This software will always be free on GitHub. If you really like it please consider donating. I'd appreciate it!
 Thanks.
 
 https://www.paypal.me/arcaderenegade
