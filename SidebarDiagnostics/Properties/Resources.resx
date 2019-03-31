@@ -9,7 +9,6 @@
     that is mostly human readable. The generation and parsing of the 
     various data types are done through the TypeConverter classes 
     associated with the data types.
-    
     Example:
     
     ... ado.net/XML headers & schema ...
@@ -902,7 +901,7 @@
     <comment>Settings use fahrenheit label</comment>
   </data>
   <data name="SettingsUseFahrenheitTooltip" xml:space="preserve">
-    <value>Temperatures for sensors and alerts will be in Fahrenheit instead of Celcius.</value>
+    <value>Temperatures for sensors and alerts will be in Fahrenheit instead of Celsius.</value>
     <comment>Settings use fahrenheit tooltip</comment>
   </data>
   <data name="SettingsUseGHz" xml:space="preserve">
