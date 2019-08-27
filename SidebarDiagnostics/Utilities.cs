@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Markup;
 using Microsoft.Win32.TaskScheduler;
 using SidebarDiagnostics.Framework;
+using System.Diagnostics;
 
 namespace SidebarDiagnostics.Utilities
 {
@@ -137,18 +138,29 @@ namespace SidebarDiagnostics.Utilities
 
         public static void EnableStartupTask(string exePath = null)
         {
-            using (TaskService _taskService = new TaskService())
+            try
             {
-                TaskDefinition _def = _taskService.NewTask();
-                _def.Triggers.Add(new LogonTrigger() { Enabled = true });
-                _def.Actions.Add(new ExecAction(exePath ?? Assembly.GetExecutingAssembly().Location));
-                _def.Principal.RunLevel = TaskRunLevel.Highest;
+                using (TaskService _taskService = new TaskService())
+                {
+                    TaskDefinition _def = _taskService.NewTask();
+                    _def.Triggers.Add(new LogonTrigger() { Enabled = true });
+                    _def.Actions.Add(new ExecAction(exePath ?? Assembly.GetExecutingAssembly().Location));
+                    _def.Principal.RunLevel = TaskRunLevel.Highest;
 
-                _def.Settings.DisallowStartIfOnBatteries = false;
-                _def.Settings.StopIfGoingOnBatteries = false;
-                _def.Settings.ExecutionTimeLimit = TimeSpan.Zero;
+                    _def.Settings.DisallowStartIfOnBatteries = false;
+                    _def.Settings.StopIfGoingOnBatteries = false;
+                    _def.Settings.ExecutionTimeLimit = TimeSpan.Zero;
 
-                _taskService.RootFolder.RegisterTaskDefinition(Constants.Generic.TASKNAME, _def);
+                    _taskService.RootFolder.RegisterTaskDefinition(Constants.Generic.TASKNAME, _def);
+                }
+            }
+            catch (Exception e)
+            {
+                using (EventLog _log = new EventLog("Application"))
+                {
+                    _log.Source = Resources.AppName;
+                    _log.WriteEntry(e.ToString(), EventLogEntryType.Error, 100, 1);
+                }
             }
         }
 

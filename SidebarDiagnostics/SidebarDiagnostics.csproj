@@ -347,6 +347,7 @@
       <LastGenOutput>Resources.de-CH.Designer.cs</LastGenOutput>
       <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.ru.resx" />
     <EmbeddedResource Include="Properties\Resources.zh.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.zh.Designer.cs</LastGenOutput>
