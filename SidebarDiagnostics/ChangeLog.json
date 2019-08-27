@@ -1,5 +1,11 @@
 ﻿[
   {
+    "Version": "3.5.3",
+    "Changes": [
+      "Now uses Libre Hardware Monitor instead of Open Hardware Monitor for Ryzen support."
+    ]
+  },
+  {
     "Version": "3.5.2",
     "Changes": [
       "Added an option to show the computer name at the top of the sidebar.",

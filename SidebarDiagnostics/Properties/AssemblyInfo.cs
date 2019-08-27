@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("Sidebar Diagnostics")]
 [assembly: AssemblyDescription("Sidebar Diagnostics")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Happa Media LLC")]
+[assembly: AssemblyCompany("ArcadeRenegade")]
 [assembly: AssemblyProduct("Sidebar Diagnostics")]
-[assembly: AssemblyCopyright("Copyright © 2016")]
+[assembly: AssemblyCopyright("Copyright © 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.5.2.0")]
-[assembly: AssemblyFileVersion("3.5.2.0")]
+[assembly: AssemblyVersion("3.5.3.0")]
+[assembly: AssemblyFileVersion("3.5.3.0")]
