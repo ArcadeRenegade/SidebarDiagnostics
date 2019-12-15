@@ -1,20 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A1174319-5065-453E-9864-9E7108419DDA}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SidebarDiagnostics</RootNamespace>
-    <AssemblyName>SidebarDiagnostics</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -32,19 +21,18 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+
+    <Company>ArcadeRenegade</Company>
+    <Configuration></Configuration>
+    <Description>Sidebar Diagnostics</Description>
+    <AssemblyTitle>Sidebar Diagnostics</AssemblyTitle>
+    <Product>Sidebar Diagnostics</Product>
+    <Copyright>Copyright © 2019</Copyright>
+    <AssemblyVersion>3.5.3.0</AssemblyVersion>
+    <FileVersion>3.5.3.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -111,83 +99,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <!--ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ChangeLog.xaml.cs">
-      <DependentUpon>ChangeLog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ChangeLogModel.cs" />
-    <Compile Include="Graph.xaml.cs">
-      <DependentUpon>Graph.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GraphModel.cs" />
-    <Compile Include="Properties\Resources.de-CH.Designer.cs">
-      <DependentUpon>Resources.de-CH.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.zh.Designer.cs">
-      <DependentUpon>Resources.zh.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.de.Designer.cs">
-      <DependentUpon>Resources.de.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.nl.Designer.cs">
-      <DependentUpon>Resources.nl.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.da.Designer.cs">
-      <DependentUpon>Resources.da.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.ja.Designer.cs">
-      <DependentUpon>Resources.ja.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.fr.Designer.cs">
-      <DependentUpon>Resources.fr.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="SidebarModel.cs" />
-    <Compile Include="Commands.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Converters.cs" />
-    <Compile Include="Dummy.xaml.cs">
-      <DependentUpon>Dummy.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Monitoring.cs" />
-    <Compile Include="SettingsModel.cs" />
-    <Compile Include="Setup.xaml.cs">
-      <DependentUpon>Setup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Update.xaml.cs">
-      <DependentUpon>Update.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UpdateModel.cs" />
-    <Compile Include="Windows.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Utilities.cs" />
-    <Compile Include="FlatStyle.xaml.cs">
-      <DependentUpon>FlatStyle.xaml</DependentUpon>
-    </Compile>
     <Page Include="ChangeLog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -200,14 +115,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sidebar.xaml.cs">
-      <DependentUpon>Sidebar.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="Dummy.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -227,12 +134,9 @@
     <Page Include="Update.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
+    </Page-->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <None Include="ChangeLog.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -258,49 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Sidebar.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.de-CH.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.de-CH.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.ru.resx" />
-    <EmbeddedResource Include="Properties\Resources.zh.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.zh.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.de.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.nl.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.nl.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.da.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.da.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.ja.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.ja.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.fr.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.fr.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit">
@@ -334,7 +195,6 @@
       <Version>2.8.15</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
