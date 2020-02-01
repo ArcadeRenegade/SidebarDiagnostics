@@ -76,9 +76,8 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenHardwareMonitorLib, Version=0.8.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibreHardwareMonitor\Bin\Release\net452\OpenHardwareMonitorLib.dll</HintPath>
+    <Reference Include="LibreHardwareMonitorLib">
+      <HintPath>..\LibreHardwareMonitor\Bin\Release\netstandard2.0\LibreHardwareMonitorLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
