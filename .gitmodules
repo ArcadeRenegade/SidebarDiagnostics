@@ -1,6 +1,3 @@
-[submodule "OpenHardwareMonitor"]
-	path = OpenHardwareMonitor
-	url = https://github.com/openhardwaremonitor/openhardwaremonitor.git
 [submodule "LibreHardwareMonitor"]
 	path = LibreHardwareMonitor
 	url = https://github.com/LibreHardwareMonitor/LibreHardwareMonitor.git
