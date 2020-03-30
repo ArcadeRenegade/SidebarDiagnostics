@@ -625,7 +625,7 @@ namespace SidebarDiagnostics.Monitoring
                 if (_tempSensor == null)
                 {
                     _tempSensor =
-                        _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name == "CPU Package").FirstOrDefault() ??
+                        _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && (s.Name == "CPU Package" || s.Name.Contains("Tdie"))).FirstOrDefault() ??
                         _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature).FirstOrDefault();
                 }
                 
