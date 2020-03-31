@@ -1,5 +1,13 @@
 ﻿[
   {
+    "Version": "3.5.4",
+    "Changes": [
+      "Update to latest version of Libre Hardware Monitor.",
+      "Bug fix for Ryzen CPU temperature.",
+      "Thank you @hirschmann!"
+    ]
+  },
+  {
     "Version": "3.5.3",
     "Changes": [
       "Now uses Libre Hardware Monitor instead of Open Hardware Monitor for Ryzen support."
