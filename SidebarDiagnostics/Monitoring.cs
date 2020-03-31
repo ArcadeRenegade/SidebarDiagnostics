@@ -267,7 +267,7 @@ namespace SidebarDiagnostics.Monitoring
         {
             Dispose(false);
         }
-        
+
         public void NotifyPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
@@ -554,7 +554,7 @@ namespace SidebarDiagnostics.Monitoring
 
             base.Update();
         }
-        
+
         private void UpdateHardware()
         {
             _hardware.Update();
@@ -566,30 +566,40 @@ namespace SidebarDiagnostics.Monitoring
 
             if (metrics.IsEnabled(MetricKey.CPUClock))
             {
-                ISensor[] _coreClocks = _hardware.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("CPU")).ToArray();
+                Regex regex = new Regex(@"^.*(CPU|Core).*#(\d)$");
 
-                if (_coreClocks.Length > 0)
+                var coreClocks = _hardware.Sensors
+                    .Where(s => s.SensorType == SensorType.Clock)
+                    .Select(s => new
+                    {
+                        Match = regex.Match(s.Name),
+                        Sensor = s
+                    })
+                    .Where(s => s.Match.Success)
+                    .Select(s => new
+                    {
+                        Index = int.Parse(s.Match.Groups[2].Value),
+                        s.Sensor
+                    })
+                    .OrderBy(s => s.Index)
+                    .ToList();
+
+                if (coreClocks.Count > 0)
                 {
                     if (allCoreClocks)
                     {
-                        for (int i = 1; i <= _coreClocks.Max(s => s.Index); i++)
+                        foreach (var coreClock in coreClocks)
                         {
-                            ISensor _coreClock = _coreClocks.Where(s => s.Index == i).FirstOrDefault();
-
-                            if (_coreClock != null)
-                            {
-                                _sensorList.Add(new OHMMetric(_coreClock, MetricKey.CPUClock, DataType.MHz, string.Format("{0} {1}", Resources.CPUCoreClockLabel, i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
-                            }
+                            _sensorList.Add(new OHMMetric(coreClock.Sensor, MetricKey.CPUClock, DataType.MHz, string.Format("{0} {1}", Resources.CPUCoreClockLabel, coreClock.Index - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                         }
                     }
                     else
                     {
-                        ISensor _firstClock = _coreClocks.FirstOrDefault(c => c.Index == 1);
+                        ISensor firstClock = coreClocks
+                            .Select(s => s.Sensor)
+                            .FirstOrDefault();
 
-                        if (_firstClock != null)
-                        {
-                            _sensorList.Add(new OHMMetric(_firstClock, MetricKey.CPUClock, DataType.MHz, null, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
-                        }
+                        _sensorList.Add(new OHMMetric(firstClock, MetricKey.CPUClock, DataType.MHz, null, (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                     }
                 }
             }
@@ -629,7 +639,7 @@ namespace SidebarDiagnostics.Monitoring
                         _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && (s.Name == "CPU Package" || s.Name.Contains("Tdie"))).FirstOrDefault() ??
                         _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature).FirstOrDefault();
                 }
-                
+
                 if (_tempSensor != null)
                 {
                     _sensorList.Add(new OHMMetric(_tempSensor, MetricKey.CPUTemp, DataType.Celcius, null, roundAll, tempAlert, (useFahrenheit ? CelciusToFahrenheit.Instance : null)));
@@ -836,7 +846,7 @@ namespace SidebarDiagnostics.Monitoring
 
             Metrics = _sensorList.ToArray();
         }
-        
+
         private IHardware _hardware { get; set; }
 
         private bool _disposed { get; set; } = false;
@@ -1056,7 +1066,7 @@ namespace SidebarDiagnostics.Monitoring
                 NotifyPropertyChanged("Status");
             }
         }
-        
+
         private iMetric _loadMetric { get; set; }
 
         public iMetric LoadMetric
@@ -1132,7 +1142,7 @@ namespace SidebarDiagnostics.Monitoring
         {
             NoLoadBar,
             LoadBarInline,
-            LoadBarStacked   
+            LoadBarStacked
         }
     }
 
@@ -1146,7 +1156,7 @@ namespace SidebarDiagnostics.Monitoring
         public NetworkMonitor(string id, string name, string extIP, MetricConfig[] metrics, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0) : base(id, name, showName)
         {
             iConverter _converter;
-            
+
             if (useBytes)
             {
                 _converter = BytesPerSecondConverter.Instance;
@@ -1157,7 +1167,7 @@ namespace SidebarDiagnostics.Monitoring
             }
 
             List<iMetric> _metrics = new List<iMetric>();
-            
+
             if (metrics.IsEnabled(MetricKey.NetworkIP))
             {
                 string _ipAddress = GetAdapterIPAddress(name);
@@ -2704,7 +2714,7 @@ namespace SidebarDiagnostics.Monitoring
         void Convert(ref double value, out double normalized, out DataType targetType);
 
         DataType TargetType { get; }
-        
+
         bool IsDynamic { get; }
     }
 
@@ -3181,7 +3191,7 @@ namespace SidebarDiagnostics.Monitoring
         public static string GetAppend(this DataType type)
         {
             switch (type)
-            {                
+            {
                 case DataType.Bit:
                     return " b";
 
