@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Sidebar Diagnostics")]
 [assembly: AssemblyDescription("Sidebar Diagnostics")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ArcadeRenegade")]
+[assembly: AssemblyCompany("Sidebar Diagnostics")]
 [assembly: AssemblyProduct("Sidebar Diagnostics")]
 [assembly: AssemblyCopyright("Copyright © 2019")]
 [assembly: AssemblyTrademark("")]

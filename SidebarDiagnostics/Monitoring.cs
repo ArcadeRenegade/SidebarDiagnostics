@@ -29,7 +29,8 @@ namespace SidebarDiagnostics.Monitoring
                 IsGpuEnabled = true,
                 IsStorageEnabled = false,
                 IsMotherboardEnabled = true,
-                IsMemoryEnabled = true
+                IsMemoryEnabled = true,
+                IsNetworkEnabled = false
             };
             _computer.Open();
             _board = GetHardware(HardwareType.Motherboard).FirstOrDefault();
