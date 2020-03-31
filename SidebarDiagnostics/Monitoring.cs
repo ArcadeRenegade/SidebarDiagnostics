@@ -12,7 +12,7 @@ using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Windows.Media;
-using OpenHardwareMonitor.Hardware;
+using LibreHardwareMonitor.Hardware;
 using Newtonsoft.Json;
 using SidebarDiagnostics.Framework;
 
@@ -24,15 +24,15 @@ namespace SidebarDiagnostics.Monitoring
         {
             _computer = new Computer()
             {
-                CPUEnabled = true,
-                FanControllerEnabled = true,
-                GPUEnabled = true,
-                HDDEnabled = false,
-                MainboardEnabled = true,
-                RAMEnabled = true
+                IsCpuEnabled = true,
+                IsControllerEnabled = true,
+                IsGpuEnabled = true,
+                IsStorageEnabled = false,
+                IsMotherboardEnabled = true,
+                IsMemoryEnabled = true
             };
             _computer.Open();
-            _board = GetHardware(HardwareType.Mainboard).FirstOrDefault();
+            _board = GetHardware(HardwareType.Motherboard).FirstOrDefault();
 
             UpdateBoard();
 
@@ -625,7 +625,7 @@ namespace SidebarDiagnostics.Monitoring
                 if (_tempSensor == null)
                 {
                     _tempSensor =
-                        _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name == "CPU Package").FirstOrDefault() ??
+                        _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && (s.Name == "CPU Package" || s.Name.Contains("Tdie"))).FirstOrDefault() ??
                         _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature).FirstOrDefault();
                 }
                 
@@ -2949,13 +2949,13 @@ namespace SidebarDiagnostics.Monitoring
             switch (type)
             {
                 case MonitorType.CPU:
-                    return new HardwareType[1] { HardwareType.CPU };
+                    return new HardwareType[1] { HardwareType.Cpu };
 
                 case MonitorType.RAM:
-                    return new HardwareType[1] { HardwareType.RAM };
+                    return new HardwareType[1] { HardwareType.Memory };
 
                 case MonitorType.GPU:
-                    return new HardwareType[2] { HardwareType.GpuNvidia, HardwareType.GpuAti };
+                    return new HardwareType[2] { HardwareType.GpuNvidia, HardwareType.GpuAmd };
 
                 default:
                     throw new ArgumentException("Invalid MonitorType.");
