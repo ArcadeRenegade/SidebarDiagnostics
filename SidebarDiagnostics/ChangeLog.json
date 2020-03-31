@@ -4,7 +4,7 @@
     "Changes": [
       "Update to latest version of Libre Hardware Monitor.",
       "Bug fix for Ryzen CPU temperature.",
-      "Thank you @hirschmann!"
+      "Thanks for the PR, @hirschmann!"
     ]
   },
   {
