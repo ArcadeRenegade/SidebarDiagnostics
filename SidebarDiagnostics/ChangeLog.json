@@ -4,7 +4,9 @@
     "Changes": [
       "Update to latest version of Libre Hardware Monitor.",
       "Bug fix for Ryzen CPU temperature.",
-      "Thanks for the PR, @hirschmann!"
+      "Thanks for the PR, @hirschmann!",
+      "Also broke the auto-updater in the last version but it should work from now on.",
+      "Sorry if you had to re-install!"
     ]
   },
   {
