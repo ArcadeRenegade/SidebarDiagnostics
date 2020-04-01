@@ -146,7 +146,7 @@
     <comment>Full name for CPU fan metric</comment>
   </data>
   <data name="GPU" xml:space="preserve">
-    <value>Графический процессор</value>
+    <value>GPU</value>
     <comment>GPU monitor title</comment>
   </data>
   <data name="ButtonHide" xml:space="preserve">
