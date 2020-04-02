@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Sidebar Diagnostics")]
 [assembly: AssemblyProduct("Sidebar Diagnostics")]
-[assembly: AssemblyCopyright("Copyright © 2019")]
+[assembly: AssemblyCopyright("Copyright © 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.5.4.0")]
-[assembly: AssemblyFileVersion("3.5.4.0")]
+[assembly: AssemblyVersion("3.5.5.0")]
+[assembly: AssemblyFileVersion("3.5.5.0")]

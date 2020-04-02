@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.5.5",
+    "Changes": [
+      "Bug fix for Ryzen CPU clock speed.",
+      "Bug fix for AMD Video Card VRAM."
+    ]
+  },
+  {
     "Version": "3.5.4",
     "Changes": [
       "Update to latest version of Libre Hardware Monitor.",
