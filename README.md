@@ -49,7 +49,7 @@ Please provide a link to this GitHub repository if reuploading. Thank you.
 
 Written in C# .NET WPF.
 
-Currently compiled in <a href="https://www.microsoft.com/en-us/download/details.aspx?id=56115">.NET 4.7.1</a>.
+Currently compiled in <a href="https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net472-web-installer">.NET 4.7.2</a>.
 
 You will need to run it as administrator.
 
