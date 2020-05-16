@@ -498,7 +498,7 @@
     <comment>Settings 24 hour clock tooltip</comment>
   </data>
   <data name="SettingsAdvancedTab" xml:space="preserve">
-    <value>Дополнтельно</value>
+    <value>Дополнительно</value>
     <comment>Title of the settings advanced tab</comment>
   </data>
   <data name="SettingsAlertFontColor" xml:space="preserve">
