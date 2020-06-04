@@ -1,0 +1,1044 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>Sidebar Diagnostics</value>
+    <comment>Name of the app</comment>
+  </data>
+  <data name="CPUClock" xml:space="preserve">
+    <value>Hız</value>
+    <comment>Full name for CPU clock metric</comment>
+  </data>
+  <data name="ButtonClose" xml:space="preserve">
+    <value>Çıkış</value>
+    <comment>Text of the close button</comment>
+  </data>
+  <data name="CPU" xml:space="preserve">
+    <value>CPU</value>
+    <comment>CPU monitor title</comment>
+  </data>
+  <data name="ButtonDonate" xml:space="preserve">
+    <value>Bağış</value>
+    <comment>Text of the donate button</comment>
+  </data>
+  <data name="Drives" xml:space="preserve">
+    <value>DİSK</value>
+    <comment>Drives monitor title</comment>
+  </data>
+  <data name="CPUFan" xml:space="preserve">
+    <value>Fan Kullanımı</value>
+    <comment>Full name for CPU fan metric</comment>
+  </data>
+  <data name="GPU" xml:space="preserve">
+    <value>GPU</value>
+    <comment>GPU monitor title</comment>
+  </data>
+  <data name="ButtonHide" xml:space="preserve">
+    <value>Sakla</value>
+    <comment>Text of the hide button</comment>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>AĞ</value>
+    <comment>Network monitor title</comment>
+  </data>
+  <data name="RAM" xml:space="preserve">
+    <value>RAM</value>
+    <comment>RAM monitor title</comment>
+  </data>
+  <data name="ButtonReload" xml:space="preserve">
+    <value>Yeniden Başlat</value>
+    <comment>Text of the reload button</comment>
+  </data>
+  <data name="ButtonSettings" xml:space="preserve">
+    <value>Ayarlar</value>
+    <comment>Text of the settings button</comment>
+  </data>
+  <data name="ButtonShow" xml:space="preserve">
+    <value>Göster</value>
+    <comment>Text of the show button</comment>
+  </data>
+  <data name="Sidebar" xml:space="preserve">
+    <value>Kenar Çubuğu</value>
+    <comment>Title of the sidebar window</comment>
+  </data>
+  <data name="CPUTemp" xml:space="preserve">
+    <value>Sıcaklık</value>
+    <comment>Full name for CPU temp metric</comment>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Zaman</value>
+    <comment>Sidebar clock title</comment>
+  </data>
+  <data name="ButtonUpdate" xml:space="preserve">
+    <value>Güncelle</value>
+    <comment>Text of the update button</comment>
+  </data>
+  <data name="ButtonVisibility" xml:space="preserve">
+    <value>Görünürlük</value>
+    <comment>Text of the visibility button</comment>
+  </data>
+  <data name="CPUVoltage" xml:space="preserve">
+    <value>Voltaj</value>
+    <comment>Full name for CPU voltage metric</comment>
+  </data>
+  <data name="ButtonGitHub" xml:space="preserve">
+    <value>GitHub</value>
+    <comment>Text of the GitHub button</comment>
+  </data>
+  <data name="CPULoad" xml:space="preserve">
+    <value>Yük</value>
+    <comment>Full name for CPU load metric</comment>
+  </data>
+  <data name="ButtonGraph" xml:space="preserve">
+    <value>Grafik</value>
+    <comment>Text of the graph button</comment>
+  </data>
+  <data name="CPUClockLabel" xml:space="preserve">
+    <value>Hız</value>
+    <comment>Short label for CPU clock metric</comment>
+  </data>
+  <data name="CPUCoreClock" xml:space="preserve">
+    <value>Çekirdek Hızı</value>
+    <comment>Full name for CPU core clock metric</comment>
+  </data>
+  <data name="CPUCoreClockLabel" xml:space="preserve">
+    <value>Çekirdek</value>
+    <comment>Short label for CPU core clock metric</comment>
+  </data>
+  <data name="CPUCoreLoad" xml:space="preserve">
+    <value>Çekirdek Yükü</value>
+    <comment>Full name for CPU core load metric</comment>
+  </data>
+  <data name="CPUCoreLoadLabel" xml:space="preserve">
+    <value>Çekirdek</value>
+    <comment>Short label for CPU core load metric</comment>
+  </data>
+  <data name="CPUFanLabel" xml:space="preserve">
+    <value>Fan</value>
+    <comment>Short label for CPU fan metric</comment>
+  </data>
+  <data name="CPULoadLabel" xml:space="preserve">
+    <value>Yük</value>
+    <comment>Short label for CPU load metric</comment>
+  </data>
+  <data name="CPUTempLabel" xml:space="preserve">
+    <value>Derece</value>
+    <comment>Short label for CPU temp metric</comment>
+  </data>
+  <data name="CPUVoltageLabel" xml:space="preserve">
+    <value>Voltaj</value>
+    <comment>Short label for CPU voltage metric</comment>
+  </data>
+  <data name="DriveFree" xml:space="preserve">
+    <value>Boş Alan</value>
+    <comment>Full name for drive free metric</comment>
+  </data>
+  <data name="DriveFreeLabel" xml:space="preserve">
+    <value>Boş Alan</value>
+    <comment>Short label for drive free metric</comment>
+  </data>
+  <data name="DriveLoad" xml:space="preserve">
+    <value>Doluluk</value>
+    <comment>Full name for drive load metric</comment>
+  </data>
+  <data name="DriveLoadBar" xml:space="preserve">
+    <value>Doluluk Barı</value>
+    <comment>Full name for drive load bar metric</comment>
+  </data>
+  <data name="DriveLoadBarLabel" xml:space="preserve">
+    <value>Doluluk Barı</value>
+    <comment>Short label for drive load bar metric</comment>
+  </data>
+  <data name="DriveLoadLabel" xml:space="preserve">
+    <value>Doluluk</value>
+    <comment>Short label for drive load metric</comment>
+  </data>
+  <data name="DriveRead" xml:space="preserve">
+    <value>Okuma Hızı</value>
+    <comment>Full name for drive read metric</comment>
+  </data>
+  <data name="DriveReadLabel" xml:space="preserve">
+    <value>Okuma</value>
+    <comment>Short label for drive read metric</comment>
+  </data>
+  <data name="DriveUsed" xml:space="preserve">
+    <value>Dolu Alan</value>
+    <comment>Full name for drive used metric</comment>
+  </data>
+  <data name="DriveUsedLabel" xml:space="preserve">
+    <value>Dolu Alan</value>
+    <comment>Short label for drive used metric</comment>
+  </data>
+  <data name="DriveWrite" xml:space="preserve">
+    <value>Yazma Hızı</value>
+    <comment>Full name for drive write metric</comment>
+  </data>
+  <data name="DriveWriteLabel" xml:space="preserve">
+    <value>Yazma</value>
+    <comment>Short label for drive write metric</comment>
+  </data>
+  <data name="GPUCoreClock" xml:space="preserve">
+    <value>Çekirdek Hızı</value>
+    <comment>Full name for GPU core clock metric</comment>
+  </data>
+  <data name="GPUCoreClockLabel" xml:space="preserve">
+    <value>Çekirdek</value>
+    <comment>Short label for RAM core clock metric</comment>
+  </data>
+  <data name="GPUCoreLoad" xml:space="preserve">
+    <value>Çekirdek Yükü</value>
+    <comment>Full name for GPU core load metric</comment>
+  </data>
+  <data name="GPUCoreLoadLabel" xml:space="preserve">
+    <value>Çekirdek</value>
+    <comment>Short label for GPU core load metric</comment>
+  </data>
+  <data name="GPUFan" xml:space="preserve">
+    <value>Fan Kullanımı</value>
+    <comment>Full name for GPU fan metric</comment>
+  </data>
+  <data name="GPUFanLabel" xml:space="preserve">
+    <value>Fan</value>
+    <comment>Short label for GPU voltage metric</comment>
+  </data>
+  <data name="GPUTemp" xml:space="preserve">
+    <value>Sıcaklık</value>
+    <comment>Full name for GPU temp metric</comment>
+  </data>
+  <data name="GPUTempLabel" xml:space="preserve">
+    <value>Derece</value>
+    <comment>Short label for GPU temp metric</comment>
+  </data>
+  <data name="GPUVoltage" xml:space="preserve">
+    <value>Voltaj</value>
+    <comment>Full name for GPU voltage metric</comment>
+  </data>
+  <data name="GPUVoltageLabel" xml:space="preserve">
+    <value>Voltaj</value>
+    <comment>Short label for GPU voltage metric</comment>
+  </data>
+  <data name="GPUVRAMClock" xml:space="preserve">
+    <value>VRAM Hızı</value>
+    <comment>Full name for GPU VRAM clock metric</comment>
+  </data>
+  <data name="GPUVRAMClockLabel" xml:space="preserve">
+    <value>VRAM</value>
+    <comment>Short label for GPU VRAM clock metric</comment>
+  </data>
+  <data name="GPUVRAMLoad" xml:space="preserve">
+    <value>VRAM Yükü</value>
+    <comment>Full name for GPU VRAM load metric</comment>
+  </data>
+  <data name="GPUVRAMLoadLabel" xml:space="preserve">
+    <value>VRAM</value>
+    <comment>Short label for GPU VRAM load metric</comment>
+  </data>
+  <data name="NetworkIn" xml:space="preserve">
+    <value>Gelen Bant Genişliği</value>
+    <comment>Full name for network in metric</comment>
+  </data>
+  <data name="NetworkInLabel" xml:space="preserve">
+    <value>Gelen</value>
+    <comment>Short label for network in metric</comment>
+  </data>
+  <data name="NetworkOut" xml:space="preserve">
+    <value>Giden Bant Genişliği</value>
+    <comment>Full name for network out metric</comment>
+  </data>
+  <data name="NetworkOutLabel" xml:space="preserve">
+    <value>Giden</value>
+    <comment>Short label for network out metric</comment>
+  </data>
+  <data name="RAMClock" xml:space="preserve">
+    <value>Hız</value>
+    <comment>Full name for RAM clock metric</comment>
+  </data>
+  <data name="RAMClockLabel" xml:space="preserve">
+    <value>Hız</value>
+    <comment>Short label for RAM clock metric</comment>
+  </data>
+  <data name="RAMFree" xml:space="preserve">
+    <value>Serbest</value>
+    <comment>Full name for RAM free metric</comment>
+  </data>
+  <data name="RAMFreeLabel" xml:space="preserve">
+    <value>Serbest</value>
+    <comment>Short label for RAM free metric</comment>
+  </data>
+  <data name="RAMLoad" xml:space="preserve">
+    <value>Yük</value>
+    <comment>Full name for RAM load metric</comment>
+  </data>
+  <data name="RAMLoadLabel" xml:space="preserve">
+    <value>Yük</value>
+    <comment>Short label for RAM load metric</comment>
+  </data>
+  <data name="RAMUsed" xml:space="preserve">
+    <value>Kullanılan</value>
+    <comment>Full name for RAM load metric</comment>
+  </data>
+  <data name="RAMUsedLabel" xml:space="preserve">
+    <value>Kullanılan</value>
+    <comment>Short label for RAM used metric</comment>
+  </data>
+  <data name="RAMVoltage" xml:space="preserve">
+    <value>Voltaj</value>
+    <comment>Full name for RAM voltage metric</comment>
+  </data>
+  <data name="RAMVoltageLabel" xml:space="preserve">
+    <value>Voltaj</value>
+    <comment>Short label for RAM voltage metric</comment>
+  </data>
+  <data name="ButtonApply" xml:space="preserve">
+    <value>Uygula</value>
+    <comment>Text of the apply button</comment>
+  </data>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>İptal</value>
+    <comment>Text of the cancel button</comment>
+  </data>
+  <data name="ButtonDone" xml:space="preserve">
+    <value>Bitti</value>
+    <comment>Text of the done button</comment>
+  </data>
+  <data name="ButtonNo" xml:space="preserve">
+    <value>Hayır</value>
+    <comment>Text of the no button</comment>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Kaydet</value>
+    <comment>Text of the save button</comment>
+  </data>
+  <data name="ButtonSkip" xml:space="preserve">
+    <value>Geç</value>
+    <comment>Text of the skip button</comment>
+  </data>
+  <data name="ButtonYes" xml:space="preserve">
+    <value>Evet</value>
+    <comment>Text of the yes button</comment>
+  </data>
+  <data name="ChangeLogTitle" xml:space="preserve">
+    <value>Günlük Kaydı</value>
+    <comment>Title of the change log window</comment>
+  </data>
+  <data name="ErrorPerformanceCounter" xml:space="preserve">
+    <value>Performans Sayacı önbelleğiniz bozuk. Wiki'yi ziyaret etmek ve bu hatayı düzeltmek için Tamam'a tıklayın.</value>
+    <comment>Text of the performance counter error</comment>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Kenar Çubuğu Hatası</value>
+    <comment>Title of the error popup</comment>
+  </data>
+  <data name="GraphConfigSectionTitle" xml:space="preserve">
+    <value>Yapılandırma</value>
+    <comment>Title of the config section in the graph window</comment>
+  </data>
+  <data name="GraphDuration" xml:space="preserve">
+    <value>Süre</value>
+    <comment>Graph config duration label</comment>
+  </data>
+  <data name="GraphDurationMinute" xml:space="preserve">
+    <value>Dakika</value>
+    <comment>Graph duration minute</comment>
+  </data>
+  <data name="GraphDurationMinutes" xml:space="preserve">
+    <value>Dakika</value>
+    <comment>Graph duration minutes plural</comment>
+  </data>
+  <data name="GraphDurationSeconds" xml:space="preserve">
+    <value>Saniye</value>
+    <comment>Graph duration seconds</comment>
+  </data>
+  <data name="GraphHardware" xml:space="preserve">
+    <value>Donanım</value>
+    <comment>Graph config hardware label</comment>
+  </data>
+  <data name="GraphMetrics" xml:space="preserve">
+    <value>Ölçümler</value>
+    <comment>Graph config metrics label</comment>
+  </data>
+  <data name="GraphMonitor" xml:space="preserve">
+    <value>Monitör</value>
+    <comment>Graph config monitor label</comment>
+  </data>
+  <data name="GraphTitle" xml:space="preserve">
+    <value>Grafik</value>
+    <comment>Title of the graph window</comment>
+  </data>
+  <data name="LanguageChangedText" xml:space="preserve">
+    <value>Lütfen uygulamayı yeniden başlatın.</value>
+    <comment>Text of the language changed popup</comment>
+  </data>
+  <data name="LanguageChangedTitle" xml:space="preserve">
+    <value>Dil Değiştirildi</value>
+    <comment>Title of the language changed popup</comment>
+  </data>
+  <data name="Settings24HourClock" xml:space="preserve">
+    <value>24 Saat Modu</value>
+    <comment>Settings 24 hour clock label</comment>
+  </data>
+  <data name="Settings24HourClockTooltip" xml:space="preserve">
+    <value>Saatin biçimini 24 saat olarak değiştirir.</value>
+    <comment>Settings 24 hour clock tooltip</comment>
+  </data>
+  <data name="SettingsAdvancedTab" xml:space="preserve">
+    <value>Gelişmiş</value>
+    <comment>Title of the settings advanced tab</comment>
+  </data>
+  <data name="SettingsAlertFontColor" xml:space="preserve">
+    <value>Uyarı Yazı Tipi Rengi</value>
+    <comment>Settings alert font color label</comment>
+  </data>
+  <data name="SettingsAlertFontColorTooltip" xml:space="preserve">
+    <value>Uyarı metninin rengi.</value>
+    <comment>Settings alert font color tooltip</comment>
+  </data>
+  <data name="SettingsAllCoreClocks" xml:space="preserve">
+    <value>Tüm Çekirdek Hızlarını Göster</value>
+    <comment>Settings all core clocks label</comment>
+  </data>
+  <data name="SettingsAllCoreClocksTooltip" xml:space="preserve">
+    <value>Sadece ilk değil tüm çekirdeklerin saat hızlarını gösterir.</value>
+    <comment>Settings all core clocks tooltip</comment>
+  </data>
+  <data name="SettingsToolbarMode" xml:space="preserve">
+    <value>Araç Çubuğu Modu</value>
+    <comment>Settings toolbar mode label</comment>
+  </data>
+  <data name="SettingsToolbarModeTooltip" xml:space="preserve">
+    <value>Kenar çubuğunu alt-tab arayüzünde gizler ve sanal masaüstleri arasında kalmasını sağlar.</value>
+    <comment>Settings toolbar mode tooltip</comment>
+  </data>
+  <data name="SettingsAlwaysOnTop" xml:space="preserve">
+    <value>Her Zaman Üstte</value>
+    <comment>Settings always on top label</comment>
+  </data>
+  <data name="SettingsAlwaysOnTopTooltip" xml:space="preserve">
+    <value>Kenar çubuğunu her zaman diğer pencerelerin üstünde tutar.</value>
+    <comment>Settings always on top tooltip</comment>
+  </data>
+  <data name="SettingsAutoBackground" xml:space="preserve">
+    <value>Otomatik Arka Plan Rengi</value>
+    <comment>Settings auto background label</comment>
+  </data>
+  <data name="SettingsAutoBackgroundTooltip" xml:space="preserve">
+    <value>Arka plan rengini Windows renk ayarlarınıza göre ayarlanır.</value>
+    <comment>Settings auto background tooltip</comment>
+  </data>
+  <data name="SettingsAutoUpdate" xml:space="preserve">
+    <value>Otomatik Güncelleme</value>
+    <comment>Settings auto update label</comment>
+  </data>
+  <data name="SettingsAutoUpdateTooltip" xml:space="preserve">
+    <value>Uygulama otomatik olarak güncellenir.</value>
+    <comment>Settings auto update tooltip</comment>
+  </data>
+  <data name="SettingsBackgroundColor" xml:space="preserve">
+    <value>Arka Plan Rengi</value>
+    <comment>Settings background color label</comment>
+  </data>
+  <data name="SettingsBackgroundColorTooltip" xml:space="preserve">
+    <value>Arka planın rengi.</value>
+    <comment>Settings background color tooltip</comment>
+  </data>
+  <data name="SettingsBackgroundOpacity" xml:space="preserve">
+    <value>Arka Plan Saydamlığı</value>
+    <comment>Settings background opacity label</comment>
+  </data>
+  <data name="SettingsBackgroundOpacityTooltip" xml:space="preserve">
+    <value>Arka planın saydamlığı.</value>
+    <comment>Settings background opacity tooltip</comment>
+  </data>
+  <data name="SettingsBandwidthInAlert" xml:space="preserve">
+    <value>Gelen Bant Genişliği Uyarısı</value>
+    <comment>Settings bandwidth in alert label</comment>
+  </data>
+  <data name="SettingsBandwidthInAlertTooltip" xml:space="preserve">
+    <value>Gelen bant genişliğinin uyarılarının oluştuğu kbps veya kBps yüzdesi. Devre dışı bırakmak için 0 yazın.</value>
+    <comment>Settings bandwidth in alert tooltip</comment>
+  </data>
+  <data name="SettingsBandwidthOutAlert" xml:space="preserve">
+    <value>Giden Bant Genişliği Uyarısı</value>
+    <comment>Settings bandwidth out alert label</comment>
+  </data>
+  <data name="SettingsBandwidthOutAlertTooltip" xml:space="preserve">
+    <value>Giden bant genişliğinin uyarılarının oluştuğu kbps veya kBps yüzdesi. Devre dışı bırakmak için 0 yazın.</value>
+    <comment>Settings bandwidth out alert tooltip</comment>
+  </data>
+  <data name="SettingsClickThrough" xml:space="preserve">
+    <value>Fare Olayları</value>
+    <comment>Settings click through label</comment>
+  </data>
+  <data name="SettingsClickThroughTooltip" xml:space="preserve">
+    <value>Fare olaylarının kenar çubuğundan geçmesini sağlar. Bunun kenar çubuğu ile etkileşimi engelleyeceğini unutmayın.</value>
+    <comment>Settings click through tooltip</comment>
+  </data>
+  <data name="SettingsCollapseMenuBar" xml:space="preserve">
+    <value>Menü Kısayol Çubuğu</value>
+    <comment>Settings collapse menu bar label</comment>
+  </data>
+  <data name="SettingsCollapseMenuBarTooltip" xml:space="preserve">
+    <value>Kenar çubuğunun üst kısmındaki fazladan alanı kaldırır.</value>
+    <comment>Settings collapse menu bar tooltip</comment>
+  </data>
+  <data name="SettingsCoreLoads" xml:space="preserve">
+    <value>Çekirdek Yüklerini Göster</value>
+    <comment>Settings core loads label</comment>
+  </data>
+  <data name="SettingsCoreLoadsTooltip" xml:space="preserve">
+    <value>Tüm çekirdeklerin yüzde yükünü gösterir.</value>
+    <comment>Settings core loads tooltip</comment>
+  </data>
+  <data name="SettingsCustomizeTab" xml:space="preserve">
+    <value>Özelleştirme</value>
+    <comment>Title of the settings customize tab</comment>
+  </data>
+  <data name="SettingsDateFormat" xml:space="preserve">
+    <value>Tarih Formatı</value>
+    <comment>Settings date format label</comment>
+  </data>
+  <data name="SettingsDateFormatDisabled" xml:space="preserve">
+    <value>Devre Dışı</value>
+    <comment>Settings date format disabled value</comment>
+  </data>
+  <data name="SettingsDateFormatTooltip" xml:space="preserve">
+    <value>Saatin altındaki tarihin biçimi.</value>
+    <comment>Settings date format tooltip</comment>
+  </data>
+  <data name="SettingsDock" xml:space="preserve">
+    <value>Yuva</value>
+    <comment>Dock settings label</comment>
+  </data>
+  <data name="SettingsDockBottom" xml:space="preserve">
+    <value>Aşağı</value>
+    <comment>Dock bottom settings label</comment>
+  </data>
+  <data name="SettingsDockLeft" xml:space="preserve">
+    <value>Sol</value>
+    <comment>Dock left settings label</comment>
+  </data>
+  <data name="SettingsDockRight" xml:space="preserve">
+    <value>Sağ</value>
+    <comment>Dock right settings label</comment>
+  </data>
+  <data name="SettingsDockTooltip" xml:space="preserve">
+    <value>Kenar çubuğunun hangi kenara sabitleneceği.</value>
+    <comment>Dock settings tooltip</comment>
+  </data>
+  <data name="SettingsDockTop" xml:space="preserve">
+    <value>Yukarı</value>
+    <comment>Dock top settings label</comment>
+  </data>
+  <data name="SettingsDriveDetailsTooltip" xml:space="preserve">
+    <value>Ek disk ayrıntılarını metin olarak gösterir.</value>
+    <comment>Settings drive details tooltip</comment>
+  </data>
+  <data name="SettingsFontColor" xml:space="preserve">
+    <value>Yazı Rengi</value>
+    <comment>Settings font color label</comment>
+  </data>
+  <data name="SettingsFontColorTooltip" xml:space="preserve">
+    <value>Metin ve simgelerin rengi.</value>
+    <comment>Settings font color tooltip</comment>
+  </data>
+  <data name="SettingsFontSize" xml:space="preserve">
+    <value>Yazı Boyutu</value>
+    <comment>Settings font size label</comment>
+  </data>
+  <data name="SettingsFontSizeTooltip" xml:space="preserve">
+    <value>Metin ve simgelerin boyutu.</value>
+    <comment>Settings font size tooltip</comment>
+  </data>
+  <data name="SettingsGeneralTab" xml:space="preserve">
+    <value>Genel</value>
+    <comment>Title of the settings general tab</comment>
+  </data>
+  <data name="SettingsHardwareColumn1" xml:space="preserve">
+    <value>Etkin</value>
+    <comment>Settings hardware data grid enabled column header</comment>
+  </data>
+  <data name="SettingsHardwareColumn2" xml:space="preserve">
+    <value>Donanım</value>
+    <comment>Settings hardware data grid hardware column header</comment>
+  </data>
+  <data name="SettingsHardwareEnabledTooltip" xml:space="preserve">
+    <value>Bu donanımı etkinleştirir.</value>
+    <comment>Settings hardware enabled checkbox tooltip</comment>
+  </data>
+  <data name="SettingsHardwareNameTooltip" xml:space="preserve">
+    <value>Bu donanımın adını düzenleyin.</value>
+    <comment>Settings hardware name tooltip</comment>
+  </data>
+  <data name="SettingsHorizontalOffset" xml:space="preserve">
+    <value>Yatay Ofset</value>
+    <comment>Horizontal offset settings label</comment>
+  </data>
+  <data name="SettingsHorizontalOffsetTooltip" xml:space="preserve">
+    <value>Kenar çubuğunun yatay ofseti.</value>
+    <comment>Horizontal offset settings tooltip</comment>
+  </data>
+  <data name="SettingsHotkeyClose" xml:space="preserve">
+    <value>Çıkış</value>
+    <comment>Settings hotkey close label</comment>
+  </data>
+  <data name="SettingsHotkeyCycleEdge" xml:space="preserve">
+    <value>Yuva Değiştirme</value>
+    <comment>Settings hotkey switch edge</comment>
+  </data>
+  <data name="SettingsHotkeyCycleScreen" xml:space="preserve">
+    <value>Ekran Değiştirme</value>
+    <comment>Settings hotkey switch screen</comment>
+  </data>
+  <data name="SettingsHotkeyHide" xml:space="preserve">
+    <value>Sakla</value>
+    <comment>Settings hotkey hide label</comment>
+  </data>
+  <data name="SettingsHotkeyReload" xml:space="preserve">
+    <value>Yeniden Başlat</value>
+    <comment>Settings hotkey reload label</comment>
+  </data>
+  <data name="SettingsHotkeyShow" xml:space="preserve">
+    <value>Göster</value>
+    <comment>Settings hotkey show label</comment>
+  </data>
+  <data name="SettingsHotkeysTab" xml:space="preserve">
+    <value>Kısayollar</value>
+    <comment>Title of the settings hotkeys tab</comment>
+  </data>
+  <data name="SettingsHotkeyToggle" xml:space="preserve">
+    <value>Görünürlük</value>
+    <comment>Settings hotkey toggle label</comment>
+  </data>
+  <data name="SettingsLanguage" xml:space="preserve">
+    <value>Dil</value>
+    <comment>Settings language label</comment>
+  </data>
+  <data name="SettingsLanguageDefault" xml:space="preserve">
+    <value>Varsayılan</value>
+    <comment>Settings language default label</comment>
+  </data>
+  <data name="SettingsLanguageTooltip" xml:space="preserve">
+    <value>Uygulamanın geçerli dili.</value>
+    <comment>Settings language tooltip</comment>
+  </data>
+  <data name="SettingsMetrics" xml:space="preserve">
+    <value>Ölçümler:</value>
+    <comment>Settings metrics label with colon</comment>
+  </data>
+  <data name="SettingsMetricsTooltip" xml:space="preserve">
+    <value>Belirli ölçümleri etkinleştirin veya devre dışı bırakın.</value>
+    <comment>Settings metrics tooltip</comment>
+  </data>
+  <data name="SettingsMonitorEnabledTooltip" xml:space="preserve">
+    <value>Bu monitörü etkinleştirir.</value>
+    <comment>Settings monitor enabled checkbox tooltip</comment>
+  </data>
+  <data name="SettingsMonitorsColumn1" xml:space="preserve">
+    <value>Etkin</value>
+    <comment>Settings monitors data grid enabled column header</comment>
+  </data>
+  <data name="SettingsMonitorsColumn2" xml:space="preserve">
+    <value>Monitör</value>
+    <comment>Settings monitors data grid monitor column header</comment>
+  </data>
+  <data name="SettingsMonitorsSubtitle1" xml:space="preserve">
+    <value>Ayarlarını düzenlemek için bir satıra tıklayın.</value>
+    <comment>Settings monitors subtitle line one</comment>
+  </data>
+  <data name="SettingsMonitorsSubtitle2" xml:space="preserve">
+    <value>Sırasını değiştirmek için bir satırı sürükleyin.</value>
+    <comment>Settings monitors subtitle line two</comment>
+  </data>
+  <data name="SettingsMonitorsTab" xml:space="preserve">
+    <value>Monitörler</value>
+    <comment>Title of the settings monitors tab</comment>
+  </data>
+  <data name="SettingsPollingInterval" xml:space="preserve">
+    <value>Yenileme Hızı</value>
+    <comment>Settings polling interval label</comment>
+  </data>
+  <data name="SettingsPollingIntervalTooltip" xml:space="preserve">
+    <value>Milisaniye cinsinden verilerin yenilenme hızı.</value>
+    <comment>Settings polling interval tooltip</comment>
+  </data>
+  <data name="SettingsReserveSpace" xml:space="preserve">
+    <value>Rezerv Alanı</value>
+    <comment>Settings reserve space label</comment>
+  </data>
+  <data name="SettingsReserveSpaceTooltip" xml:space="preserve">
+    <value>Kenar çubuğu için çalışma ekranında yer ayırır.</value>
+    <comment>Settings reserve space tooltip</comment>
+  </data>
+  <data name="SettingsRoundAllDecimals" xml:space="preserve">
+    <value>Tam Sayıya Yuvarlama</value>
+    <comment>Settings round all decimals label</comment>
+  </data>
+  <data name="SettingsRoundAllDecimalsTooltip" xml:space="preserve">
+    <value>Tüm ondalık değerleri en yakın tam sayıya yuvarlar.</value>
+    <comment>Settings round all decimals tooltip</comment>
+  </data>
+  <data name="SettingsRunAtStartup" xml:space="preserve">
+    <value>Başlangıçta Çalıştır</value>
+    <comment>Settings run at startup label</comment>
+  </data>
+  <data name="SettingsRunAtStartupTooltip" xml:space="preserve">
+    <value>İlk oturum açtığınızda uygulamayı çalıştırır.</value>
+    <comment>Settings run at startup tooltip</comment>
+  </data>
+  <data name="SettingsScreen" xml:space="preserve">
+    <value>Ekran</value>
+    <comment>Screen settings label</comment>
+  </data>
+  <data name="SettingsScreenTooltip" xml:space="preserve">
+    <value>Kenar çubuğunun hangi ekranda olacağı.</value>
+    <comment>Screen settings tooltip</comment>
+  </data>
+  <data name="SettingsShowClock" xml:space="preserve">
+    <value>Hızı Göster</value>
+    <comment>Settings show clock label</comment>
+  </data>
+  <data name="SettingsShowClockTooltip" xml:space="preserve">
+    <value>Hızı gösterir.</value>
+    <comment>Settings show clock tooltip</comment>
+  </data>
+  <data name="SettingsShowDriveDetails" xml:space="preserve">
+    <value>Disk Ayrıntılarını Göster</value>
+    <comment>Settings show drive details label</comment>
+  </data>
+  <data name="SettingsShowDriveIO" xml:space="preserve">
+    <value>Disk IO Göster</value>
+    <comment>Settings show drive IO label</comment>
+  </data>
+  <data name="SettingsShowDriveIOTooltip" xml:space="preserve">
+    <value>Disk ayrıntıları etkinse sürücü okuma ve yazma hızlarını gösterir.</value>
+    <comment>Settings show drive IO tooltip</comment>
+  </data>
+  <data name="SettingsShowDriveSpace" xml:space="preserve">
+    <value>Disk Alanını Göster</value>
+    <comment>Settings show drive space label</comment>
+  </data>
+  <data name="SettingsShowDriveSpaceTooltip" xml:space="preserve">
+    <value>Disk ayrıntıları etkinse yük yüzdesi, kullanılan alanı ve boş alanı gösterir.</value>
+    <comment>Settings show drive space tooltip</comment>
+  </data>
+  <data name="SettingsShowHardwareNames" xml:space="preserve">
+    <value>Donanım Adlarını Göster</value>
+    <comment>Settings show hardware names label</comment>
+  </data>
+  <data name="SettingsShowHardwareNamesTooltip" xml:space="preserve">
+    <value>Donanım adlarını gösterir.</value>
+    <comment>Settings show hardware names tooltip</comment>
+  </data>
+  <data name="SettingsShowTrayIcon" xml:space="preserve">
+    <value>Tepsi Simgesi</value>
+    <comment>Settings show tray icon label</comment>
+  </data>
+  <data name="SettingsShowTrayIconTooltip" xml:space="preserve">
+    <value>Görev çubuğundaki tepsi simgesini gösterir. Bu bazen gereklidir.</value>
+    <comment>Settings show tray icon tooltip</comment>
+  </data>
+  <data name="SettingsSidebarWidth" xml:space="preserve">
+    <value>Kenar Çubuğu Genişliği</value>
+    <comment>Settings sidebar width label</comment>
+  </data>
+  <data name="SettingsSidebarWidthTooltip" xml:space="preserve">
+    <value>Kenar çubuğunun piksel cinsinden genişliği.</value>
+    <comment>Settings sidebar width tooltip</comment>
+  </data>
+  <data name="SettingsTemperatureAlert" xml:space="preserve">
+    <value>Sıcaklık Uyarısı</value>
+    <comment>Settings temperature alert label</comment>
+  </data>
+  <data name="SettingsTemperatureAlertTooltip" xml:space="preserve">
+    <value>Uyarıların oluştuğu sıcaklık yüzdesi. Devre dışı bırakmak için 0 yazın.</value>
+    <comment>Settings temperature alert tooltip</comment>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Kenar Çubuğu Ayarları</value>
+    <comment>Title of the settings window</comment>
+  </data>
+  <data name="SettingsUIScale" xml:space="preserve">
+    <value>Kullanıcı Arayüzü Ölçeği</value>
+    <comment>Settings UI scale label</comment>
+  </data>
+  <data name="SettingsUIScaleTooltip" xml:space="preserve">
+    <value>Tüm pencerelerin ve UI bileşenlerinin ölçeği.</value>
+    <comment>Settings UI scale tooltip</comment>
+  </data>
+  <data name="SettingsUseBytesPerSecond" xml:space="preserve">
+    <value>Saniye Başına Bayt</value>
+    <comment>Settings use bytes per second label</comment>
+  </data>
+  <data name="SettingsUseBytesPerSecondTooltip" xml:space="preserve">
+    <value>Bant genişliğini saniye başına bit yerine bayt cinsinden gösterir.</value>
+    <comment>Settings use bytes per second tooltip</comment>
+  </data>
+  <data name="SettingsUsedSpaceAlert" xml:space="preserve">
+    <value>Doluluk Uyarısı</value>
+    <comment>Settings used space alert label</comment>
+  </data>
+  <data name="SettingsUsedSpaceAlertTooltip" xml:space="preserve">
+    <value>Dolu alan uyarılarının oluştuğu yüzde. Devre dışı bırakmak için 0 yazın.</value>
+    <comment>Settings used space alert tooltip</comment>
+  </data>
+  <data name="SettingsUseFahrenheit" xml:space="preserve">
+    <value>Fahrenhayt Kullanımı</value>
+    <comment>Settings use fahrenheit label</comment>
+  </data>
+  <data name="SettingsUseFahrenheitTooltip" xml:space="preserve">
+    <value>Sensörler ve uyarılar için sıcaklıklar, Santigrat yerine Fahrenhayt olacaktır.</value>
+    <comment>Settings use fahrenheit tooltip</comment>
+  </data>
+  <data name="SettingsUseGHz" xml:space="preserve">
+    <value>GHz Kullanımı</value>
+    <comment>Settings use GHz label</comment>
+  </data>
+  <data name="SettingsUseGHzTooltip" xml:space="preserve">
+    <value>Hızları MHz yerine GHz olacaktır.</value>
+    <comment>Settings use GHz tooltip</comment>
+  </data>
+  <data name="SettingsVerticalOffset" xml:space="preserve">
+    <value>Dikey Ofset</value>
+    <comment>Vertical offset settings label</comment>
+  </data>
+  <data name="SettingsVerticalOffsetTooltip" xml:space="preserve">
+    <value>Kenar çubuğunun dikey ofseti.</value>
+    <comment>Vertical Offset settings tooltip</comment>
+  </data>
+  <data name="SetupCustomSubtitle" xml:space="preserve">
+    <value>Kenar çubuğunu doğru konuma taşımak için kaydırıcıları ve metin kutularını kullanın.</value>
+    <comment>Subtitle of the custom setup page</comment>
+  </data>
+  <data name="SetupCustomTitle" xml:space="preserve">
+    <value>Özel</value>
+    <comment>Title of the custom setup page</comment>
+  </data>
+  <data name="SetupDoneSubtitle" xml:space="preserve">
+    <value>Kenar çubuğunu özelleştirmek istiyorsanız ayarlar düğmesine tıklayın.</value>
+    <comment>Subtitle of the setup done page</comment>
+  </data>
+  <data name="SetupDoneText" xml:space="preserve">
+    <value>Ayarlara kenar çubuğunun sağ üst kısmındaki dişli çark simgesinden veya görev çubuğundaki tepsi simgesinden de erişebilirsiniz.</value>
+    <comment>Text of the setup done page</comment>
+  </data>
+  <data name="SetupDoneTitle" xml:space="preserve">
+    <value>Bitti!</value>
+    <comment>Title of the setup done page</comment>
+  </data>
+  <data name="SetupSubtitle" xml:space="preserve">
+    <value>Bu, kenar çubuğunu doğru konuma getirmek için hızlı bir kurulumdur.</value>
+    <comment>Subtitle of the initial setup page</comment>
+  </data>
+  <data name="SetupText" xml:space="preserve">
+    <value>Kenar çubuğu görünür ve birincil monitörünüzün sağ kenarına sabitlenmiş mi?</value>
+    <comment>Text of the initial setup page</comment>
+  </data>
+  <data name="SetupTitle" xml:space="preserve">
+    <value>İlk Kurulum</value>
+    <comment>Title of the initial setup page</comment>
+  </data>
+  <data name="UpdateErrorFatalText" xml:space="preserve">
+    <value>Güncellemeye çalışırken önemli bir hata oluştu. Otomatik güncelleme artık devre dışı.</value>
+    <comment>Fatal text of the update error popup</comment>
+  </data>
+  <data name="UpdateErrorText" xml:space="preserve">
+    <value>Güncelleme yapılamıyor. İnternet bağlantınızı kontrol edin.</value>
+    <comment>Text of the update error popup</comment>
+  </data>
+  <data name="UpdateErrorTitle" xml:space="preserve">
+    <value>Güncelleme Hatası</value>
+    <comment>Title of the update error popup</comment>
+  </data>
+  <data name="UpdateSuccessText" xml:space="preserve">
+    <value>En güncel sürüme sahipsiniz.</value>
+    <comment>Text of the update success popup</comment>
+  </data>
+  <data name="UpdateTitle" xml:space="preserve">
+    <value>Güncelleniyor</value>
+    <comment>Title of the update window</comment>
+  </data>
+  <data name="SettingsTextAlign" xml:space="preserve">
+    <value>Metin Hizalama</value>
+    <comment>Settings text align label</comment>
+  </data>
+  <data name="SettingsTextAlignLeft" xml:space="preserve">
+    <value>Sol</value>
+    <comment>Settings text align left value</comment>
+  </data>
+  <data name="SettingsTextAlignRight" xml:space="preserve">
+    <value>Sağ</value>
+    <comment>Settings text align right value</comment>
+  </data>
+  <data name="SettingsTextAlignTooltip" xml:space="preserve">
+    <value>Ölçüm metninin hizalanması.</value>
+    <comment>Settings text align tooltip</comment>
+  </data>
+  <data name="SettingsAlertBlink" xml:space="preserve">
+    <value>Uyarı Yanıp Sönme</value>
+    <comment>Settings alert blink label</comment>
+  </data>
+  <data name="SettingsAlertBlinkTooltip" xml:space="preserve">
+    <value>Uyarı metninin yanıp sönmesini sağlar.</value>
+    <comment>Settings alert blink tooltip</comment>
+  </data>
+  <data name="NetworkIP" xml:space="preserve">
+    <value>IP Adresi</value>
+    <comment>Full name for the network IP address metric</comment>
+  </data>
+  <data name="NetworkIPLabel" xml:space="preserve">
+    <value>IP</value>
+    <comment>Short label for network IP address metric</comment>
+  </data>
+  <data name="SettingsInitiallyHidden" xml:space="preserve">
+    <value>Başlangıçta Gizle</value>
+    <comment>Settings initially hidden label</comment>
+  </data>
+  <data name="SettingsInitiallyHiddenTooltip" xml:space="preserve">
+    <value>Kenar çubuğunu başlangıçta gizler.</value>
+    <comment>Settings initially hidden tooltip</comment>
+  </data>
+  <data name="SettingsVirtualDesktop" xml:space="preserve">
+    <value>Sanal Masaüstü</value>
+    <comment>Settings virtual desktop label</comment>
+  </data>
+  <data name="SettingsVirtualDesktopTooltip" xml:space="preserve">
+    <value>Sanal masaüstleri için desteği etkinleştirir.</value>
+    <comment>Settings virtual desktop tooltip</comment>
+  </data>
+  <data name="SettingsHotkeyReserveSpace" xml:space="preserve">
+    <value>Rezerv Alanı</value>
+    <comment>Settings hotkey reserve space</comment>
+  </data>
+  <data name="NetworkExtIP" xml:space="preserve">
+    <value>Harici IP Adresi</value>
+    <comment>Full name for the network ext IP address metric</comment>
+  </data>
+  <data name="NetworkExtIPLabel" xml:space="preserve">
+    <value>H-IP</value>
+    <comment>Short label for network ext IP address metric</comment>
+  </data>
+  <data name="SettingsShowMachineName" xml:space="preserve">
+    <value>PC Adını Göster</value>
+    <comment>Settings show machine name label</comment>
+  </data>
+  <data name="SettingsShowMachineNameTooltip" xml:space="preserve">
+    <value>Bilgisayar kullanıcısının adını gösterir.</value>
+    <comment>Settings show machine name tooltip</comment>
+  </data>
+</root>
