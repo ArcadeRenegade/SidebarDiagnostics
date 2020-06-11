@@ -558,7 +558,7 @@
     <comment>Settings background color tooltip</comment>
   </data>
   <data name="SettingsBackgroundOpacity" xml:space="preserve">
-    <value>Прорачность фона</value>
+    <value>Прозрачность фона</value>
     <comment>Settings background opacity label</comment>
   </data>
   <data name="SettingsBackgroundOpacityTooltip" xml:space="preserve">
@@ -658,11 +658,11 @@
     <comment>Settings font color tooltip</comment>
   </data>
   <data name="SettingsFontSize" xml:space="preserve">
-    <value>Размер шрифта.</value>
+    <value>Размер шрифта</value>
     <comment>Settings font size label</comment>
   </data>
   <data name="SettingsFontSizeTooltip" xml:space="preserve">
-    <value>Размер текста и иконок.</value>
+    <value>Размер текста и иконок</value>
     <comment>Settings font size tooltip</comment>
   </data>
   <data name="SettingsGeneralTab" xml:space="preserve">
