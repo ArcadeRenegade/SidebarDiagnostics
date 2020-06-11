@@ -914,7 +914,7 @@
     <comment>Settings use GHz tooltip</comment>
   </data>
   <data name="SettingsVerticalOffset" xml:space="preserve">
-    <value>Вертикальный отсутп</value>
+    <value>Вертикальный отступ</value>
     <comment>Vertical offset settings label</comment>
   </data>
   <data name="SettingsVerticalOffsetTooltip" xml:space="preserve">
