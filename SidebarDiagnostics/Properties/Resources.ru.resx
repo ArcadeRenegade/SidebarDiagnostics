@@ -558,11 +558,11 @@
     <comment>Settings background color tooltip</comment>
   </data>
   <data name="SettingsBackgroundOpacity" xml:space="preserve">
-    <value>Прозрачность фона</value>
+    <value>Непрозрачность фона</value>
     <comment>Settings background opacity label</comment>
   </data>
   <data name="SettingsBackgroundOpacityTooltip" xml:space="preserve">
-    <value>Задает прозрачность фона.</value>
+    <value>Задает непрозрачность фона, где 1 фон непрозрачный, 0 полностью прозрачный.</value>
     <comment>Settings background opacity tooltip</comment>
   </data>
   <data name="SettingsBandwidthInAlert" xml:space="preserve">
