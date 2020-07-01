@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -53,7 +53,6 @@
     value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
-
     mimetype: application/x-microsoft.net.object.bytearray.base64
     value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
@@ -134,7 +133,7 @@
     <comment>Text of the close button</comment>
   </data>
   <data name="ButtonDonate" xml:space="preserve">
-    <value>Donare</value>
+    <value>Donazione</value>
     <comment>Text of the donate button</comment>
   </data>
   <data name="ButtonDone" xml:space="preserve">
@@ -574,19 +573,19 @@
     <comment>Settings background opacity tooltip</comment>
   </data>
   <data name="SettingsBandwidthInAlert" xml:space="preserve">
-    <value>Allerta della larghezza di banda</value>
+    <value>Allert banda in entrata</value>
     <comment>Settings bandwidth in alert label</comment>
   </data>
   <data name="SettingsBandwidthInAlertTooltip" xml:space="preserve">
-    <value>La soglia kbps o kBps alla quale si verificano gli avvisi di larghezza di banda ricevuti. Usa 0 per disabilitare.</value>
+    <value>Soglia kbps per avvisi su larghezza di banda in entrata. Usa 0 per disabilitare.</value>
     <comment>Settings bandwidth in alert tooltip</comment>
   </data>
   <data name="SettingsBandwidthOutAlert" xml:space="preserve">
-    <value>Avviso di larghezza di banda</value>
-    <comment>Settings bandwidth out alert label</comment>
+    <value>Allert banda in uscita</value>
+    <comment>Allert banda in uscita</comment>
   </data>
   <data name="SettingsBandwidthOutAlertTooltip" xml:space="preserve">
-    <value>Soglia kbps o kBps alla quale si verificano gli avvisi di larghezza di banda inviati. Usa 0 per disabilitare.</value>
+    <value>Soglia kbps per avvisi su larghezza di banda in uscita. Usa 0 per disabilitare.</value>
     <comment>Settings bandwidth out alert tooltip</comment>
   </data>
   <data name="SettingsClickThrough" xml:space="preserve">
@@ -594,7 +593,7 @@
     <comment>Settings click through label</comment>
   </data>
   <data name="SettingsClickThroughTooltip" xml:space="preserve">
-    <value>Fa passare gli eventi del mouse attraverso la finestra. Nota che ciò impedirà qualsiasi interazione con la barra laterale.</value>
+    <value>Passa gli 'eventi del mouse' nella finestra (NOTA: inibisce tutte le interazioni con la barra laterale).</value>
     <comment>Settings click through tooltip</comment>
   </data>
   <data name="SettingsCollapseMenuBar" xml:space="preserve">
@@ -602,7 +601,7 @@
     <comment>Settings collapse menu bar label</comment>
   </data>
   <data name="SettingsCollapseMenuBarTooltip" xml:space="preserve">
-    <value>Rimuove lo spazio aggiuntivo nella parte superiore della barra laterale.</value>
+    <value>Rimuove gli spazi nella parte alta della barra laterale.</value>
     <comment>Settings collapse menu bar tooltip</comment>
   </data>
   <data name="SettingsCoreLoads" xml:space="preserve">
@@ -626,7 +625,7 @@
     <comment>Settings date format disabled value</comment>
   </data>
   <data name="SettingsDateFormatTooltip" xml:space="preserve">
-    <value>Formato della data sotto l'orologio.</value>
+    <value>Imposta il formato della data sotto l'orologio.</value>
     <comment>Settings date format tooltip</comment>
   </data>
   <data name="SettingsDock" xml:space="preserve">
@@ -646,7 +645,7 @@
     <comment>Dock right settings label</comment>
   </data>
   <data name="SettingsDockTooltip" xml:space="preserve">
-    <value>A quale bordo verrà agganciata la barra laterale.</value>
+    <value>Lato al quale si aggancia la barra laterale.</value>
     <comment>Dock settings tooltip</comment>
   </data>
   <data name="SettingsDockTop" xml:space="preserve">
@@ -654,7 +653,7 @@
     <comment>Dock top settings label</comment>
   </data>
   <data name="SettingsDriveDetailsTooltip" xml:space="preserve">
-    <value>Mostra i dettagli dell'unità extra come testo.</value>
+    <value>Mostra i dettagli dell'unità aggiuntiva.</value>
     <comment>Settings drive details tooltip</comment>
   </data>
   <data name="SettingsFontColor" xml:space="preserve">
@@ -662,7 +661,7 @@
     <comment>Settings font color label</comment>
   </data>
   <data name="SettingsFontColorTooltip" xml:space="preserve">
-    <value>Colore del testo e delle icone.</value>
+    <value>Impostazione colore e testo delle icone.</value>
     <comment>Settings font color tooltip</comment>
   </data>
   <data name="SettingsFontSize" xml:space="preserve">
@@ -670,7 +669,7 @@
     <comment>Settings font size label</comment>
   </data>
   <data name="SettingsFontSizeTooltip" xml:space="preserve">
-    <value>Dimensione del testo e delle icone.</value>
+    <value>Dimensione testo ed icone.</value>
     <comment>Settings font size tooltip</comment>
   </data>
   <data name="SettingsGeneralTab" xml:space="preserve">
