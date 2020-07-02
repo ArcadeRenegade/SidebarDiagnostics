@@ -582,7 +582,7 @@
   </data>
   <data name="SettingsBandwidthOutAlert" xml:space="preserve">
     <value>Allert banda in uscita</value>
-    <comment>Allert banda in uscita</comment>
+    <comment>Settings bandwidth out alert label</comment>
   </data>
   <data name="SettingsBandwidthOutAlertTooltip" xml:space="preserve">
     <value>Soglia kbps per avvisi su larghezza di banda in uscita. Usa 0 per disabilitare.</value>
