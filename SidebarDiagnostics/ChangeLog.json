@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "Unreleased",
+    "Changes": [
+      "Russian language support.",
+      "Italian language support."
+    ]
+  },
+  {
     "Version": "3.5.5",
     "Changes": [
       "Bug fix for Ryzen CPU clock speed.",

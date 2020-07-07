@@ -205,6 +205,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Properties\Resources.it.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.it.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.zh.Designer.cs">
       <DependentUpon>Resources.zh.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -341,6 +346,11 @@
     <EmbeddedResource Include="Properties\Resources.de-CH.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.de-CH.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.it.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.it.Designer.cs</LastGenOutput>
       <CustomToolNamespace>SidebarDiagnostics.Framework</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.ru.resx" />
