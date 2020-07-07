@@ -3,7 +3,8 @@
     "Version": "Unreleased",
     "Changes": [
       "Russian language support.",
-      "Italian language support."
+      "Italian language support.",
+      "Fix: AMD core chiplet dies temperature (Ryzen Master)"
     ]
   },
   {
