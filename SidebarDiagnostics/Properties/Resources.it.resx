@@ -53,6 +53,7 @@
     value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
+
     mimetype: application/x-microsoft.net.object.bytearray.base64
     value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
@@ -213,7 +214,7 @@
     <comment>Short label for CPU core clock metric</comment>
   </data>
   <data name="CPUCoreLoad" xml:space="preserve">
-    <value>Carico Core</value>
+    <value>Uso Core</value>
     <comment>Full name for CPU core load metric</comment>
   </data>
   <data name="CPUCoreLoadLabel" xml:space="preserve">
@@ -221,7 +222,7 @@
     <comment>Short label for CPU core load metric</comment>
   </data>
   <data name="CPUFan" xml:space="preserve">
-    <value>Uso ventola</value>
+    <value>Ventola</value>
     <comment>Full name for CPU fan metric</comment>
   </data>
   <data name="CPUFanLabel" xml:space="preserve">
@@ -229,11 +230,11 @@
     <comment>Short label for CPU fan metric</comment>
   </data>
   <data name="CPULoad" xml:space="preserve">
-    <value>Carico</value>
+    <value>Utilizzo</value>
     <comment>Full name for CPU load metric</comment>
   </data>
   <data name="CPULoadLabel" xml:space="preserve">
-    <value>Carico</value>
+    <value>Utilizzo</value>
     <comment>Short label for CPU load metric</comment>
   </data>
   <data name="CPUTemp" xml:space="preserve">
@@ -253,11 +254,11 @@
     <comment>Short label for CPU voltage metric</comment>
   </data>
   <data name="DriveFree" xml:space="preserve">
-    <value>Disponibile</value>
+    <value>Libero</value>
     <comment>Full name for drive free metric</comment>
   </data>
   <data name="DriveFreeLabel" xml:space="preserve">
-    <value>Disponibile</value>
+    <value>Liberi</value>
     <comment>Short label for drive free metric</comment>
   </data>
   <data name="DriveLoad" xml:space="preserve">
@@ -269,11 +270,11 @@
     <comment>Full name for drive load bar metric</comment>
   </data>
   <data name="DriveLoadBarLabel" xml:space="preserve">
-    <value>Occupato</value>
+    <value>In Uso</value>
     <comment>Short label for drive load bar metric</comment>
   </data>
   <data name="DriveLoadLabel" xml:space="preserve">
-    <value>Occupato</value>
+    <value>In Uso</value>
     <comment>Short label for drive load metric</comment>
   </data>
   <data name="DriveRead" xml:space="preserve">
@@ -281,7 +282,7 @@
     <comment>Full name for drive read metric</comment>
   </data>
   <data name="DriveReadLabel" xml:space="preserve">
-    <value>Velocità di lettura</value>
+    <value>Lettura</value>
     <comment>Short label for drive read metric</comment>
   </data>
   <data name="Drives" xml:space="preserve">
@@ -289,11 +290,11 @@
     <comment>Drives monitor title</comment>
   </data>
   <data name="DriveUsed" xml:space="preserve">
-    <value>Occupato</value>
+    <value>In Uso</value>
     <comment>Full name for drive used metric</comment>
   </data>
   <data name="DriveUsedLabel" xml:space="preserve">
-    <value>Occupato</value>
+    <value>Usati</value>
     <comment>Short label for drive used metric</comment>
   </data>
   <data name="DriveWrite" xml:space="preserve">
@@ -301,7 +302,7 @@
     <comment>Full name for drive write metric</comment>
   </data>
   <data name="DriveWriteLabel" xml:space="preserve">
-    <value>Velocità di scrittura</value>
+    <value>Scrittura</value>
     <comment>Short label for drive write metric</comment>
   </data>
   <data name="ErrorPerformanceCounter" xml:space="preserve">
@@ -317,7 +318,7 @@
     <comment>GPU monitor title</comment>
   </data>
   <data name="GPUCoreClock" xml:space="preserve">
-    <value>Core Clock</value>
+    <value>GPU Clock</value>
     <comment>Full name for GPU core clock metric</comment>
   </data>
   <data name="GPUCoreClockLabel" xml:space="preserve">
@@ -325,7 +326,7 @@
     <comment>Short label for RAM core clock metric</comment>
   </data>
   <data name="GPUCoreLoad" xml:space="preserve">
-    <value>Carico Core</value>
+    <value>Uso Core</value>
     <comment>Full name for GPU core load metric</comment>
   </data>
   <data name="GPUCoreLoadLabel" xml:space="preserve">
@@ -369,7 +370,7 @@
     <comment>Full name for GPU VRAM load metric</comment>
   </data>
   <data name="GPUVRAMLoadLabel" xml:space="preserve">
-    <value>VRAM</value>
+    <value>Uso VRAM</value>
     <comment>Short label for GPU VRAM load metric</comment>
   </data>
   <data name="GraphConfigSectionTitle" xml:space="preserve">
@@ -417,19 +418,19 @@
     <comment>Title of the language changed popup</comment>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Network</value>
+    <value>Rete</value>
     <comment>Network monitor title</comment>
   </data>
   <data name="NetworkExtIP" xml:space="preserve">
-    <value>Indirizzo IP esterno</value>
+    <value>IP Pubblico</value>
     <comment>Full name for the network ext IP address metric</comment>
   </data>
   <data name="NetworkExtIPLabel" xml:space="preserve">
-    <value>IP pubblico</value>
+    <value>IP Pubblico</value>
     <comment>Short label for network ext IP address metric</comment>
   </data>
   <data name="NetworkIn" xml:space="preserve">
-    <value>Larghezza di banda</value>
+    <value>Banda di Download</value>
     <comment>Full name for network in metric</comment>
   </data>
   <data name="NetworkInLabel" xml:space="preserve">
@@ -441,11 +442,11 @@
     <comment>Full name for the network IP address metric</comment>
   </data>
   <data name="NetworkIPLabel" xml:space="preserve">
-    <value>IP</value>
+    <value>IP Privato</value>
     <comment>Short label for network IP address metric</comment>
   </data>
   <data name="NetworkOut" xml:space="preserve">
-    <value>Larghezza di banda in uscita</value>
+    <value>Banda di Upload</value>
     <comment>Full name for network out metric</comment>
   </data>
   <data name="NetworkOutLabel" xml:space="preserve">
@@ -473,19 +474,19 @@
     <comment>Short label for RAM free metric</comment>
   </data>
   <data name="RAMLoad" xml:space="preserve">
-    <value>Percentuale occupata</value>
+    <value>Percentuale Occupata</value>
     <comment>Full name for RAM load metric</comment>
   </data>
   <data name="RAMLoadLabel" xml:space="preserve">
-    <value>Percentuale occupata</value>
+    <value>In Uso</value>
     <comment>Short label for RAM load metric</comment>
   </data>
   <data name="RAMUsed" xml:space="preserve">
-    <value>Usata</value>
+    <value>In Uso</value>
     <comment>Full name for RAM load metric</comment>
   </data>
   <data name="RAMUsedLabel" xml:space="preserve">
-    <value>Usata</value>
+    <value>In Uso</value>
     <comment>Short label for RAM used metric</comment>
   </data>
   <data name="RAMVoltage" xml:space="preserve">
