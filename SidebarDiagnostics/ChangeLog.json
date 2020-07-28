@@ -2,6 +2,7 @@
   {
     "Version": "Unreleased",
     "Changes": [
+      "Turkish language support.",
       "Fix: Shortened some Italian translations to better fit the panel."
     ]
   },
