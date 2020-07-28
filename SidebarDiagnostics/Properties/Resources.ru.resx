@@ -558,11 +558,11 @@
     <comment>Settings background color tooltip</comment>
   </data>
   <data name="SettingsBackgroundOpacity" xml:space="preserve">
-    <value>Прорачность фона</value>
+    <value>Непрозрачность фона</value>
     <comment>Settings background opacity label</comment>
   </data>
   <data name="SettingsBackgroundOpacityTooltip" xml:space="preserve">
-    <value>Задает прозрачность фона.</value>
+    <value>Задает непрозрачность фона, где 1 фон непрозрачный, 0 полностью прозрачный.</value>
     <comment>Settings background opacity tooltip</comment>
   </data>
   <data name="SettingsBandwidthInAlert" xml:space="preserve">
@@ -658,11 +658,11 @@
     <comment>Settings font color tooltip</comment>
   </data>
   <data name="SettingsFontSize" xml:space="preserve">
-    <value>Размер шрифта.</value>
+    <value>Размер шрифта</value>
     <comment>Settings font size label</comment>
   </data>
   <data name="SettingsFontSizeTooltip" xml:space="preserve">
-    <value>Размер текста и иконок.</value>
+    <value>Размер текста и иконок</value>
     <comment>Settings font size tooltip</comment>
   </data>
   <data name="SettingsGeneralTab" xml:space="preserve">
@@ -914,7 +914,7 @@
     <comment>Settings use GHz tooltip</comment>
   </data>
   <data name="SettingsVerticalOffset" xml:space="preserve">
-    <value>Вертикальный отсутп</value>
+    <value>Вертикальный отступ</value>
     <comment>Vertical offset settings label</comment>
   </data>
   <data name="SettingsVerticalOffsetTooltip" xml:space="preserve">
