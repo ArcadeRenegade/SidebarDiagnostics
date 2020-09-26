@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using Squirrel;
+//using Squirrel;
 using Hardcodet.Wpf.TaskbarNotification;
 using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Utilities;
@@ -138,73 +138,73 @@ namespace SidebarDiagnostics
             new Graph(_sidebar);
         }
 
-        private async Task AppUpdate(bool showInfo)
-        {
-            string _exe = await SquirrelUpdate(showInfo);
+        //private async Task AppUpdate(bool showInfo)
+        //{
+        //    string _exe = await SquirrelUpdate(showInfo);
 
-            if (_exe != null)
-            {
-                if (Framework.Settings.Instance.RunAtStartup)
-                {
-                    Utilities.Startup.EnableStartupTask(_exe);
-                }
+        //    if (_exe != null)
+        //    {
+        //        if (Framework.Settings.Instance.RunAtStartup)
+        //        {
+        //            Utilities.Startup.EnableStartupTask(_exe);
+        //        }
 
-                Process.Start(_exe);
+        //        Process.Start(_exe);
 
-                Shutdown();
-            }
-        }
+        //        Shutdown();
+        //    }
+        //}
 
-        private async Task<string> SquirrelUpdate(bool showInfo)
-        {
-            try
-            {
-                using (UpdateManager _manager = new UpdateManager(ConfigurationManager.AppSettings["CurrentReleaseURL"]))
-                {
-                    UpdateInfo _update = await _manager.CheckForUpdate();
+        //private async Task<string> SquirrelUpdate(bool showInfo)
+        //{
+        //    try
+        //    {
+        //        using (UpdateManager _manager = new UpdateManager(ConfigurationManager.AppSettings["CurrentReleaseURL"]))
+        //        {
+        //            UpdateInfo _update = await _manager.CheckForUpdate();
 
-                    if (_update.ReleasesToApply.Any())
-                    {
-                        Version _newVersion = _update.ReleasesToApply.OrderByDescending(r => r.Version).First().Version.Version;
+        //            if (_update.ReleasesToApply.Any())
+        //            {
+        //                Version _newVersion = _update.ReleasesToApply.OrderByDescending(r => r.Version).First().Version.Version;
 
-                        Update _updateWindow = new Update();
-                        _updateWindow.Show();
+        //                Update _updateWindow = new Update();
+        //                _updateWindow.Show();
 
-                        await _manager.UpdateApp((p) => _updateWindow.SetProgress(p));
+        //                await _manager.UpdateApp((p) => _updateWindow.SetProgress(p));
 
-                        _updateWindow.Close();
+        //                _updateWindow.Close();
 
-                        return Utilities.Paths.Exe(_newVersion);
-                    }
-                    else if (showInfo)
-                    {
-                        MessageBox.Show(Framework.Resources.UpdateSuccessText, Framework.Resources.AppName, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-                    }
-                }
-            }
-            catch (WebException)
-            {
-                if (showInfo)
-                {
-                    MessageBox.Show(Framework.Resources.UpdateErrorText, Framework.Resources.UpdateErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-                }
-            }
-            catch (Exception e)
-            {
-                Framework.Settings.Instance.AutoUpdate = false;
-                Framework.Settings.Instance.Save();
+        //                return Utilities.Paths.Exe(_newVersion);
+        //            }
+        //            else if (showInfo)
+        //            {
+        //                MessageBox.Show(Framework.Resources.UpdateSuccessText, Framework.Resources.AppName, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+        //            }
+        //        }
+        //    }
+        //    catch (WebException)
+        //    {
+        //        if (showInfo)
+        //        {
+        //            MessageBox.Show(Framework.Resources.UpdateErrorText, Framework.Resources.UpdateErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Framework.Settings.Instance.AutoUpdate = false;
+        //        Framework.Settings.Instance.Save();
 
-                using (EventLog _log = new EventLog("Application"))
-                {
-                    _log.Source = Framework.Resources.AppName;
-                    _log.WriteEntry(e.ToString(), EventLogEntryType.Error, 100, 1);
-                }
+        //        using (EventLog _log = new EventLog("Application"))
+        //        {
+        //            _log.Source = Framework.Resources.AppName;
+        //            _log.WriteEntry(e.ToString(), EventLogEntryType.Error, 100, 1);
+        //        }
 
-                MessageBox.Show(Framework.Resources.UpdateErrorFatalText, Framework.Resources.UpdateErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-            }
+        //        MessageBox.Show(Framework.Resources.UpdateErrorFatalText, Framework.Resources.UpdateErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         private void CheckSettings()
         {
@@ -297,7 +297,7 @@ namespace SidebarDiagnostics
 
         private async void Update_Click(object sender, RoutedEventArgs e)
         {
-            await AppUpdate(true);
+            //await AppUpdate(true);
         }
 
         private void Close_Click(object sender, EventArgs e)
