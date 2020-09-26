@@ -35,12 +35,12 @@ namespace SidebarDiagnostics
             Culture.SetCurrent(true);
 
             // UPDATE
-            #if !DEBUG
-            if (Framework.Settings.Instance.AutoUpdate)
-            {
-                await AppUpdate(false);
-            }
-            #endif
+            //#if !DEBUG
+            //if (Framework.Settings.Instance.AutoUpdate)
+            //{
+            //    await AppUpdate(false);
+            //}
+            //#endif
 
             // SETTINGS
             CheckSettings();
