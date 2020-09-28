@@ -223,6 +223,36 @@ namespace SidebarDiagnostics.Framework {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;Version&quot;: &quot;Unreleased&quot;,
+        ///    &quot;Changes&quot;: [
+        ///      &quot;Turkish language support.&quot;,
+        ///      &quot;Fix: Shortened some Italian translations to better fit the panel.&quot;
+        ///    ]
+        ///  },
+        ///  {
+        ///    &quot;Version&quot;: &quot;3.5.6&quot;,
+        ///    &quot;Changes&quot;: [
+        ///      &quot;Updated Libre Hardware Monitor.&quot;,
+        ///      &quot;Russian language support.&quot;,
+        ///      &quot;Italian language support.&quot;,
+        ///      &quot;Fix: AMD core chiplet dies temperature (Ryzen Master)&quot;
+        ///    ]
+        ///  },
+        ///  {
+        ///    &quot;Version&quot;: &quot;3.5.5&quot;,
+        ///    &quot;Changes&quot;: [
+        ///      &quot;Bug fix for Ryzen CPU clock speed.&quot;,
+        ///  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string ChangeLog {
+            get {
+                return ResourceManager.GetString("ChangeLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Log.
         /// </summary>
         public static string ChangeLogTitle {

@@ -76,19 +76,21 @@ namespace SidebarDiagnostics.Models
     {
         public static ChangeLogEntry[] Load()
         {
-            ChangeLogEntry[] _return = null;
+            //ChangeLogEntry[] _return = null;
 
-            string _file = Paths.ChangeLog;
+            //string _file = Paths.ChangeLog;
 
-            if (File.Exists(_file))
-            {
-                using (StreamReader _reader = File.OpenText(_file))
-                {
-                    _return = (ChangeLogEntry[])new JsonSerializer().Deserialize(_reader, typeof(ChangeLogEntry[]));
-                }
-            }
+            //if (File.Exists(_file))
+            //{
+            //    using (StreamReader _reader = File.OpenText(_file))
+            //    {
+            //        _return = (ChangeLogEntry[])new JsonSerializer().Deserialize(_reader, typeof(ChangeLogEntry[]));
+            //    }
+            //}
 
-            return _return ?? new ChangeLogEntry[0];
+            //return _return ?? new ChangeLogEntry[0];
+
+            return JsonConvert.DeserializeObject<ChangeLogEntry[]>(Resources.ChangeLog);
         }
 
         [JsonProperty]

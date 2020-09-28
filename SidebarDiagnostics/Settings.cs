@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
+using Windows.Storage;
+using System.Threading.Tasks;
 
 namespace SidebarDiagnostics.Framework
 {
@@ -13,37 +15,62 @@ namespace SidebarDiagnostics.Framework
     {
         private Settings() { }
 
-        public void Save()
+        public async Task Save()
         {
-            if (!Directory.Exists(Paths.LocalApp))
+            //if (!Directory.Exists(Paths.LocalApp))
+            //{
+            //    Directory.CreateDirectory(Paths.LocalApp);
+            //}
+
+            //using (StreamWriter _writer = File.CreateText(Paths.SettingsFile))
+            //{
+            //    new JsonSerializer() { Formatting = Formatting.Indented }.Serialize(_writer, this);
+            //}
+
+            StorageFile settingsFile = await Paths.LocalFolder.CreateFileAsync(Paths.SETTINGS, CreationCollisionOption.ReplaceExisting);
+
+            using (Stream stream = await settingsFile.OpenStreamForWriteAsync())
             {
-                Directory.CreateDirectory(Paths.LocalApp);
-            }
-
-            using (StreamWriter _writer = File.CreateText(Paths.SettingsFile))
-            {
-                new JsonSerializer() { Formatting = Formatting.Indented }.Serialize(_writer, this);
-            }
-        }
-
-        public void Reload()
-        {
-            _instance = Load();
-        }
-
-        private static Settings Load()
-        {
-            Settings _return = null;
-
-            if (File.Exists(Paths.SettingsFile))
-            {
-                using (StreamReader _reader = File.OpenText(Paths.SettingsFile))
+                using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    _return = (Settings)new JsonSerializer().Deserialize(_reader, typeof(Settings));
+                    new JsonSerializer() { Formatting = Formatting.Indented }.Serialize(writer, this);
                 }
             }
+        }
 
-            return _return ?? new Settings();
+        public async Task Reload()
+        {
+            _instance = await Load();
+        }
+
+        private static async Task<Settings> Load()
+        {
+            //Settings _return = null;
+
+            //if (File.Exists(Paths.SettingsFile))
+            //{
+            //    using (StreamReader _reader = File.OpenText(Paths.SettingsFile))
+            //    {
+            //        _return = (Settings)new JsonSerializer().Deserialize(_reader, typeof(Settings));
+            //    }
+            //}
+
+            //return _return ?? new Settings();
+
+            try
+            {
+                using (Stream stream = await Paths.LocalFolder.OpenStreamForReadAsync(Paths.SETTINGS))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        return (Settings)new JsonSerializer().Deserialize(reader, typeof(Settings));
+                    }
+                }
+            }
+            catch
+            {
+                return new Settings();
+            }
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -142,7 +169,7 @@ namespace SidebarDiagnostics.Framework
         }
 
         private bool _useAppBar { get; set; } = true;
-        
+
         [JsonProperty]
         public bool UseAppBar
         {
@@ -357,7 +384,7 @@ namespace SidebarDiagnostics.Framework
             set
             {
                 _initiallyHidden = value;
-                
+
                 NotifyPropertyChanged("InitiallyHidden");
             }
         }
@@ -465,7 +492,7 @@ namespace SidebarDiagnostics.Framework
         }
 
         private string _fontColor { get; set; } = "#FFFFFF";
-        
+
         [JsonProperty]
         public string FontColor
         {
@@ -625,7 +652,9 @@ namespace SidebarDiagnostics.Framework
             {
                 if (_instance == null)
                 {
-                    _instance = Load();
+                    Task<Settings> task = Load();
+                    task.Wait();
+                    _instance = task.Result;
                 }
 
                 return _instance;

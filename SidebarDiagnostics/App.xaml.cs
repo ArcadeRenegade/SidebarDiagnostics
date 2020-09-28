@@ -80,7 +80,8 @@ namespace SidebarDiagnostics
             if (!string.Equals(Framework.Settings.Instance.ChangeLog, _vstring, StringComparison.OrdinalIgnoreCase))
             {
                 Framework.Settings.Instance.ChangeLog = _vstring;
-                Framework.Settings.Instance.Save();
+                Task task = Framework.Settings.Instance.Save();
+                //task.Wait();
 
                 new ChangeLog(_version).Show();
             }

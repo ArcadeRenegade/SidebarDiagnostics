@@ -9,105 +9,114 @@ using System.Windows.Markup;
 using Microsoft.Win32.TaskScheduler;
 using SidebarDiagnostics.Framework;
 using System.Diagnostics;
+using Windows.Storage;
 
 namespace SidebarDiagnostics.Utilities
 {
     public static class Paths
     {
-        private const string SETTINGS = "settings.json";
-        private const string CHANGELOG = "ChangeLog.json";
+        public const string SETTINGS = "settings.json";
+        public const string CHANGELOG = "ChangeLog.json";
 
-        public static string Install(Version version)
-        {
-            return Path.Combine(LocalApp, string.Format("app-{0}", version.ToString(3)));
-        }
+        //public static string Install(Version version)
+        //{
+        //    return Path.Combine(LocalApp, string.Format("app-{0}", version.ToString(3)));
+        //}
 
-        public static string Exe(Version version)
-        {
-            return Path.Combine(Install(version), ExeName);
-        }
+        //public static string Exe(Version version)
+        //{
+        //    return Path.Combine(Install(version), ExeName);
+        //}
 
-        public static string ChangeLog
+        //public static string ChangeLog
+        //{
+        //    get
+        //    {
+        //        return Path.Combine(CurrentDirectory, CHANGELOG);
+        //    }
+        //}
+
+        //public static string CurrentDirectory
+        //{
+        //    get
+        //    {
+        //        return Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+        //    }
+        //}
+
+        //public static string TaskBar
+        //{
+        //    get
+        //    {
+        //        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar");
+        //    }
+        //}
+
+        //private static string _assemblyName { get; set; } = null;
+
+        //public static string AssemblyName
+        //{
+        //    get
+        //    {
+        //        if (_assemblyName == null)
+        //        {
+        //            _assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+        //        }
+
+        //        return _assemblyName;
+        //    }
+        //}
+
+        //private static string _exeName { get; set; } = null;
+
+        //public static string ExeName
+        //{
+        //    get
+        //    {
+        //        if (_exeName == null)
+        //        {
+        //            _exeName = string.Format("{0}.exe", AssemblyName);
+        //        }
+
+        //        return _exeName;
+        //    }
+        //}
+
+        //private static string _settingsFile { get; set; } = null;
+
+        //public static string SettingsFile
+        //{
+        //    get
+        //    {
+        //        if (_settingsFile == null)
+        //        {
+        //            _settingsFile = Path.Combine(LocalApp, SETTINGS);
+        //        }
+
+        //        return _settingsFile;
+        //    }
+        //}
+
+        //private static string _localApp { get; set; } = null;
+
+        //public static string LocalApp
+        //{
+        //    get
+        //    {
+        //        if (_localApp == null)
+        //        {
+        //            _localApp = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyName);
+        //        }
+
+        //        return _localApp;
+        //    }
+        //}
+
+        public static StorageFolder LocalFolder
         {
             get
             {
-                return Path.Combine(CurrentDirectory, CHANGELOG);
-            }
-        }
-
-        public static string CurrentDirectory
-        {
-            get
-            {
-                return Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
-            }
-        }
-
-        public static string TaskBar
-        {
-            get
-            {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar");
-            }
-        }
-
-        private static string _assemblyName { get; set; } = null;
-
-        public static string AssemblyName
-        {
-            get
-            {
-                if (_assemblyName == null)
-                {
-                    _assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
-                }
-
-                return _assemblyName;
-            }
-        }
-
-        private static string _exeName { get; set; } = null;
-
-        public static string ExeName
-        {
-            get
-            {
-                if (_exeName == null)
-                {
-                    _exeName = string.Format("{0}.exe", AssemblyName);
-                }
-
-                return _exeName;
-            }
-        }
-
-        private static string _settingsFile { get; set; } = null;
-
-        public static string SettingsFile
-        {
-            get
-            {
-                if (_settingsFile == null)
-                {
-                    _settingsFile = Path.Combine(LocalApp, SETTINGS);
-                }
-
-                return _settingsFile;
-            }
-        }
-
-        private static string _localApp { get; set; } = null;
-
-        public static string LocalApp
-        {
-            get
-            {
-                if (_localApp == null)
-                {
-                    _localApp = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyName);
-                }
-
-                return _localApp;
+                return ApplicationData.Current.LocalFolder;
             }
         }
     }

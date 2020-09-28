@@ -117,7 +117,8 @@ namespace SidebarDiagnostics
             }
 
             Framework.Settings.Instance.InitialSetup = false;
-            Framework.Settings.Instance.Save();
+            Task task = Framework.Settings.Instance.Save();
+            task.Wait();
 
             App.StartApp(_openSettings);
         }

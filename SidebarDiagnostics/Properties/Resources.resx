@@ -9,6 +9,7 @@
     that is mostly human readable. The generation and parsing of the 
     various data types are done through the TypeConverter classes 
     associated with the data types.
+    
     Example:
     
     ... ado.net/XML headers & schema ...
@@ -1039,5 +1040,9 @@
   <data name="SettingsShowMachineNameTooltip" xml:space="preserve">
     <value>Shows the name of the computer.</value>
     <comment>Settings show machine name tooltip</comment>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ChangeLog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ChangeLog.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

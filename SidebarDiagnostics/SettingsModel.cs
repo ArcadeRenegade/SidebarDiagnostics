@@ -9,6 +9,7 @@ using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Framework;
+using System.Threading.Tasks;
 
 namespace SidebarDiagnostics.Models
 {
@@ -231,7 +232,8 @@ namespace SidebarDiagnostics.Models
 
             Framework.Settings.Instance.Hotkeys = _hotkeys.ToArray();
 
-            Framework.Settings.Instance.Save();
+            Task task = Framework.Settings.Instance.Save();
+            task.Wait();
 
             App.RefreshIcon();
 
