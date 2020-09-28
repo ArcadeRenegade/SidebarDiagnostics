@@ -27,7 +27,7 @@ namespace SidebarDiagnostics.Framework
             //    new JsonSerializer() { Formatting = Formatting.Indented }.Serialize(_writer, this);
             //}
 
-            StorageFile settingsFile = await Paths.LocalFolder.CreateFileAsync(Paths.SETTINGS, CreationCollisionOption.ReplaceExisting);
+            StorageFile settingsFile = await Paths.LocalFolder.CreateFileAsync(Paths.SETTINGS, CreationCollisionOption.ReplaceExisting).AsTask();
 
             using (Stream stream = await settingsFile.OpenStreamForWriteAsync())
             {
@@ -38,12 +38,7 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        public async Task Reload()
-        {
-            _instance = await Load();
-        }
-
-        private static async Task<Settings> Load()
+        public static async Task Load()
         {
             //Settings _return = null;
 
@@ -57,20 +52,24 @@ namespace SidebarDiagnostics.Framework
 
             //return _return ?? new Settings();
 
+            Settings settings;
+
             try
             {
                 using (Stream stream = await Paths.LocalFolder.OpenStreamForReadAsync(Paths.SETTINGS))
                 {
                     using (StreamReader reader = new StreamReader(stream))
                     {
-                        return (Settings)new JsonSerializer().Deserialize(reader, typeof(Settings));
+                        settings = (Settings)new JsonSerializer().Deserialize(reader, typeof(Settings));
                     }
                 }
             }
             catch
             {
-                return new Settings();
+                settings = new Settings();
             }
+
+            _instance = settings;
         }
 
         public void NotifyPropertyChanged(string propertyName)
@@ -650,13 +649,6 @@ namespace SidebarDiagnostics.Framework
         {
             get
             {
-                if (_instance == null)
-                {
-                    Task<Settings> task = Load();
-                    task.Wait();
-                    _instance = task.Result;
-                }
-
                 return _instance;
             }
         }

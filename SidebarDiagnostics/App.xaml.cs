@@ -30,6 +30,9 @@ namespace SidebarDiagnostics
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(AppDomain_Error);
             #endif
 
+            // INIT SETTINGS
+            await Framework.Settings.Load();
+
             // LANGUAGE
             Culture.SetDefault();
             Culture.SetCurrent(true);
@@ -61,7 +64,7 @@ namespace SidebarDiagnostics
             }
             else
             {
-                StartApp(false);
+                await StartApp(false);
             }
         }
 
@@ -72,7 +75,7 @@ namespace SidebarDiagnostics
             base.OnExit(e);
         }
 
-        public static void StartApp(bool openSettings)
+        public static async Task StartApp(bool openSettings)
         {
             Version _version = Assembly.GetExecutingAssembly().GetName().Version;
             string _vstring = _version.ToString(3);
@@ -80,8 +83,7 @@ namespace SidebarDiagnostics
             if (!string.Equals(Framework.Settings.Instance.ChangeLog, _vstring, StringComparison.OrdinalIgnoreCase))
             {
                 Framework.Settings.Instance.ChangeLog = _vstring;
-                Task task = Framework.Settings.Instance.Save();
-                //task.Wait();
+                await Framework.Settings.Instance.Save();
 
                 new ChangeLog(_version).Show();
             }

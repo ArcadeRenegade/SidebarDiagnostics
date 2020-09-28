@@ -109,7 +109,7 @@ namespace SidebarDiagnostics
             Close();
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private async void Window_Closed(object sender, EventArgs e)
         {
             if (Sidebar != null && Sidebar.IsInitialized)
             {
@@ -117,10 +117,9 @@ namespace SidebarDiagnostics
             }
 
             Framework.Settings.Instance.InitialSetup = false;
-            Task task = Framework.Settings.Instance.Save();
-            task.Wait();
+            await Framework.Settings.Instance.Save();
 
-            App.StartApp(_openSettings);
+            await App.StartApp(_openSettings);
         }
 
         public Dummy Sidebar { get; private set; }

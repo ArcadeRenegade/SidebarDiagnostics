@@ -30,7 +30,7 @@ namespace SidebarDiagnostics
 
         private async Task Save(bool finalize)
         {
-            Model.Save();
+            await Model.Save();
 
             await App.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(async () =>
             {

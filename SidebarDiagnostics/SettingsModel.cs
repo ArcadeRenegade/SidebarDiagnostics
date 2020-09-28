@@ -127,7 +127,7 @@ namespace SidebarDiagnostics.Models
             IsChanged = false;
         }
 
-        public void Save()
+        public async Task Save()
         {
             if (!string.Equals(Culture, Framework.Settings.Instance.Culture, StringComparison.Ordinal))
             {
@@ -232,8 +232,7 @@ namespace SidebarDiagnostics.Models
 
             Framework.Settings.Instance.Hotkeys = _hotkeys.ToArray();
 
-            Task task = Framework.Settings.Instance.Save();
-            task.Wait();
+            await Framework.Settings.Instance.Save();
 
             App.RefreshIcon();
 

@@ -587,8 +587,7 @@ namespace SidebarDiagnostics.Windows
                                         break;
                                 }
 
-                                Task task1 = Framework.Settings.Instance.Save();
-                                task1.Wait();
+                                Framework.Settings.Instance.Save();
 
                                 _sidebar.Reposition();
                             }
@@ -608,8 +607,7 @@ namespace SidebarDiagnostics.Windows
                                     Framework.Settings.Instance.ScreenIndex = 0;
                                 }
 
-                                Task task2 = Framework.Settings.Instance.Save();
-                                task2.Wait();
+                                Framework.Settings.Instance.Save();
 
                                 _sidebar.Reposition();
                             }
@@ -617,8 +615,7 @@ namespace SidebarDiagnostics.Windows
 
                         case KeyAction.ReserveSpace:
                             Framework.Settings.Instance.UseAppBar = !Framework.Settings.Instance.UseAppBar;
-                            Task task3 = Framework.Settings.Instance.Save();
-                            task3.Wait();
+                            Framework.Settings.Instance.Save();
 
                             _sidebar.Reposition();
                             break;
