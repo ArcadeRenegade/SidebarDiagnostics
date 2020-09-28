@@ -50,8 +50,8 @@ namespace SidebarDiagnostics.Models
             ToolbarMode = Framework.Settings.Instance.ToolbarMode;
             ClickThrough = Framework.Settings.Instance.ClickThrough;
             ShowTrayIcon = Framework.Settings.Instance.ShowTrayIcon;
-            AutoUpdate = Framework.Settings.Instance.AutoUpdate;
-            RunAtStartup = Framework.Settings.Instance.RunAtStartup;
+            //AutoUpdate = Framework.Settings.Instance.AutoUpdate;
+            //RunAtStartup = Framework.Settings.Instance.RunAtStartup;
             SidebarWidth = Framework.Settings.Instance.SidebarWidth;
             AutoBGColor = Framework.Settings.Instance.AutoBGColor;
             BGColor = Framework.Settings.Instance.BGColor;
@@ -146,8 +146,8 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.ToolbarMode = ToolbarMode;
             Framework.Settings.Instance.ClickThrough = ClickThrough;
             Framework.Settings.Instance.ShowTrayIcon = ShowTrayIcon;
-            Framework.Settings.Instance.AutoUpdate = AutoUpdate;
-            Framework.Settings.Instance.RunAtStartup = RunAtStartup;
+            //Framework.Settings.Instance.AutoUpdate = AutoUpdate;
+            //Framework.Settings.Instance.RunAtStartup = RunAtStartup;
             Framework.Settings.Instance.SidebarWidth = SidebarWidth;
             Framework.Settings.Instance.AutoBGColor = AutoBGColor;
             Framework.Settings.Instance.BGColor = BGColor;
@@ -236,14 +236,14 @@ namespace SidebarDiagnostics.Models
 
             App.RefreshIcon();
 
-            if (RunAtStartup)
-            {
-                Startup.EnableStartupTask();
-            }
-            else
-            {
-                Startup.DisableStartupTask();
-            }
+            //if (RunAtStartup)
+            //{
+            //    Startup.EnableStartupTask();
+            //}
+            //else
+            //{
+            //    Startup.DisableStartupTask();
+            //}
 
             IsChanged = false;
         }
@@ -529,37 +529,37 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _autoUpdate { get; set; }
+        //private bool _autoUpdate { get; set; }
 
-        public bool AutoUpdate
-        {
-            get
-            {
-                return _autoUpdate;
-            }
-            set
-            {
-                _autoUpdate = value;
+        //public bool AutoUpdate
+        //{
+        //    get
+        //    {
+        //        return _autoUpdate;
+        //    }
+        //    set
+        //    {
+        //        _autoUpdate = value;
 
-                NotifyPropertyChanged("AutoUpdate");
-            }
-        }
+        //        NotifyPropertyChanged("AutoUpdate");
+        //    }
+        //}
 
-        private bool _runAtStartup { get; set; }
+        //private bool _runAtStartup { get; set; }
 
-        public bool RunAtStartup
-        {
-            get
-            {
-                return _runAtStartup;
-            }
-            set
-            {
-                _runAtStartup = value;
+        //public bool RunAtStartup
+        //{
+        //    get
+        //    {
+        //        return _runAtStartup;
+        //    }
+        //    set
+        //    {
+        //        _runAtStartup = value;
 
-                NotifyPropertyChanged("RunAtStartup");
-            }
-        }
+        //        NotifyPropertyChanged("RunAtStartup");
+        //    }
+        //}
 
         private int _sidebarWidth { get; set; }
 

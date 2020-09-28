@@ -201,39 +201,39 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _autoUpdate { get; set; } = true;
+        //private bool _autoUpdate { get; set; } = true;
 
-        [JsonProperty]
-        public bool AutoUpdate
-        {
-            get
-            {
-                return _autoUpdate;
-            }
-            set
-            {
-                _autoUpdate = value;
+        //[JsonProperty]
+        //public bool AutoUpdate
+        //{
+        //    get
+        //    {
+        //        return _autoUpdate;
+        //    }
+        //    set
+        //    {
+        //        _autoUpdate = value;
 
-                NotifyPropertyChanged("AutoUpdate");
-            }
-        }
+        //        NotifyPropertyChanged("AutoUpdate");
+        //    }
+        //}
 
-        private bool _runAtStartup { get; set; } = true;
+        //private bool _runAtStartup { get; set; } = true;
 
-        [JsonProperty]
-        public bool RunAtStartup
-        {
-            get
-            {
-                return _runAtStartup;
-            }
-            set
-            {
-                _runAtStartup = value;
+        //[JsonProperty]
+        //public bool RunAtStartup
+        //{
+        //    get
+        //    {
+        //        return _runAtStartup;
+        //    }
+        //    set
+        //    {
+        //        _runAtStartup = value;
 
-                NotifyPropertyChanged("RunAtStartup");
-            }
-        }
+        //        NotifyPropertyChanged("RunAtStartup");
+        //    }
+        //}
 
         private double _uiScale { get; set; } = 1d;
 

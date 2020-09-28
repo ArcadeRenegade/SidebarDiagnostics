@@ -211,10 +211,10 @@ namespace SidebarDiagnostics
 
         private void CheckSettings()
         {
-            if (Framework.Settings.Instance.RunAtStartup && !Utilities.Startup.StartupTaskExists())
-            {
-                Utilities.Startup.EnableStartupTask();
-            }
+            //if (Framework.Settings.Instance.RunAtStartup && !Utilities.Startup.StartupTaskExists())
+            //{
+            //    Utilities.Startup.EnableStartupTask();
+            //}
 
             Framework.Settings.Instance.MonitorConfig = MonitorConfig.CheckConfig(Framework.Settings.Instance.MonitorConfig);
         }

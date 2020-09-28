@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
-using Microsoft.Win32.TaskScheduler;
+//using Microsoft.Win32.TaskScheduler;
 using SidebarDiagnostics.Framework;
 using System.Diagnostics;
 using Windows.Storage;
@@ -123,63 +123,63 @@ namespace SidebarDiagnostics.Utilities
 
     public static class Startup
     {        
-        public static bool StartupTaskExists()
-        {
-            using (TaskService _taskService = new TaskService())
-            {
-                Task _task = _taskService.FindTask(Constants.Generic.TASKNAME);
+        //public static bool StartupTaskExists()
+        //{
+        //    using (TaskService _taskService = new TaskService())
+        //    {
+        //        Task _task = _taskService.FindTask(Constants.Generic.TASKNAME);
 
-                if (_task == null)
-                {
-                    return false;
-                }
+        //        if (_task == null)
+        //        {
+        //            return false;
+        //        }
 
-                ExecAction _action = _task.Definition.Actions.OfType<ExecAction>().FirstOrDefault();
+        //        ExecAction _action = _task.Definition.Actions.OfType<ExecAction>().FirstOrDefault();
 
-                if (_action == null || _action.Path != Assembly.GetExecutingAssembly().Location)
-                {
-                    return false;
-                }
+        //        if (_action == null || _action.Path != Assembly.GetExecutingAssembly().Location)
+        //        {
+        //            return false;
+        //        }
 
-                return true;
-            }
-        }
+        //        return true;
+        //    }
+        //}
 
-        public static void EnableStartupTask(string exePath = null)
-        {
-            try
-            {
-                using (TaskService _taskService = new TaskService())
-                {
-                    TaskDefinition _def = _taskService.NewTask();
-                    _def.Triggers.Add(new LogonTrigger() { Enabled = true });
-                    _def.Actions.Add(new ExecAction(exePath ?? Assembly.GetExecutingAssembly().Location));
-                    _def.Principal.RunLevel = TaskRunLevel.Highest;
+        //public static void EnableStartupTask(string exePath = null)
+        //{
+        //    try
+        //    {
+        //        using (TaskService _taskService = new TaskService())
+        //        {
+        //            TaskDefinition _def = _taskService.NewTask();
+        //            _def.Triggers.Add(new LogonTrigger() { Enabled = true });
+        //            _def.Actions.Add(new ExecAction(exePath ?? Assembly.GetExecutingAssembly().Location));
+        //            _def.Principal.RunLevel = TaskRunLevel.Highest;
 
-                    _def.Settings.DisallowStartIfOnBatteries = false;
-                    _def.Settings.StopIfGoingOnBatteries = false;
-                    _def.Settings.ExecutionTimeLimit = TimeSpan.Zero;
+        //            _def.Settings.DisallowStartIfOnBatteries = false;
+        //            _def.Settings.StopIfGoingOnBatteries = false;
+        //            _def.Settings.ExecutionTimeLimit = TimeSpan.Zero;
 
-                    _taskService.RootFolder.RegisterTaskDefinition(Constants.Generic.TASKNAME, _def);
-                }
-            }
-            catch (Exception e)
-            {
-                using (EventLog _log = new EventLog("Application"))
-                {
-                    _log.Source = Resources.AppName;
-                    _log.WriteEntry(e.ToString(), EventLogEntryType.Error, 100, 1);
-                }
-            }
-        }
+        //            _taskService.RootFolder.RegisterTaskDefinition(Constants.Generic.TASKNAME, _def);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        using (EventLog _log = new EventLog("Application"))
+        //        {
+        //            _log.Source = Resources.AppName;
+        //            _log.WriteEntry(e.ToString(), EventLogEntryType.Error, 100, 1);
+        //        }
+        //    }
+        //}
 
-        public static void DisableStartupTask()
-        {
-            using (TaskService _taskService = new TaskService())
-            {
-                _taskService.RootFolder.DeleteTask(Constants.Generic.TASKNAME, false);
-            }
-        }
+        //public static void DisableStartupTask()
+        //{
+        //    using (TaskService _taskService = new TaskService())
+        //    {
+        //        _taskService.RootFolder.DeleteTask(Constants.Generic.TASKNAME, false);
+        //    }
+        //}
     }
 
     public static class Culture
