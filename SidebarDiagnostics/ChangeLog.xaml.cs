@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using SidebarDiagnostics.Models;
-using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics

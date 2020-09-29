@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using SidebarDiagnostics.Monitoring;
 
@@ -7,11 +8,19 @@ namespace SidebarDiagnostics.Models
 {
     public class SidebarModel : INotifyPropertyChanged, IDisposable
     {
-        public SidebarModel()
+        private SidebarModel() { }
+
+        public static async Task<SidebarModel> CreateInstance()
         {
-            InitMachineName();
-            InitClock();
-            InitMonitors();
+            SidebarModel instance = new SidebarModel();
+
+            instance.InitMachineName();
+
+            instance.InitClock();
+
+            await instance.InitMonitors();
+
+            return instance;
         }
 
         public void Dispose()
@@ -95,9 +104,9 @@ namespace SidebarDiagnostics.Models
             UpdateClock();
         }
 
-        private void InitMonitors()
+        private async Task InitMonitors()
         {
-            MonitorManager = new MonitorManager(Framework.Settings.Instance.MonitorConfig);
+            MonitorManager = await MonitorManager.CreateInstance(Framework.Settings.Instance.MonitorConfig);
             MonitorManager.Update();
         }
 
@@ -187,7 +196,7 @@ namespace SidebarDiagnostics.Models
                 _monitorTimer.Stop();
                 _monitorTimer = null;
             }
-            
+
             if (MonitorManager != null)
             {
                 MonitorManager.Dispose();

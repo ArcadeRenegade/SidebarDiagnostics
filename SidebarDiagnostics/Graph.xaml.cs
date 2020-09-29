@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using SidebarDiagnostics.Models;
-using SidebarDiagnostics.Windows;
 using System.ComponentModel;
 using SidebarDiagnostics.Style;
 

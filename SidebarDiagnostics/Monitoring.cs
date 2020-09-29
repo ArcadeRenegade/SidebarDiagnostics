@@ -4,9 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.IO;
-using System.Net;
-using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
@@ -15,29 +12,48 @@ using System.Windows.Media;
 using LibreHardwareMonitor.Hardware;
 using Newtonsoft.Json;
 using SidebarDiagnostics.Framework;
+using Windows.Web.Http;
+using System.Threading.Tasks;
 
 namespace SidebarDiagnostics.Monitoring
 {
     public class MonitorManager : INotifyPropertyChanged, IDisposable
     {
-        public MonitorManager(MonitorConfig[] config)
+        private MonitorManager() { }
+
+        public static async Task<MonitorManager> CreateInstance(MonitorConfig[] config)
         {
-            _computer = new Computer()
+            MonitorManager instance = new MonitorManager
             {
-                IsCpuEnabled = true,
-                IsControllerEnabled = true,
-                IsGpuEnabled = true,
-                IsStorageEnabled = false,
-                IsMotherboardEnabled = true,
-                IsMemoryEnabled = true,
-                IsNetworkEnabled = false
+                _computer = new Computer()
+                {
+                    IsCpuEnabled = true,
+                    IsControllerEnabled = true,
+                    IsGpuEnabled = true,
+                    IsStorageEnabled = false,
+                    IsMotherboardEnabled = true,
+                    IsMemoryEnabled = true,
+                    IsNetworkEnabled = false
+                }
             };
-            _computer.Open();
-            _board = GetHardware(HardwareType.Motherboard).FirstOrDefault();
 
-            UpdateBoard();
+            instance._computer.Open();
+            instance._board = instance.GetHardware(HardwareType.Motherboard).FirstOrDefault();
 
-            MonitorPanels = config.Where(c => c.Enabled).OrderByDescending(c => c.Order).Select(c => NewPanel(c)).ToArray();
+            instance.UpdateBoard();
+
+            List<MonitorPanel> panels = new List<MonitorPanel>();
+
+            foreach (MonitorConfig mconfig in config.Where(c => c.Enabled).OrderByDescending(c => c.Order))
+            {
+                MonitorPanel newPanel = await instance.NewPanel(mconfig);
+
+                panels.Add(newPanel);
+            }
+
+            instance.MonitorPanels = panels.ToArray();
+
+            return instance;
         }
 
         public void Dispose()
@@ -118,7 +134,7 @@ namespace SidebarDiagnostics.Monitoring
             return _computer.Hardware.Where(h => types.Contains(h.HardwareType));
         }
 
-        private MonitorPanel NewPanel(MonitorConfig config)
+        private async Task<MonitorPanel> NewPanel(MonitorConfig config)
         {
             switch (config.Type)
             {
@@ -161,7 +177,7 @@ namespace SidebarDiagnostics.Monitoring
                         );
 
                 case MonitorType.Network:
-                    return NetworkPanel(
+                    return await NetworkPanel(
                         config.Type,
                         config.Hardware,
                         config.Metrics,
@@ -191,12 +207,12 @@ namespace SidebarDiagnostics.Monitoring
                 );
         }
 
-        private MonitorPanel NetworkPanel(MonitorType type, HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters)
+        private async Task<MonitorPanel> NetworkPanel(MonitorType type, HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters)
         {
             return new MonitorPanel(
                 type.GetDescription(),
                 "M 40,44L 39.9999,51L 44,51C 45.1046,51 46,51.8954 46,53L 46,57C 46,58.1046 45.1045,59 44,59L 32,59C 30.8954,59 30,58.1046 30,57L 30,53C 30,51.8954 30.8954,51 32,51L 36,51L 36,44L 40,44 Z M 47,53L 57,53L 57,57L 47,57L 47,53 Z M 29,53L 29,57L 19,57L 19,53L 29,53 Z M 19,22L 57,22L 57,31L 19,31L 19,22 Z M 55,24L 53,24L 53,29L 55,29L 55,24 Z M 51,24L 49,24L 49,29L 51,29L 51,24 Z M 47,24L 45,24L 45,29L 47,29L 47,24 Z M 21,27L 21,29L 23,29L 23,27L 21,27 Z M 19,33L 57,33L 57,42L 19,42L 19,33 Z M 55,35L 53,35L 53,40L 55,40L 55,35 Z M 51,35L 49,35L 49,40L 51,40L 51,35 Z M 47,35L 45,35L 45,40L 47,40L 47,35 Z M 21,38L 21,40L 23,40L 23,38L 21,38 Z",
-                NetworkMonitor.GetInstances(hardwareConfig, metrics, parameters)
+                await NetworkMonitor.GetInstances(hardwareConfig, metrics, parameters)
                 );
         }
 
@@ -1223,7 +1239,7 @@ namespace SidebarDiagnostics.Monitoring
             return _instances.Where(i => !_regex.IsMatch(i)).OrderBy(h => h).Select(h => new HardwareConfig() { ID = h, Name = h, ActualName = h });
         }
 
-        public static iMonitor[] GetInstances(HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters)
+        public static async Task<iMonitor[]> GetInstances(HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters)
         {
             bool _showName = parameters.GetValue<bool>(ParamKey.HardwareNames);
             bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
@@ -1235,7 +1251,7 @@ namespace SidebarDiagnostics.Monitoring
 
             if (metrics.IsEnabled(MetricKey.NetworkExtIP))
             {
-                _extIP = GetExternalIPAddress();
+                _extIP = await GetExternalIPAddress();
             }
 
             return (
@@ -1295,28 +1311,45 @@ namespace SidebarDiagnostics.Monitoring
             return null;
         }
 
-        private static string GetExternalIPAddress()
+        private static async Task<string> GetExternalIPAddress()
         {
+            //try
+            //{
+            //    HttpWebRequest _request = WebRequest.CreateHttp(Constants.URLs.IPIFY);
+            //    _request.Method = HttpMethod.Get.Method;
+            //    _request.Timeout = 5000;
+
+            //    using (HttpWebResponse _response = (HttpWebResponse)_request.GetResponse())
+            //    {
+            //        using (Stream _stream = _response.GetResponseStream())
+            //        {
+            //            using (StreamReader _reader = new StreamReader(_stream))
+            //            {
+            //                return _reader.ReadToEnd();
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (WebException)
+            //{
+            //    return "";
+            //}
+
             try
             {
-                HttpWebRequest _request = WebRequest.CreateHttp(Constants.URLs.IPIFY);
-                _request.Method = HttpMethod.Get.Method;
-                _request.Timeout = 5000;
-
-                using (HttpWebResponse _response = (HttpWebResponse)_request.GetResponse())
+                using (HttpClient client = new HttpClient())
                 {
-                    using (Stream _stream = _response.GetResponseStream())
+                    Uri uri = new Uri(Constants.URLs.IPIFY);
+
+                    using (HttpResponseMessage response = await client.GetAsync(uri).AsTask())
                     {
-                        using (StreamReader _reader = new StreamReader(_stream))
-                        {
-                            return _reader.ReadToEnd();
-                        }
+                        return await response.Content.ReadAsStringAsync().AsTask();
                     }
                 }
             }
-            catch (WebException)
+            catch
             {
-                return "";
+                return string.Empty;
             }
         }
     }

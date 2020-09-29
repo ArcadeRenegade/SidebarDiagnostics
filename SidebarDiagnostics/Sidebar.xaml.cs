@@ -177,7 +177,9 @@ namespace SidebarDiagnostics
                     Model = null;
                 }
 
-                await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ModelReadyHandler(ModelReady), new SidebarModel());
+                SidebarModel model = await SidebarModel.CreateInstance();
+
+                await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ModelReadyHandler(ModelReady), model);
             });
         }
 

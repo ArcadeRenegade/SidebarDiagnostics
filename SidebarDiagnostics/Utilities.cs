@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
 //using Microsoft.Win32.TaskScheduler;
 using SidebarDiagnostics.Framework;
-using System.Diagnostics;
 using Windows.Storage;
 
 namespace SidebarDiagnostics.Utilities

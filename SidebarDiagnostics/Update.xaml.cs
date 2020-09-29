@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Models;
-using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics
