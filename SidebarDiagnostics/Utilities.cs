@@ -184,12 +184,10 @@ namespace SidebarDiagnostics.Utilities
 
         public static void SetCurrent(bool init)
         {
-            SetCurrent(Framework.Settings.Instance.Culture, init);
-        }
+            Resources.Culture = Framework.Settings.Instance.CultureInfo;
 
-        public static void SetCurrent(string name, bool init)
-        {
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = string.Equals(name, DEFAULT, StringComparison.Ordinal) ? Default : new CultureInfo(name);
+            Thread.CurrentThread.CurrentCulture = Framework.Settings.Instance.CultureInfo;
+            Thread.CurrentThread.CurrentUICulture = Framework.Settings.Instance.CultureInfo;
 
             if (init)
             {

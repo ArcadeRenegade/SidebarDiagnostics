@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
+using System.Globalization;
 
 namespace SidebarDiagnostics.Framework
 {
@@ -138,6 +139,16 @@ namespace SidebarDiagnostics.Framework
                 _culture = value;
 
                 NotifyPropertyChanged("Culture");
+            }
+        }
+
+        public CultureInfo CultureInfo
+        {
+            get
+            {
+                return string.Equals(_culture, Utilities.Culture.DEFAULT, StringComparison.Ordinal)
+                    ? Utilities.Culture.Default
+                    : new CultureInfo(_culture);
             }
         }
 
@@ -797,7 +808,7 @@ namespace SidebarDiagnostics.Framework
                     return Resources.SettingsDateFormatDisabled;
                 }
 
-                return DateTime.Today.ToString(Format);
+                return DateTime.Today.ToString(Format, Settings.Instance.CultureInfo);
             }
         }
 
