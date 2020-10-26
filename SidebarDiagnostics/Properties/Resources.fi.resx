@@ -438,11 +438,11 @@
     <comment>Title of the change log window</comment>
   </data>
   <data name="ErrorPerformanceCounter" xml:space="preserve">
-    <value>Your Performance Counter cache is corrupted. Click OK to visit the wiki and fix this error.</value>
+    <value>Suorituskyky laskurin välimuisti on korruptoitunut. Paina OK vieraillaksesi wikissä ja korjataksesi virhe.</value>
     <comment>Text of the performance counter error</comment>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
-    <value>Sidebar Error</value>
+    <value>Sivupalkin virhe</value>
     <comment>Title of the error popup</comment>
   </data>
   <data name="GraphConfigSectionTitle" xml:space="preserve">
