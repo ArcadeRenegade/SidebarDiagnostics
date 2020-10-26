@@ -142,16 +142,6 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        public CultureInfo CultureInfo
-        {
-            get
-            {
-                return string.Equals(_culture, Utilities.Culture.DEFAULT, StringComparison.Ordinal)
-                    ? Utilities.Culture.Default
-                    : new CultureInfo(_culture);
-            }
-        }
-
         private bool _useAppBar { get; set; } = true;
         
         [JsonProperty]
@@ -808,7 +798,7 @@ namespace SidebarDiagnostics.Framework
                     return Resources.SettingsDateFormatDisabled;
                 }
 
-                return DateTime.Today.ToString(Format, Settings.Instance.CultureInfo);
+                return DateTime.Today.ToString(Format, Culture.CultureInfo);
             }
         }
 

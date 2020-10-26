@@ -184,10 +184,10 @@ namespace SidebarDiagnostics.Utilities
 
         public static void SetCurrent(bool init)
         {
-            Resources.Culture = Framework.Settings.Instance.CultureInfo;
+            Resources.Culture = CultureInfo;
 
-            Thread.CurrentThread.CurrentCulture = Framework.Settings.Instance.CultureInfo;
-            Thread.CurrentThread.CurrentUICulture = Framework.Settings.Instance.CultureInfo;
+            Thread.CurrentThread.CurrentCulture = CultureInfo;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo;
 
             if (init)
             {
@@ -209,6 +209,17 @@ namespace SidebarDiagnostics.Utilities
         }
 
         public static CultureInfo Default { get; private set; }
+
+        public static CultureInfo CultureInfo
+        {
+            get
+            {
+                string culture = Framework.Settings.Instance.Culture;
+                return string.Equals(culture, DEFAULT, StringComparison.Ordinal)
+                    ? Default
+                    : new CultureInfo(culture);
+            }
+        }
     }
 
     public class CultureItem

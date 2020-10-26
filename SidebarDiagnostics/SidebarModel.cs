@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Threading;
 using SidebarDiagnostics.Monitoring;
+using SidebarDiagnostics.Utilities;
 
 namespace SidebarDiagnostics.Models
 {
@@ -126,11 +127,11 @@ namespace SidebarDiagnostics.Models
         {
             DateTime _now = DateTime.Now;
 
-            Time = _now.ToString(Framework.Settings.Instance.Clock24HR ? "H:mm:ss" : "h:mm:ss tt", Framework.Settings.Instance.CultureInfo);
+            Time = _now.ToString(Framework.Settings.Instance.Clock24HR ? "H:mm:ss" : "h:mm:ss tt", Culture.CultureInfo);
 
             if (ShowDate)
             {
-                Date = _now.ToString(Framework.Settings.Instance.DateSetting.Format, Framework.Settings.Instance.CultureInfo);
+                Date = _now.ToString(Framework.Settings.Instance.DateSetting.Format, Culture.CultureInfo);
             }
         }
 
