@@ -206,7 +206,7 @@
     <comment>Full name for CPU load metric</comment>
   </data>
   <data name="ButtonGraph" xml:space="preserve">
-    <value>Taulukko</value>
+    <value>Monitorointi</value>
     <comment>Text of the graph button</comment>
   </data>
   <data name="CPUClockLabel" xml:space="preserve">
@@ -446,7 +446,7 @@
     <comment>Title of the error popup</comment>
   </data>
   <data name="GraphConfigSectionTitle" xml:space="preserve">
-    <value>Konfiguraatio</value>
+    <value>Asetukset</value>
     <comment>Title of the config section in the graph window</comment>
   </data>
   <data name="GraphDuration" xml:space="preserve">
@@ -462,11 +462,11 @@
     <comment>Graph duration minutes plural</comment>
   </data>
   <data name="GraphDurationSeconds" xml:space="preserve">
-    <value>Sekunttia</value>
+    <value>Sekuntia</value>
     <comment>Graph duration seconds</comment>
   </data>
   <data name="GraphHardware" xml:space="preserve">
-    <value>Hardware</value>
+    <value>Laitteisto</value>
     <comment>Graph config hardware label</comment>
   </data>
   <data name="GraphMetrics" xml:space="preserve">
@@ -478,7 +478,7 @@
     <comment>Graph config monitor label</comment>
   </data>
   <data name="GraphTitle" xml:space="preserve">
-    <value>Taulukko</value>
+    <value>Monitorointi</value>
     <comment>Title of the graph window</comment>
   </data>
   <data name="LanguageChangedText" xml:space="preserve">
@@ -570,7 +570,7 @@
     <comment>Settings bandwidth in alert label</comment>
   </data>
   <data name="SettingsBandwidthInAlertTooltip" xml:space="preserve">
-    <value>Asettaa varoituksen kun lähetysnopeuden kbps tai kBps raja ylittyy. Arvo 0, ottaa ominaisuuden pois käytöstä.</value>
+    <value>Asettaa varoituksen, kun annettu lähetysnopeuden kbps tai kBps raja ylittyy. Arvo 0, poistaa ominaisuuden käytöstä.</value>
     <comment>Settings bandwidth in alert tooltip</comment>
   </data>
   <data name="SettingsBandwidthOutAlert" xml:space="preserve">
@@ -578,7 +578,7 @@
     <comment>Settings bandwidth out alert label</comment>
   </data>
   <data name="SettingsBandwidthOutAlertTooltip" xml:space="preserve">
-    <value>Asettaa varoituksen kun latausnopeuden kbps tai kBps raja ylittyy. Arvo 0, ottaa ominaisuuden pois käytöstä.</value>
+    <value>Asettaa varoituksen, kun annettu latausnopeuden kbps tai kBps raja ylittyy. Arvo 0, poistaa ominaisuuden käytöstä.</value>
     <comment>Settings bandwidth out alert tooltip</comment>
   </data>
   <data name="SettingsClickThrough" xml:space="preserve">
@@ -866,7 +866,7 @@
     <comment>Settings temperature alert label</comment>
   </data>
   <data name="SettingsTemperatureAlertTooltip" xml:space="preserve">
-    <value>Lämpötilan raja, jolloin varoitus tapahtuu. Arvo 0, ottaa pois käytöstä.</value>
+    <value>Lämpötilan raja, jolloin varoitus tapahtuu. Arvo 0, poistaa ominaisuuden käytöstä.</value>
     <comment>Settings temperature alert tooltip</comment>
   </data>
   <data name="SettingsTitle" xml:space="preserve">
@@ -894,11 +894,11 @@
     <comment>Settings used space alert label</comment>
   </data>
   <data name="SettingsUsedSpaceAlertTooltip" xml:space="preserve">
-    <value>Prosenttiraja jolloin varoitus tapahtuu. Arvo 0, ottaa pois käytöstä.</value>
+    <value>Prosenttiraja jolloin varoitus tapahtuu. Arvo 0, poistaa ominaisuuden käytöstä.</value>
     <comment>Settings used space alert tooltip</comment>
   </data>
   <data name="SettingsUseFahrenheit" xml:space="preserve">
-    <value>Käytä fahrenheitiä</value>
+    <value>Käytä fahrenheitia</value>
     <comment>Settings use fahrenheit label</comment>
   </data>
   <data name="SettingsUseFahrenheitTooltip" xml:space="preserve">
