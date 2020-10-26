@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
+using System.Globalization;
 
 namespace SidebarDiagnostics.Framework
 {
@@ -797,7 +798,7 @@ namespace SidebarDiagnostics.Framework
                     return Resources.SettingsDateFormatDisabled;
                 }
 
-                return DateTime.Today.ToString(Format);
+                return DateTime.Today.ToString(Format, Culture.CultureInfo);
             }
         }
 
