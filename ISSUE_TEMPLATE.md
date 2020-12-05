@@ -1,9 +1,11 @@
+**1. Is this a feature request?**
 
+*If yes then sorry but this project is not taking feature requests at this time.*
 
-**1. Your Operating System**
+**2. Your Operating System**
 
-**2. App Version**
+**3. App Version**
 
-**3. Any Relevant Settings**
+**4. Any Relevant Settings**
 
-**4. Steps to Reproduce**
+**5. Steps to Reproduce**
