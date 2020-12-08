@@ -1,9 +1,9 @@
 ﻿[
   {
-    "Version": "Unreleased",
+    "Version": "3.5.7",
     "Changes": [
-      "Turkish language support.",
-      "Fix: Shortened some Italian translations to better fit the panel."
+      "Updated Libre Hardware Monitor.",
+      "i18n language updates (thank you contributors)."
     ]
   },
   {
