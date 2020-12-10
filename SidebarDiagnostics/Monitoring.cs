@@ -566,7 +566,7 @@ namespace SidebarDiagnostics.Monitoring
 
             if (metrics.IsEnabled(MetricKey.CPUClock))
             {
-                Regex regex = new Regex(@"^.*(CPU|Core).*#(\d)$");
+                Regex regex = new Regex(@"^.*(CPU|Core).*#(\d+)$");
 
                 var coreClocks = _hardware.Sensors
                     .Where(s => s.SensorType == SensorType.Clock)
