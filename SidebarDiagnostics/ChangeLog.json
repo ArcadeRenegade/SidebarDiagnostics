@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Version": "3.6.1",
+    "Changes": [
+      "Updated Libre Hardware Monitor.",
+      "Fix GPU fan metric bug."
+    ]
+  },
+  {
     "Version": "3.6.0",
     "Changes": [
       "Updated Libre Hardware Monitor."

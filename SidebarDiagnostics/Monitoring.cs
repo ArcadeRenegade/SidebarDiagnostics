@@ -838,7 +838,7 @@ namespace SidebarDiagnostics.Monitoring
 
             if (metrics.IsEnabled(MetricKey.GPUFan))
             {
-                ISensor _fanSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Control && s.Index == 0).FirstOrDefault();
+                ISensor _fanSensor = _hardware.Sensors.Where(s => new SensorType[2] { SensorType.Fan, SensorType.Control }.Contains(s.SensorType)).OrderBy(s => s.Index).FirstOrDefault();
 
                 if (_fanSensor != null)
                 {
