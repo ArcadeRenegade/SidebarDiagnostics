@@ -47,7 +47,7 @@ Currently compiled in <a href="https://dotnet.microsoft.com/download/dotnet-fram
 
 You will need to run it as administrator.
 
-Data provided by <a href="https://github.com/LibreHardwareMonitor/LibreHardwareMonitor">Libre Hardware Monitor</a>.
+Data provided by <a href="https://github.com/LibreHardwareMonitor/LibreHardwareMonitor">Libre Hardware Monitor</a>. Please thank the library's contributors for their support!
 
 <img src="http://i.imgur.com/70LkdwO.png" />
 
