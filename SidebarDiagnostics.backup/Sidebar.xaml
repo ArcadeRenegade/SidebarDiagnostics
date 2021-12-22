@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SidebarDiagnostics"
-        xmlns:props="clr-namespace:SidebarDiagnostics.Properties"
+        xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
         xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitoring"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
@@ -25,7 +25,7 @@
                 <Style TargetType="{x:Type Ellipse}">
                     <Setter Property="Width" Value="40" />
                     <Setter Property="Height" Value="40" />
-                    <Setter Property="Stroke" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
+                    <Setter Property="Stroke" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                     <Setter Property="StrokeThickness" Value="5" />
                     <Setter Property="StrokeDashArray" Value="18" />
                     <Setter Property="Opacity" Value="0.85" />
@@ -94,7 +94,7 @@
                                                 <StackPanel Style="{StaticResource GroupPanel}">
                                                     <StackPanel Style="{StaticResource MonitorTitle}">
                                                         <Path Style="{StaticResource AppIcon}" Data="M256,0C114.625,0,0,114.625,0,256s114.625,256,256,256s256-114.625,256-256S397.375,0,256,0z M272,479.188V448h-32v31.188  C129.281,471.313,40.688,382.719,32.813,272H64v-32H32.813C40.688,129.281,129.281,40.688,240,32.813V64h32V32.813  C382.719,40.688,471.313,129.281,479.188,240H448v32h31.188C471.313,382.719,382.719,471.313,272,479.188z M373.781,188  c2.188,3.813,0.875,8.719-2.938,10.938l-84.516,48.781c0.734,2.719,1.672,5.344,1.672,8.281c0,17.688-14.328,32-32,32  s-32-14.313-32-32l-86.844-50.125c-7.656-4.438-10.281-14.219-5.859-21.875c4.406-7.688,14.203-10.313,21.859-5.875l87.344,50.438  c4.656-2.625,9.75-4.563,15.5-4.563c8.938,0,16.984,3.688,22.797,9.625l84.047-48.563C366.594,182.844,371.5,184.156,373.781,188z"></Path>
-                                                        <Label Content="{x:Static props:Resources.Time}" Style="{StaticResource AppTitle}" />
+                                                        <Label Content="{x:Static frame:Resources.Time}" Style="{StaticResource AppTitle}" />
                                                     </StackPanel>
                                                     
                                                     <StackPanel Style="{StaticResource MonitorPanel}">
@@ -197,8 +197,8 @@
                                                                         <Setter Property="Content">
                                                                             <Setter.Value>
                                                                                 <StackPanel Orientation="Horizontal">
-                                                                                    <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Width="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.FontSize, Mode=OneWay}" Style="{StaticResource DataText}" />
-                                                                                    <ProgressBar DataContext="{Binding Path=LoadMetric}" Value="{Binding Path=Value, Mode=OneWay}" Margin="8,2,0,0" Width="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.BarWidth, Mode=OneWay}" Style="{StaticResource DriveProgress}" />
+                                                                                    <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Width="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.FontSize, Mode=OneWay}" Style="{StaticResource DataText}" />
+                                                                                    <ProgressBar DataContext="{Binding Path=LoadMetric}" Value="{Binding Path=Value, Mode=OneWay}" Margin="8,2,0,0" Width="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.BarWidth, Mode=OneWay}" Style="{StaticResource DriveProgress}" />
                                                                                 </StackPanel>
                                                                             </Setter.Value>
                                                                         </Setter>

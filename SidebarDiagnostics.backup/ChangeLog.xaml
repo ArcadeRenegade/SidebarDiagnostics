@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         xmlns:sty="clr-namespace:SidebarDiagnostics.Style"
-        xmlns:props="clr-namespace:SidebarDiagnostics.Properties"
+        xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
         mc:Ignorable="d"
         Title="Sidebar Diagnostics"
         Icon="Sidebar.ico"
@@ -19,7 +19,7 @@
         Style="{StaticResource FlatWindowStyle}">
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons_SM}">
-            <Button Content="{x:Static props:Resources.ButtonClose}" Click="Close_Click" Style="{StaticResource NeutralButton_SM}" />
+            <Button Content="{x:Static frame:Resources.ButtonClose}" Click="Close_Click" Style="{StaticResource NeutralButton_SM}" />
         </StackPanel>
         <StackPanel Style="{StaticResource ChangeLogContent}">
             <Label Content="{Binding Path=Title, Mode=OneWay}" Style="{StaticResource ChangeLogTitle}" />

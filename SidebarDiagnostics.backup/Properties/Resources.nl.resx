@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>Sidebar Diagnostics</value>
+    <comment>Name of the app</comment>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Afsluiten</value>
+    <comment>Close app taskbar menu item</comment>
+  </data>
+  <data name="CPU" xml:space="preserve">
+    <value>CPU</value>
+    <comment>CPU monitor title</comment>
+  </data>
+  <data name="CPUClock" xml:space="preserve">
+    <value>Klok</value>
+    <comment>Full name for CPU clock metric</comment>
+  </data>
+  <data name="CPUClockLabel" xml:space="preserve">
+    <value>Klok</value>
+    <comment>Short label for CPU clock metric</comment>
+  </data>
+  <data name="CPUCoreClock" xml:space="preserve">
+    <value>Core Clock</value>
+    <comment>Full name for CPU core clock metric</comment>
+  </data>
+  <data name="CPUCoreClockLabel" xml:space="preserve">
+    <value>Kern</value>
+    <comment>Short label for CPU core clock metric</comment>
+  </data>
+  <data name="CPUCoreLoad" xml:space="preserve">
+    <value>Core Load</value>
+    <comment>Full name for CPU core load metric</comment>
+  </data>
+  <data name="CPUCoreLoadLabel" xml:space="preserve">
+    <value>Kern</value>
+    <comment>Short label for CPU core load metric</comment>
+  </data>
+  <data name="CPUFan" xml:space="preserve">
+    <value>Fan Usage</value>
+    <comment>Full name for CPU fan metric</comment>
+  </data>
+  <data name="CPUFanLabel" xml:space="preserve">
+    <value>Ventilator</value>
+    <comment>Short label for CPU fan metric</comment>
+  </data>
+  <data name="CPULoad" xml:space="preserve">
+    <value>Load</value>
+    <comment>Full name for CPU load metric</comment>
+  </data>
+  <data name="CPULoadLabel" xml:space="preserve">
+    <value>Gebruik</value>
+    <comment>Short label for CPU load metric</comment>
+  </data>
+  <data name="CPUTemp" xml:space="preserve">
+    <value>Temperature</value>
+    <comment>Full name for CPU temp metric</comment>
+  </data>
+  <data name="CPUTempLabel" xml:space="preserve">
+    <value>Temp</value>
+    <comment>Short label for CPU temp metric</comment>
+  </data>
+  <data name="CPUVoltage" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Full name for CPU voltage metric</comment>
+  </data>
+  <data name="CPUVoltageLabel" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Short label for CPU voltage metric</comment>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Doneer</value>
+    <comment>Donate taskbar menu item</comment>
+  </data>
+  <data name="DriveFree" xml:space="preserve">
+    <value>Beschikbaar</value>
+    <comment>Full name for drive free metric</comment>
+  </data>
+  <data name="DriveFreeLabel" xml:space="preserve">
+    <value>Beschikbaar</value>
+    <comment>Short label for drive free metric</comment>
+  </data>
+  <data name="DriveLoad" xml:space="preserve">
+    <value>Gebruik</value>
+    <comment>Full name for drive load metric</comment>
+  </data>
+  <data name="DriveLoadBar" xml:space="preserve">
+    <value>Load Bar</value>
+    <comment>Full name for drive load bar metric</comment>
+  </data>
+  <data name="DriveLoadBarLabel" xml:space="preserve">
+    <value>Gebruik</value>
+    <comment>Short label for drive load bar metric</comment>
+  </data>
+  <data name="DriveLoadLabel" xml:space="preserve">
+    <value>Gebruik</value>
+    <comment>Short label for drive load metric</comment>
+  </data>
+  <data name="DriveRead" xml:space="preserve">
+    <value>Read Rate</value>
+    <comment>Full name for drive read metric</comment>
+  </data>
+  <data name="DriveReadLabel" xml:space="preserve">
+    <value>Lezen</value>
+    <comment>Short label for drive read metric</comment>
+  </data>
+  <data name="Drives" xml:space="preserve">
+    <value>Opslag</value>
+    <comment>Drives monitor title</comment>
+  </data>
+  <data name="DriveUsed" xml:space="preserve">
+    <value>In Gebruik</value>
+    <comment>Full name for drive used metric</comment>
+  </data>
+  <data name="DriveUsedLabel" xml:space="preserve">
+    <value>In Gebruik</value>
+    <comment>Short label for drive used metric</comment>
+  </data>
+  <data name="DriveWrite" xml:space="preserve">
+    <value>Write Rate</value>
+    <comment>Full name for drive write metric</comment>
+  </data>
+  <data name="DriveWriteLabel" xml:space="preserve">
+    <value>Schrijven</value>
+    <comment>Short label for drive write metric</comment>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>GitHub</value>
+    <comment>GitHub taskbar menu item</comment>
+  </data>
+  <data name="GPU" xml:space="preserve">
+    <value>GPU</value>
+    <comment>GPU monitor title</comment>
+  </data>
+  <data name="GPUCoreClock" xml:space="preserve">
+    <value>Core Clock</value>
+    <comment>Full name for GPU core clock metric</comment>
+  </data>
+  <data name="GPUCoreClockLabel" xml:space="preserve">
+    <value>Kern</value>
+    <comment>Short label for RAM core clock metric</comment>
+  </data>
+  <data name="GPUCoreLoad" xml:space="preserve">
+    <value>Core Load</value>
+    <comment>Full name for GPU core load metric</comment>
+  </data>
+  <data name="GPUCoreLoadLabel" xml:space="preserve">
+    <value>Kern</value>
+    <comment>Short label for GPU core load metric</comment>
+  </data>
+  <data name="GPUFan" xml:space="preserve">
+    <value>Fan Usage</value>
+    <comment>Full name for GPU fan metric</comment>
+  </data>
+  <data name="GPUFanLabel" xml:space="preserve">
+    <value>Ventilator</value>
+    <comment>Short label for GPU voltage metric</comment>
+  </data>
+  <data name="GPUTemp" xml:space="preserve">
+    <value>Temperature</value>
+    <comment>Full name for GPU temp metric</comment>
+  </data>
+  <data name="GPUTempLabel" xml:space="preserve">
+    <value>Temp</value>
+    <comment>Short label for GPU temp metric</comment>
+  </data>
+  <data name="GPUVoltage" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Full name for GPU voltage metric</comment>
+  </data>
+  <data name="GPUVoltageLabel" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Short label for GPU voltage metric</comment>
+  </data>
+  <data name="GPUVRAMClock" xml:space="preserve">
+    <value>VRAM Clock</value>
+    <comment>Full name for GPU VRAM clock metric</comment>
+  </data>
+  <data name="GPUVRAMClockLabel" xml:space="preserve">
+    <value>VRAM</value>
+    <comment>Short label for GPU VRAM clock metric</comment>
+  </data>
+  <data name="GPUVRAMLoad" xml:space="preserve">
+    <value>VRAM Load</value>
+    <comment>Full name for GPU VRAM load metric</comment>
+  </data>
+  <data name="GPUVRAMLoadLabel" xml:space="preserve">
+    <value>VRAM</value>
+    <comment>Short label for GPU VRAM load metric</comment>
+  </data>
+  <data name="Graph" xml:space="preserve">
+    <value>Graph</value>
+    <comment>Graph taskbar menu item</comment>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Verbergen</value>
+    <comment>Hide taskbar menu item</comment>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Netwerk</value>
+    <comment>Network monitor title</comment>
+  </data>
+  <data name="NetworkIn" xml:space="preserve">
+    <value>Bandwidth In</value>
+    <comment>Full name for network in metric</comment>
+  </data>
+  <data name="NetworkInLabel" xml:space="preserve">
+    <value>In</value>
+    <comment>Short label for network in metric</comment>
+  </data>
+  <data name="NetworkOut" xml:space="preserve">
+    <value>Bandwidth Out</value>
+    <comment>Full name for network out metric</comment>
+  </data>
+  <data name="NetworkOutLabel" xml:space="preserve">
+    <value>Uit</value>
+    <comment>Short label for network out metric</comment>
+  </data>
+  <data name="RAM" xml:space="preserve">
+    <value>RAM</value>
+    <comment>RAM monitor title</comment>
+  </data>
+  <data name="RAMClock" xml:space="preserve">
+    <value>Klok</value>
+    <comment>Full name for RAM clock metric</comment>
+  </data>
+  <data name="RAMClockLabel" xml:space="preserve">
+    <value>Klok</value>
+    <comment>Short label for RAM clock metric</comment>
+  </data>
+  <data name="RAMFree" xml:space="preserve">
+    <value>Beschikbaar</value>
+    <comment>Full name for RAM free metric</comment>
+  </data>
+  <data name="RAMFreeLabel" xml:space="preserve">
+    <value>Beschikbaar</value>
+    <comment>Short label for RAM free metric</comment>
+  </data>
+  <data name="RAMLoad" xml:space="preserve">
+    <value>Gebruik</value>
+    <comment>Full name for RAM load metric</comment>
+  </data>
+  <data name="RAMLoadLabel" xml:space="preserve">
+    <value>Gebruik</value>
+    <comment>Short label for RAM load metric</comment>
+  </data>
+  <data name="RAMUsed" xml:space="preserve">
+    <value>In Gebruik</value>
+    <comment>Full name for RAM load metric</comment>
+  </data>
+  <data name="RAMUsedLabel" xml:space="preserve">
+    <value>In Gebruik</value>
+    <comment>Short label for RAM used metric</comment>
+  </data>
+  <data name="RAMVoltage" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Full name for RAM voltage metric</comment>
+  </data>
+  <data name="RAMVoltageLabel" xml:space="preserve">
+    <value>Voltage</value>
+    <comment>Short label for RAM voltage metric</comment>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Ververs</value>
+    <comment>Reload taskbar menu item</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Zijbalk</value>
+    <comment>Settings taskbar menu item</comment>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Tonen</value>
+    <comment>Show taskbar menu item</comment>
+  </data>
+  <data name="Sidebar" xml:space="preserve">
+    <value>Sidebar</value>
+    <comment>Title of the sidebar window</comment>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Tijd</value>
+    <comment>Sidebar clock title</comment>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Bijwerken</value>
+    <comment>Update taskbar menu item</comment>
+  </data>
+  <data name="Visibility" xml:space="preserve">
+    <value>Zichtbaarheid</value>
+    <comment>Visibility taskbar menu item</comment>
+  </data>
+</root>

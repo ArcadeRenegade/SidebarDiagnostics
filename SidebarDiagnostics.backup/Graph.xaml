@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         xmlns:sty="clr-namespace:SidebarDiagnostics.Style"
-        xmlns:props="clr-namespace:SidebarDiagnostics.Properties"
+        xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
         mc:Ignorable="d"
         PreviewKeyDown="Window_PreviewKeyDown"
         Closing="Window_Closing"
@@ -24,7 +24,7 @@
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource FlatWindowStyle}">
     <DockPanel Style="{StaticResource ChartContent}">
-        <Expander DockPanel.Dock="Top" Header="{x:Static props:Resources.GraphConfigSectionTitle}" IsExpanded="{Binding Path=ExpandConfig, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChartExpander}">
+        <Expander DockPanel.Dock="Top" Header="{x:Static frame:Resources.GraphConfigSectionTitle}" IsExpanded="{Binding Path=ExpandConfig, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChartExpander}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -37,16 +37,16 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="0" Content="{x:Static props:Resources.GraphMonitor}" Style="{StaticResource ChartLabel}" />
+                <Label Grid.Column="0" Grid.Row="0" Content="{x:Static frame:Resources.GraphMonitor}" Style="{StaticResource ChartLabel}" />
                 <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=MonitorItems, Mode=OneWay}" SelectedValue="{Binding Path=Monitor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Title" Style="{StaticResource ChartComboBox}" />
 
-                <Label Grid.Column="0" Grid.Row="1" Content="{x:Static props:Resources.GraphHardware}" Style="{StaticResource ChartLabel}" />
+                <Label Grid.Column="0" Grid.Row="1" Content="{x:Static frame:Resources.GraphHardware}" Style="{StaticResource ChartLabel}" />
                 <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=HardwareItems, Mode=OneWay}" SelectedValue="{Binding Path=Hardware, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" Style="{StaticResource ChartComboBox}" />
 
-                <Label Grid.Column="0" Grid.Row="2" Content="{x:Static props:Resources.GraphMetrics}" Style="{StaticResource ChartLabel}" />
+                <Label Grid.Column="0" Grid.Row="2" Content="{x:Static frame:Resources.GraphMetrics}" Style="{StaticResource ChartLabel}" />
                 <xctk:CheckComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=MetricItems, Mode=OneWay}" SelectedItemsOverride="{Binding Path=Metrics, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FullName" Style="{StaticResource ChartCheckComboBox}" />
 
-                <Label Grid.Column="0" Grid.Row="3" Content="{x:Static props:Resources.GraphDuration}" Style="{StaticResource ChartLabel}" />
+                <Label Grid.Column="0" Grid.Row="3" Content="{x:Static frame:Resources.GraphDuration}" Style="{StaticResource ChartLabel}" />
                 <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Path=DurationItems, Mode=OneWay}" SelectedValue="{Binding Path=Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Text" SelectedValuePath="Seconds" Style="{StaticResource ChartComboBox}" />
             </Grid>
         </Expander>

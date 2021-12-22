@@ -7,7 +7,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
 using Microsoft.Win32.TaskScheduler;
-using SidebarDiagnostics.Properties;
+using SidebarDiagnostics.Framework;
 using System.Diagnostics;
 
 namespace SidebarDiagnostics.Utilities
@@ -214,7 +214,7 @@ namespace SidebarDiagnostics.Utilities
         {
             get
             {
-                string culture = Config.Settings.Instance.Culture;
+                string culture = Framework.Settings.Instance.Culture;
                 return string.Equals(culture, DEFAULT, StringComparison.Ordinal)
                     ? Default
                     : new CultureInfo(culture);

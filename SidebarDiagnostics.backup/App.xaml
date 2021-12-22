@@ -4,7 +4,7 @@
              xmlns:tb="http://www.hardcodet.net/taskbar"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:SidebarDiagnostics"
-             xmlns:props="clr-namespace:SidebarDiagnostics.Properties"
+             xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
              xmlns:command="clr-namespace:SidebarDiagnostics.Commands"
              xmlns:conv="clr-namespace:SidebarDiagnostics.Converters"
              xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
@@ -20,19 +20,19 @@
             <tb:TaskbarIcon x:Key="TrayIcon" IconSource="Sidebar.ico" LeftClickCommand="{StaticResource ShowCommand}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="{x:Static props:Resources.ButtonSettings}" Click="Settings_Click" />
-                        <MenuItem Header="{x:Static props:Resources.ButtonReload}" Click="Reload_Click" />
-                        <MenuItem Header="{x:Static props:Resources.ButtonGraph}" Click="Graph_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonSettings}" Click="Settings_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonReload}" Click="Reload_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonGraph}" Click="Graph_Click" />
                         <Separator />
-                        <MenuItem Header="{x:Static props:Resources.ButtonVisibility}" SubmenuOpened="Visibility_SubmenuOpened">
-                            <MenuItem Header="{x:Static props:Resources.ButtonShow}" Click="Show_Click" />
-                            <MenuItem Header="{x:Static props:Resources.ButtonHide}" Click="Hide_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonVisibility}" SubmenuOpened="Visibility_SubmenuOpened">
+                            <MenuItem Header="{x:Static frame:Resources.ButtonShow}" Click="Show_Click" />
+                            <MenuItem Header="{x:Static frame:Resources.ButtonHide}" Click="Hide_Click" />
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="{x:Static props:Resources.ButtonDonate}" Click="Donate_Click" />
-                        <MenuItem Header="{x:Static props:Resources.ButtonGitHub}" Click="GitHub_Click" />
-                        <MenuItem Header="{x:Static props:Resources.ButtonUpdate}" Click="Update_Click" />
-                        <MenuItem Header="{x:Static props:Resources.ButtonClose}" Click="Close_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonDonate}" Click="Donate_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonGitHub}" Click="GitHub_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonUpdate}" Click="Update_Click" />
+                        <MenuItem Header="{x:Static frame:Resources.ButtonClose}" Click="Close_Click" />
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
@@ -43,7 +43,7 @@
             <conv:PercentConverter x:Key="PercentConverter" />
 
             <Style x:Key="SidebarWindow" TargetType="{x:Type win:AppBarWindow}">
-                <Setter Property="Title" Value="{x:Static props:Resources.Sidebar}" />
+                <Setter Property="Title" Value="{x:Static frame:Resources.Sidebar}" />
                 <Setter Property="Icon" Value="Sidebar.ico" />
                 <Setter Property="Left" Value="0" />
                 <Setter Property="Top" Value="0" />
@@ -65,14 +65,14 @@
                 <Setter Property="WindowStyle" Value="None" />
                 <Setter Property="Background">
                     <Setter.Value>
-                        <SolidColorBrush Opacity="{Binding Source={x:Static local:StoredSettings.Instance}, Path=BGOpacity, Mode=OneWay}" Color="{Binding Source={x:Static props:Settings.Instance}, Path=BGColor, Mode=OneWay}" />
+                        <SolidColorBrush Opacity="{Binding Source={x:Static frame:Settings.Instance}, Path=BGOpacity, Mode=OneWay}" Color="{Binding Source={x:Static frame:Settings.Instance}, Path=BGColor, Mode=OneWay}" />
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Source={x:Static StoredSettings.Instance}, Path=AutoBGColor, Mode=OneWay}" Value="True">
+                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=AutoBGColor, Mode=OneWay}" Value="True">
                         <Setter Property="Background">
                             <Setter.Value>
-                                <SolidColorBrush Opacity="{Binding Source={x:Static props:Settings.Instance}, Path=BGOpacity, Mode=OneWay}" Color="{Binding Path=(SystemParameters.WindowGlassColor), Mode=OneWay}" />
+                                <SolidColorBrush Opacity="{Binding Source={x:Static frame:Settings.Instance}, Path=BGOpacity, Mode=OneWay}" Color="{Binding Path=(SystemParameters.WindowGlassColor), Mode=OneWay}" />
                             </Setter.Value>
                         </Setter>
                     </DataTrigger>
@@ -99,7 +99,7 @@
             </Style>
 
             <Style x:Key="IconButton" TargetType="{x:Type Button}">
-                <Setter Property="Foreground" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                 <Setter Property="Template">
@@ -134,11 +134,11 @@
             </Style>
 
             <Style x:Key="AppIcon" TargetType="{x:Type Path}">
-                <Setter Property="Width" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.IconSize, Mode=OneWay}" />
-                <Setter Property="Height" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.IconSize, Mode=OneWay}" />
+                <Setter Property="Width" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.IconSize, Mode=OneWay}" />
+                <Setter Property="Height" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.IconSize, Mode=OneWay}" />
                 <Setter Property="Margin" Value="0,0,10,0" />
                 <Setter Property="Stretch" Value="Uniform" />
-                <Setter Property="Fill" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
+                <Setter Property="Fill" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
 
@@ -146,16 +146,16 @@
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Foreground" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
-                <Setter Property="FontSize" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.TitleFontSize, Mode=OneWay}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
+                <Setter Property="FontSize" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.TitleFontSize, Mode=OneWay}" />
             </Style>
 
             <Style x:Key="AppText" TargetType="{x:Type TextBlock}">
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Foreground" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
-                <Setter Property="FontSize" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.SmallFontSize, Mode=OneWay}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
+                <Setter Property="FontSize" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.SmallFontSize, Mode=OneWay}" />
                 <Setter Property="TextWrapping" Value="WrapWithOverflow" />
             </Style>
 
@@ -194,10 +194,10 @@
             </Style>
 
             <Style x:Key="DataText" TargetType="{x:Type TextBlock}">
-                <Setter Property="Foreground" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
-                <Setter Property="FontSize" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.FontSize, Mode=OneWay}" />
+                <Setter Property="FontSize" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.FontSize, Mode=OneWay}" />
                 <Setter Property="TextWrapping" Value="WrapWithOverflow" />
             </Style>
 
@@ -211,7 +211,7 @@
             
             <Style x:Key="MetricLabel" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataText}">
                 <Setter Property="DockPanel.Dock" Value="Left" />
-                <Setter Property="Margin" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.FontSize, Mode=OneWay, Converter={StaticResource FontToSpaceConverter}}" />
+                <Setter Property="Margin" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.FontSize, Mode=OneWay, Converter={StaticResource FontToSpaceConverter}}" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
                         <Setter Property="Foreground" Value="{Binding Path=AlertColor, Mode=OneWay}" />
@@ -222,7 +222,7 @@
             <Style x:Key="MetricValue" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MetricLabel}">
                 <Setter Property="Margin" Value="0" />
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Source={x:Static props:Settings.Instance}, Path=TextAlign, Mode=OneWay}" Value="Right">
+                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=TextAlign, Mode=OneWay}" Value="Right">
                         <Setter Property="DockPanel.Dock" Value="Right" />
                         <Setter Property="TextAlignment" Value="Right" />
                     </DataTrigger>
@@ -233,10 +233,10 @@
                 <Setter Property="Minimum" Value="0" />
                 <Setter Property="Maximum" Value="100" />
                 <Setter Property="Margin" Value="0,4" />
-                <Setter Property="Width" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.BarWidthWide, Mode=OneWay}" />
-                <Setter Property="Height" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontSetting.BarHeight, Mode=OneWay}" />
+                <Setter Property="Width" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.BarWidthWide, Mode=OneWay}" />
+                <Setter Property="Height" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.BarHeight, Mode=OneWay}" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Foreground" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Template">
                     <Setter.Value>
@@ -246,14 +246,14 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <DataTrigger Binding="{Binding Path=IsAlert, Mode=OneWay}" Value="True">
-                                    <Setter Property="Foreground" Value="{Binding Source={x:Static props:Settings.Instance}, Path=AlertFontColor, Mode=OneWay}" />
+                                    <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=AlertFontColor, Mode=OneWay}" />
                                 </DataTrigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Source={x:Static props:Settings.Instance}, Path=TextAlign, Mode=OneWay}" Value="Right">
+                    <DataTrigger Binding="{Binding Source={x:Static frame:Settings.Instance}, Path=TextAlign, Mode=OneWay}" Value="Right">
                         <Setter Property="Width" Value="Auto" />
                         <Setter Property="HorizontalAlignment" Value="Stretch" />
                     </DataTrigger>
@@ -600,7 +600,7 @@
 
             <Style x:Key="MinScrollBar" TargetType="{x:Type ScrollBar}">
                 <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-                <Setter Property="Foreground" Value="{Binding Source={x:Static props:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
+                <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Width" Value="7" />
                 <Setter Property="Template">

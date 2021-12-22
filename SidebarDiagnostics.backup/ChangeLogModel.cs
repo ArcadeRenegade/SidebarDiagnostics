@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using SidebarDiagnostics.Utilities;
-using SidebarDiagnostics.Properties;
+using SidebarDiagnostics.Framework;
 
 namespace SidebarDiagnostics.Models
 {

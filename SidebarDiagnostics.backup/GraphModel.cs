@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using OxyPlot.Wpf;
-using SidebarDiagnostics.Properties;
+using SidebarDiagnostics.Framework;
 using SidebarDiagnostics.Monitoring;
 
 namespace SidebarDiagnostics.Models

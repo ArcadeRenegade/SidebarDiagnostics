@@ -5,12 +5,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SidebarDiagnostics"
-        xmlns:props="clr-namespace:SidebarDiagnostics.Properties"
+        xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
         xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
         xmlns:sty="clr-namespace:SidebarDiagnostics.Style"
         mc:Ignorable="d"
         Closed="Window_Closed"
-        Title="{x:Static props:Resources.AppName}"
+        Title="{x:Static frame:Resources.AppName}"
         Icon="Sidebar.ico"
         Height="400"
         Width="400"
@@ -29,16 +29,16 @@
                     <Ellipse IsEnabled="False" />
                     <Ellipse IsEnabled="False" />
                 </StackPanel>
-                <Label Content="{x:Static props:Resources.SetupTitle}" Style="{StaticResource SetupTitle}" />
-                <TextBlock Text="{x:Static props:Resources.SetupSubtitle}" Style="{StaticResource SetupSubtitle}" />
+                <Label Content="{x:Static frame:Resources.SetupTitle}" Style="{StaticResource SetupTitle}" />
+                <TextBlock Text="{x:Static frame:Resources.SetupSubtitle}" Style="{StaticResource SetupSubtitle}" />
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
-                <Button Content="{x:Static props:Resources.ButtonYes}" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
-                <Button Content="{x:Static props:Resources.ButtonNo}" Click="No_Click" Style="{StaticResource ErrorButton}" />
-                <Button Content="{x:Static props:Resources.ButtonSkip}" Click="Close_Click" />
+                <Button Content="{x:Static frame:Resources.ButtonYes}" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
+                <Button Content="{x:Static frame:Resources.ButtonNo}" Click="No_Click" Style="{StaticResource ErrorButton}" />
+                <Button Content="{x:Static frame:Resources.ButtonSkip}" Click="Close_Click" />
             </StackPanel>
             <StackPanel Style="{StaticResource SetupContent}">
-                <TextBlock Text="{x:Static props:Resources.SetupText}" Style="{StaticResource SetupText}" />
+                <TextBlock Text="{x:Static frame:Resources.SetupText}" Style="{StaticResource SetupText}" />
             </StackPanel>
         </DockPanel>
         <DockPanel x:Name="BeginCustom" Style="{StaticResource SetupPage}">
@@ -48,12 +48,12 @@
                     <Ellipse  />
                     <Ellipse IsEnabled="False" />
                 </StackPanel>
-                <Label Content="{x:Static props:Resources.SetupCustomTitle}" Style="{StaticResource SetupTitle}" />
-                <TextBlock Text="{x:Static props:Resources.SetupCustomSubtitle}" Style="{StaticResource SetupSubtitle}" />
+                <Label Content="{x:Static frame:Resources.SetupCustomTitle}" Style="{StaticResource SetupTitle}" />
+                <TextBlock Text="{x:Static frame:Resources.SetupCustomSubtitle}" Style="{StaticResource SetupSubtitle}" />
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
-                <Button Content="{x:Static props:Resources.ButtonDone}" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
-                <Button Content="{x:Static props:Resources.ButtonSkip}" Click="Close_Click" />
+                <Button Content="{x:Static frame:Resources.ButtonDone}" Click="Yes_Click" Style="{StaticResource SuccessButton}" />
+                <Button Content="{x:Static frame:Resources.ButtonSkip}" Click="Close_Click" />
             </StackPanel>
             <Grid Style="{StaticResource SetupCustom}">
                 <Grid.ColumnDefinitions>
@@ -65,16 +65,16 @@
                     <RowDefinition Height="38px"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="0" Content="{x:Static props:Resources.SettingsHorizontalOffset}" />
+                <Label Grid.Column="0" Grid.Row="0" Content="{x:Static frame:Resources.SettingsHorizontalOffset}" />
                 <DockPanel Grid.Column="1" Grid.Row="0">
-                    <TextBox Text="{Binding ElementName=XOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" ToolTip="{x:Static props:Resources.SettingsHorizontalOffsetTooltip}" />
-                    <Slider x:Name="XOffsetSlider" Value="{Binding Path=XOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="{x:Static props:Resources.SettingsHorizontalOffsetTooltip}" />
+                    <TextBox Text="{Binding ElementName=XOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" ToolTip="{x:Static frame:Resources.SettingsHorizontalOffsetTooltip}" />
+                    <Slider x:Name="XOffsetSlider" Value="{Binding Path=XOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="{x:Static frame:Resources.SettingsHorizontalOffsetTooltip}" />
                 </DockPanel>
 
-                <Label Grid.Column="0" Grid.Row="1" Content="{x:Static props:Resources.SettingsVerticalOffset}" />
+                <Label Grid.Column="0" Grid.Row="1" Content="{x:Static frame:Resources.SettingsVerticalOffset}" />
                 <DockPanel Grid.Column="1" Grid.Row="1">
-                    <TextBox Text="{Binding ElementName=YOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" ToolTip="{x:Static props:Resources.SettingsVerticalOffsetTooltip}" />
-                    <Slider x:Name="YOffsetSlider" Value="{Binding Path=YOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="{x:Static props:Resources.SettingsVerticalOffsetTooltip}" />
+                    <TextBox Text="{Binding ElementName=YOffsetSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" ToolTip="{x:Static frame:Resources.SettingsVerticalOffsetTooltip}" />
+                    <Slider x:Name="YOffsetSlider" Value="{Binding Path=YOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="-2000" Maximum="2000" TickFrequency="1" LargeChange="1000" ValueChanged="OffsetSlider_ValueChanged" ToolTip="{x:Static frame:Resources.SettingsVerticalOffsetTooltip}" />
                 </DockPanel>
             </Grid>
         </DockPanel>
@@ -85,15 +85,15 @@
                     <Ellipse IsEnabled="False" />
                     <Ellipse />
                 </StackPanel>
-                <Label Content="{x:Static props:Resources.SetupDoneTitle}" Style="{StaticResource SetupTitle}" />
-                <TextBlock Text="{x:Static props:Resources.SetupDoneSubtitle}" Style="{StaticResource SetupSubtitle}" />
+                <Label Content="{x:Static frame:Resources.SetupDoneTitle}" Style="{StaticResource SetupTitle}" />
+                <TextBlock Text="{x:Static frame:Resources.SetupDoneSubtitle}" Style="{StaticResource SetupSubtitle}" />
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource WindowButtons}">
-                <Button Content="{x:Static props:Resources.ButtonSettings}" Click="Settings_Click" />
-                <Button Content="{x:Static props:Resources.ButtonClose}" Click="Close_Click" Style="{StaticResource NeutralButton}" />
+                <Button Content="{x:Static frame:Resources.ButtonSettings}" Click="Settings_Click" />
+                <Button Content="{x:Static frame:Resources.ButtonClose}" Click="Close_Click" Style="{StaticResource NeutralButton}" />
             </StackPanel>
             <StackPanel Style="{StaticResource SetupContent}">
-                <TextBlock Text="{x:Static props:Resources.SetupDoneText}" Style="{StaticResource SetupText}" />
+                <TextBlock Text="{x:Static frame:Resources.SetupDoneText}" Style="{StaticResource SetupText}" />
             </StackPanel>
         </DockPanel>
     </Grid>

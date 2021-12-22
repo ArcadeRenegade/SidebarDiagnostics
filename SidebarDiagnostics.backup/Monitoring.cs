@@ -14,7 +14,7 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using LibreHardwareMonitor.Hardware;
 using Newtonsoft.Json;
-using SidebarDiagnostics.Properties;
+using SidebarDiagnostics.Framework;
 
 namespace SidebarDiagnostics.Monitoring
 {
