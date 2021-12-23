@@ -774,7 +774,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public void InitGPU(MetricConfig[] metrics, bool roundAll, bool useGHz, bool useFahrenheit, double tempAlert)
         {
-            List<OHMMetric> _sensorList = new List<OHMMetric>();
+            List<iMetric> _sensorList = new List<iMetric>();
 
             if (metrics.IsEnabled(MetricKey.GPUCoreClock))
             {
@@ -809,12 +809,22 @@ namespace SidebarDiagnostics.Monitoring
 
             if (metrics.IsEnabled(MetricKey.GPUVRAMLoad))
             {
-                ISensor _vramLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Name.Contains("Memory")).FirstOrDefault() ??
-                    _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 3).FirstOrDefault();
+                ISensor _memoryUsed = _hardware.Sensors.Where(s => (s.SensorType == SensorType.Data || s.SensorType == SensorType.SmallData) && s.Name == "GPU Memory Used").FirstOrDefault();
+                ISensor _memoryTotal = _hardware.Sensors.Where(s => (s.SensorType == SensorType.Data || s.SensorType == SensorType.SmallData) && s.Name == "GPU Memory Total").FirstOrDefault();
 
-                if (_vramLoad != null)
+                if (_memoryUsed != null && _memoryTotal != null)
                 {
-                    _sensorList.Add(new OHMMetric(_vramLoad, MetricKey.GPUVRAMLoad, DataType.Percent, null, roundAll));
+                    _sensorList.Add(new GPUVRAMMLoadMetric(_memoryUsed, _memoryTotal, MetricKey.GPUVRAMLoad, DataType.Percent, null, roundAll));
+                }
+                else
+                {
+                    ISensor _vramLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Name.Contains("Memory")).FirstOrDefault() ??
+                        _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 1).FirstOrDefault();
+
+                    if (_vramLoad != null)
+                    {
+                        _sensorList.Add(new OHMMetric(_vramLoad, MetricKey.GPUVRAMLoad, DataType.Percent, null, roundAll));
+                    }
                 }
             }
 
@@ -1702,6 +1712,62 @@ namespace SidebarDiagnostics.Monitoring
         }
 
         private ISensor _sensor { get; set; }
+
+        private bool _disposed { get; set; } = false;
+    }
+
+    public class GPUVRAMMLoadMetric : BaseMetric
+    {
+        public GPUVRAMMLoadMetric(ISensor memoryUsedSensor, ISensor memoryTotalSensor, MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
+        {
+            _memoryUsedSensor = memoryUsedSensor;
+            _memoryTotalSensor = memoryTotalSensor;
+        }
+
+        public new void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _memoryUsedSensor = null;
+                    _memoryTotalSensor = null;
+                }
+
+                _disposed = true;
+            }
+        }
+
+        ~GPUVRAMMLoadMetric()
+        {
+            Dispose(false);
+        }
+
+        public override void Update()
+        {
+            if (_memoryUsedSensor.Value.HasValue && _memoryTotalSensor.Value.HasValue)
+            {
+                float load = _memoryUsedSensor.Value.Value / _memoryTotalSensor.Value.Value * 100f;
+
+                Update(load);
+            }
+            else
+            {
+                Text = "No Value";
+            }
+        }
+
+        private ISensor _memoryUsedSensor { get; set; }
+
+        private ISensor _memoryTotalSensor { get; set; }
 
         private bool _disposed { get; set; } = false;
     }
