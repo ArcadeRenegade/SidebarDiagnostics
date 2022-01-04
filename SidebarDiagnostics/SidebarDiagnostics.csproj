@@ -200,6 +200,11 @@
       <DependentUpon>Graph.xaml</DependentUpon>
     </Compile>
     <Compile Include="GraphModel.cs" />
+    <Compile Include="Properties\Resources.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.fi.Designer.cs">
       <DependentUpon>Resources.fi.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -348,6 +353,10 @@
     <Resource Include="Sidebar.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.es.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.fi.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.fi.Designer.cs</LastGenOutput>

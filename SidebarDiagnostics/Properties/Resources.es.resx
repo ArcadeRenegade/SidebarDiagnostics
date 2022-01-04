@@ -1,0 +1,1044 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>Sidebar Diagnostics</value>
+    <comment>Name of the app</comment>
+  </data>
+  <data name="CPUClock" xml:space="preserve">
+    <value>Reloj</value>
+    <comment>Full name for CPU clock metric</comment>
+  </data>
+  <data name="ButtonClose" xml:space="preserve">
+    <value>Cerrar</value>
+    <comment>Text of the close button</comment>
+  </data>
+  <data name="CPU" xml:space="preserve">
+    <value>CPU</value>
+    <comment>CPU monitor title</comment>
+  </data>
+  <data name="ButtonDonate" xml:space="preserve">
+    <value>Donar</value>
+    <comment>Text of the donate button</comment>
+  </data>
+  <data name="Drives" xml:space="preserve">
+    <value>Discos</value>
+    <comment>Drives monitor title</comment>
+  </data>
+  <data name="CPUFan" xml:space="preserve">
+    <value>Uso del ventilador</value>
+    <comment>Full name for CPU fan metric</comment>
+  </data>
+  <data name="GPU" xml:space="preserve">
+    <value>GPU</value>
+    <comment>GPU monitor title</comment>
+  </data>
+  <data name="ButtonHide" xml:space="preserve">
+    <value>Ocultar</value>
+    <comment>Text of the hide button</comment>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Red</value>
+    <comment>Network monitor title</comment>
+  </data>
+  <data name="RAM" xml:space="preserve">
+    <value>RAM</value>
+    <comment>RAM monitor title</comment>
+  </data>
+  <data name="ButtonReload" xml:space="preserve">
+    <value>Recargar</value>
+    <comment>Text of the reload button</comment>
+  </data>
+  <data name="ButtonSettings" xml:space="preserve">
+    <value>Ajustes</value>
+    <comment>Text of the settings button</comment>
+  </data>
+  <data name="ButtonShow" xml:space="preserve">
+    <value>Mostrar</value>
+    <comment>Text of the show button</comment>
+  </data>
+  <data name="Sidebar" xml:space="preserve">
+    <value>Sidebar</value>
+    <comment>Title of the sidebar window</comment>
+  </data>
+  <data name="CPUTemp" xml:space="preserve">
+    <value>Temperatura</value>
+    <comment>Full name for CPU temp metric</comment>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Tiempo</value>
+    <comment>Sidebar clock title</comment>
+  </data>
+  <data name="ButtonUpdate" xml:space="preserve">
+    <value>Actualizar</value>
+    <comment>Text of the update button</comment>
+  </data>
+  <data name="ButtonVisibility" xml:space="preserve">
+    <value>Visibilidad</value>
+    <comment>Text of the visibility button</comment>
+  </data>
+  <data name="CPUVoltage" xml:space="preserve">
+    <value>Voltaje</value>
+    <comment>Full name for CPU voltage metric</comment>
+  </data>
+  <data name="ButtonGitHub" xml:space="preserve">
+    <value>GitHub</value>
+    <comment>Text of the GitHub button</comment>
+  </data>
+  <data name="CPULoad" xml:space="preserve">
+    <value>Carga</value>
+    <comment>Full name for CPU load metric</comment>
+  </data>
+  <data name="ButtonGraph" xml:space="preserve">
+    <value>Gráfico</value>
+    <comment>Text of the graph button</comment>
+  </data>
+  <data name="CPUClockLabel" xml:space="preserve">
+    <value>Reloj</value>
+    <comment>Short label for CPU clock metric</comment>
+  </data>
+  <data name="CPUCoreClock" xml:space="preserve">
+    <value>Reloj del núcleo</value>
+    <comment>Full name for CPU core clock metric</comment>
+  </data>
+  <data name="CPUCoreClockLabel" xml:space="preserve">
+    <value>Núcleo</value>
+    <comment>Short label for CPU core clock metric</comment>
+  </data>
+  <data name="CPUCoreLoad" xml:space="preserve">
+    <value>Carga del núcleo</value>
+    <comment>Full name for CPU core load metric</comment>
+  </data>
+  <data name="CPUCoreLoadLabel" xml:space="preserve">
+    <value>Núcleo</value>
+    <comment>Short label for CPU core load metric</comment>
+  </data>
+  <data name="CPUFanLabel" xml:space="preserve">
+    <value>Ventilador</value>
+    <comment>Short label for CPU fan metric</comment>
+  </data>
+  <data name="CPULoadLabel" xml:space="preserve">
+    <value>Carga</value>
+    <comment>Short label for CPU load metric</comment>
+  </data>
+  <data name="CPUTempLabel" xml:space="preserve">
+    <value>Temp</value>
+    <comment>Short label for CPU temp metric</comment>
+  </data>
+  <data name="CPUVoltageLabel" xml:space="preserve">
+    <value>Voltaje</value>
+    <comment>Short label for CPU voltage metric</comment>
+  </data>
+  <data name="DriveFree" xml:space="preserve">
+    <value>Libre</value>
+    <comment>Full name for drive free metric</comment>
+  </data>
+  <data name="DriveFreeLabel" xml:space="preserve">
+    <value>Libre</value>
+    <comment>Short label for drive free metric</comment>
+  </data>
+  <data name="DriveLoad" xml:space="preserve">
+    <value>Carga</value>
+    <comment>Full name for drive load metric</comment>
+  </data>
+  <data name="DriveLoadBar" xml:space="preserve">
+    <value>Barra de Carga</value>
+    <comment>Full name for drive load bar metric</comment>
+  </data>
+  <data name="DriveLoadBarLabel" xml:space="preserve">
+    <value>Carga</value>
+    <comment>Short label for drive load bar metric</comment>
+  </data>
+  <data name="DriveLoadLabel" xml:space="preserve">
+    <value>Carga</value>
+    <comment>Short label for drive load metric</comment>
+  </data>
+  <data name="DriveRead" xml:space="preserve">
+    <value>Tasa de Lectura</value>
+    <comment>Full name for drive read metric</comment>
+  </data>
+  <data name="DriveReadLabel" xml:space="preserve">
+    <value>Lectura</value>
+    <comment>Short label for drive read metric</comment>
+  </data>
+  <data name="DriveUsed" xml:space="preserve">
+    <value>Usado</value>
+    <comment>Full name for drive used metric</comment>
+  </data>
+  <data name="DriveUsedLabel" xml:space="preserve">
+    <value>Usado</value>
+    <comment>Short label for drive used metric</comment>
+  </data>
+  <data name="DriveWrite" xml:space="preserve">
+    <value>Tasa de Escritura</value>
+    <comment>Full name for drive write metric</comment>
+  </data>
+  <data name="DriveWriteLabel" xml:space="preserve">
+    <value>Escritura</value>
+    <comment>Short label for drive write metric</comment>
+  </data>
+  <data name="GPUCoreClock" xml:space="preserve">
+    <value>Reloj del núcleo</value>
+    <comment>Full name for GPU core clock metric</comment>
+  </data>
+  <data name="GPUCoreClockLabel" xml:space="preserve">
+    <value>Núcleo</value>
+    <comment>Short label for RAM core clock metric</comment>
+  </data>
+  <data name="GPUCoreLoad" xml:space="preserve">
+    <value>Carga del núcleo</value>
+    <comment>Full name for GPU core load metric</comment>
+  </data>
+  <data name="GPUCoreLoadLabel" xml:space="preserve">
+    <value>Núcleo</value>
+    <comment>Short label for GPU core load metric</comment>
+  </data>
+  <data name="GPUFan" xml:space="preserve">
+    <value>Uso del ventilador</value>
+    <comment>Full name for GPU fan metric</comment>
+  </data>
+  <data name="GPUFanLabel" xml:space="preserve">
+    <value>Ventilador</value>
+    <comment>Short label for GPU voltage metric</comment>
+  </data>
+  <data name="GPUTemp" xml:space="preserve">
+    <value>Temperatura</value>
+    <comment>Full name for GPU temp metric</comment>
+  </data>
+  <data name="GPUTempLabel" xml:space="preserve">
+    <value>Temp</value>
+    <comment>Short label for GPU temp metric</comment>
+  </data>
+  <data name="GPUVoltage" xml:space="preserve">
+    <value>Voltaje</value>
+    <comment>Full name for GPU voltage metric</comment>
+  </data>
+  <data name="GPUVoltageLabel" xml:space="preserve">
+    <value>Voltaje</value>
+    <comment>Short label for GPU voltage metric</comment>
+  </data>
+  <data name="GPUVRAMClock" xml:space="preserve">
+    <value>Reloj VRAM</value>
+    <comment>Full name for GPU VRAM clock metric</comment>
+  </data>
+  <data name="GPUVRAMClockLabel" xml:space="preserve">
+    <value>VRAM</value>
+    <comment>Short label for GPU VRAM clock metric</comment>
+  </data>
+  <data name="GPUVRAMLoad" xml:space="preserve">
+    <value>Carga VRAM</value>
+    <comment>Full name for GPU VRAM load metric</comment>
+  </data>
+  <data name="GPUVRAMLoadLabel" xml:space="preserve">
+    <value>VRAM</value>
+    <comment>Short label for GPU VRAM load metric</comment>
+  </data>
+  <data name="NetworkIn" xml:space="preserve">
+    <value>Ancho de banda entrante</value>
+    <comment>Full name for network in metric</comment>
+  </data>
+  <data name="NetworkInLabel" xml:space="preserve">
+    <value>Entrante</value>
+    <comment>Short label for network in metric</comment>
+  </data>
+  <data name="NetworkOut" xml:space="preserve">
+    <value>Ancho de banda saliente</value>
+    <comment>Full name for network out metric</comment>
+  </data>
+  <data name="NetworkOutLabel" xml:space="preserve">
+    <value>Saliente</value>
+    <comment>Short label for network out metric</comment>
+  </data>
+  <data name="RAMClock" xml:space="preserve">
+    <value>Reloj</value>
+    <comment>Full name for RAM clock metric</comment>
+  </data>
+  <data name="RAMClockLabel" xml:space="preserve">
+    <value>Reloj</value>
+    <comment>Short label for RAM clock metric</comment>
+  </data>
+  <data name="RAMFree" xml:space="preserve">
+    <value>Libre</value>
+    <comment>Full name for RAM free metric</comment>
+  </data>
+  <data name="RAMFreeLabel" xml:space="preserve">
+    <value>Libre</value>
+    <comment>Short label for RAM free metric</comment>
+  </data>
+  <data name="RAMLoad" xml:space="preserve">
+    <value>Carga</value>
+    <comment>Full name for RAM load metric</comment>
+  </data>
+  <data name="RAMLoadLabel" xml:space="preserve">
+    <value>Carga</value>
+    <comment>Short label for RAM load metric</comment>
+  </data>
+  <data name="RAMUsed" xml:space="preserve">
+    <value>Usado</value>
+    <comment>Full name for RAM load metric</comment>
+  </data>
+  <data name="RAMUsedLabel" xml:space="preserve">
+    <value>Usado</value>
+    <comment>Short label for RAM used metric</comment>
+  </data>
+  <data name="RAMVoltage" xml:space="preserve">
+    <value>Voltaje</value>
+    <comment>Full name for RAM voltage metric</comment>
+  </data>
+  <data name="RAMVoltageLabel" xml:space="preserve">
+    <value>Voltaje</value>
+    <comment>Short label for RAM voltage metric</comment>
+  </data>
+  <data name="ButtonApply" xml:space="preserve">
+    <value>Aplicar</value>
+    <comment>Text of the apply button</comment>
+  </data>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>Cancelar</value>
+    <comment>Text of the cancel button</comment>
+  </data>
+  <data name="ButtonDone" xml:space="preserve">
+    <value>Hecho</value>
+    <comment>Text of the done button</comment>
+  </data>
+  <data name="ButtonNo" xml:space="preserve">
+    <value>No</value>
+    <comment>Text of the no button</comment>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Guardar</value>
+    <comment>Text of the save button</comment>
+  </data>
+  <data name="ButtonSkip" xml:space="preserve">
+    <value>Saltar</value>
+    <comment>Text of the skip button</comment>
+  </data>
+  <data name="ButtonYes" xml:space="preserve">
+    <value>Sí</value>
+    <comment>Text of the yes button</comment>
+  </data>
+  <data name="ChangeLogTitle" xml:space="preserve">
+    <value>Registro de cambios</value>
+    <comment>Title of the change log window</comment>
+  </data>
+  <data name="ErrorPerformanceCounter" xml:space="preserve">
+    <value>Su caché del Contador de Rendimiento está dañado. Haga clic en Aceptar para visitar la wiki y corregir este error.</value>
+    <comment>Text of the performance counter error</comment>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error de Sidebar</value>
+    <comment>Title of the error popup</comment>
+  </data>
+  <data name="GraphConfigSectionTitle" xml:space="preserve">
+    <value>Configuración</value>
+    <comment>Title of the config section in the graph window</comment>
+  </data>
+  <data name="GraphDuration" xml:space="preserve">
+    <value>Duración</value>
+    <comment>Graph config duration label</comment>
+  </data>
+  <data name="GraphDurationMinute" xml:space="preserve">
+    <value>Minuto</value>
+    <comment>Graph duration minute</comment>
+  </data>
+  <data name="GraphDurationMinutes" xml:space="preserve">
+    <value>Minutos</value>
+    <comment>Graph duration minutes plural</comment>
+  </data>
+  <data name="GraphDurationSeconds" xml:space="preserve">
+    <value>Segundos</value>
+    <comment>Graph duration seconds</comment>
+  </data>
+  <data name="GraphHardware" xml:space="preserve">
+    <value>Hardware</value>
+    <comment>Graph config hardware label</comment>
+  </data>
+  <data name="GraphMetrics" xml:space="preserve">
+    <value>Métrica</value>
+    <comment>Graph config metrics label</comment>
+  </data>
+  <data name="GraphMonitor" xml:space="preserve">
+    <value>Monitor</value>
+    <comment>Graph config monitor label</comment>
+  </data>
+  <data name="GraphTitle" xml:space="preserve">
+    <value>Gráfico</value>
+    <comment>Title of the graph window</comment>
+  </data>
+  <data name="LanguageChangedText" xml:space="preserve">
+    <value>Por favor reinicia la aplicación.</value>
+    <comment>Text of the language changed popup</comment>
+  </data>
+  <data name="LanguageChangedTitle" xml:space="preserve">
+    <value>Idioma cambiado</value>
+    <comment>Title of the language changed popup</comment>
+  </data>
+  <data name="Settings24HourClock" xml:space="preserve">
+    <value>Reloj de 24 horas</value>
+    <comment>Settings 24 hour clock label</comment>
+  </data>
+  <data name="Settings24HourClockTooltip" xml:space="preserve">
+    <value>Cambia el formato de hora del reloj a 24 horas.</value>
+    <comment>Settings 24 hour clock tooltip</comment>
+  </data>
+  <data name="SettingsAdvancedTab" xml:space="preserve">
+    <value>Avanzado</value>
+    <comment>Title of the settings advanced tab</comment>
+  </data>
+  <data name="SettingsAlertFontColor" xml:space="preserve">
+    <value>Color de fuente de alerta</value>
+    <comment>Settings alert font color label</comment>
+  </data>
+  <data name="SettingsAlertFontColorTooltip" xml:space="preserve">
+    <value>Color del texto de alerta.</value>
+    <comment>Settings alert font color tooltip</comment>
+  </data>
+  <data name="SettingsAllCoreClocks" xml:space="preserve">
+    <value>Mostrar todos los relojes del núcleo</value>
+    <comment>Settings all core clocks label</comment>
+  </data>
+  <data name="SettingsAllCoreClocksTooltip" xml:space="preserve">
+    <value>Muestra las velocidades del reloj de todos los núcleos no solo del primero.</value>
+    <comment>Settings all core clocks tooltip</comment>
+  </data>
+  <data name="SettingsToolbarMode" xml:space="preserve">
+    <value>Modo de Barra de Herramientas</value>
+    <comment>Settings toolbar mode label</comment>
+  </data>
+  <data name="SettingsToolbarModeTooltip" xml:space="preserve">
+    <value>Oculta la barra lateral al hacer uso de alt-tab y la hace persistir entre los escritorios virtuales.</value>
+    <comment>Settings toolbar mode tooltip</comment>
+  </data>
+  <data name="SettingsAlwaysOnTop" xml:space="preserve">
+    <value>Siempre en primer plano</value>
+    <comment>Settings always on top label</comment>
+  </data>
+  <data name="SettingsAlwaysOnTopTooltip" xml:space="preserve">
+    <value>Hace que la barra lateral esté siempre encima de otras ventanas.</value>
+    <comment>Settings always on top tooltip</comment>
+  </data>
+  <data name="SettingsAutoBackground" xml:space="preserve">
+    <value>Color de Fondo Automático</value>
+    <comment>Settings auto background label</comment>
+  </data>
+  <data name="SettingsAutoBackgroundTooltip" xml:space="preserve">
+    <value>Establece el color de fondo al de tu configuración de color de Windows.</value>
+    <comment>Settings auto background tooltip</comment>
+  </data>
+  <data name="SettingsAutoUpdate" xml:space="preserve">
+    <value>Auto Actualización</value>
+    <comment>Settings auto update label</comment>
+  </data>
+  <data name="SettingsAutoUpdateTooltip" xml:space="preserve">
+    <value>Actualiza la aplicación automáticamente.</value>
+    <comment>Settings auto update tooltip</comment>
+  </data>
+  <data name="SettingsBackgroundColor" xml:space="preserve">
+    <value>Color de Fondo</value>
+    <comment>Settings background color label</comment>
+  </data>
+  <data name="SettingsBackgroundColorTooltip" xml:space="preserve">
+    <value>Color del fondo.</value>
+    <comment>Settings background color tooltip</comment>
+  </data>
+  <data name="SettingsBackgroundOpacity" xml:space="preserve">
+    <value>Opacidad de fondo</value>
+    <comment>Settings background opacity label</comment>
+  </data>
+  <data name="SettingsBackgroundOpacityTooltip" xml:space="preserve">
+    <value>Opacidad del fondo.</value>
+    <comment>Settings background opacity tooltip</comment>
+  </data>
+  <data name="SettingsBandwidthInAlert" xml:space="preserve">
+    <value>Alerta de Ancho de Banda entrante</value>
+    <comment>Settings bandwidth in alert label</comment>
+  </data>
+  <data name="SettingsBandwidthInAlertTooltip" xml:space="preserve">
+    <value>El umbral de kbps o kBps en el que se producen las alertas de ancho de banda entrante. Use 0 para deshabilitar.</value>
+    <comment>Settings bandwidth in alert tooltip</comment>
+  </data>
+  <data name="SettingsBandwidthOutAlert" xml:space="preserve">
+    <value>Alerta de Ancho de Banda saliente</value>
+    <comment>Settings bandwidth out alert label</comment>
+  </data>
+  <data name="SettingsBandwidthOutAlertTooltip" xml:space="preserve">
+    <value>El umbral de kbps o kBps en el que se producen las alertas de ancho de banda saliente. Use 0 para deshabilitar.</value>
+    <comment>Settings bandwidth out alert tooltip</comment>
+  </data>
+  <data name="SettingsClickThrough" xml:space="preserve">
+    <value>Hacer clic a través</value>
+    <comment>Settings click through label</comment>
+  </data>
+  <data name="SettingsClickThroughTooltip" xml:space="preserve">
+    <value>Hace que los eventos del mouse pasen por la ventana. Tenga en cuenta que esto evitará cualquier interacción con la barra lateral.</value>
+    <comment>Settings click through tooltip</comment>
+  </data>
+  <data name="SettingsCollapseMenuBar" xml:space="preserve">
+    <value>Contraer la Barra del Menú</value>
+    <comment>Settings collapse menu bar label</comment>
+  </data>
+  <data name="SettingsCollapseMenuBarTooltip" xml:space="preserve">
+    <value>Elimina el espacio adicional en la parte superior de la barra lateral.</value>
+    <comment>Settings collapse menu bar tooltip</comment>
+  </data>
+  <data name="SettingsCoreLoads" xml:space="preserve">
+    <value>Mostrar las cargas del Núcleo</value>
+    <comment>Settings core loads label</comment>
+  </data>
+  <data name="SettingsCoreLoadsTooltip" xml:space="preserve">
+    <value>Muestra el porcentaje de carga de todos los núcleos.</value>
+    <comment>Settings core loads tooltip</comment>
+  </data>
+  <data name="SettingsCustomizeTab" xml:space="preserve">
+    <value>Personalizar</value>
+    <comment>Title of the settings customize tab</comment>
+  </data>
+  <data name="SettingsDateFormat" xml:space="preserve">
+    <value>Formato de fecha</value>
+    <comment>Settings date format label</comment>
+  </data>
+  <data name="SettingsDateFormatDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+    <comment>Settings date format disabled value</comment>
+  </data>
+  <data name="SettingsDateFormatTooltip" xml:space="preserve">
+    <value>Formato de la fecha debajo del reloj.</value>
+    <comment>Settings date format tooltip</comment>
+  </data>
+  <data name="SettingsDock" xml:space="preserve">
+    <value>Acoplar</value>
+    <comment>Dock settings label</comment>
+  </data>
+  <data name="SettingsDockBottom" xml:space="preserve">
+    <value>Abajo</value>
+    <comment>Dock bottom settings label</comment>
+  </data>
+  <data name="SettingsDockLeft" xml:space="preserve">
+    <value>Izquierda</value>
+    <comment>Dock left settings label</comment>
+  </data>
+  <data name="SettingsDockRight" xml:space="preserve">
+    <value>Derecha</value>
+    <comment>Dock right settings label</comment>
+  </data>
+  <data name="SettingsDockTooltip" xml:space="preserve">
+    <value>En qué borde se acoplará la barra lateral.</value>
+    <comment>Dock settings tooltip</comment>
+  </data>
+  <data name="SettingsDockTop" xml:space="preserve">
+    <value>Arriba</value>
+    <comment>Dock top settings label</comment>
+  </data>
+  <data name="SettingsDriveDetailsTooltip" xml:space="preserve">
+    <value>Muestra detalles adicionales de la unidad como texto.</value>
+    <comment>Settings drive details tooltip</comment>
+  </data>
+  <data name="SettingsFontColor" xml:space="preserve">
+    <value>Color de Fuente</value>
+    <comment>Settings font color label</comment>
+  </data>
+  <data name="SettingsFontColorTooltip" xml:space="preserve">
+    <value>Color de texto e iconos.</value>
+    <comment>Settings font color tooltip</comment>
+  </data>
+  <data name="SettingsFontSize" xml:space="preserve">
+    <value>Tamaño de Fuente</value>
+    <comment>Settings font size label</comment>
+  </data>
+  <data name="SettingsFontSizeTooltip" xml:space="preserve">
+    <value>Tamaño de texto e iconos.</value>
+    <comment>Settings font size tooltip</comment>
+  </data>
+  <data name="SettingsGeneralTab" xml:space="preserve">
+    <value>General</value>
+    <comment>Title of the settings general tab</comment>
+  </data>
+  <data name="SettingsHardwareColumn1" xml:space="preserve">
+    <value>Activado</value>
+    <comment>Settings hardware data grid enabled column header</comment>
+  </data>
+  <data name="SettingsHardwareColumn2" xml:space="preserve">
+    <value>Hardware</value>
+    <comment>Settings hardware data grid hardware column header</comment>
+  </data>
+  <data name="SettingsHardwareEnabledTooltip" xml:space="preserve">
+    <value>Habilita este hardware.</value>
+    <comment>Settings hardware enabled checkbox tooltip</comment>
+  </data>
+  <data name="SettingsHardwareNameTooltip" xml:space="preserve">
+    <value>Edita el nombre de este hardware.</value>
+    <comment>Settings hardware name tooltip</comment>
+  </data>
+  <data name="SettingsHorizontalOffset" xml:space="preserve">
+    <value>Desplazamiento horizontal</value>
+    <comment>Horizontal offset settings label</comment>
+  </data>
+  <data name="SettingsHorizontalOffsetTooltip" xml:space="preserve">
+    <value>Desplazamiento horizontal de la barra lateral.</value>
+    <comment>Horizontal offset settings tooltip</comment>
+  </data>
+  <data name="SettingsHotkeyClose" xml:space="preserve">
+    <value>Cerrar</value>
+    <comment>Settings hotkey close label</comment>
+  </data>
+  <data name="SettingsHotkeyCycleEdge" xml:space="preserve">
+    <value>Cambiar Borde</value>
+    <comment>Settings hotkey switch edge</comment>
+  </data>
+  <data name="SettingsHotkeyCycleScreen" xml:space="preserve">
+    <value>Cambiar Pantalla</value>
+    <comment>Settings hotkey switch screen</comment>
+  </data>
+  <data name="SettingsHotkeyHide" xml:space="preserve">
+    <value>Ocultar</value>
+    <comment>Settings hotkey hide label</comment>
+  </data>
+  <data name="SettingsHotkeyReload" xml:space="preserve">
+    <value>Recargar</value>
+    <comment>Settings hotkey reload label</comment>
+  </data>
+  <data name="SettingsHotkeyShow" xml:space="preserve">
+    <value>Mostrar</value>
+    <comment>Settings hotkey show label</comment>
+  </data>
+  <data name="SettingsHotkeysTab" xml:space="preserve">
+    <value>Teclas de acceso rápido</value>
+    <comment>Title of the settings hotkeys tab</comment>
+  </data>
+  <data name="SettingsHotkeyToggle" xml:space="preserve">
+    <value>Alternar</value>
+    <comment>Settings hotkey toggle label</comment>
+  </data>
+  <data name="SettingsLanguage" xml:space="preserve">
+    <value>Idioma</value>
+    <comment>Settings language label</comment>
+  </data>
+  <data name="SettingsLanguageDefault" xml:space="preserve">
+    <value>Predeterminado</value>
+    <comment>Settings language default label</comment>
+  </data>
+  <data name="SettingsLanguageTooltip" xml:space="preserve">
+    <value>Idioma actual de la aplicación.</value>
+    <comment>Settings language tooltip</comment>
+  </data>
+  <data name="SettingsMetrics" xml:space="preserve">
+    <value>Métricas:</value>
+    <comment>Settings metrics label with colon</comment>
+  </data>
+  <data name="SettingsMetricsTooltip" xml:space="preserve">
+    <value>Habilita o desactiva métricas específicas.</value>
+    <comment>Settings metrics tooltip</comment>
+  </data>
+  <data name="SettingsMonitorEnabledTooltip" xml:space="preserve">
+    <value>Habilita este monitor.</value>
+    <comment>Settings monitor enabled checkbox tooltip</comment>
+  </data>
+  <data name="SettingsMonitorsColumn1" xml:space="preserve">
+    <value>Activado</value>
+    <comment>Settings monitors data grid enabled column header</comment>
+  </data>
+  <data name="SettingsMonitorsColumn2" xml:space="preserve">
+    <value>Monitor</value>
+    <comment>Settings monitors data grid monitor column header</comment>
+  </data>
+  <data name="SettingsMonitorsSubtitle1" xml:space="preserve">
+    <value>Haga clic en una fila para editar su configuración.</value>
+    <comment>Settings monitors subtitle line one</comment>
+  </data>
+  <data name="SettingsMonitorsSubtitle2" xml:space="preserve">
+    <value>Arrastre una fila para cambiar su orden.</value>
+    <comment>Settings monitors subtitle line two</comment>
+  </data>
+  <data name="SettingsMonitorsTab" xml:space="preserve">
+    <value>Monitores</value>
+    <comment>Title of the settings monitors tab</comment>
+  </data>
+  <data name="SettingsPollingInterval" xml:space="preserve">
+    <value>Intervalo de Sondeo</value>
+    <comment>Settings polling interval label</comment>
+  </data>
+  <data name="SettingsPollingIntervalTooltip" xml:space="preserve">
+    <value>Tiempo entre sondeos de datos en milisegundos.</value>
+    <comment>Settings polling interval tooltip</comment>
+  </data>
+  <data name="SettingsReserveSpace" xml:space="preserve">
+    <value>Reservar Espacio</value>
+    <comment>Settings reserve space label</comment>
+  </data>
+  <data name="SettingsReserveSpaceTooltip" xml:space="preserve">
+    <value>Reserva espacio en el área de trabajo para la barra lateral.</value>
+    <comment>Settings reserve space tooltip</comment>
+  </data>
+  <data name="SettingsRoundAllDecimals" xml:space="preserve">
+    <value>Redondear todos los decimales</value>
+    <comment>Settings round all decimals label</comment>
+  </data>
+  <data name="SettingsRoundAllDecimalsTooltip" xml:space="preserve">
+    <value>Redondea todos los valores decimales al número entero más cercano.</value>
+    <comment>Settings round all decimals tooltip</comment>
+  </data>
+  <data name="SettingsRunAtStartup" xml:space="preserve">
+    <value>Ejecutar en el Arranque</value>
+    <comment>Settings run at startup label</comment>
+  </data>
+  <data name="SettingsRunAtStartupTooltip" xml:space="preserve">
+    <value>Ejecuta la aplicación inmediatamente cuando inicias sesión.</value>
+    <comment>Settings run at startup tooltip</comment>
+  </data>
+  <data name="SettingsScreen" xml:space="preserve">
+    <value>Pantalla</value>
+    <comment>Screen settings label</comment>
+  </data>
+  <data name="SettingsScreenTooltip" xml:space="preserve">
+    <value>En qué pantalla estará la barra lateral.</value>
+    <comment>Screen settings tooltip</comment>
+  </data>
+  <data name="SettingsShowClock" xml:space="preserve">
+    <value>Mostrar Reloj</value>
+    <comment>Settings show clock label</comment>
+  </data>
+  <data name="SettingsShowClockTooltip" xml:space="preserve">
+    <value>Muestra el Reloj.</value>
+    <comment>Settings show clock tooltip</comment>
+  </data>
+  <data name="SettingsShowDriveDetails" xml:space="preserve">
+    <value>Mostrar detalles de la Unidad</value>
+    <comment>Settings show drive details label</comment>
+  </data>
+  <data name="SettingsShowDriveIO" xml:space="preserve">
+    <value>Mostrar IO de la Unidad</value>
+    <comment>Settings show drive IO label</comment>
+  </data>
+  <data name="SettingsShowDriveIOTooltip" xml:space="preserve">
+    <value>Muestra las velocidades de lectura y escritura de la unidad si los detalles de la unidad están habilitados.</value>
+    <comment>Settings show drive IO tooltip</comment>
+  </data>
+  <data name="SettingsShowDriveSpace" xml:space="preserve">
+    <value>Mostrar Espacio de la Unidad</value>
+    <comment>Settings show drive space label</comment>
+  </data>
+  <data name="SettingsShowDriveSpaceTooltip" xml:space="preserve">
+    <value>Muestra el porcentaje de carga, espacio utilizado y espacio libre si los detalles de la unidad están habilitados.</value>
+    <comment>Settings show drive space tooltip</comment>
+  </data>
+  <data name="SettingsShowHardwareNames" xml:space="preserve">
+    <value>Mostrar Nombres del Hardware</value>
+    <comment>Settings show hardware names label</comment>
+  </data>
+  <data name="SettingsShowHardwareNamesTooltip" xml:space="preserve">
+    <value>Muestra los Nombres del Hardware.</value>
+    <comment>Settings show hardware names tooltip</comment>
+  </data>
+  <data name="SettingsShowTrayIcon" xml:space="preserve">
+    <value>Mostrar Icono de Bandeja</value>
+    <comment>Settings show tray icon label</comment>
+  </data>
+  <data name="SettingsShowTrayIconTooltip" xml:space="preserve">
+    <value>Muestra el Icono de la Bandeja en la barra de tareas. Esto a veces es necesario.</value>
+    <comment>Settings show tray icon tooltip</comment>
+  </data>
+  <data name="SettingsSidebarWidth" xml:space="preserve">
+    <value>Ancho de la barra lateral</value>
+    <comment>Settings sidebar width label</comment>
+  </data>
+  <data name="SettingsSidebarWidthTooltip" xml:space="preserve">
+    <value>Ancho de la barra lateral en pixeles.</value>
+    <comment>Settings sidebar width tooltip</comment>
+  </data>
+  <data name="SettingsTemperatureAlert" xml:space="preserve">
+    <value>Alerta de Temperatura</value>
+    <comment>Settings temperature alert label</comment>
+  </data>
+  <data name="SettingsTemperatureAlertTooltip" xml:space="preserve">
+    <value>El umbral de temperatura en el que se producen las alertas. Use 0 para deshabilitar.</value>
+    <comment>Settings temperature alert tooltip</comment>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Configuración de la Barra Lateral</value>
+    <comment>Title of the settings window</comment>
+  </data>
+  <data name="SettingsUIScale" xml:space="preserve">
+    <value>Escala de UI</value>
+    <comment>Settings UI scale label</comment>
+  </data>
+  <data name="SettingsUIScaleTooltip" xml:space="preserve">
+    <value>Escala de todas las ventanas y componentes de la interfaz de usuario.</value>
+    <comment>Settings UI scale tooltip</comment>
+  </data>
+  <data name="SettingsUseBytesPerSecond" xml:space="preserve">
+    <value>Usar Bytes por Segundo</value>
+    <comment>Settings use bytes per second label</comment>
+  </data>
+  <data name="SettingsUseBytesPerSecondTooltip" xml:space="preserve">
+    <value>Muestra el ancho de banda en bytes en lugar de bits por segundo.</value>
+    <comment>Settings use bytes per second tooltip</comment>
+  </data>
+  <data name="SettingsUsedSpaceAlert" xml:space="preserve">
+    <value>Alerta de Espacio Usado</value>
+    <comment>Settings used space alert label</comment>
+  </data>
+  <data name="SettingsUsedSpaceAlertTooltip" xml:space="preserve">
+    <value>El umbral de porcentaje en el que se producen las alertas de espacio utilizado. Use 0 para deshabilitar.</value>
+    <comment>Settings used space alert tooltip</comment>
+  </data>
+  <data name="SettingsUseFahrenheit" xml:space="preserve">
+    <value>Usar Fahrenheit</value>
+    <comment>Settings use fahrenheit label</comment>
+  </data>
+  <data name="SettingsUseFahrenheitTooltip" xml:space="preserve">
+    <value>Las temperaturas de los sensores y las alertas estarán en Fahrenheit en lugar de Celsius.</value>
+    <comment>Settings use fahrenheit tooltip</comment>
+  </data>
+  <data name="SettingsUseGHz" xml:space="preserve">
+    <value>Usar GHz</value>
+    <comment>Settings use GHz label</comment>
+  </data>
+  <data name="SettingsUseGHzTooltip" xml:space="preserve">
+    <value>Las velocidades de reloj estarán en GHz en lugar de MHz.</value>
+    <comment>Settings use GHz tooltip</comment>
+  </data>
+  <data name="SettingsVerticalOffset" xml:space="preserve">
+    <value>Desplazamiento vertical</value>
+    <comment>Vertical offset settings label</comment>
+  </data>
+  <data name="SettingsVerticalOffsetTooltip" xml:space="preserve">
+    <value>Desplazamiento vertical de la barra lateral.</value>
+    <comment>Vertical Offset settings tooltip</comment>
+  </data>
+  <data name="SetupCustomSubtitle" xml:space="preserve">
+    <value>Utilice los controles deslizantes y los cuadros de texto para mover la barra lateral a la posición correcta.</value>
+    <comment>Subtitle of the custom setup page</comment>
+  </data>
+  <data name="SetupCustomTitle" xml:space="preserve">
+    <value>Personalizado</value>
+    <comment>Title of the custom setup page</comment>
+  </data>
+  <data name="SetupDoneSubtitle" xml:space="preserve">
+    <value>Si desea personalizar la barra lateral, haga clic en el botón de configuración.</value>
+    <comment>Subtitle of the setup done page</comment>
+  </data>
+  <data name="SetupDoneText" xml:space="preserve">
+    <value>También puede acceder a la configuración a través del icono de engranaje en la parte superior derecha de la barra lateral o mediante el icono de la bandeja en la barra de tareas.</value>
+    <comment>Text of the setup done page</comment>
+  </data>
+  <data name="SetupDoneTitle" xml:space="preserve">
+    <value>Hecho!</value>
+    <comment>Title of the setup done page</comment>
+  </data>
+  <data name="SetupSubtitle" xml:space="preserve">
+    <value>Esta es una configuración rápida para colocar la barra lateral en la posición correcta.</value>
+    <comment>Subtitle of the initial setup page</comment>
+  </data>
+  <data name="SetupText" xml:space="preserve">
+    <value>¿Está la barra lateral visible y acoplada al borde derecho de su monitor principal?</value>
+    <comment>Text of the initial setup page</comment>
+  </data>
+  <data name="SetupTitle" xml:space="preserve">
+    <value>Configuración Inicial</value>
+    <comment>Title of the initial setup page</comment>
+  </data>
+  <data name="UpdateErrorFatalText" xml:space="preserve">
+    <value>Ocurrió un error fatal al intentar actualizar. La actualización automática se desactivó.</value>
+    <comment>Fatal text of the update error popup</comment>
+  </data>
+  <data name="UpdateErrorText" xml:space="preserve">
+    <value>Imposible actualizar. Revisa tu conexión a Internet.</value>
+    <comment>Text of the update error popup</comment>
+  </data>
+  <data name="UpdateErrorTitle" xml:space="preserve">
+    <value>Error de actualización</value>
+    <comment>Title of the update error popup</comment>
+  </data>
+  <data name="UpdateSuccessText" xml:space="preserve">
+    <value>Tienes la última versión.</value>
+    <comment>Text of the update success popup</comment>
+  </data>
+  <data name="UpdateTitle" xml:space="preserve">
+    <value>Actualizando</value>
+    <comment>Title of the update window</comment>
+  </data>
+  <data name="SettingsTextAlign" xml:space="preserve">
+    <value>Alinear Texto</value>
+    <comment>Settings text align label</comment>
+  </data>
+  <data name="SettingsTextAlignLeft" xml:space="preserve">
+    <value>Izquierda</value>
+    <comment>Settings text align left value</comment>
+  </data>
+  <data name="SettingsTextAlignRight" xml:space="preserve">
+    <value>Derecha</value>
+    <comment>Settings text align right value</comment>
+  </data>
+  <data name="SettingsTextAlignTooltip" xml:space="preserve">
+    <value>Alineación de texto métrico.</value>
+    <comment>Settings text align tooltip</comment>
+  </data>
+  <data name="SettingsAlertBlink" xml:space="preserve">
+    <value>Alerta parpadeante</value>
+    <comment>Settings alert blink label</comment>
+  </data>
+  <data name="SettingsAlertBlinkTooltip" xml:space="preserve">
+    <value>Hace que el texto de alerta parpadee.</value>
+    <comment>Settings alert blink tooltip</comment>
+  </data>
+  <data name="NetworkIP" xml:space="preserve">
+    <value>Dirección IP</value>
+    <comment>Full name for the network IP address metric</comment>
+  </data>
+  <data name="NetworkIPLabel" xml:space="preserve">
+    <value>IP</value>
+    <comment>Short label for network IP address metric</comment>
+  </data>
+  <data name="SettingsInitiallyHidden" xml:space="preserve">
+    <value>Ocultar al Inicio</value>
+    <comment>Settings initially hidden label</comment>
+  </data>
+  <data name="SettingsInitiallyHiddenTooltip" xml:space="preserve">
+    <value>Hace que la barra lateral se oculte al inicio.</value>
+    <comment>Settings initially hidden tooltip</comment>
+  </data>
+  <data name="SettingsVirtualDesktop" xml:space="preserve">
+    <value>Escritorio Virtual</value>
+    <comment>Settings virtual desktop label</comment>
+  </data>
+  <data name="SettingsVirtualDesktopTooltip" xml:space="preserve">
+    <value>Habilita el soporte para escritorios virtuales.</value>
+    <comment>Settings virtual desktop tooltip</comment>
+  </data>
+  <data name="SettingsHotkeyReserveSpace" xml:space="preserve">
+    <value>Reservar Espacio</value>
+    <comment>Settings hotkey reserve space</comment>
+  </data>
+  <data name="NetworkExtIP" xml:space="preserve">
+    <value>Dirección IP Externa</value>
+    <comment>Full name for the network ext IP address metric</comment>
+  </data>
+  <data name="NetworkExtIPLabel" xml:space="preserve">
+    <value>Ext</value>
+    <comment>Short label for network ext IP address metric</comment>
+  </data>
+  <data name="SettingsShowMachineName" xml:space="preserve">
+    <value>Mostrar nombre de PC</value>
+    <comment>Settings show machine name label</comment>
+  </data>
+  <data name="SettingsShowMachineNameTooltip" xml:space="preserve">
+    <value>Muestra el nombre de la computadora.</value>
+    <comment>Settings show machine name tooltip</comment>
+  </data>
+</root>
