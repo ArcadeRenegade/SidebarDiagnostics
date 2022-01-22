@@ -52,6 +52,7 @@ namespace SidebarDiagnostics.Models
             AutoUpdate = Framework.Settings.Instance.AutoUpdate;
             RunAtStartup = Framework.Settings.Instance.RunAtStartup;
             SidebarWidth = Framework.Settings.Instance.SidebarWidth;
+            SidebarBorderWidth = Framework.Settings.Instance.SidebarBorderWidth;
             AutoBGColor = Framework.Settings.Instance.AutoBGColor;
             BGColor = Framework.Settings.Instance.BGColor;
             BGOpacity = Framework.Settings.Instance.BGOpacity;
@@ -148,6 +149,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.AutoUpdate = AutoUpdate;
             Framework.Settings.Instance.RunAtStartup = RunAtStartup;
             Framework.Settings.Instance.SidebarWidth = SidebarWidth;
+            Framework.Settings.Instance.SidebarBorderWidth = SidebarBorderWidth;
             Framework.Settings.Instance.AutoBGColor = AutoBGColor;
             Framework.Settings.Instance.BGColor = BGColor;
             Framework.Settings.Instance.BGOpacity = BGOpacity;
@@ -573,6 +575,22 @@ namespace SidebarDiagnostics.Models
                 _sidebarWidth = value;
 
                 NotifyPropertyChanged("SidebarWidth");
+            }
+        }
+
+        private int _sidebarBorderWidth { get; set; }
+
+        public int SidebarBorderWidth
+        {
+            get
+            {
+                return _sidebarBorderWidth;
+            }
+            set
+            {
+                _sidebarBorderWidth = value;
+
+                NotifyPropertyChanged("SidebarBorderWidth");
             }
         }
 

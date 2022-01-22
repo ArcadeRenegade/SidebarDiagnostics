@@ -380,6 +380,23 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private int _sidebarBorderWidth { get; set; } = 12;
+
+        [JsonProperty]
+        public int SidebarBorderWidth
+        {
+            get
+            {
+                return _sidebarBorderWidth;
+            }
+            set
+            {
+                _sidebarBorderWidth = value;
+
+                NotifyPropertyChanged("SidebarBorderWidth");
+            }
+        }
+
         private bool _autoBGColor { get; set; } = false;
 
         [JsonProperty]

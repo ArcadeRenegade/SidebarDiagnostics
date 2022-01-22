@@ -9,6 +9,7 @@
     that is mostly human readable. The generation and parsing of the 
     various data types are done through the TypeConverter classes 
     associated with the data types.
+    
     Example:
     
     ... ado.net/XML headers & schema ...
@@ -1039,5 +1040,13 @@
   <data name="SettingsShowMachineNameTooltip" xml:space="preserve">
     <value>Shows the name of the computer.</value>
     <comment>Settings show machine name tooltip</comment>
+  </data>
+  <data name="SettingsSidebarBorderWidth" xml:space="preserve">
+    <value>Sidebar Border Width</value>
+    <comment>Settings sidebar border width label</comment>
+  </data>
+  <data name="SettingsSidebarBorderWidthTooltip" xml:space="preserve">
+    <value>Width of the sidebar border in pixels.</value>
+    <comment>Settings sidebar border width tooltip</comment>
   </data>
 </root>
