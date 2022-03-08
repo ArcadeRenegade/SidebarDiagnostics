@@ -630,7 +630,7 @@ namespace SidebarDiagnostics.Monitoring
 
                 _tempSensor = _hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Contains("CCDs Max (Tdie)")).FirstOrDefault(); // Check for AMD core chiplet dies (CCDs)
 
-                if (board != null && _tempSensor != null)
+                if (board != null && _tempSensor == null)
                 {
                     _tempSensor = board.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Contains("CPU")).FirstOrDefault();
                 }
