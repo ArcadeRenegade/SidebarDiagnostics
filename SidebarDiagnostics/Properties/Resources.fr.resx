@@ -214,7 +214,7 @@
     <comment>Short label for CPU core clock metric</comment>
   </data>
   <data name="CPUCoreLoad" xml:space="preserve">
-    <value>Chargement du cœur</value>
+    <value>Charge du cœur</value>
     <comment>Full name for CPU core load metric</comment>
   </data>
   <data name="CPUCoreLoadLabel" xml:space="preserve">
@@ -222,7 +222,7 @@
     <comment>Short label for CPU core load metric</comment>
   </data>
   <data name="CPUFan" xml:space="preserve">
-    <value>Utilisation ventilateur</value>
+    <value>Utilisation du ventilateur</value>
     <comment>Full name for CPU fan metric</comment>
   </data>
   <data name="CPUFanLabel" xml:space="preserve">
@@ -230,11 +230,11 @@
     <comment>Short label for CPU fan metric</comment>
   </data>
   <data name="CPULoad" xml:space="preserve">
-    <value>Chargement</value>
+    <value>Charge</value>
     <comment>Full name for CPU load metric</comment>
   </data>
   <data name="CPULoadLabel" xml:space="preserve">
-    <value>Chargement</value>
+    <value>Charge</value>
     <comment>Short label for CPU load metric</comment>
   </data>
   <data name="CPUTemp" xml:space="preserve">
@@ -286,7 +286,7 @@
     <comment>Short label for drive read metric</comment>
   </data>
   <data name="Drives" xml:space="preserve">
-    <value>Disques Durs</value>
+    <value>Disques durs</value>
     <comment>Drives monitor title</comment>
   </data>
   <data name="DriveUsed" xml:space="preserve">
@@ -302,11 +302,11 @@
     <comment>Full name for drive write metric</comment>
   </data>
   <data name="DriveWriteLabel" xml:space="preserve">
-    <value>Ecriture</value>
+    <value>Écriture</value>
     <comment>Short label for drive write metric</comment>
   </data>
   <data name="ErrorPerformanceCounter" xml:space="preserve">
-    <value>Your Performance Counter cache is corrupted. Click OK to visit the wiki and fix this error.</value>
+    <value>Votre cache Performance Counter est corrompu. Cliquez sur OK pour visiter le wiki et corriger cette erreur.</value>
     <comment>Text of the performance counter error</comment>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
@@ -326,7 +326,7 @@
     <comment>Short label for RAM core clock metric</comment>
   </data>
   <data name="GPUCoreLoad" xml:space="preserve">
-    <value>Chargement du cœur</value>
+    <value>Charge du cœur</value>
     <comment>Full name for GPU core load metric</comment>
   </data>
   <data name="GPUCoreLoadLabel" xml:space="preserve">
@@ -334,7 +334,7 @@
     <comment>Short label for GPU core load metric</comment>
   </data>
   <data name="GPUFan" xml:space="preserve">
-    <value>Utilisation ventilateur</value>
+    <value>Utilisation du ventilateur</value>
     <comment>Full name for GPU fan metric</comment>
   </data>
   <data name="GPUFanLabel" xml:space="preserve">
@@ -366,7 +366,7 @@
     <comment>Short label for GPU VRAM clock metric</comment>
   </data>
   <data name="GPUVRAMLoad" xml:space="preserve">
-    <value>Chargement VRAM</value>
+    <value>Charge VRAM</value>
     <comment>Full name for GPU VRAM load metric</comment>
   </data>
   <data name="GPUVRAMLoadLabel" xml:space="preserve">
@@ -394,7 +394,7 @@
     <comment>Graph duration seconds</comment>
   </data>
   <data name="GraphHardware" xml:space="preserve">
-    <value>Matériel</value>
+    <value>Composants</value>
     <comment>Graph config hardware label</comment>
   </data>
   <data name="GraphMetrics" xml:space="preserve">
@@ -466,11 +466,11 @@
     <comment>Short label for RAM load metric</comment>
   </data>
   <data name="RAMUsed" xml:space="preserve">
-    <value>Occupée</value>
+    <value>Occupé</value>
     <comment>Full name for RAM load metric</comment>
   </data>
   <data name="RAMUsedLabel" xml:space="preserve">
-    <value>Occupée</value>
+    <value>Occupé</value>
     <comment>Short label for RAM used metric</comment>
   </data>
   <data name="RAMVoltage" xml:space="preserve">
@@ -490,7 +490,7 @@
     <comment>Settings 24 hour clock tooltip</comment>
   </data>
   <data name="SettingsAdvancedTab" xml:space="preserve">
-    <value>Avancée</value>
+    <value>Avancé</value>
     <comment>Title of the settings advanced tab</comment>
   </data>
   <data name="SettingsAlertFontColor" xml:space="preserve">
@@ -534,7 +534,7 @@
     <comment>Settings auto background tooltip</comment>
   </data>
   <data name="SettingsAutoUpdate" xml:space="preserve">
-    <value>Mise à jour Auto</value>
+    <value>Mise à jour automatique</value>
     <comment>Settings auto update label</comment>
   </data>
   <data name="SettingsAutoUpdateTooltip" xml:space="preserve">
@@ -558,23 +558,23 @@
     <comment>Settings background opacity tooltip</comment>
   </data>
   <data name="SettingsBandwidthInAlert" xml:space="preserve">
-    <value>Alerte Bande Passante entrante</value>
+    <value>Alerte bande passante entrante</value>
     <comment>Settings bandwidth in alert label</comment>
   </data>
   <data name="SettingsBandwidthInAlertTooltip" xml:space="preserve">
-    <value>Seuil en kbps ou kBps à laquelle la bande passante reçu génère une alerte. Mettez 0 pour désactiver.</value>
+    <value>Seuil en kbps ou kBps au-delà duquel la bande passante entrante génère une alerte. Mettez 0 pour désactiver.</value>
     <comment>Settings bandwidth in alert tooltip</comment>
   </data>
   <data name="SettingsBandwidthOutAlert" xml:space="preserve">
-    <value>Alerte Bande Passante sortante</value>
+    <value>Alerte bande passante sortante</value>
     <comment>Settings bandwidth out alert label</comment>
   </data>
   <data name="SettingsBandwidthOutAlertTooltip" xml:space="preserve">
-    <value>Seuil en kbps ou kBps à laquelle la bande passante envoyée génère une alerte. Mettez 0 pour désactiver.</value>
+    <value>Seuil en kbps ou kBps au-delà duquel la bande passante sortante génère une alerte. Mettez 0 pour désactiver.</value>
     <comment>Settings bandwidth out alert tooltip</comment>
   </data>
   <data name="SettingsClickThrough" xml:space="preserve">
-    <value>Clic au travers</value>
+    <value>Clic à travers</value>
     <comment>Settings click through label</comment>
   </data>
   <data name="SettingsClickThroughTooltip" xml:space="preserve">
@@ -582,15 +582,15 @@
     <comment>Settings click through tooltip</comment>
   </data>
   <data name="SettingsCollapseMenuBar" xml:space="preserve">
-    <value>Déplier la Barre du Menu</value>
+    <value>Déplier la barre de menu</value>
     <comment>Settings collapse menu bar label</comment>
   </data>
   <data name="SettingsCollapseMenuBarTooltip" xml:space="preserve">
-    <value>Supprime l'espace supplémentaire en haut de la sibedar.</value>
+    <value>Supprime l'espace supplémentaire en haut de la sidebar.</value>
     <comment>Settings collapse menu bar tooltip</comment>
   </data>
   <data name="SettingsCoreLoads" xml:space="preserve">
-    <value>Afficher le chargement des cœurs</value>
+    <value>Afficher la charge des cœurs</value>
     <comment>Settings core loads label</comment>
   </data>
   <data name="SettingsCoreLoadsTooltip" xml:space="preserve">
@@ -614,7 +614,7 @@
     <comment>Settings date format tooltip</comment>
   </data>
   <data name="SettingsDock" xml:space="preserve">
-    <value>Encrage</value>
+    <value>Ancrage</value>
     <comment>Dock settings label</comment>
   </data>
   <data name="SettingsDockBottom" xml:space="preserve">
@@ -666,15 +666,15 @@
     <comment>Settings hardware data grid enabled column header</comment>
   </data>
   <data name="SettingsHardwareColumn2" xml:space="preserve">
-    <value>Matériel</value>
+    <value>Composant</value>
     <comment>Settings hardware data grid hardware column header</comment>
   </data>
   <data name="SettingsHardwareEnabledTooltip" xml:space="preserve">
-    <value>Activer ce matériel. (Double cliquez pour changer. Bug connu.)</value>
+    <value>Activer ce composant. (Double cliquez pour changer. Bug connu.)</value>
     <comment>Settings hardware enabled checkbox tooltip</comment>
   </data>
   <data name="SettingsHardwareNameTooltip" xml:space="preserve">
-    <value>Editer le nom de ce matériel.</value>
+    <value>Éditer le nom de ce composant.</value>
     <comment>Settings hardware name tooltip</comment>
   </data>
   <data name="SettingsHorizontalOffset" xml:space="preserve">
@@ -710,7 +710,7 @@
     <comment>Settings hotkey show label</comment>
   </data>
   <data name="SettingsHotkeysTab" xml:space="preserve">
-    <value>Raccourics</value>
+    <value>Raccourcis</value>
     <comment>Title of the settings hotkeys tab</comment>
   </data>
   <data name="SettingsHotkeyToggle" xml:space="preserve">
@@ -734,7 +734,7 @@
     <comment>Settings metrics label with colon</comment>
   </data>
   <data name="SettingsMetricsTooltip" xml:space="preserve">
-    <value>Activer ou désactiver des m‚triques sp‚cifiques.</value>
+    <value>Activer ou désactiver des métriques spécifiques.</value>
     <comment>Settings metrics tooltip</comment>
   </data>
   <data name="SettingsMonitorEnabledTooltip" xml:space="preserve">
@@ -750,11 +750,11 @@
     <comment>Settings monitors data grid monitor column header</comment>
   </data>
   <data name="SettingsMonitorsSubtitle1" xml:space="preserve">
-    <value>Cliquez sur un ligne pour éditer ses réglages.</value>
+    <value>Cliquez sur une ligne pour éditer ses réglages.</value>
     <comment>Settings monitors subtitle line one</comment>
   </data>
   <data name="SettingsMonitorsSubtitle2" xml:space="preserve">
-    <value>Déplacer une ligne pour changer son ordre.</value>
+    <value>Déplacez une ligne pour changer son ordre.</value>
     <comment>Settings monitors subtitle line two</comment>
   </data>
   <data name="SettingsMonitorsTab" xml:space="preserve">
@@ -762,11 +762,11 @@
     <comment>Title of the settings monitors tab</comment>
   </data>
   <data name="SettingsPollingInterval" xml:space="preserve">
-    <value>Interval de rafraichissement.</value>
+    <value>Intervalle de rafraichissement.</value>
     <comment>Settings polling interval label</comment>
   </data>
   <data name="SettingsPollingIntervalTooltip" xml:space="preserve">
-    <value>Durée entre l'interrogation des données en millisecondes.</value>
+    <value>Fréquence de rafraîchissement des données en millisecondes.</value>
     <comment>Settings polling interval tooltip</comment>
   </data>
   <data name="SettingsReserveSpace" xml:space="preserve">
@@ -774,7 +774,7 @@
     <comment>Settings reserve space label</comment>
   </data>
   <data name="SettingsReserveSpaceTooltip" xml:space="preserve">
-    <value>Réserve d'espace dans le zone de travail pour la sidebar.</value>
+    <value>Réserve de l'espace dans la zone de travail pour la sidebar.</value>
     <comment>Settings reserve space tooltip</comment>
   </data>
   <data name="SettingsRoundAllDecimals" xml:space="preserve">
@@ -786,7 +786,7 @@
     <comment>Settings round all decimals tooltip</comment>
   </data>
   <data name="SettingsRunAtStartup" xml:space="preserve">
-    <value>Lancer au démarrage.</value>
+    <value>Lancer au démarrage</value>
     <comment>Settings run at startup label</comment>
   </data>
   <data name="SettingsRunAtStartupTooltip" xml:space="preserve">
@@ -794,11 +794,11 @@
     <comment>Settings run at startup tooltip</comment>
   </data>
   <data name="SettingsScreen" xml:space="preserve">
-    <value>Ecran</value>
+    <value>Écran</value>
     <comment>Screen settings label</comment>
   </data>
   <data name="SettingsScreenTooltip" xml:space="preserve">
-    <value>Ecran sur lequel la sidebar sera affichée.</value>
+    <value>Écran sur lequel la sidebar sera affichée.</value>
     <comment>Screen settings tooltip</comment>
   </data>
   <data name="SettingsShowClock" xml:space="preserve">
@@ -830,15 +830,15 @@
     <comment>Settings show drive space tooltip</comment>
   </data>
   <data name="SettingsShowHardwareNames" xml:space="preserve">
-    <value>Afficher les noms des matériels</value>
+    <value>Afficher les noms des composants</value>
     <comment>Settings show hardware names label</comment>
   </data>
   <data name="SettingsShowHardwareNamesTooltip" xml:space="preserve">
-    <value>Afficher les noms des matériels.</value>
+    <value>Affiche les noms des composants.</value>
     <comment>Settings show hardware names tooltip</comment>
   </data>
   <data name="SettingsShowTrayIcon" xml:space="preserve">
-    <value>Afficher l'icône dans la barre de tâches</value>
+    <value>Affiche l'icône dans la barre de tâches</value>
     <comment>Settings show tray icon label</comment>
   </data>
   <data name="SettingsShowTrayIconTooltip" xml:space="preserve">
@@ -882,19 +882,19 @@
     <comment>Title of the settings window</comment>
   </data>
   <data name="SettingsUIScale" xml:space="preserve">
-    <value>Echelle de l'UI</value>
+    <value>Échelle de l'UI</value>
     <comment>Settings UI scale label</comment>
   </data>
   <data name="SettingsUIScaleTooltip" xml:space="preserve">
-    <value>Echelle de toutes les fenêtres et composants.</value>
+    <value>Échelle de toutes les fenêtres et leurs composants.</value>
     <comment>Settings UI scale tooltip</comment>
   </data>
   <data name="SettingsUseBytesPerSecond" xml:space="preserve">
-    <value>Utiliser Bytes par seconde</value>
+    <value>Utiliser des octets par seconde</value>
     <comment>Settings use bytes per second label</comment>
   </data>
   <data name="SettingsUseBytesPerSecondTooltip" xml:space="preserve">
-    <value>Affiche la bande passante en Bytes par seconde au lieu de l'octet par seconde.</value>
+    <value>Affiche la bande passante en octets par seconde au lieu de bits par seconde.</value>
     <comment>Settings use bytes per second tooltip</comment>
   </data>
   <data name="SettingsUsedSpaceAlert" xml:space="preserve">
@@ -906,19 +906,19 @@
     <comment>Settings used space alert tooltip</comment>
   </data>
   <data name="SettingsUseFahrenheit" xml:space="preserve">
-    <value>Utiliser le Degré Fahrenheit</value>
+    <value>Utiliser des degrés Fahrenheit</value>
     <comment>Settings use fahrenheit label</comment>
   </data>
   <data name="SettingsUseFahrenheitTooltip" xml:space="preserve">
-    <value>Les températures des sondes et alarmes seront en Fahrenheit au lieu des Celsius.</value>
+    <value>La température des sondes et alarmes sera en Fahrenheit au lieu de Celsius.</value>
     <comment>Settings use fahrenheit tooltip</comment>
   </data>
   <data name="SettingsUseGHz" xml:space="preserve">
-    <value>Utiliser le GHz</value>
+    <value>Utiliser des GHz</value>
     <comment>Settings use GHz label</comment>
   </data>
   <data name="SettingsUseGHzTooltip" xml:space="preserve">
-    <value>Les fréquences vont être en Ghz au lieu des Mhz.</value>
+    <value>Les fréquences seront en GHz au lieu de MHz.</value>
     <comment>Settings use GHz tooltip</comment>
   </data>
   <data name="SettingsVerticalOffset" xml:space="preserve">
@@ -942,7 +942,7 @@
     <comment>Subtitle of the setup done page</comment>
   </data>
   <data name="SetupDoneText" xml:space="preserve">
-    <value>Vous pouvez également accéder aux réglages via l'icônes en haut à droite de la sidebar ou via l'icône dans la barre de tâches.</value>
+    <value>Vous pouvez également accéder aux réglages via l'icône en haut à droite de la sidebar ou via l'icône dans la barre des tâches.</value>
     <comment>Text of the setup done page</comment>
   </data>
   <data name="SetupDoneTitle" xml:space="preserve">
@@ -988,5 +988,53 @@
   <data name="UpdateTitle" xml:space="preserve">
     <value>Mise à jour</value>
     <comment>Title of the update window</comment>
+  </data>
+  <data name="SettingsToolbarMode" xml:space="preserve">
+    <value>Mode barre d'outils</value>
+    <comment>Settings toolbar mode label</comment>
+  </data>
+  <data name="SettingsToolbarModeTooltip" xml:space="preserve">
+    <value>La Sidebar est cachée en alt-tab et persiste entre bureaux virtuels</value>
+    <comment>Settings toolbar mode tooltip</comment>
+  </data>
+  <data name="SettingsInitiallyHidden" xml:space="preserve">
+    <value>Cacher au démarrage</value>
+    <comment>Settings initially hidden label</comment>
+  </data>
+  <data name="SettingsInitiallyHiddenTooltip" xml:space="preserve">
+    <value>Cacher la Sidebar au démarrage.</value>
+    <comment>Settings initially hidden tooltip</comment>
+  </data>
+  <data name="SettingsAlertBlink" xml:space="preserve">
+    <value>Alertes clignotent</value>
+    <comment>Settings alert blink label</comment>
+  </data>
+  <data name="SettingsAlertBlinkTooltip" xml:space="preserve">
+    <value>Le texte des alertes clignote.</value>
+    <comment>Settings alert blink tooltip</comment>
+  </data>
+  <data name="SettingsShowMachineName" xml:space="preserve">
+    <value>Afficher le nom du PC</value>
+    <comment>Settings show machine name label</comment>
+  </data>
+  <data name="SettingsShowMachineNameTooltip" xml:space="preserve">
+    <value>Affiche le nom du PC.</value>
+    <comment>Settings show machine name tooltip</comment>
+  </data>
+  <data name="NetworkExtIP" xml:space="preserve">
+    <value>Adresse IP externe</value>
+    <comment>Full name for the network ext IP address metric</comment>
+  </data>
+  <data name="NetworkExtIPLabel" xml:space="preserve">
+    <value>Ext</value>
+    <comment>Short label for network ext IP address metric</comment>
+  </data>
+  <data name="NetworkIP" xml:space="preserve">
+    <value>Adresse IP</value>
+    <comment>Full name for the network IP address metric</comment>
+  </data>
+  <data name="NetworkIPLabel" xml:space="preserve">
+    <value>IP</value>
+    <comment>Short label for network IP address metric</comment>
   </data>
 </root>
