@@ -161,6 +161,7 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Content="{x:Static frame:Resources.SettingsSidebarWidth}" />
@@ -207,6 +208,12 @@
 
                     <Label Grid.Column="0" Grid.Row="12" Content="{x:Static frame:Resources.SettingsDateFormat}" />
                     <ComboBox Grid.Column="1" Grid.Row="12" ItemsSource="{Binding Path=DateSettingItems}" DisplayMemberPath="Display" SelectedValue="{Binding Path=DateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="{x:Static frame:Resources.SettingsDateFormatTooltip}" />
+
+                    <Label Grid.Column="0" Grid.Row="13" Content="{x:Static frame:Resources.SettingsSidebarBorderWidth}" />
+                    <DockPanel Grid.Column="1" Grid.Row="13">
+                        <TextBox Text="{Binding ElementName=SidebarBorderWidthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberBox_PreviewTextInput" />
+                        <Slider x:Name="SidebarBorderWidthSlider" Value="{Binding Path=SidebarBorderWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="20" TickFrequency="1" LargeChange="2" ToolTip="{x:Static frame:Resources.SettingsSidebarBorderWidthTooltip}" />
+                    </DockPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static frame:Resources.SettingsMonitorsTab}">
