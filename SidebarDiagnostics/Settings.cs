@@ -465,6 +465,24 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
+        private string _fontName { get; set; } = "Arial";
+
+        [JsonProperty]
+        public string FontName
+        {
+            get
+            {
+                return _fontName;
+            }
+            set
+            {
+                _fontName = value;
+
+                NotifyPropertyChanged("FontName");
+            }
+        }
+
+
         private string _fontColor { get; set; } = "#FFFFFF";
         
         [JsonProperty]

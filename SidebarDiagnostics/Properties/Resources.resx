@@ -656,6 +656,14 @@
     <value>Color of text and icons.</value>
     <comment>Settings font color tooltip</comment>
   </data>
+  <data name="SettingsFontName" xml:space="preserve">
+    <value>Font Family</value>
+    <comment>Settings font family label</comment>
+  </data>
+  <data name="SettingsFontNameTooltip" xml:space="preserve">
+    <value>Font family of text.</value>
+    <comment>Settings font family tooltip</comment>
+  </data>
   <data name="SettingsFontSize" xml:space="preserve">
     <value>Font Size</value>
     <comment>Settings font size label</comment>

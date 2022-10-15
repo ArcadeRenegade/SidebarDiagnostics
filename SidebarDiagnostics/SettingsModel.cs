@@ -9,6 +9,8 @@ using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
 using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Framework;
+using System.Windows.Media;
+using System.Drawing.Text;
 
 namespace SidebarDiagnostics.Models
 {
@@ -73,7 +75,10 @@ namespace SidebarDiagnostics.Models
                 FontSetting.x18
             };
 
+            FontNames = Fonts.SystemFontFamilies.Select(i => i.Source).ToArray();
+
             FontSetting = Framework.Settings.Instance.FontSetting;
+            FontName = Framework.Settings.Instance.FontName;
             FontColor = Framework.Settings.Instance.FontColor;
             AlertFontColor = Framework.Settings.Instance.AlertFontColor;
             AlertBlink = Framework.Settings.Instance.AlertBlink;
@@ -153,6 +158,7 @@ namespace SidebarDiagnostics.Models
             Framework.Settings.Instance.BGOpacity = BGOpacity;
             Framework.Settings.Instance.TextAlign = TextAlign;
             Framework.Settings.Instance.FontSetting = FontSetting;
+            Framework.Settings.Instance.FontName = FontName;
             Framework.Settings.Instance.FontColor = FontColor;
             Framework.Settings.Instance.AlertFontColor = AlertFontColor;
             Framework.Settings.Instance.AlertBlink = AlertBlink;
@@ -683,6 +689,37 @@ namespace SidebarDiagnostics.Models
             set
             {
                 _fontSettingItems = value;
+
+                NotifyPropertyChanged("FontSizeItems");
+            }
+        }
+        private string _fontName { get; set; }
+
+        public string FontName
+        {
+            get
+            {
+                return _fontName;
+            }
+            set
+            {
+                _fontName = value;
+
+                NotifyPropertyChanged("FontName");
+            }
+        }
+
+        private String[] _fontNames { get; set; }
+
+        public String[] FontNames
+        {
+            get
+            {
+                return _fontNames;
+            }
+            set
+            {
+                _fontNames = value;
 
                 NotifyPropertyChanged("FontSizeItems");
             }
