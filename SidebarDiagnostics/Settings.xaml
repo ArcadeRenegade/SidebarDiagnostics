@@ -186,7 +186,7 @@
                     <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Path=TextAlignItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedValue="{Binding Path=TextAlign, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsTextAlignTooltip}" />
 
                     <Label Grid.Column="0" Grid.Row="5" Content="{x:Static frame:Resources.SettingsFontName}" />
-                    <ComboBox Grid.Column="1" Grid.Row="5" ItemsSource="{Binding Path=FontNames, Mode=OneWay}" SelectedValue="{Binding Path=FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsFontNameTooltip}" />
+                    <ComboBox Grid.Column="1" Grid.Row="5" ItemsSource="{Binding Path=FontNameItems, Mode=OneWay}" SelectedValue="{Binding Path=FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsFontNameTooltip}" />
                     
                     <Label Grid.Column="0" Grid.Row="6" Content="{x:Static frame:Resources.SettingsFontSize}" />
                     <ComboBox Grid.Column="1" Grid.Row="6" ItemsSource="{Binding Path=FontSettingItems, Mode=OneWay}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsFontSizeTooltip}" />

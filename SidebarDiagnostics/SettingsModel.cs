@@ -75,7 +75,7 @@ namespace SidebarDiagnostics.Models
                 FontSetting.x18
             };
 
-            FontNames = Fonts.SystemFontFamilies.Select(i => i.Source).ToArray();
+            FontNameItems = Fonts.SystemFontFamilies.Select(i => i.Source).ToArray();
 
             FontSetting = Framework.Settings.Instance.FontSetting;
             FontName = Framework.Settings.Instance.FontName;
@@ -709,19 +709,19 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private String[] _fontNames { get; set; }
+        private String[] _fontNameItems { get; set; }
 
-        public String[] FontNames
+        public String[] FontNameItems
         {
             get
             {
-                return _fontNames;
+                return _fontNameItems;
             }
             set
             {
-                _fontNames = value;
+                _fontNameItems = value;
 
-                NotifyPropertyChanged("FontSizeItems");
+                NotifyPropertyChanged("FontNameItems");
             }
         }
 
