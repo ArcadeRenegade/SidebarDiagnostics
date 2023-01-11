@@ -157,6 +157,7 @@
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="38px"></RowDefinition>
+                        <RowDefinition Height="38px"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -184,29 +185,32 @@
                     <Label Grid.Column="0" Grid.Row="4" Content="{x:Static frame:Resources.SettingsTextAlign}" />
                     <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Path=TextAlignItems, Mode=OneWay}" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedValue="{Binding Path=TextAlign, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsTextAlignTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="5" Content="{x:Static frame:Resources.SettingsFontSize}" />
-                    <ComboBox Grid.Column="1" Grid.Row="5" ItemsSource="{Binding Path=FontSettingItems, Mode=OneWay}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsFontSizeTooltip}" />
+                    <Label Grid.Column="0" Grid.Row="5" Content="{x:Static frame:Resources.SettingsFontName}" />
+                    <ComboBox Grid.Column="1" Grid.Row="5" ItemsSource="{Binding Path=FontNameItems, Mode=OneWay}" SelectedValue="{Binding Path=FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsFontNameTooltip}" />
+                    
+                    <Label Grid.Column="0" Grid.Row="6" Content="{x:Static frame:Resources.SettingsFontSize}" />
+                    <ComboBox Grid.Column="1" Grid.Row="6" ItemsSource="{Binding Path=FontSettingItems, Mode=OneWay}" DisplayMemberPath="FontSize" SelectedValue="{Binding Path=FontSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsFontSizeTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="6" Content="{x:Static frame:Resources.SettingsFontColor}" />
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="6" SelectedColor="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsFontColorTooltip}"/>
+                    <Label Grid.Column="0" Grid.Row="7" Content="{x:Static frame:Resources.SettingsFontColor}" />
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="7" SelectedColor="{Binding Path=FontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsFontColorTooltip}"/>
 
-                    <Label Grid.Column="0" Grid.Row="7" Content="{x:Static frame:Resources.SettingsAlertFontColor}" />
-                    <xctk:ColorPicker Grid.Column="1" Grid.Row="7" SelectedColor="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsAlertFontColorTooltip}"/>
+                    <Label Grid.Column="0" Grid.Row="8" Content="{x:Static frame:Resources.SettingsAlertFontColor}" />
+                    <xctk:ColorPicker Grid.Column="1" Grid.Row="8" SelectedColor="{Binding Path=AlertFontColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsAlertFontColorTooltip}"/>
 
-                    <Label Grid.Column="0" Grid.Row="8" Content="{x:Static frame:Resources.SettingsAlertBlink}" />
-                    <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Path=AlertBlink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsAlertBlinkTooltip}" />
+                    <Label Grid.Column="0" Grid.Row="9" Content="{x:Static frame:Resources.SettingsAlertBlink}" />
+                    <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=AlertBlink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsAlertBlinkTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="9" Content="{x:Static frame:Resources.SettingsShowMachineName}" />
-                    <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=ShowMachineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsShowMachineNameTooltip}" />
+                    <Label Grid.Column="0" Grid.Row="10" Content="{x:Static frame:Resources.SettingsShowMachineName}" />
+                    <CheckBox Grid.Column="1" Grid.Row="10" IsChecked="{Binding Path=ShowMachineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsShowMachineNameTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="10" Content="{x:Static frame:Resources.SettingsShowClock}" />
-                    <CheckBox Grid.Column="1" Grid.Row="10" IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsShowClockTooltip}" />
+                    <Label Grid.Column="0" Grid.Row="11" Content="{x:Static frame:Resources.SettingsShowClock}" />
+                    <CheckBox Grid.Column="1" Grid.Row="11" IsChecked="{Binding Path=ShowClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static frame:Resources.SettingsShowClockTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="11" Content="{x:Static frame:Resources.Settings24HourClock}" />
-                    <CheckBox Grid.Column="1" Grid.Row="11" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="{x:Static frame:Resources.Settings24HourClockTooltip}" />
+                    <Label Grid.Column="0" Grid.Row="12" Content="{x:Static frame:Resources.Settings24HourClock}" />
+                    <CheckBox Grid.Column="1" Grid.Row="12" IsChecked="{Binding Path=Clock24HR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="{x:Static frame:Resources.Settings24HourClockTooltip}" />
 
-                    <Label Grid.Column="0" Grid.Row="12" Content="{x:Static frame:Resources.SettingsDateFormat}" />
-                    <ComboBox Grid.Column="1" Grid.Row="12" ItemsSource="{Binding Path=DateSettingItems}" DisplayMemberPath="Display" SelectedValue="{Binding Path=DateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="{x:Static frame:Resources.SettingsDateFormatTooltip}" />
+                    <Label Grid.Column="0" Grid.Row="13" Content="{x:Static frame:Resources.SettingsDateFormat}" />
+                    <ComboBox Grid.Column="1" Grid.Row="13" ItemsSource="{Binding Path=DateSettingItems}" DisplayMemberPath="Display" SelectedValue="{Binding Path=DateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=ShowClock, Mode=OneWay}" ToolTip="{x:Static frame:Resources.SettingsDateFormatTooltip}" />
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static frame:Resources.SettingsMonitorsTab}">

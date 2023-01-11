@@ -1310,6 +1310,28 @@ namespace SidebarDiagnostics.Framework {
                 return ResourceManager.GetString("SettingsFontSizeTooltip", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Font Name.
+        /// </summary>
+        public static string SettingsFontName
+        {
+            get
+            {
+                return ResourceManager.GetString("SettingsFontName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Name of text and icons..
+        /// </summary>
+        public static string SettingsFontNameTooltip
+        {
+            get
+            {
+                return ResourceManager.GetString("SettingsFontNameTooltip", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to General.

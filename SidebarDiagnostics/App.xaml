@@ -148,6 +148,7 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="FontSize" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.TitleFontSize, Mode=OneWay}" />
+                <Setter Property="FontFamily" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontName, Mode=OneWay}" />
             </Style>
 
             <Style x:Key="AppText" TargetType="{x:Type TextBlock}">
@@ -156,6 +157,7 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Foreground" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontColor, Mode=OneWay}" />
                 <Setter Property="FontSize" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.SmallFontSize, Mode=OneWay}" />
+                <Setter Property="FontFamily" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontName, Mode=OneWay}" />
                 <Setter Property="TextWrapping" Value="WrapWithOverflow" />
             </Style>
 
@@ -198,6 +200,7 @@
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="FontSize" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontSetting.FontSize, Mode=OneWay}" />
+                <Setter Property="FontFamily" Value="{Binding Source={x:Static frame:Settings.Instance}, Path=FontName, Mode=OneWay}" />
                 <Setter Property="TextWrapping" Value="WrapWithOverflow" />
             </Style>
 
