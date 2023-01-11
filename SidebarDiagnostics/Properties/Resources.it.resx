@@ -1018,7 +1018,7 @@
     <comment>Title of the sidebar window</comment>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Tempo</value>
+    <value>Ora</value>
     <comment>Sidebar clock title</comment>
   </data>
   <data name="UpdateErrorFatalText" xml:space="preserve">
