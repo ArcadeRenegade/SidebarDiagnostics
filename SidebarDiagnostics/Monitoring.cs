@@ -820,10 +820,15 @@ namespace SidebarDiagnostics.Monitoring
                 {
                     ISensor _vramLoad = _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Name.Contains("Memory")).FirstOrDefault() ??
                         _hardware.Sensors.Where(s => s.SensorType == SensorType.Load && s.Index == 1).FirstOrDefault();
+                    ISensor _sharedmemory = _hardware.Sensors.Where(s => (s.SensorType == SensorType.Data || s.SensorType == SensorType.SmallData) && s.Name == "D3D Shared Memory Used").FirstOrDefault();
 
-                    if (_vramLoad != null)
+                    if (_vramLoad != null && _sharedmemory == null)
                     {
                         _sensorList.Add(new OHMMetric(_vramLoad, MetricKey.GPUVRAMLoad, DataType.Percent, null, roundAll));
+                    }
+                    if (_sharedmemory != null)
+                    {
+                        _sensorList.Add(new OHMMetric(_sharedmemory, MetricKey.GPUVRAMLoad, DataType.Megabyte, null, roundAll));
                     }
                 }
             }
@@ -3036,7 +3041,7 @@ namespace SidebarDiagnostics.Monitoring
                     return new HardwareType[1] { HardwareType.Memory };
 
                 case MonitorType.GPU:
-                    return new HardwareType[2] { HardwareType.GpuNvidia, HardwareType.GpuAmd };
+                    return new HardwareType[3] { HardwareType.GpuNvidia, HardwareType.GpuAmd, HardwareType.GpuIntel };
 
                 default:
                     throw new ArgumentException("Invalid MonitorType.");
