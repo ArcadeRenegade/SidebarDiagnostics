@@ -1425,6 +1425,7 @@ namespace SidebarDiagnostics.Windows
             {
                 await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, (Action)(() =>
                 {
+                    _monitorWorkArea = Monitor.GetMonitorFromIndex(Screen).WorkArea;
                     HwndSource.AddHook(AppBarHook);
                 }));
             });
@@ -1482,7 +1483,12 @@ namespace SidebarDiagnostics.Windows
                 switch (wParam.ToInt32())
                 {
                     case APPBARNOTIFY.ABN_POSCHANGED:
-                        SetAppBar();
+                        {
+                            int screen = Framework.Settings.Instance.ScreenIndex;
+                            RECT currentMonitorWa = Monitor.GetMonitorFromIndex(screen).WorkArea;
+                            if (!currentMonitorWa.Equals(_monitorWorkArea))
+                                SetAppBar();
+                        }
                         break;
 
                     case APPBARNOTIFY.ABN_FULLSCREENAPP:
@@ -1529,5 +1535,7 @@ namespace SidebarDiagnostics.Windows
         private int _callbackID { get; set; }
 
         private CancellationTokenSource _cancelReposition { get; set; }
+
+        private RECT _monitorWorkArea { get; set; }
     }
 }
