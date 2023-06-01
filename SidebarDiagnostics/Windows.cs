@@ -873,7 +873,10 @@ namespace SidebarDiagnostics.Windows
             };
 
             windowWA = Windows.WorkArea.FromRECT(_active.WorkArea);
-            windowWA.Scale(_active.InverseScaleX, _active.InverseScaleY);
+            
+            double scaleX = _active.ScaleX / _primary.ScaleX;
+            double scaleY = _active.ScaleY / _primary.ScaleY;
+            windowWA.Scale(scaleX, scaleY);
 
             double _modifyX = 0d;
             double _modifyY = 0d;
@@ -889,6 +892,9 @@ namespace SidebarDiagnostics.Windows
 
             windowWA.Offset(_offsetX, _offsetY);
 
+            windowWA.Top = 0;
+            windowWA.Bottom = _active.WorkArea.Height;
+            
             appbarWA = Windows.WorkArea.FromRECT(_active.WorkArea);
 
             appbarWA.Offset(_modifyX, _modifyY);
