@@ -182,7 +182,7 @@
     <comment>Full name for CPU temp metric</comment>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Tiempo</value>
+    <value>Hora</value>
     <comment>Sidebar clock title</comment>
   </data>
   <data name="ButtonUpdate" xml:space="preserve">
